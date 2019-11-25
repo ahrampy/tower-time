@@ -4,7 +4,7 @@
   "description": "Canvas based tower defense-style game.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack --watch --mode=development"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,5 @@
   "dependencies": {
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
-  },
-  "devtool": "source-map"
+  }
 }
