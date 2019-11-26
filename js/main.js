@@ -1,1 +1,1 @@
-console.log("hey");
+import Game from './game';

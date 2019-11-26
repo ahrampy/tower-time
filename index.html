@@ -1,9 +1,27 @@
 <html>
-    
-    <script src="./dist/bundle.js"></script>
+    <head>
+        <script src="./dist/bundle.js"></script>
+        <link rel="stylesheet" type="text/css" href="./styles/main.css">
+    </head>
     <body>
-        <canvas id="game-canvas" width="600px" height="600px">
-        
-        </canvas>
+        <div id="holder">
+            <!-- <h1>Tower Time</h1> -->
+            <div id="game-canvas" width="600px" height="600px">
+                <div id="content-box">
+                    <div id="towers">
+                        
+                    </div>
+                    <div id="info">
+                        <div class="info-tile">Wave</div>
+                        <div class="info-tile">Points</div>
+                        <!-- <div class="info-tile">Enemies</div>
+                        <div class="info-tile">Destroyed</div> -->
+                        <div class="info-tile">Lives</div>
+                        <div class="info-tile">Bits</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
