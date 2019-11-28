@@ -10,14 +10,12 @@ class Attack {
 
     run() {
         this.update();
-        this.checkFire()
         this.render();
     }
 
     update() {
         this.location.y += Math.sin(this.angle)*this.speed;
         this.location.x += Math.cos(this.angle)*this.speed;
-        
     }
 
     render() {

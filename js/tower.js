@@ -11,17 +11,27 @@ class Tower{
         this.angle = 0;
         this.visible = false
         this.placed = false
+        this.fired = Date.now()
+        this.cooldown = 500
     }
-
-    checkFire() {
-        let dx= this.location.x - towerTime.canvas.mouseX
-        let dy= this.location.y - towerTime.canvas.mouseY
-    }
-
+    
     run(){
         this.update();
         this.render();
         this.checkFire();
+    }
+    
+    checkFire() {
+        let mils = Date.now()
+        let dx= this.location.x - towerTime.canvas.mouseX
+        let dy= this.location.y - towerTime.canvas.mouseY
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 250 && this.placed && mils - this.fired > this.cooldown) {
+            this.fired = mils
+            const attackLocation = new JSVector(this.location.x, this.location.y);
+            const attack = new Attack(attackLocation, this.angle, this.atkImg);
+            towerTime.attacks.push(attack);
+        }
     }
 
     update(){
@@ -29,8 +39,6 @@ class Tower{
         let dy = this.location.y - towerTime.canvas.mouseY;
         this.angle = Math.atan2(dy, dx) - Math.PI;
     }
-
-
 
     render() {
         const context = towerTime.context;

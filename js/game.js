@@ -81,13 +81,14 @@ class Game {
             const tileDiv = document.createElement("div");
             const tileImgPath = "images/dot.png"
             const lilImgPath = "images/lil-dot.png"
+            const attackImgPath = "images/attack-dot.png"
 
             tileDiv.tileDivImg = new Image();
             tileDiv.tileDivImg.src = lilImgPath;
             // tileDiv.tileDivImg = addEventListener('load', this.hideElementImg, false);
 
             tileDiv.tileDivAttackImg = new Image();
-            tileDiv.tileDivAttackImg.src = lilImgPath;
+            tileDiv.tileDivAttackImg.src = attackImgPath;
             // tileDiv.tileDivAttackImg = addEventListener('load', this.hideElementImg, false);
 
             document.getElementById('towers').appendChild(tileDiv);
