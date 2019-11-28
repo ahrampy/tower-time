@@ -1,6 +1,6 @@
 'use strict'
 
-import JSVector from './vector';
+// import JSVector from './vector';
 
 class Tower{
     constructor(cost, img, atkImg) {
@@ -10,18 +10,27 @@ class Tower{
         this.location = new JSVector(0,0);
         this.angle = 0;
         this.visible = false
+        this.placed = false
+    }
+
+    checkFire() {
+        let dx= this.location.x - towerTime.canvas.mouseX
+        let dy= this.location.y - towerTime.canvas.mouseY
     }
 
     run(){
         this.update();
         this.render();
+        this.checkFire();
     }
 
     update(){
-        let dx = this.location.x - towerTime.cnv.mouseX;
-        let dy = this.location.y - towerTime.cnv.mouseY;
+        let dx = this.location.x - towerTime.canvas.mouseX;
+        let dy = this.location.y - towerTime.canvas.mouseY;
         this.angle = Math.atan2(dy, dx) - Math.PI;
     }
+
+
 
     render() {
         const context = towerTime.context;
@@ -39,4 +48,4 @@ class Tower{
     }
 }
 
-export default Tower;
+// export default Tower;

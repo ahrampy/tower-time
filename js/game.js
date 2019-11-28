@@ -1,4 +1,5 @@
-import Tower from './tower';
+// import Tower from './tower';
+// import JSVector from './vector';
 
 'use strict'
 
@@ -22,8 +23,10 @@ class Game {
         this.towers = [];
         this.creeps = [];
         this.attacks = []; //tower attacks/moves
-        this.placingTower = false;
+
         this.bits = 1000 // testing
+
+        this.placingTower = false;
 
         this.canvas = document.createElement("canvas");
         this.canvas.width = 750
@@ -31,7 +34,7 @@ class Game {
         document.getElementById('game-canvas').appendChild(this.canvas)
         this.canvas.addEventListener('mousemove', this.handleCanvasMouseMoved, false)
         this.canvas.addEventListener('mouseover', this.handleCanvasMouseOver, false)
-        this.canvas.addEventListener('click', this.handleCanvasClicked, false)
+        this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false)
         this.context = this.canvas.getContext("2d");
 
         this.tileDivs = this.createTileDivs();
@@ -44,14 +47,33 @@ class Game {
         if (towerTime.towers.length < 1) return;
         if (!towerTime.towers[towerTime.towers.length - 1].placed &&
             towerTime.placingTower === true ) {
-                towerTime.towers[towerTime.towers.length - 1].loc.x = this.mouseX;
-                towerTime.towers[towerTime.towers.length - 1].loc.y = this.mouseY;
+                towerTime.towers[towerTime.towers.length - 1].location.x = this.mouseX;
+                towerTime.towers[towerTime.towers.length - 1].location.y = this.mouseY;
             }
     }
 
-    hideElementImg() {
-        this.style.display = "none";
+    handleCanvasMouseOver() {
+        if(towerTime.towers.length < 1) return;
+        towerTime.towers[towerTime.towers.length - 1].visible = true;
     }
+
+    handleCanvasMouseClicked() {
+        if(towerTime.canAddTower()){
+            towerTime.placeTower();
+        }
+    }
+
+    canAddTower() {
+        if (towerTime.placingTower) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // hideElementImg() {
+    //     this.style.display = "none";
+    // }
 
     createTileDivs() {
         const tileDivs = [];
@@ -61,23 +83,22 @@ class Game {
 
             tileDiv.tileDivImg = new Image();
             tileDiv.tileDivImg.src = tileImgPath;
-            tileDiv.tileDivImg = addEventListener('load', this.hideElementImg, false);
+            // tileDiv.tileDivImg = addEventListener('load', this.hideElementImg, false);
 
             tileDiv.tileDivAttackImg = new Image();
             tileDiv.tileDivAttackImg.src = tileImgPath;
-            tileDiv.tileDivAttackImg = addEventListener('load', this.hideElementImg, false);
+            // tileDiv.tileDivAttackImg = addEventListener('load', this.hideElementImg, false);
 
             document.getElementById('towers').appendChild(tileDiv);
 
             tileDiv.cost = 10 * (i + 1)
             tileDiv.id = i
             tileDivs.push(tileDiv);
-
+            
             const tileImg = new Image();
             tileImg.src = tileImgPath;
             tileDiv.appendChild(tileImg)
-
-            // tile.appendChild(tile.tileImg)
+            
         }
         return tileDivs;
     }
@@ -89,14 +110,6 @@ class Game {
             tileDiv.addEventListener('mouseout',this.tileRollOut, false)
             tileDiv.addEventListener('mousedown',this.tilePressed, false)
             tileDiv.addEventListener('click',this.tileClicked, false)
-        }
-    }
-
-    tileClicked() {
-        if (towerTime.placingTower === true) return;
-        if (towerTime.bits > this.cost) {
-            towerTime.createTower(this);
-            towerTime.placingTower = true;
         }
     }
 
@@ -112,22 +125,43 @@ class Game {
         this.style.backgroundColor = '#333333';
     }
 
-    createTower(tileDiv) {
-        const tower = new Tower(tileDiv.cost, tileDiv.tileDivImg, tileDiv.tileDivAttackImg);
-        if (tower) {
-            this.towers.push(tower);
-        } else {
-            console.log("Couldn't create Tower");
+    tileClicked() {        
+        if (towerTime.placingTower === true) return;
+        if (towerTime.bits > this.cost) {            
+            towerTime.createTower(this);
+            towerTime.placingTower = true;
         }
     }
 
-    run() {
-
+    createTower(tileDiv) {
+        const tower = new Tower(tileDiv.cost, tileDiv.tileDivImg, tileDiv.tileDivAttackImg);
+        this.towers.push(tower);
     }
 
-    // render() {
+    placeTower() {
+        towerTime.towers[towerTime.towers.length - 1].location = new JSVector(
+            this.canvas.mouseX, this.canvas.mouseY )
+        towerTime.towers[towerTime.towers.length - 1].placed = true;
+        towerTime.placingTower = false;
+    }
 
-    // }
+
+    run() {
+        if (this.isRunning) {
+            this.render();
+        }
+        for (let i = 0; i < this.towers.length; i++) {
+            this.towers[i].run()
+        }
+        for (let i = 0; i < this.attacks.length; i++) {
+            this.attacks[i].run()
+        }
+    }
+
+    render() {
+        this.context.clearRect(0,0,this.canvas.height, this.canvas.width)
+    }
+
 }
 
-export default Game
+// export default Game
