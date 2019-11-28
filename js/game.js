@@ -80,13 +80,14 @@ class Game {
         for (let i = 0; i < 4; i++) {
             const tileDiv = document.createElement("div");
             const tileImgPath = "images/dot.png"
+            const lilImgPath = "images/lil-dot.png"
 
             tileDiv.tileDivImg = new Image();
-            tileDiv.tileDivImg.src = tileImgPath;
+            tileDiv.tileDivImg.src = lilImgPath;
             // tileDiv.tileDivImg = addEventListener('load', this.hideElementImg, false);
 
             tileDiv.tileDivAttackImg = new Image();
-            tileDiv.tileDivAttackImg.src = tileImgPath;
+            tileDiv.tileDivAttackImg.src = lilImgPath;
             // tileDiv.tileDivAttackImg = addEventListener('load', this.hideElementImg, false);
 
             document.getElementById('towers').appendChild(tileDiv);
@@ -147,9 +148,7 @@ class Game {
 
 
     run() {
-        if (this.isRunning) {
-            this.render();
-        }
+        this.render();
         for (let i = 0; i < this.towers.length; i++) {
             this.towers[i].run()
         }
@@ -159,7 +158,7 @@ class Game {
     }
 
     render() {
-        this.context.clearRect(0,0,this.canvas.height, this.canvas.width)
+        this.context.clearRect(0, 0, 750, 500)
     }
 
 }
