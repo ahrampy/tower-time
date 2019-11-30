@@ -1,6 +1,3 @@
-// import Tower from './tower';
-// import JSVector from './vector';
-
 'use strict'
 
 window.addEventListener('load', init, false)
@@ -10,7 +7,7 @@ const FRAME_RATE = 30;
 
 function init() {
     towerTime = new Game();
-    window.setTimeout(animate, 100);
+    window.setTimeout(animate, 500);
 }
 
 function animate() {
@@ -23,6 +20,7 @@ class Game {
         this.towers = [];
         this.creeps = [];
         this.attacks = []; //tower attacks/moves
+        this.grid = [];
 
         this.bits = 1000 // testing
 
@@ -37,8 +35,14 @@ class Game {
         this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false)
         this.context = this.canvas.getContext("2d");
 
+        this.cellSize = 25
+        this.numCols = 30
+        this.numRows = 20
+
         this.tileDivs = this.createTileDivs();
         this.handleDomCallbacks(this.tileDivs);
+        this.loadCreeps(5) //num enemies
+        this.loadGrid()
     }
 
     handleCanvasMouseMoved(event) {
@@ -61,6 +65,8 @@ class Game {
         if(towerTime.canAddTower()){
             towerTime.placeTower();
         }
+        const mouseX = event.offsetX; //test
+        const mouseY = event.offsetY; //test
     }
 
     canAddTower() {
@@ -147,6 +153,27 @@ class Game {
         towerTime.placingTower = false;
     }
 
+    loadGrid() {
+        let count = 1
+        for (let c = 0; c < this.numCols; c++) {
+            this.grid.push([])
+            for (let r = 0; r < this.numRows; r++)
+                this.grid[c].push(new Cell(this, count++, c, r))
+                // if(Math.random()*100 < 10) {
+                //     this.grid[c][r].occupied = true
+                // }
+        }
+        
+    }
+
+    loadCreeps(num) {
+        for (let i = 0; i < num; i++) {
+            const location = new JSVector(this.canvas.width / 2, this.canvas.height / 2)
+            const creep = new Creep(location)
+            this.creeps.push(creep)
+        }
+    }
+
 
     run() {
         this.render();
@@ -156,6 +183,13 @@ class Game {
         for (let i = 0; i < this.attacks.length; i++) {
             this.attacks[i].run()
         }
+        for (let i = 0; i < this.creeps.length; i++) {
+            this.creeps[i].run()
+        }
+        for (let c = 0; c < this.numCols; c++) {
+            for (let r = 0; r < this.numRows; r++)
+                this.grid[c][r].render()
+        }
     }
 
     render() {
@@ -163,5 +197,3 @@ class Game {
     }
 
 }
-
-// export default Game

@@ -7,12 +7,13 @@ class Tower{
         this.cost = cost;
         this.img = img;
         this.atkImg = atkImg;
+        this.cooldown = 500 // add input
+        this.range = 200 //add input
         this.location = new JSVector(0,0);
         this.angle = 0;
         this.visible = false
         this.placed = false
-        this.fired = Date.now()
-        this.cooldown = 500
+        this.lastFired = Date.now()
     }
     
     run(){
@@ -26,8 +27,8 @@ class Tower{
         let dx= this.location.x - towerTime.canvas.mouseX
         let dy= this.location.y - towerTime.canvas.mouseY
         let dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 250 && this.placed && mils - this.fired > this.cooldown) {
-            this.fired = mils
+        if (dist < this.range && this.placed && mils - this.lastFired > this.cooldown) {
+            this.lastFired = mils
             const attackLocation = new JSVector(this.location.x, this.location.y);
             const attack = new Attack(attackLocation, this.angle, this.atkImg);
             towerTime.attacks.push(attack);
