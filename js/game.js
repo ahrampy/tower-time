@@ -3,7 +3,7 @@
 window.addEventListener('load', init, false)
 
 var towerTime;
-const FRAME_RATE = 30;
+// const FRAME_RATE = 30;
 
 function init() {
     towerTime = new Game();
@@ -46,7 +46,8 @@ class Game {
         this.handleDomCallbacks(this.tileDivs);
         this.loadGrid();
         this.findPath()
-        this.loadCreeps(45); //num enemies
+        setTimeout(this.loadCreeps(20), 2000)
+        // this.loadCreeps(45); //num enemies
     }
 
     handleCanvasMouseMoved(event) {
@@ -66,31 +67,23 @@ class Game {
     }
 
     handleCanvasMouseClicked() {
-        if(towerTime.canAddTower()){
+        if (towerTime.placingTower){
             towerTime.placeTower();
-        }
-        const mouseX = event.offsetX; //test
-        const mouseY = event.offsetY; //test
-
-        const gridCol = Math.floor(mouseX/towerTime.cellSize) //test
-        const gridRow = Math.floor(mouseY/towerTime.cellSize) //test
-
-        const cell = towerTime.grid[gridCol][gridRow];
-        cell.occupied = !cell.occupied;
-        
-
-        towerTime.findPath();
-        for (let c = 0; c < this.numCols; c++) {
-            for (let r = 0; r < this.numRows; r++)
-                this.grid[c][r].loadAdjacentCells()
-        }
-    }
-
-    canAddTower() {
-        if (towerTime.placingTower) {
-            return true;
-        } else {
-            return false;
+            const mouseX = event.offsetX; //test
+            const mouseY = event.offsetY; //test
+    
+            const gridCol = Math.floor(mouseX/towerTime.cellSize) //test
+            const gridRow = Math.floor(mouseY/towerTime.cellSize) //test
+    
+            const cell = towerTime.grid[gridCol][gridRow];
+            cell.occupied = !cell.occupied;
+            
+    
+            towerTime.findPath();
+            for (let c = 0; c < this.numCols; c++) {
+                for (let r = 0; r < this.numRows; r++)
+                    this.grid[c][r].loadAdjacentCells()
+            }
         }
     }
 
@@ -139,11 +132,11 @@ class Game {
     }
 
     tileRollOver() {
-        this.style.backgroundColor = '#ffffff';
+        this.style.backgroundColor = 'rgba(57, 255, 47, 0.27)';
     }
 
     tileRollOut() {
-        this.style.backgroundColor = '#d2691e';
+        this.style.backgroundColor = 'rgba(68, 74, 129, 0.57)';
     }
 
     tilePressed() {
@@ -186,7 +179,9 @@ class Game {
         // }
         
         
-        this.goal = this.grid[Math.floor(Math.random() * 20)][Math.floor(Math.random() * 13)];
+        this.goal = this.grid[Math.floor(Math.random() * 5) + 15][Math.floor(Math.random() * 12) + 1];
+        this.start = this.grid[Math.floor(Math.random() * 1) + 1][Math.floor(Math.random() * 10) + 1];
+        this.start.occupied = false
         this.goal.occupied = false
         this.goal.value = 0
     }
@@ -228,11 +223,14 @@ class Game {
 
     loadCreeps(numCreeps) {
         for (let i = 0; i < numCreeps; i++) {
-            const location = new Vector(30, 200)
-            // this.grid[location.x][location.y].occupied = false
-            const creep = new Creep(location)
-            this.creeps.push(creep)
+            setTimeout(this.sendCreep,1500*i)
         }
+    }
+
+    sendCreep() {
+        const location = towerTime.start.center.copy();
+        const creep = new Creep(location)
+        towerTime.creeps.push(creep)
     }
 
     run() {
@@ -249,7 +247,9 @@ class Game {
             this.attacks[i].run()
         }
         for (let i = 0; i < this.creeps.length; i++) {
-            this.creeps[i].run()
+            if (this.creeps[i].alive) {
+                this.creeps[i].run()
+            }
         }
 
     }

@@ -68,17 +68,21 @@ class Cell{
     }
 
     render(){
-        if (this.occupied) {
-            this.context.fillStyle = "#333333"
+        if (this === towerTime.goal) {
+            this.context.fillStyle = "rgba(222, 23, 10, 0.7)"
+        } else if (this === towerTime.start) {
+            this.context.fillStyle = "rgba(68, 74, 110, 0.33)"
+        } else if (this.occupied) {
+            this.context.fillStyle = "rgba(57, 255, 47, 0.27)"
         } else {
-            this.context.fillStyle = "#e9ba55"
+            this.context.fillStyle = "rgba(150, 151, 129, 0.06)"
         }
 
-        this.context.strokeStyle = "#333333"
+        // this.context.strokeStyle = "#333333"
         this.context.fillRect(this.location.x, this.location.y, this.size, this.size)
-        this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
-        this.context.font = "11px Arial"
-        this.context.fillStyle = "#333333"
-        this.context.fillText(this.value, this.location.x + 5, this.location.y + 10)
+        // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
+        // this.context.font = "11px Arial"
+        // this.context.fillStyle = "#333333"
+        // this.context.fillText(this.value, this.location.x + 5, this.location.y + 10)
     }
 }

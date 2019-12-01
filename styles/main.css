@@ -21,7 +21,7 @@ canvas {
 
 #content-box {
     display: flex;
-    width: 750px;
+    width: 800px;
 }
 
 #info {
@@ -30,27 +30,28 @@ canvas {
 }
 
 .info-tile {
+    color: rgb(187, 186, 186);
     display: flex;
     justify-content: center;
-    width: 60px;
+    width: 70px;
     height: 50px;
     padding: 20px;
-    background: chartreuse;
+    background: rgba(68, 74, 110, 0.33);
 }
 
 #towers {
+    color: rgb(187, 186, 186);
     display: flex;
-    width: 310px;
+    width: 330px;
     height: 50px;
     padding: 20px;
-    background: #d2691e;
+    background: rgba(68, 74, 129, 0.57);
 }
 
 #towers > div {
     width: 50px;
     height: 50px;
     margin-left: 20px;
-    color: cyan;
     border-radius: 100%;
 }
 

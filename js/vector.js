@@ -16,8 +16,8 @@ class Vector {
         this.y -= vec.y
     };
 
-    limit(vec) {
-        const len = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
+    normalize() {
+        const len = Math.sqrt(this.x * this.x + this.y * this.y);
         this.x /= len;
         this.y /= len;
         return new Vector(this.x, this.y)
