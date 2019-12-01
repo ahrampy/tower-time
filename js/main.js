@@ -1,1 +1,0 @@
-import Game from './game';

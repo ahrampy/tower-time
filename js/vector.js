@@ -1,6 +1,6 @@
 'use strict'
 
-class JSVector {
+class Vector {
     constructor(x,y) {
         this.x = x;
         this.y = y;
@@ -16,20 +16,25 @@ class JSVector {
         this.y -= vec.y
     };
 
+    limit(vec) {
+        const len = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
+        this.x /= len;
+        this.y /= len;
+        return new Vector(this.x, this.y)
+    }
+
     addGetNew(vec1, vec2) {
         const x = vec1.x + vec2.x;
         const y = vec1.y + vec2.y;
 
-        const newVec = new JSVector(x,y)
-        return newVec;
+        return new Vector(x,y)
     };
 
     subGetNew(vec1, vec2) {
         const x = vec1.x - vec2.x;
         const y = vec1.y - vec2.y;
 
-        const newVec = new JSVector(x,y);
-        return newVec;
+        return new Vector(x,y);
     };
 
     getDir() {
@@ -61,6 +66,8 @@ class JSVector {
         
         return Math.sqrt(x*x + y*y);
     }
-}
 
-// export default JSVector
+    copy() {
+        return new Vector(this.x, this.y);
+    }
+}

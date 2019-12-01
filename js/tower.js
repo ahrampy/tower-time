@@ -1,7 +1,5 @@
 'use strict'
 
-// import JSVector from './vector';
-
 class Tower{
     constructor(cost, img, atkImg) {
         this.cost = cost;
@@ -9,7 +7,7 @@ class Tower{
         this.atkImg = atkImg;
         this.cooldown = 500 // add input
         this.range = 200 //add input
-        this.location = new JSVector(0,0);
+        this.location = new Vector(0,0);
         this.angle = 0;
         this.visible = false
         this.placed = false
@@ -29,7 +27,7 @@ class Tower{
         let dist = Math.sqrt(dx*dx + dy*dy);
         if (dist < this.range && this.placed && mils - this.lastFired > this.cooldown) {
             this.lastFired = mils
-            const attackLocation = new JSVector(this.location.x, this.location.y);
+            const attackLocation = new Vector(this.location.x, this.location.y);
             const attack = new Attack(attackLocation, this.angle, this.atkImg);
             towerTime.attacks.push(attack);
         }
@@ -56,5 +54,3 @@ class Tower{
 
     }
 }
-
-// export default Tower;

@@ -7,7 +7,7 @@ const FRAME_RATE = 30;
 
 function init() {
     towerTime = new Game();
-    window.setTimeout(animate, 500);
+    window.setTimeout(animate, 100);
 }
 
 function animate() {
@@ -22,27 +22,31 @@ class Game {
         this.attacks = []; //tower attacks/moves
         this.grid = [];
 
+        this.start = null;
+        this.goal = null;
+
         this.bits = 1000 // testing
 
         this.placingTower = false;
 
         this.canvas = document.createElement("canvas");
-        this.canvas.width = 750
-        this.canvas.height = 500
+        this.canvas.width = 800
+        this.canvas.height = 520
         document.getElementById('game-canvas').appendChild(this.canvas)
         this.canvas.addEventListener('mousemove', this.handleCanvasMouseMoved, false)
         this.canvas.addEventListener('mouseover', this.handleCanvasMouseOver, false)
         this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false)
         this.context = this.canvas.getContext("2d");
 
-        this.cellSize = 25
-        this.numCols = 30
-        this.numRows = 20
+        this.cellSize = 40
+        this.numCols = 20
+        this.numRows = 13
 
         this.tileDivs = this.createTileDivs();
         this.handleDomCallbacks(this.tileDivs);
-        this.loadCreeps(5) //num enemies
-        this.loadGrid()
+        this.loadGrid();
+        this.findPath()
+        this.loadCreeps(45); //num enemies
     }
 
     handleCanvasMouseMoved(event) {
@@ -67,6 +71,19 @@ class Game {
         }
         const mouseX = event.offsetX; //test
         const mouseY = event.offsetY; //test
+
+        const gridCol = Math.floor(mouseX/towerTime.cellSize) //test
+        const gridRow = Math.floor(mouseY/towerTime.cellSize) //test
+
+        const cell = towerTime.grid[gridCol][gridRow];
+        cell.occupied = !cell.occupied;
+        
+
+        towerTime.findPath();
+        for (let c = 0; c < this.numCols; c++) {
+            for (let r = 0; r < this.numRows; r++)
+                this.grid[c][r].loadAdjacentCells()
+        }
     }
 
     canAddTower() {
@@ -147,7 +164,7 @@ class Game {
     }
 
     placeTower() {
-        towerTime.towers[towerTime.towers.length - 1].location = new JSVector(
+        towerTime.towers[towerTime.towers.length - 1].location = new Vector(
             this.canvas.mouseX, this.canvas.mouseY )
         towerTime.towers[towerTime.towers.length - 1].placed = true;
         towerTime.placingTower = false;
@@ -159,24 +176,72 @@ class Game {
             this.grid.push([])
             for (let r = 0; r < this.numRows; r++)
                 this.grid[c].push(new Cell(this, count++, c, r))
-                // if(Math.random()*100 < 10) {
-                //     this.grid[c][r].occupied = true
-                // }
         }
+        for (let i = 0; i < 50; i++) {
+            this.grid[Math.floor(Math.random() * 20)][Math.floor(Math.random() * 13)].occupied = true
+        }
+        // for (let c = 0; c < this.numCols; c++) {
+        //     for (let r = 0; r < this.numRows; r++)
+        //     this.grid[c][r].loadAdjacentCells()
+        // }
         
+        
+        this.goal = this.grid[Math.floor(Math.random() * 20)][Math.floor(Math.random() * 13)];
+        this.goal.occupied = false
+        this.goal.value = 0
     }
 
-    loadCreeps(num) {
-        for (let i = 0; i < num; i++) {
-            const location = new JSVector(this.canvas.width / 2, this.canvas.height / 2)
+    findPath() {
+        this.grid.forEach(col => {
+            col.forEach(cell => {
+                if (cell !== this.goal) {
+                    cell.value = -1
+                    cell.adjacent = []
+                }
+            })
+        })
+
+        for (let c = 0; c < this.numCols; c++) {
+            for (let r = 0; r < this.numRows; r++)
+                this.grid[c][r].loadAdjacentCells()
+        }
+
+        const checkCells = [this.goal]
+        while (checkCells.length) {
+            const current = checkCells.shift();
+            for (let i = 0; i < current.adjacent.length; i++) {  
+                const cell = current.adjacent[i] 
+                if(cell.value === -1){
+                    checkCells.push(cell);
+                    cell.value = current.value + 1;
+                }             
+            }
+        }
+        for (let col = 0; col < this.grid.length; col++) {
+            for (let row = 0; row < this.grid[col].length; row++) {
+                if (!this.grid[col][row].occupied) {
+                    this.grid[col][row].getShortestRoute()
+                }
+            }
+        }
+    }
+
+    loadCreeps(numCreeps) {
+        for (let i = 0; i < numCreeps; i++) {
+            const location = new Vector(30, 200)
+            // this.grid[location.x][location.y].occupied = false
             const creep = new Creep(location)
             this.creeps.push(creep)
         }
     }
 
-
     run() {
+
         this.render();
+        for (let c = 0; c < this.numCols; c++) {
+            for (let r = 0; r < this.numRows; r++)
+            this.grid[c][r].run()
+        }
         for (let i = 0; i < this.towers.length; i++) {
             this.towers[i].run()
         }
@@ -186,14 +251,11 @@ class Game {
         for (let i = 0; i < this.creeps.length; i++) {
             this.creeps[i].run()
         }
-        for (let c = 0; c < this.numCols; c++) {
-            for (let r = 0; r < this.numRows; r++)
-                this.grid[c][r].render()
-        }
+
     }
 
     render() {
-        this.context.clearRect(0, 0, 750, 500)
+        this.context.clearRect(0, 0, 800, 520)
     }
 
 }
