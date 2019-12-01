@@ -6,6 +6,8 @@ class Attack {
         this.angle = angle;
         this.attackImg = attackImg;
         this.speed = 5;
+        this.hit = false;
+        this.damage = 25;
     }
 
     run() {

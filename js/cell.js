@@ -8,14 +8,16 @@ class Cell{
         this.game = game;
         this.context = game.context;
         this.size = game.cellSize;
-        this.occupied = false;
         this.col = col;
         this.row = row;
-
+        
         this.adjacent = [];
         this.value = -1;
         this.smallestAdjacent = null;
         this.smallestAdjacentIndex = 0;
+        
+        this.occupied = false;
+        this.attacked = false
     }
 
     loadAdjacentCells() {
@@ -65,6 +67,7 @@ class Cell{
 
     run(){
         this.render();
+        setTimeout(() => (this.attacked = false), 500)
     }
 
     render(){
@@ -74,12 +77,14 @@ class Cell{
             this.context.fillStyle = "rgba(68, 74, 110, 0.33)"
         } else if (this.occupied) {
             this.context.fillStyle = "rgba(57, 255, 47, 0.27)"
+        // } else if (this.attacked) {
+            // this.context.fillStyle = "rgb(206, 202, 202)"
         } else {
             this.context.fillStyle = "rgba(150, 151, 129, 0.06)"
         }
 
-        // this.context.strokeStyle = "#333333"
         this.context.fillRect(this.location.x, this.location.y, this.size, this.size)
+        // this.context.strokeStyle = "#333333"
         // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
         // this.context.font = "11px Arial"
         // this.context.fillStyle = "#333333"

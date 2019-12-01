@@ -5,12 +5,14 @@ class Creep {
         // this.currentCell = this.game.grid[0][1];
         // this.location = this.game.grid[0][8].center.copy();
         this.location = location
+        this.currentCell = null;
         // this.velocity = new Vector(Math.random() * 2 - 1, Math.random() * 2 - 1);
         this.velocity = new Vector(0,0);
         this.acceleration = new Vector(0, .0015);
         this.radius = 12;
         this.color = "rgb(200, 200, 200)" //add to input
-        this.health = 500 //add to input
+        this.maxHealth = 500 //add to input
+        this.health = this.maxHealth;
         this.alive = true;
     }
 
@@ -36,7 +38,15 @@ class Creep {
     }
 
     checkHit() {
+        if (this.currentCell && this.currentCell.attacked) {
+            this.health -= 10;
+        }
+    }
 
+    checkAlive() {
+        if (this.health === 0) {
+            this.alive = false;
+        }
     }
 
     move() {
@@ -49,9 +59,9 @@ class Creep {
             return
         }
         if (towerTime.grid[col][row] && !towerTime.grid[col][row].occupied) {
-            let currentCell = towerTime.grid[col][row];
-            let nextCell = currentCell.smallestAdjacent;
-            this.acceleration = this.acceleration.subGetNew(nextCell.center, currentCell.center);
+            this.currentCell = towerTime.grid[col][row];
+            let nextCell = this.currentCell.smallestAdjacent;
+            this.acceleration = this.acceleration.subGetNew(nextCell.center, this.currentCell.center);
             this.acceleration.setMag(0.05);
         }
 
@@ -66,19 +76,29 @@ class Creep {
     }
 
     update() {
+        this.move();
         this.checkWalls();
         this.checkEdges();
         this.checkHit();
-        this.move();
+        this.checkAlive();
     }
 
     render() {
         const context = towerTime.context;
         context.beginPath();
         context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
-        context.strokeStyle = "#333";
+        context.strokeStyle = "rgba(51, 51, 51, 0.5)";
         context.stroke();
         context.fillStyle = this.color;
+        if (this.health < this.maxHealth && this.health > this.maxHealth*0.75) {
+            context.fillStyle = "rgba(206, 182, 10, 0.5)"
+        } else if (this.health < this.maxHealth * 0.75 && this.health > this.maxHealth * 0.5) {
+            context.fillStyle = "rgba(237, 157, 10, 0.5)"
+        } else if (this.health < this.maxHealth * 0.5 && this.health > this.maxHealth * 0.25) {
+            context.fillStyle = "rgba(246, 90, 20, 0.5)"
+        } else if (this.health < this.maxHealth * 0.25) {
+            context.fillStyle = "rgba(246, 7, 0, 0.5)"
+        }
         context.fill();
     }
 

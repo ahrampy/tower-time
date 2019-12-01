@@ -76,8 +76,7 @@ class Game {
             const gridRow = Math.floor(mouseY/towerTime.cellSize) //test
     
             const cell = towerTime.grid[gridCol][gridRow];
-            cell.occupied = !cell.occupied;
-            
+            cell.occupied = true; 
     
             towerTime.findPath();
             for (let c = 0; c < this.numCols; c++) {
@@ -86,10 +85,6 @@ class Game {
             }
         }
     }
-
-    // hideElementImg() {
-    //     this.style.display = "none";
-    // }
 
     createTileDivs() {
         const tileDivs = [];
@@ -233,9 +228,22 @@ class Game {
         towerTime.creeps.push(creep)
     }
 
+    gridAttacks() {
+        for (let i = 0; i < this.attacks.length; i++) {
+            const attack = this.attacks[i].location
+            const gridCol = Math.floor(attack.x / towerTime.cellSize)
+            const gridRow = Math.floor(attack.y / towerTime.cellSize)
+            if (towerTime.grid[gridCol] && towerTime.grid[gridCol][gridRow]) {
+                const cell = towerTime.grid[gridCol][gridRow];
+                cell.attacked = true
+            }
+        }
+    }
+
     run() {
 
         this.render();
+        this.gridAttacks()
         for (let c = 0; c < this.numCols; c++) {
             for (let r = 0; r < this.numRows; r++)
             this.grid[c][r].run()
@@ -244,14 +252,15 @@ class Game {
             this.towers[i].run()
         }
         for (let i = 0; i < this.attacks.length; i++) {
-            this.attacks[i].run()
+            if (!this.attacks[i].hit) {
+                this.attacks[i].run()
+            }
         }
         for (let i = 0; i < this.creeps.length; i++) {
             if (this.creeps[i].alive) {
                 this.creeps[i].run()
             }
         }
-
     }
 
     render() {
