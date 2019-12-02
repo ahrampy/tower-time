@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Canvas based tower defense-style game.",
   "main": "index.js",
-  "scripts": {
-    "start": "webpack --watch --mode=development"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahrampy/tower-time.git"
