@@ -15,6 +15,31 @@ body {
     color: rgb(187, 186, 186);
 }
 
+#game-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 30px;
+    height: 55px;
+    width: 800px;
+    background: rgba(68, 74, 110, 0.33);
+}
+
+#start-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 120px;
+    background: rgba(68, 74, 110, 0.815);
+    color: rgb(187, 186, 186);
+}
+
+#start-button > h3 {
+    padding: 0px;
+    margin: 0px;
+}
+
 canvas {
     background: rgb(187, 186, 186);
 }
@@ -34,9 +59,9 @@ canvas {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 70px;
+    width: 50px;
     height: 50px;
-    padding: 20px;
+    padding: 30px 25px;
     background: rgba(68, 74, 110, 0.33);
 }
 
@@ -54,22 +79,27 @@ canvas {
 #towers {
     color: rgb(187, 186, 186);
     display: flex;
-    width: 330px;
+    width: 360px;
     height: 50px;
     padding: 20px;
-    background: rgba(68, 74, 129, 0.57);
+    padding-bottom: 40px;
+    background: rgba(68, 74, 110, 0.33);
 }
 
 #towers > div {
     width: 50px;
     height: 50px;
-    margin-left: 24px;
+    margin: 0px 20px;
     border-radius: 100%;
 }
 
 #towers > div > img {
+    padding-top: -15px;
     width: 50px;
     height: 50px;
-        color: rgb(206, 202, 202);
+}
 
+#towers p {
+    margin: 0px;
+    text-align: center;
 }

@@ -26,7 +26,7 @@ class Game {
         this.lives = 20
         this.bits = 400
         this.score = 0
-        this.wave = 0
+        this.wave = 0 // test
 
         // load canvas
         this.canvas = document.createElement("canvas");
@@ -39,16 +39,17 @@ class Game {
         this.context = this.canvas.getContext("2d");
 
         // grid specs
-        this.numBlocks = 30;
+        this.numBlocks = 50;
         this.cellSize = 40;
         this.numCols = 20;
         this.numRows = 13;
         this.start = null;
         this.goal = null;
 
-        // load towers
+        // load buttons
         this.tileDivs = this.createTileDivs();
         this.handleDomCallbacks(this.tileDivs);
+        this.handleButtonClick();
 
         // path finding
         this.loadGrid();
@@ -57,9 +58,19 @@ class Game {
 
         // limit 1
         this.placingTower = false;
+    }
 
-        // test wave
-        setTimeout(this.loadCreeps(20), 2000);
+    handleButtonClick() {
+        const button = document.getElementById("start-button");
+        button.addEventListener('click', this.buttonClick, false );
+    }
+
+    buttonClick() {
+        this.innerText = "Next Wave";
+        towerTime.wave += 1;
+        this.style.backgroundColor = "rgba(68, 74, 110, 0.33)"
+        setTimeout(() => towerTime.loadCreeps(20), 500);
+        setTimeout(() => this.style.backgroundColor = "", 100);
     }
 
     handleCanvasMouseMoved(event) {
@@ -125,12 +136,13 @@ class Game {
         const tileDivs = [];
         for (let i = 0; i < 4; i++) {
             const tileDiv = document.createElement("div");
+
             const tileImgPath = "images/dot.png"
-            const lilImgPath = "images/lil-dot.png"
+            const boardImgPath = "images/lil-dot.png"
             const attackImgPath = "images/attack-dot.png"
 
             tileDiv.tileDivImg = new Image();
-            tileDiv.tileDivImg.src = lilImgPath;
+            tileDiv.tileDivImg.src = boardImgPath;
             // tileDiv.tileDivImg = addEventListener('load', this.hideElementImg, false);
 
             tileDiv.tileDivAttackImg = new Image();
@@ -139,13 +151,25 @@ class Game {
 
             document.getElementById('towers').appendChild(tileDiv);
 
-            tileDiv.cost = 10 * (i + 1)
+            tileDiv.cost = 15 * (i + 1)
             tileDiv.id = i
             tileDivs.push(tileDiv);
             
             const tileImg = new Image();
             tileImg.src = tileImgPath;
             tileDiv.appendChild(tileImg)
+
+            const towerName = document.createElement("p");
+            if (i === 0) {
+                towerName.innerText = "15 b"
+            } else if (i=== 1) {
+                towerName.innerText = "30 b"
+            } else if (i === 2) {
+                towerName.innerText = "45 b"
+            } else if (i === 3) {
+                towerName.innerText = "60 b"
+            }
+            tileDiv.appendChild(towerName)
             
         }
         return tileDivs;
@@ -162,11 +186,19 @@ class Game {
     }
 
     tileRollOver() {
-        this.style.backgroundColor = 'rgba(57, 255, 47, 0.27)';
+        if (this.id === "0") {
+            this.style.backgroundColor = 'rgba(116, 206, 228, 0.5)';
+        } else if (this.id === "1"){
+            this.style.backgroundColor = 'rgba(111, 193, 145, 0.5)';
+        } else if (this.id === "2"){
+            this.style.backgroundColor = 'rgba(236, 119, 75, 0.5)';
+        } else if (this.id === "3") {
+            this.style.backgroundColor = 'rgba(237, 191, 71, 0.5)';
+        } 
     }
 
     tileRollOut() {
-        this.style.backgroundColor = 'rgba(68, 74, 129, 0.57)';
+        this.style.backgroundColor = 'rgba(68, 74, 110, 0.33)';
     }
 
     tilePressed() {
@@ -182,7 +214,10 @@ class Game {
     }
 
     createTower(tileDiv) {
-        const tower = new Tower(tileDiv.cost, tileDiv.tileDivImg, tileDiv.tileDivAttackImg);
+        const tower = new Tower(
+            tileDiv.cost,
+            tileDiv.tileDivImg,
+            tileDiv.tileDivAttackImg);
         this.towers.push(tower);
     }
 
