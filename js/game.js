@@ -3,7 +3,7 @@
 window.addEventListener('load', init, false)
 
 var towerTime;
-// const FRAME_RATE = 30;
+const FRAME_RATE = 30;
 
 function init() {
     towerTime = new Game();
@@ -52,6 +52,7 @@ class Game {
         // path finding
         this.loadGrid();
         this.findPath()
+        this.validated = false;
 
         // limit 1
         this.placingTower = false;
@@ -78,7 +79,6 @@ class Game {
 
     handleCanvasMouseClicked() {
         if (towerTime.placingTower){
-            towerTime.placeTower();
             const mouseX = event.offsetX; //test
             const mouseY = event.offsetY; //test
     
@@ -86,12 +86,36 @@ class Game {
             const gridRow = Math.floor(mouseY/towerTime.cellSize) //test
     
             const cell = towerTime.grid[gridCol][gridRow];
-            cell.occupied = true; 
-    
-            towerTime.findPath();
-            for (let c = 0; c < this.numCols; c++) {
-                for (let r = 0; r < this.numRows; r++)
-                    this.grid[c][r].loadAdjacentCells()
+
+            if (!cell.occupied && cell !== towerTime.goal && cell !== towerTime.start) {
+                cell.occupied = true; 
+
+                towerTime.findPath();
+                for (let c = 0; c < towerTime.numCols; c++) {
+                    for (let r = 0; r < towerTime.numRows; r++)
+                        towerTime.grid[c][r].loadAdjacentCells()
+                }
+                
+                let checkBlock = false;
+
+                for (let c = 0; c < towerTime.numCols; c++) {
+                    for (let r = 0; r < towerTime.numRows; r++)
+                        if (towerTime.grid[c][r].value === -1 && !towerTime.grid[c][r].occupied) {
+                            checkBlock = true;
+                        }
+                }
+
+                if (checkBlock) {
+                    cell.occupied = false
+                    towerTime.findPath();
+                    for (let c = 0; c < towerTime.numCols; c++) {
+                        for (let r = 0; r < towerTime.numRows; r++)
+                            towerTime.grid[c][r].loadAdjacentCells()
+                    }
+                } else {
+                    towerTime.placeTower(cell.center);
+                }
+
             }
         }
     }
@@ -161,9 +185,9 @@ class Game {
         this.towers.push(tower);
     }
 
-    placeTower() {
+    placeTower(location) {
         const tower = towerTime.towers[towerTime.towers.length - 1]
-        tower.location = new Vector( this.canvas.mouseX, this.canvas.mouseY )
+        tower.location = new Vector( location.x, location.y )
         this.bits -= tower.cost
         tower.placed = true;
         towerTime.placingTower = false;
@@ -180,9 +204,6 @@ class Game {
                 value.style.fontSize = '10pt';
                 value.innerHTML = this.bits;
                 info.appendChild(value)
-                // if (this.bits < 0) {
-                //     this.bits == 0;
-                // }
             } else if (info.innerHTML.indexOf('Lives') != -1) {
                 info.innerHTML = '<h4>Lives</h4> <br/>';
                 const value = document.createElement('p');
@@ -207,48 +228,54 @@ class Game {
     }
 
     loadGrid() {
-        let count = 1
+        let id = 1;
+
         for (let c = 0; c < this.numCols; c++) {
-            this.grid.push([])
+            this.grid.push([]);
             for (let r = 0; r < this.numRows; r++)
-                this.grid[c].push(new Cell(this, count++, c, r))
+                this.grid[c].push(new Cell(this, id++, c, r));
         }
+
+        this.initBlocks();
+    }
+
+    initBlocks() {
+        for (let c = 0; c < this.numCols; c++) {
+            for (let r = 0; r < this.numRows; r++)
+                this.grid[c][r].occupied = false;
+        }
+
         for (let i = 0; i < 50; i++) {
-            this.grid[Math.floor(Math.random() * 20)][Math.floor(Math.random() * 13)].occupied = true
+            this.grid[Math.floor(Math.random() * 20)][Math.floor(Math.random() * 13)].occupied = true;
         }
-        // for (let c = 0; c < this.numCols; c++) {
-        //     for (let r = 0; r < this.numRows; r++)
-        //     this.grid[c][r].loadAdjacentCells()
-        // }
-        
-        
+
         this.goal = this.grid[Math.floor(Math.random() * 5) + 15][Math.floor(Math.random() * 12) + 1];
         this.start = this.grid[Math.floor(Math.random() * 1) + 1][Math.floor(Math.random() * 10) + 1];
-        this.start.occupied = false
-        this.goal.occupied = false
-        this.goal.value = 0
+        this.start.occupied = false;
+        this.goal.occupied = false;
+        this.goal.value = 0;
     }
 
     findPath() {
         this.grid.forEach(col => {
             col.forEach(cell => {
                 if (cell !== this.goal) {
-                    cell.value = -1
-                    cell.adjacent = []
+                    cell.value = -1;
+                    cell.adjacent = [];
                 }
             })
         })
 
         for (let c = 0; c < this.numCols; c++) {
             for (let r = 0; r < this.numRows; r++)
-                this.grid[c][r].loadAdjacentCells()
+                this.grid[c][r].loadAdjacentCells();
         }
 
         const checkCells = [this.goal]
         while (checkCells.length) {
             const current = checkCells.shift();
             for (let i = 0; i < current.adjacent.length; i++) {  
-                const cell = current.adjacent[i] 
+                const cell = current.adjacent[i];
                 if(cell.value === -1){
                     checkCells.push(cell);
                     cell.value = current.value + 1;
@@ -261,6 +288,28 @@ class Game {
                     this.grid[col][row].getShortestRoute()
                 }
             }
+        }
+        if (!this.validated) {
+            this.ensureValidMap();
+        }
+    }
+
+    ensureValidMap() {
+        
+        let checkBlock = false;
+
+        for (let c = 0; c < this.numCols; c++) {
+            for (let r = 0; r < this.numRows; r++)
+                if (this.grid[c][r].value === -1 && !this.grid[c][r].occupied) {
+                    checkBlock = true;
+                }
+        }
+
+        if (checkBlock) {
+            this.initBlocks();
+            this.findPath();
+        } else {
+            this.validated = true
         }
     }
 

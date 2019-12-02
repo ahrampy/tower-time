@@ -86,7 +86,7 @@ class Cell{
         this.context.fillRect(this.location.x, this.location.y, this.size, this.size)
         // this.context.strokeStyle = "#333333"
         // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
-        // this.context.font = "11px Arial"
+        // this.context.font = "15px"
         // this.context.fillStyle = "#333333"
         // this.context.fillText(this.value, this.location.x + 5, this.location.y + 10)
     }
