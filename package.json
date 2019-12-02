@@ -1,7 +1,7 @@
 {
   "name": "tower-time-master",
   "version": "1.0.0",
-  "description": "Canvas based tower defense-style game.",
+  "description": "Canvas tower defense game.",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -13,9 +13,5 @@
   "bugs": {
     "url": "https://github.com/ahrampy/tower-time/issues"
   },
-  "homepage": "https://github.com/ahrampy/tower-time#readme",
-  "dependencies": {
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
-  }
+  "homepage": "https://github.com/ahrampy/tower-time#readme"
 }
