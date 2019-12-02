@@ -32,11 +32,23 @@ canvas {
 .info-tile {
     color: rgb(187, 186, 186);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     width: 70px;
     height: 50px;
     padding: 20px;
     background: rgba(68, 74, 110, 0.33);
+}
+
+.info-tile h4 {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: -5px;
+}
+
+.info-tile p {
+    text-align: center;
+    margin-top: -5px;
 }
 
 #towers {

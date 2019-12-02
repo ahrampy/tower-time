@@ -19,16 +19,16 @@ class Game {
     constructor() {
         this.towers = [];
         this.creeps = [];
-        this.attacks = []; //tower attacks/moves
+        this.attacks = [];
         this.grid = [];
 
-        this.start = null;
-        this.goal = null;
+        // game stats
+        this.lives = 20
+        this.bits = 400
+        this.score = 0
+        this.wave = 0
 
-        this.bits = 1000 // testing
-
-        this.placingTower = false;
-
+        // load canvas
         this.canvas = document.createElement("canvas");
         this.canvas.width = 800
         this.canvas.height = 520
@@ -38,16 +38,26 @@ class Game {
         this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false)
         this.context = this.canvas.getContext("2d");
 
+        // grid specs
         this.cellSize = 40
         this.numCols = 20
         this.numRows = 13
+        this.start = null;
+        this.goal = null;
 
+        // load towers
         this.tileDivs = this.createTileDivs();
         this.handleDomCallbacks(this.tileDivs);
+
+        // path finding
         this.loadGrid();
         this.findPath()
+
+        // limit 1
+        this.placingTower = false;
+
+        // test wave
         setTimeout(this.loadCreeps(20), 2000)
-        // this.loadCreeps(45); //num enemies
     }
 
     handleCanvasMouseMoved(event) {
@@ -152,10 +162,48 @@ class Game {
     }
 
     placeTower() {
-        towerTime.towers[towerTime.towers.length - 1].location = new Vector(
-            this.canvas.mouseX, this.canvas.mouseY )
-        towerTime.towers[towerTime.towers.length - 1].placed = true;
+        const tower = towerTime.towers[towerTime.towers.length - 1]
+        tower.location = new Vector( this.canvas.mouseX, this.canvas.mouseY )
+        this.bits -= tower.cost
+        tower.placed = true;
         towerTime.placingTower = false;
+    }
+
+    updateInfo() {
+        let infoTiles = document.getElementById('info').getElementsByClassName('info-tile');
+        for (let i = 0; i < infoTiles.length; i++) {
+            let info = infoTiles[i];
+
+            if (info.innerHTML.indexOf('Bits') != -1) {
+                info.innerHTML = '<h4>Bits</h4> <br/>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.bits;
+                info.appendChild(value)
+                // if (this.bits < 0) {
+                //     this.bits == 0;
+                // }
+            } else if (info.innerHTML.indexOf('Lives') != -1) {
+                info.innerHTML = '<h4>Lives</h4> <br/>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.lives;
+                info.appendChild(value);
+             } else if (info.innerHTML.indexOf('Score') != -1) {
+                info.innerHTML = '<h4>Score</h4> <br/>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.score;
+                info.appendChild(value);
+            } else if (info.innerHTML.indexOf('Wave') != -1) {
+                info.innerHTML = '<h4>Wave</h4> <br/>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.wave;
+                info.appendChild(value);
+            }
+
+        }
     }
 
     loadGrid() {
@@ -230,12 +278,17 @@ class Game {
 
     gridAttacks() {
         for (let i = 0; i < this.attacks.length; i++) {
-            const attack = this.attacks[i].location
-            const gridCol = Math.floor(attack.x / towerTime.cellSize)
-            const gridRow = Math.floor(attack.y / towerTime.cellSize)
+            const attack = this.attacks[i]
+            const gridCol = Math.floor(attack.location.x / towerTime.cellSize)
+            const gridRow = Math.floor(attack.location.y / towerTime.cellSize)
             if (towerTime.grid[gridCol] && towerTime.grid[gridCol][gridRow]) {
                 const cell = towerTime.grid[gridCol][gridRow];
                 cell.attacked = true
+                for (let i = 0; i < this.creeps.length; i++) {
+                    if (this.creeps[i].curretCell === cell ) {
+                        attack.hit = true;
+                    }
+                }
             }
         }
     }
@@ -243,7 +296,8 @@ class Game {
     run() {
 
         this.render();
-        this.gridAttacks()
+        this.updateInfo();
+        this.gridAttacks();
         for (let c = 0; c < this.numCols; c++) {
             for (let r = 0; r < this.numRows; r++)
             this.grid[c][r].run()

@@ -2,16 +2,18 @@
 
 class Creep {
     constructor(location) {
-        // this.currentCell = this.game.grid[0][1];
-        // this.location = this.game.grid[0][8].center.copy();
+
         this.location = location
         this.currentCell = null;
-        // this.velocity = new Vector(Math.random() * 2 - 1, Math.random() * 2 - 1);
         this.velocity = new Vector(0,0);
         this.acceleration = new Vector(0, .0015);
         this.radius = 12;
+
         this.color = "rgb(200, 200, 200)" //add to input
         this.maxHealth = 500 //add to input
+        this.worth = 5 //add to input
+        this.pointValue = 100 //add to input
+
         this.health = this.maxHealth;
         this.alive = true;
     }
@@ -45,6 +47,8 @@ class Creep {
 
     checkAlive() {
         if (this.health === 0) {
+            towerTime.bits += this.worth;
+            towerTime.score += this.pointValue;
             this.alive = false;
         }
     }
@@ -55,7 +59,7 @@ class Creep {
 
         if (towerTime.grid[col][row] === towerTime.goal) {
             this.alive = false;
-            // take life away
+            towerTime.lives -= 1;
             return
         }
         if (towerTime.grid[col][row] && !towerTime.grid[col][row].occupied) {
