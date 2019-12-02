@@ -93,7 +93,6 @@ class Creep {
         context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
         context.strokeStyle = "rgba(51, 51, 51, 0.5)";
         context.stroke();
-        context.fillStyle = this.color;
         if (this.health < this.maxHealth && this.health > this.maxHealth*0.75) {
             context.fillStyle = "rgba(206, 182, 10, 0.5)"
         } else if (this.health < this.maxHealth * 0.75 && this.health > this.maxHealth * 0.5) {
@@ -101,7 +100,9 @@ class Creep {
         } else if (this.health < this.maxHealth * 0.5 && this.health > this.maxHealth * 0.25) {
             context.fillStyle = "rgba(246, 90, 20, 0.5)"
         } else if (this.health < this.maxHealth * 0.25) {
-            context.fillStyle = "rgba(246, 7, 0, 0.5)"
+            context.fillStyle = "rgba(222, 23, 10, 0.5)"
+        } else {
+            context.fillStyle = this.color;
         }
         context.fill();
     }

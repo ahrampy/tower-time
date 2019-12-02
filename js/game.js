@@ -39,9 +39,10 @@ class Game {
         this.context = this.canvas.getContext("2d");
 
         // grid specs
-        this.cellSize = 40
-        this.numCols = 20
-        this.numRows = 13
+        this.numBlocks = 30;
+        this.cellSize = 40;
+        this.numCols = 20;
+        this.numRows = 13;
         this.start = null;
         this.goal = null;
 
@@ -51,14 +52,14 @@ class Game {
 
         // path finding
         this.loadGrid();
-        this.findPath()
+        this.findPath();
         this.validated = false;
 
         // limit 1
         this.placingTower = false;
 
         // test wave
-        setTimeout(this.loadCreeps(20), 2000)
+        setTimeout(this.loadCreeps(20), 2000);
     }
 
     handleCanvasMouseMoved(event) {
@@ -245,7 +246,7 @@ class Game {
                 this.grid[c][r].occupied = false;
         }
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < this.numBlocks; i++) {
             this.grid[Math.floor(Math.random() * 20)][Math.floor(Math.random() * 13)].occupied = true;
         }
 
