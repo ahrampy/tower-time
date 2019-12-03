@@ -29,19 +29,19 @@ class Attack {
         const context = towerTime.context;
         context.save();
         
-            context.beginPath();
-            context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
+            // context.beginPath();
+            // context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
 
-            if (this.type === 0) {
-                context.fillStyle = "rgba(111, 193, 145, 0.5)"
-            } else if (this.type === 1) {
-                context.fillStyle = "rgba(116, 206, 228, 0.5)"
-            } else if (this.type === 2) {
-                context.fillStyle = "rgba(236, 119, 75, 0.5)"
-            } else if (this.type === 3) {
-                context.fillStyle = "rgba(237, 191, 71, 0.5)"
-            }
-            context.fill();
+            // if (this.type === 0) {
+            //     context.fillStyle = "rgba(111, 193, 145, 0.5)"
+            // } else if (this.type === 1) {
+            //     context.fillStyle = "rgba(116, 206, 228, 0.5)"
+            // } else if (this.type === 2) {
+            //     context.fillStyle = "rgba(236, 119, 75, 0.5)"
+            // } else if (this.type === 3) {
+            //     context.fillStyle = "rgba(237, 191, 71, 0.5)"
+            // }
+            // context.fill();
 
             context.translate(this.location.x, this.location.y);
             context.rotate(this.angle);

@@ -90,22 +90,24 @@ class Game {
     }
 
     handleCanvasMouseClicked() {
+        const mouseX = event.offsetX;
+        const mouseY = event.offsetY;
+
+        const gridCol = Math.floor(mouseX/towerTime.cellSize);
+        const gridRow = Math.floor(mouseY/towerTime.cellSize);
+
+        const cell = towerTime.grid[gridCol][gridRow];
+
         if (towerTime.placingTower){
-            const mouseX = event.offsetX; //test
-            const mouseY = event.offsetY; //test
-    
-            const gridCol = Math.floor(mouseX/towerTime.cellSize) //test
-            const gridRow = Math.floor(mouseY/towerTime.cellSize) //test
-    
-            const cell = towerTime.grid[gridCol][gridRow];
 
             if (!cell.occupied && cell !== towerTime.goal && cell !== towerTime.start) {
                 cell.occupied = true; 
 
                 towerTime.findPath();
                 for (let c = 0; c < towerTime.numCols; c++) {
-                    for (let r = 0; r < towerTime.numRows; r++)
-                        towerTime.grid[c][r].loadAdjacentCells()
+                    for (let r = 0; r < towerTime.numRows; r++) {
+                        towerTime.grid[c][r].loadAdjacentCells();
+                    }
                 }
                 
                 let checkBlock = false;
@@ -128,6 +130,16 @@ class Game {
                     towerTime.placeTower(cell.center);
                 }
 
+            }
+        } else {
+            for (let i = 0; i < towerTime.towers.length; i++) {
+                let checkCell = towerTime.towers[i]
+                if (checkCell.location.x === cell.center.x
+                    && checkCell.location.y === cell.center.y) {
+                    checkCell.selected = !checkCell.selected;
+                } else {
+                    checkCell.selected = false;
+                }
             }
         }
     }
@@ -152,17 +164,17 @@ class Game {
                 damage = 10;
             } else if (i === 1) {
                 type = 1; // water
-                range = 200;
+                range = 150;
                 cooldown = 500;
                 damage = 5;
             } else if (i === 2) {
                 type = 2; // fire
-                range = 250;
+                range = 200;
                 cooldown = 2000;
                 damage = 20;
             } else if (i === 3) {
                 type = 3; // air
-                range = 150;
+                range = 75;
                 cooldown = 3000;
                 damage = 45;
             }

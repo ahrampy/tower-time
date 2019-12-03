@@ -2,6 +2,7 @@
 
 class Tower{
     constructor(cost, img, atkImg, type, range, damage, cooldown) {
+        // images
         this.img = img;
         this.atkImg = atkImg;
 
@@ -22,6 +23,9 @@ class Tower{
         this.angle = 0;
         this.target = null;
         this.follow = true;
+
+        //display
+        this.selected = false;
 
         // init
         this.visible = false
@@ -78,19 +82,18 @@ class Tower{
     render() {
         const context = towerTime.context;
         context.save()
-            context.translate(this.location.x, this.location.y)
-            context.rotate(this.angle);
             if (this.visible) {
-                context.drawImage(this.img, -this.img.width/2, -this.img.height/2);
-                if (!this.placed) {
+                if (!this.placed || this.selected) {
                     context.beginPath();
                     context.arc(this.location.x, this.location.y, this.range, 0, Math.PI * 2);
-                    context.fillStyle = "rgba(111, 193, 145, 0.5)"
-                    debugger;
+                    context.fillStyle = "rgba(200, 200, 200, 0.5)"
                     context.fill();
                 }
+                context.translate(this.location.x, this.location.y)
+                context.rotate(this.angle);
+                context.drawImage(this.img, -this.img.width/2, -this.img.height/2);
             }
-
+            
         context.restore()
     }
 }
