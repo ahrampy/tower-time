@@ -1,19 +1,31 @@
 'use strict'
 
 class Tower{
-    constructor(cost, img, atkImg) {
-        this.cost = cost;
+    constructor(cost, img, atkImg, type, range, damage, cooldown) {
         this.img = img;
         this.atkImg = atkImg;
-        this.cooldown = 500 // add input
-        this.range = 200 //add input
+
+        // stats
+        this.cost = cost;
+        this.type = type;
+        this.range = range;
+        this.cooldown = cooldown;
+        this.damage = damage;
+
+        // location
         this.location = new Vector(0,0);
+        
+        // attack time
+        this.lastFired = Date.now();
+        
+        // direction
         this.angle = 0;
-        this.visible = false
-        this.placed = false
-        this.lastFired = Date.now()
         this.target = null;
         this.follow = true;
+
+        // init
+        this.visible = false
+        this.placed = false
     }
     
     run(){
@@ -49,7 +61,8 @@ class Tower{
             && towerTime.creeps.length !== 0 && !this.follow) {
             this.lastFired = mils
             const attackLocation = new Vector(this.location.x, this.location.y);
-            const attack = new Attack(attackLocation, this.angle, this.atkImg);
+            const attack = new Attack(
+                attackLocation, this.angle, this.atkImg, this.type, this.damage);
             towerTime.attacks.push(attack);
         }
     }
@@ -69,7 +82,15 @@ class Tower{
             context.rotate(this.angle);
             if (this.visible) {
                 context.drawImage(this.img, -this.img.width/2, -this.img.height/2);
+                if (!this.placed) {
+                    context.beginPath();
+                    context.arc(this.location.x, this.location.y, this.range, 0, Math.PI * 2);
+                    context.fillStyle = "rgba(111, 193, 145, 0.5)"
+                    debugger;
+                    context.fill();
+                }
             }
+
         context.restore()
     }
 }

@@ -10,7 +10,7 @@ class Creep {
         this.radius = 12;
 
         this.color = "rgb(200, 200, 200)" //add to input
-        this.maxHealth = 500 //add to input
+        this.maxHealth = (towerTime.wave * 500) //add to input
         this.worth = 5 //add to input
         this.pointValue = 100 //add to input
 
@@ -42,6 +42,12 @@ class Creep {
     checkHit() {
         if (this.currentCell && this.currentCell.attacked) {
             this.health -= 10;
+            for (let i = 0; i < towerTime.attacks.length; i++) {
+                let attack = towerTime.attacks[i];
+                if (attack.location) {
+                    
+                }
+            }
         }
     }
 

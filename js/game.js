@@ -3,7 +3,7 @@
 window.addEventListener('load', init, false)
 
 var towerTime;
-const FRAME_RATE = 30;
+var FRAME_RATE = 100;
 
 function init() {
     towerTime = new Game();
@@ -24,7 +24,7 @@ class Game {
 
         // game stats
         this.lives = 20
-        this.bits = 400
+        this.bits = 200
         this.score = 0
         this.wave = 0 // test
 
@@ -52,9 +52,9 @@ class Game {
         this.handleButtonClick();
 
         // path finding
+        this.validated = false;
         this.loadGrid();
         this.findPath();
-        this.validated = false;
 
         // limit 1
         this.placingTower = false;
@@ -137,9 +137,36 @@ class Game {
         for (let i = 0; i < 4; i++) {
             const tileDiv = document.createElement("div");
 
-            const tileImgPath = "images/dot.png"
-            const boardImgPath = "images/lil-dot.png"
-            const attackImgPath = "images/attack-dot.png"
+            let tileImgPath = "images/dot.png"
+            let boardImgPath = "images/lil-dot.png"
+            let attackImgPath = "images/attack-dot.png"
+            let type;
+            let range;
+            let cooldown;
+            let damage;
+
+            if (i === 0) {
+                type = 0; //earth
+                range = 100;
+                cooldown = 1000;
+                damage = 10;
+            } else if (i === 1) {
+                type = 1; // water
+                range = 200;
+                cooldown = 500;
+                damage = 5;
+            } else if (i === 2) {
+                type = 2; // fire
+                range = 250;
+                cooldown = 2000;
+                damage = 20;
+            } else if (i === 3) {
+                type = 3; // air
+                range = 150;
+                cooldown = 3000;
+                damage = 45;
+            }
+
 
             tileDiv.tileDivImg = new Image();
             tileDiv.tileDivImg.src = boardImgPath;
@@ -152,7 +179,11 @@ class Game {
             document.getElementById('towers').appendChild(tileDiv);
 
             tileDiv.cost = 15 * (i + 1)
-            tileDiv.id = i
+            tileDiv.id = i;
+            tileDiv.type = type;
+            tileDiv.range = range;
+            tileDiv.cooldown = cooldown;
+            tileDiv.damage = damage;
             tileDivs.push(tileDiv);
             
             const tileImg = new Image();
@@ -160,6 +191,7 @@ class Game {
             tileDiv.appendChild(tileImg)
 
             const towerName = document.createElement("p");
+
             if (i === 0) {
                 towerName.innerText = "15 b"
             } else if (i=== 1) {
@@ -169,6 +201,7 @@ class Game {
             } else if (i === 3) {
                 towerName.innerText = "60 b"
             }
+
             tileDiv.appendChild(towerName)
             
         }
@@ -187,9 +220,9 @@ class Game {
 
     tileRollOver() {
         if (this.id === "0") {
-            this.style.backgroundColor = 'rgba(116, 206, 228, 0.5)';
-        } else if (this.id === "1"){
             this.style.backgroundColor = 'rgba(111, 193, 145, 0.5)';
+        } else if (this.id === "1"){
+            this.style.backgroundColor = 'rgba(116, 206, 228, 0.5)';
         } else if (this.id === "2"){
             this.style.backgroundColor = 'rgba(236, 119, 75, 0.5)';
         } else if (this.id === "3") {
@@ -217,7 +250,12 @@ class Game {
         const tower = new Tower(
             tileDiv.cost,
             tileDiv.tileDivImg,
-            tileDiv.tileDivAttackImg);
+            tileDiv.tileDivAttackImg,
+            tileDiv.type,
+            tileDiv.range,
+            tileDiv.damage,
+            tileDiv.cooldown,
+            );
         this.towers.push(tower);
     }
 
@@ -368,12 +406,7 @@ class Game {
             const gridRow = Math.floor(attack.location.y / towerTime.cellSize)
             if (towerTime.grid[gridCol] && towerTime.grid[gridCol][gridRow]) {
                 const cell = towerTime.grid[gridCol][gridRow];
-                cell.attacked = true
-                for (let i = 0; i < this.creeps.length; i++) {
-                    if (this.creeps[i].curretCell === cell ) {
-                        attack.hit = true;
-                    }
-                }
+                cell.attacked = true;
             }
         }
     }
@@ -385,25 +418,29 @@ class Game {
         this.gridAttacks();
         for (let c = 0; c < this.numCols; c++) {
             for (let r = 0; r < this.numRows; r++)
-            this.grid[c][r].run()
+            this.grid[c][r].run();
         }
         for (let i = 0; i < this.towers.length; i++) {
-            this.towers[i].run()
+            this.towers[i].run();
         }
         for (let i = 0; i < this.attacks.length; i++) {
             if (!this.attacks[i].hit) {
-                this.attacks[i].run()
+                this.attacks[i].run();
+            } else {
+                this.attacks.splice(i, 1);
             }
         }
         for (let i = 0; i < this.creeps.length; i++) {
             if (this.creeps[i].alive) {
-                this.creeps[i].run()
+                this.creeps[i].run();
+            } else {
+                this.creeps.splice(i, 1);
             }
         }
     }
 
     render() {
-        this.context.clearRect(0, 0, 800, 520)
+        this.context.clearRect(0, 0, 800, 520);
     }
 
 }
