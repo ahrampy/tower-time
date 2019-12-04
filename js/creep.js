@@ -97,16 +97,16 @@ class Creep {
         const context = towerTime.context;
         context.beginPath();
         context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
-        context.strokeStyle = "rgba(51, 51, 51, 0.5)";
-        context.stroke();
+        // context.strokeStyle = "rgba(51, 51, 51, 0.5)";
+        // context.stroke();
         if (this.health < this.maxHealth && this.health > this.maxHealth*0.75) {
-            context.fillStyle = "rgba(206, 182, 10, 0.5)"
+            context.fillStyle = "rgba(245, 242, 66)"
         } else if (this.health < this.maxHealth * 0.75 && this.health > this.maxHealth * 0.5) {
-            context.fillStyle = "rgba(237, 157, 10, 0.5)"
+            context.fillStyle = "rgba(245, 182, 66)"
         } else if (this.health < this.maxHealth * 0.5 && this.health > this.maxHealth * 0.25) {
-            context.fillStyle = "rgba(246, 90, 20, 0.5)"
+            context.fillStyle = "rgba(245, 147, 66)"
         } else if (this.health < this.maxHealth * 0.25) {
-            context.fillStyle = "rgba(222, 23, 10, 0.5)"
+            context.fillStyle = "rgba(245, 75, 66)"
         } else {
             context.fillStyle = this.color;
         }

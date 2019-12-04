@@ -149,34 +149,51 @@ class Game {
         for (let i = 0; i < 4; i++) {
             const tileDiv = document.createElement("div");
 
-            let tileImgPath = "images/dot.png"
-            let boardImgPath = "images/lil-dot.png"
-            let attackImgPath = "images/attack-dot.png"
+            let tileImgPath;
+            let boardImgPath;
+            let attackImgPath;
             let type;
             let range;
             let cooldown;
             let damage;
+            let speed;
 
             if (i === 0) {
+                tileImgPath = "images/earth/green-tower-1.png"
+                boardImgPath = "images/earth/green-tower-1.png"
+                attackImgPath = "images/earth/green-tower-atk-1.png"
                 type = 0; //earth
                 range = 100;
                 cooldown = 1000;
                 damage = 10;
+                speed = 3;
             } else if (i === 1) {
+                tileImgPath = "images/water/blue-tower-1.png"
+                boardImgPath = "images/water/blue-tower-1.png"
+                attackImgPath = "images/water/blue-tower-atk-1.png"
                 type = 1; // water
                 range = 150;
-                cooldown = 500;
-                damage = 5;
+                cooldown = 600;
+                damage = 1;
+                speed = 1;
             } else if (i === 2) {
+                tileImgPath = "images/fire/red-tower-1.png"
+                boardImgPath = "images/fire/red-tower-1.png"
+                attackImgPath = "images/fire/red-tower-atk-1.png"
                 type = 2; // fire
-                range = 200;
-                cooldown = 2000;
-                damage = 20;
-            } else if (i === 3) {
-                type = 3; // air
                 range = 75;
+                cooldown = 200;
+                damage = 5;
+                speed = 10;
+            } else if (i === 3) {
+                tileImgPath = "images/air/yellow-tower-1.png"
+                boardImgPath = "images/air/yellow-tower-1.png"
+                attackImgPath = "images/air/yellow-tower-atk-1.png"
+                type = 3; // air
+                range = 200;
                 cooldown = 3000;
                 damage = 45;
+                speed = 12;
             }
 
 
@@ -196,6 +213,7 @@ class Game {
             tileDiv.range = range;
             tileDiv.cooldown = cooldown;
             tileDiv.damage = damage;
+            tileDiv.speed = speed;
             tileDivs.push(tileDiv);
             
             const tileImg = new Image();
@@ -230,17 +248,17 @@ class Game {
         }
     }
 
-    tileRollOver() {
-        if (this.id === "0") {
-            this.style.backgroundColor = 'rgba(111, 193, 145, 0.5)';
-        } else if (this.id === "1"){
-            this.style.backgroundColor = 'rgba(116, 206, 228, 0.5)';
-        } else if (this.id === "2"){
-            this.style.backgroundColor = 'rgba(236, 119, 75, 0.5)';
-        } else if (this.id === "3") {
-            this.style.backgroundColor = 'rgba(237, 191, 71, 0.5)';
-        } 
-    }
+    // tileRollOver() {
+    //     if (this.id === "0") {
+    //         this.style.backgroundColor = 'rgba(111, 193, 145, 0.5)';
+    //     } else if (this.id === "1"){
+    //         this.style.backgroundColor = 'rgba(116, 206, 228, 0.5)';
+    //     } else if (this.id === "2"){
+    //         this.style.backgroundColor = 'rgba(236, 119, 75, 0.5)';
+    //     } else if (this.id === "3") {
+    //         this.style.backgroundColor = 'rgba(237, 191, 71, 0.5)';
+    //     } 
+    // }
 
     tileRollOut() {
         this.style.backgroundColor = 'rgba(68, 74, 110, 0.33)';
@@ -267,6 +285,7 @@ class Game {
             tileDiv.range,
             tileDiv.damage,
             tileDiv.cooldown,
+            tileDiv.speed
             );
         this.towers.push(tower);
     }
@@ -435,18 +454,18 @@ class Game {
         for (let i = 0; i < this.towers.length; i++) {
             this.towers[i].run();
         }
-        for (let i = 0; i < this.attacks.length; i++) {
-            if (!this.attacks[i].hit) {
-                this.attacks[i].run();
-            } else {
-                this.attacks.splice(i, 1);
-            }
-        }
         for (let i = 0; i < this.creeps.length; i++) {
             if (this.creeps[i].alive) {
                 this.creeps[i].run();
             } else {
                 this.creeps.splice(i, 1);
+            }
+        }
+        for (let i = 0; i < this.attacks.length; i++) {
+            if (!this.attacks[i].hit) {
+                this.attacks[i].run();
+            } else {
+                this.attacks.splice(i, 1);
             }
         }
     }

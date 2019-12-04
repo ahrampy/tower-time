@@ -1,7 +1,7 @@
 'use strict'
 
 class Attack {
-    constructor(location, angle, atkImg, type, damage) {
+    constructor(location, angle, atkImg, type, damage, speed) {
         this.location = location.copy();
         this.angle = angle;
         this.radius = 10;
@@ -10,6 +10,7 @@ class Attack {
         this.speed = 5;
         this.hit = false;
         this.damage = damage;
+        this.speed = speed;
     }
 
     run() {

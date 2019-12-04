@@ -17,7 +17,7 @@ body {
 
 #game-controls {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-top: 30px;
     height: 55px;
@@ -33,6 +33,11 @@ body {
     width: 120px;
     background: rgba(68, 74, 110, 0.815);
     color: rgb(187, 186, 186);
+}
+
+#start-button:hover {
+    cursor: pointer;
+    background: rgba(68, 74, 110, 0.33);
 }
 
 #start-button > h3 {
@@ -52,28 +57,28 @@ canvas {
 #info {
     display: flex;
     justify-content: center;
+    margin-left: 15px;
 }
 
 .info-tile {
-    color: rgb(187, 186, 186);
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    padding: 30px 25px;
-    background: rgba(68, 74, 110, 0.33);
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+    color: rgb(187, 186, 186);
+    width: 100px;
+    height: 55px;
 }
 
 .info-tile h4 {
     text-align: center;
-    margin-top: 5px;
-    margin-bottom: -5px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .info-tile p {
-    text-align: center;
-    margin-top: -5px;
+    margin-left: 10px;
 }
 
 #towers {
@@ -99,7 +104,53 @@ canvas {
     height: 50px;
 }
 
+#towers > div > img:hover {
+    cursor: pointer;
+}
+
 #towers p {
     margin: 0px;
     text-align: center;
+}
+
+#tower-details {
+    display: flex;
+    width: 100%;
+    background: rgba(68, 74, 110, 0.33);
+}
+
+.detail-tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+    color: rgb(187, 186, 186);
+    width: 80px;
+}
+
+.detail-tile h4 {
+    margin: 0px;
+}
+
+#edit-tower-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    margin-left: 40px;
+}
+
+#edit-tower-buttons h5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    height: 50%;
+    width: 100%;
+    background: rgba(68, 74, 110, 0.815);
+}
+
+#edit-tower-buttons h5:hover {
+    cursor: pointer;
+    background: rgba(68, 74, 110, 0.33);
 }

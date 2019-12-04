@@ -1,7 +1,7 @@
 'use strict'
 
 class Tower{
-    constructor(cost, img, atkImg, type, range, damage, cooldown) {
+    constructor(cost, img, atkImg, type, range, damage, cooldown, speed) {
         // images
         this.img = img;
         this.atkImg = atkImg;
@@ -12,6 +12,7 @@ class Tower{
         this.range = range;
         this.cooldown = cooldown;
         this.damage = damage;
+        this.speed = speed;
 
         // location
         this.location = new Vector(0,0);
@@ -45,7 +46,7 @@ class Tower{
             } 
         }
         this.target = new Vector(towerTime.canvas.mouseX, towerTime.canvas.mouseY)
-        this.follow = true // mouse default
+        this.follow = true
         return this.target
     }
 
@@ -55,18 +56,14 @@ class Tower{
     
     checkFire() {
         let mils = Date.now()
-        // let dx= this.location.x - towerTime.canvas.mouseX
-        // let dy= this.location.y - towerTime.canvas.mouseY
-        // let dx= this.location.x - this.target.x
-        // let dy= this.location.y - this.target.y
-        // let dist = Math.sqrt(dx*dx + dy*dy);
+
         let dist = this.location.dist(this.target)
         if (dist < this.range && this.placed && mils - this.lastFired > this.cooldown
             && towerTime.creeps.length !== 0 && !this.follow) {
             this.lastFired = mils
             const attackLocation = new Vector(this.location.x, this.location.y);
             const attack = new Attack(
-                attackLocation, this.angle, this.atkImg, this.type, this.damage);
+                attackLocation, this.angle, this.atkImg, this.type, this.damage, this.speed);
             towerTime.attacks.push(attack);
         }
     }
@@ -86,7 +83,7 @@ class Tower{
                 if (!this.placed || this.selected) {
                     context.beginPath();
                     context.arc(this.location.x, this.location.y, this.range, 0, Math.PI * 2);
-                    context.fillStyle = "rgba(200, 200, 200, 0.5)"
+                    context.fillStyle = "rgba(222, 255, 252, 0.3)"
                     context.fill();
                 }
                 context.translate(this.location.x, this.location.y)

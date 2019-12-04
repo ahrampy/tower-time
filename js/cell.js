@@ -76,7 +76,7 @@ class Cell{
         } else if (this === towerTime.start) {
             this.context.fillStyle = "rgba(68, 74, 110, 0.33)"
         } else if (this.occupied) {
-            this.context.fillStyle = "rgba(57, 255, 47, 0.27)"
+            this.context.fillStyle = "rgba(224, 224, 224, 0.27)"
         // } else if (this.attacked) {
             // this.context.fillStyle = "rgb(206, 202, 202)"
         } else {
