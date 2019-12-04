@@ -1,13 +1,14 @@
 'use strict'
 
 class Tower{
-    constructor(cost, img, atkImg, type, range, damage, cooldown, speed) {
+    constructor(cost, upgrade, img, atkImg, type, range, damage, cooldown, speed) {
         // images
         this.img = img;
         this.atkImg = atkImg;
 
         // stats
         this.cost = cost;
+        this.upgrade = upgrade;
         this.type = type;
         this.range = range;
         this.cooldown = cooldown;
@@ -29,13 +30,11 @@ class Tower{
         this.selected = false;
 
         // init
-        this.visible = false
-        this.placed = false
-    }
-    
-    run(){
-        this.update();
-        this.render();
+        this.upgradeLevel = 1;
+        this.canUpgrade = true;
+        this.removed = false;
+        this.visible = false;
+        this.placed = false;
     }
 
     findTarget() {
@@ -48,10 +47,6 @@ class Tower{
         this.target = new Vector(towerTime.canvas.mouseX, towerTime.canvas.mouseY)
         this.follow = true
         return this.target
-    }
-
-    checkCreeps() {
-
     }
     
     checkFire() {
@@ -66,6 +61,73 @@ class Tower{
                 attackLocation, this.angle, this.atkImg, this.type, this.damage, this.speed);
             towerTime.attacks.push(attack);
         }
+    }
+
+    handleUpgrade() {
+        this.upgradeLevel += 1;
+        this.upgrade *= 2;
+        this.damage *= 2;
+        this.range += 25;
+        this.speed += 2;
+
+        if (this.type === "Earth") {
+            if (this.upgradeLevel === 2) {
+                this.img = new Image();
+                this.img.src = "images/earth/green-tower-2.png";
+                this.atkImg = new Image();
+                this.atkImg.src = "images/earth/green-tower-atk-2.png";
+            } else {
+                this.img = new Image();
+                this.img.src = "images/earth/green-tower-3.png";
+                this.atkImg = new Image();
+                this.atkImg.src = "images/earth/green-tower-atk-3.png";
+            }
+        } else if (this.type === "Water") {
+            if (this.upgradeLevel === 2) {
+                this.img = new Image()
+                this.img.src = "images/water/blue-tower-2.png"
+                this.atkImg = new Image();
+                this.atkImg.src = "images/water/blue-tower-atk-2.png";
+            } else {
+                this.img = new Image()
+                this.img.src = "images/water/blue-tower-3.png"
+                this.atkImg = new Image();
+                this.atkImg.src = "images/water/blue-tower-atk-3.png";
+            }
+        } else if (this.type === "Fire") {
+            if (this.upgradeLevel === 2) {
+                this.img = new Image()
+                this.img.src = "images/fire/red-tower-2.png"
+                this.atkImg = new Image();
+                this.atkImg.src = "images/fire/red-tower-atk-2.png";
+            } else {
+                this.img = new Image()
+                this.img.src = "images/fire/red-tower-3.png"
+                this.atkImg = new Image();
+                this.atkImg.src = "images/fire/red-tower-atk-3.png";
+            }
+        } else if (this.type === "Air") {
+            if (this.upgradeLevel === 2) {
+                this.img = new Image()
+                this.img.src = "images/air/yellow-tower-2.png"
+                this.atkImg = new Image();
+                this.atkImg.src = "images/air/yellow-tower-atk-2.png";
+            } else {
+                this.img = new Image()
+                this.img.src = "images/air/yellow-tower-3.png"
+                this.atkImg = new Image();
+                this.atkImg.src = "images/air/yellow-tower-atk-3.png";
+            }
+        }
+
+        if (this.upgradeLevel === 3) {
+            this.canUpgrade = false;
+        }
+    }
+
+    run() {
+        this.update();
+        this.render();
     }
 
     update(){

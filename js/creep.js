@@ -6,7 +6,7 @@ class Creep {
         this.location = location
         this.currentCell = null;
         this.velocity = new Vector(0,0);
-        this.acceleration = new Vector(0, .0015);
+        this.acceleration = new Vector(0, 0);
         this.radius = 12;
 
         this.color = "rgb(200, 200, 200)" //add to input
@@ -41,18 +41,15 @@ class Creep {
 
     checkHit() {
         if (this.currentCell && this.currentCell.attacked) {
-            this.health -= 10;
-            for (let i = 0; i < towerTime.attacks.length; i++) {
-                let attack = towerTime.attacks[i];
-                if (attack.location) {
-                    
-                }
+            if (this.currentCell.attackSlow) {
+                
             }
+            this.health -= this.currentCell.attackDamage;
         }
     }
 
     checkAlive() {
-        if (this.health === 0) {
+        if (this.health <= 0) {
             towerTime.bits += this.worth;
             towerTime.score += this.pointValue;
             this.alive = false;

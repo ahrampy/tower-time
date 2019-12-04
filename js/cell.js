@@ -11,13 +11,17 @@ class Cell{
         this.col = col;
         this.row = row;
         
+        // path finding
         this.adjacent = [];
         this.value = -1;
         this.smallestAdjacent = null;
         this.smallestAdjacentIndex = 0;
         
+        // check state
         this.occupied = false;
-        this.attacked = false
+        this.attacked = false;
+        this.attackDamage = null;
+        this.attackSlow = false;
     }
 
     loadAdjacentCells() {

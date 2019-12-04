@@ -49,28 +49,59 @@ class Game {
         // load buttons
         this.tileDivs = this.createTileDivs();
         this.handleDomCallbacks(this.tileDivs);
-        this.handleButtonClick();
+        this.handleStartClick();
+        this.handleEditClicks();
 
         // path finding
         this.validated = false;
         this.loadGrid();
         this.findPath();
 
-        // limit 1
+        // track tower
         this.placingTower = false;
+        this.selectedTower = null;
     }
 
-    handleButtonClick() {
+    handleStartClick() {
         const button = document.getElementById("start-button");
-        button.addEventListener('click', this.buttonClick, false );
+        button.addEventListener('click', this.startClick, false );
     }
 
-    buttonClick() {
+    startClick() {
         this.innerText = "Next Wave";
         towerTime.wave += 1;
         this.style.backgroundColor = "rgba(68, 74, 110, 0.33)"
         setTimeout(() => towerTime.loadCreeps(20), 500);
         setTimeout(() => this.style.backgroundColor = "", 100);
+    }
+
+    handleEditClicks() {
+        const upgradeButton = document.getElementById("upgrade-button");
+        const sellButton = document.getElementById("sell-button");
+        upgradeButton.addEventListener('click', this.upgradeClick, false);
+        sellButton.addEventListener('click', this.sellClick, false);
+    }
+
+    upgradeClick() {
+        const tower = towerTime.selectedTower
+        if (tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
+            towerTime.bits -= tower.upgrade;
+            tower.handleUpgrade();
+        }
+    }
+
+    sellClick() {
+        const tower = towerTime.selectedTower;
+
+        const gridCol = Math.floor(tower.location.x / towerTime.cellSize);
+        const gridRow = Math.floor(tower.location.y / towerTime.cellSize);
+
+        const cell = towerTime.grid[gridCol][gridRow];
+        cell.occupied = false;
+
+        towerTime.bits += tower.upgrade / 2;
+        towerTime.selectedTower = null;
+        tower.removed = true;
     }
 
     handleCanvasMouseMoved(event) {
@@ -133,12 +164,18 @@ class Game {
             }
         } else {
             for (let i = 0; i < towerTime.towers.length; i++) {
-                let checkCell = towerTime.towers[i]
-                if (checkCell.location.x === cell.center.x
-                    && checkCell.location.y === cell.center.y) {
-                    checkCell.selected = !checkCell.selected;
+                let tower = towerTime.towers[i]
+                if (tower.location.x === cell.center.x
+                    && tower.location.y === cell.center.y) {
+                    tower.selected = !tower.selected;
+                    if (tower.selected) {
+                        towerTime.selectedTower = tower;
+                    }
                 } else {
-                    checkCell.selected = false;
+                    tower.selected = false;
+                    if (tower === this.selectedTower) {
+                        towerTime.selectedTower = null;
+                    }
                 }
             }
         }
@@ -162,37 +199,37 @@ class Game {
                 tileImgPath = "images/earth/green-tower-1.png"
                 boardImgPath = "images/earth/green-tower-1.png"
                 attackImgPath = "images/earth/green-tower-atk-1.png"
-                type = 0; //earth
+                type = "Earth";
                 range = 100;
                 cooldown = 1000;
-                damage = 10;
-                speed = 3;
+                damage = 35;
+                speed = 6;
             } else if (i === 1) {
                 tileImgPath = "images/water/blue-tower-1.png"
                 boardImgPath = "images/water/blue-tower-1.png"
                 attackImgPath = "images/water/blue-tower-atk-1.png"
-                type = 1; // water
+                type = "Water";
                 range = 150;
-                cooldown = 600;
-                damage = 1;
+                cooldown = 300;
+                damage = 10;
                 speed = 1;
             } else if (i === 2) {
                 tileImgPath = "images/fire/red-tower-1.png"
                 boardImgPath = "images/fire/red-tower-1.png"
                 attackImgPath = "images/fire/red-tower-atk-1.png"
-                type = 2; // fire
-                range = 75;
+                type = "Fire";
+                range = 150;
                 cooldown = 200;
-                damage = 5;
+                damage = 25;
                 speed = 10;
             } else if (i === 3) {
                 tileImgPath = "images/air/yellow-tower-1.png"
                 boardImgPath = "images/air/yellow-tower-1.png"
                 attackImgPath = "images/air/yellow-tower-atk-1.png"
-                type = 3; // air
+                type = "Air";
                 range = 200;
-                cooldown = 3000;
-                damage = 45;
+                cooldown = 1600;
+                damage = 150;
                 speed = 12;
             }
 
@@ -207,7 +244,8 @@ class Game {
 
             document.getElementById('towers').appendChild(tileDiv);
 
-            tileDiv.cost = 15 * (i + 1)
+            tileDiv.cost = 15 * (i + 1);
+            tileDiv.upgrade = 30 * (i + 1);
             tileDiv.id = i;
             tileDiv.type = type;
             tileDiv.range = range;
@@ -248,17 +286,9 @@ class Game {
         }
     }
 
-    // tileRollOver() {
-    //     if (this.id === "0") {
-    //         this.style.backgroundColor = 'rgba(111, 193, 145, 0.5)';
-    //     } else if (this.id === "1"){
-    //         this.style.backgroundColor = 'rgba(116, 206, 228, 0.5)';
-    //     } else if (this.id === "2"){
-    //         this.style.backgroundColor = 'rgba(236, 119, 75, 0.5)';
-    //     } else if (this.id === "3") {
-    //         this.style.backgroundColor = 'rgba(237, 191, 71, 0.5)';
-    //     } 
-    // }
+    tileRollOver() {
+        this.style.backgroundColor = 'rgba(222, 255, 252, 0.3)';
+    }
 
     tileRollOut() {
         this.style.backgroundColor = 'rgba(68, 74, 110, 0.33)';
@@ -279,6 +309,7 @@ class Game {
     createTower(tileDiv) {
         const tower = new Tower(
             tileDiv.cost,
+            tileDiv.upgrade,
             tileDiv.tileDivImg,
             tileDiv.tileDivAttackImg,
             tileDiv.type,
@@ -329,6 +360,82 @@ class Game {
                 info.appendChild(value);
             }
 
+        }
+    }
+
+    showTowerInfo() {
+        let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
+        let towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
+        if (towerTime.selectedTower) {
+            towerEditButtons[0].style.opacity = 100
+            towerEditButtons[1].style.opacity = 100
+            for (let i = 0; i < towerInfoTiles.length; i++) {
+                let info = towerInfoTiles[i];
+    
+                if (info.innerHTML.indexOf('Type') != -1) {
+                    info.innerHTML = '<h5>Type</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = towerTime.selectedTower.type;
+                    info.appendChild(value)
+                } else if (info.innerHTML.indexOf('Range') != -1) {
+                    info.innerHTML = '<h5>Range</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = towerTime.selectedTower.range;
+                    info.appendChild(value);
+                } else if (info.innerHTML.indexOf('Damage') != -1) {
+                    info.innerHTML = '<h5>Damage</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = towerTime.selectedTower.damage;
+                    info.appendChild(value);
+                } else if (info.innerHTML.indexOf('Next') != -1) {
+                    info.innerHTML = '<h5>Next</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    if (towerTime.selectedTower.canUpgrade) {
+                        value.innerHTML = towerTime.selectedTower.upgrade + " bits";
+                    } else {
+                        value.innerHTML = "Max";
+                    }
+                    info.appendChild(value);
+                }
+    
+            }
+        } else {
+            towerEditButtons[0].style.opacity = 0
+            towerEditButtons[1].style.opacity = 0
+            for (let i = 0; i < towerInfoTiles.length; i++) {
+                let info = towerInfoTiles[i];
+
+                if (info.innerHTML.indexOf('Type') != -1) {
+                    info.innerHTML = '<h5>Type</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = "";
+                    info.appendChild(value)
+                } else if (info.innerHTML.indexOf('Range') != -1) {
+                    info.innerHTML = '<h5>Range</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = "";
+                    info.appendChild(value);
+                } else if (info.innerHTML.indexOf('Damage') != -1) {
+                    info.innerHTML = '<h5>Damage</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = "";
+                    info.appendChild(value);
+                } else if (info.innerHTML.indexOf('Next') != -1) {
+                    info.innerHTML = '<h5>Next</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = "";
+                    info.appendChild(value);
+                }
+
+            }
         }
     }
 
@@ -433,12 +540,24 @@ class Game {
     gridAttacks() {
         for (let i = 0; i < this.attacks.length; i++) {
             const attack = this.attacks[i]
+            let slow = false;
+            if (attack.type === "water") {
+                slow = true;
+            }
             const gridCol = Math.floor(attack.location.x / towerTime.cellSize)
             const gridRow = Math.floor(attack.location.y / towerTime.cellSize)
             if (towerTime.grid[gridCol] && towerTime.grid[gridCol][gridRow]) {
                 const cell = towerTime.grid[gridCol][gridRow];
                 cell.attacked = true;
+                cell.attackDamage = attack.damage;
+                cell.attackSlow = slow;
+                for (let j = 0; j < this.creeps.length; j++) {
+                    if (cell === this.creeps[j].currentCell) {
+                        attack.hit = true;
+                    }
+                }
             }
+
         }
     }
 
@@ -446,13 +565,18 @@ class Game {
 
         this.render();
         this.updateInfo();
+        this.showTowerInfo();
         this.gridAttacks();
         for (let c = 0; c < this.numCols; c++) {
             for (let r = 0; r < this.numRows; r++)
             this.grid[c][r].run();
         }
         for (let i = 0; i < this.towers.length; i++) {
-            this.towers[i].run();
+            if (!this.towers[i].removed) {
+                this.towers[i].run();
+            } else {
+                this.towers.splice(i, 1)
+            }
         }
         for (let i = 0; i < this.creeps.length; i++) {
             if (this.creeps[i].alive) {

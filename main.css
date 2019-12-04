@@ -121,16 +121,26 @@ canvas {
 
 .detail-tile {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    flex-direction: column;
     padding: 0px;
     margin: 0px;
     color: rgb(187, 186, 186);
-    width: 80px;
+    width: 60px;
 }
 
 .detail-tile h4 {
     margin: 0px;
+    padding: 0px;
+    size: 12px;
+    font-weight: lighter;
+}
+
+.detail-tile p {
+    size: 10px;
+    margin: 0px;
+    padding: 0px;
 }
 
 #edit-tower-buttons {
