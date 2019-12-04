@@ -99,6 +99,13 @@ class Game {
         const cell = towerTime.grid[gridCol][gridRow];
         cell.occupied = false;
 
+        towerTime.findPath();
+        for (let c = 0; c < towerTime.numCols; c++) {
+            for (let r = 0; r < towerTime.numRows; r++) {
+                towerTime.grid[c][r].loadAdjacentCells();
+            }
+        }
+
         towerTime.bits += tower.upgrade / 2;
         towerTime.selectedTower = null;
         tower.removed = true;
@@ -300,7 +307,7 @@ class Game {
 
     tileClicked() {        
         if (towerTime.placingTower === true) return;
-        if (towerTime.bits > this.cost) {            
+        if (towerTime.bits >= this.cost) {            
             towerTime.createTower(this);
             towerTime.placingTower = true;
         }
