@@ -23,13 +23,11 @@ class Vector {
         return new Vector(this.x, this.y)
     }
 
-    // slow() {
-    //     debugger;
-    //     this.x /= 2;
-    //     this.y /= 2;
-    //     debugger;
-    //     return new Vector(this.x, this.y)
-    // }
+    slow() {
+        this.x /=2;
+        this.y /=2;
+        return new Vector(this.x, this.y);
+    }
 
     addGetNew(vec1, vec2) {
         const x = vec1.x + vec2.x;

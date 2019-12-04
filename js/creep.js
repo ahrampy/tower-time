@@ -9,13 +9,14 @@ class Creep {
         this.acceleration = new Vector(0, 0);
         this.radius = 12;
 
-        this.color = "rgb(200, 200, 200)" //add to input
+        this.color = "rgb(200, 200, 200)" // default
         this.maxHealth = (towerTime.wave * 500) //add to input
         this.worth = 5 //add to input
         this.pointValue = 100 //add to input
 
         this.health = this.maxHealth;
         this.alive = true;
+        this.slowed = false;
     }
 
     checkEdges() {
@@ -41,10 +42,11 @@ class Creep {
 
     checkHit() {
         if (this.currentCell && this.currentCell.attacked) {
-            if (this.currentCell.attackSlow) {
-                
-            }
             this.health -= this.currentCell.attackDamage;
+            if (this.currentCell.attackSlow) {
+                this.slowed = true;
+                setTimeout(() => this.slowed = false, 2000)
+            }
         }
     }
 
@@ -71,9 +73,13 @@ class Creep {
             this.acceleration = this.acceleration.subGetNew(nextCell.center, this.currentCell.center);
             this.acceleration.setMag(0.05);
         }
-
+        
         this.velocity.add(this.acceleration)
         this.velocity.normalize();
+        if (this.slowed) {
+            this.velocity.slow();
+
+        }
         this.location.add(this.velocity);
     }
 
@@ -94,18 +100,20 @@ class Creep {
         const context = towerTime.context;
         context.beginPath();
         context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
-        // context.strokeStyle = "rgba(51, 51, 51, 0.5)";
-        // context.stroke();
         if (this.health < this.maxHealth && this.health > this.maxHealth*0.75) {
             context.fillStyle = "rgba(245, 242, 66)"
-        } else if (this.health < this.maxHealth * 0.75 && this.health > this.maxHealth * 0.5) {
+        } else if (this.health <= this.maxHealth * 0.75 && this.health >= this.maxHealth * 0.5) {
             context.fillStyle = "rgba(245, 182, 66)"
-        } else if (this.health < this.maxHealth * 0.5 && this.health > this.maxHealth * 0.25) {
+        } else if (this.health <= this.maxHealth * 0.5 && this.health >= this.maxHealth * 0.25) {
             context.fillStyle = "rgba(245, 147, 66)"
-        } else if (this.health < this.maxHealth * 0.25) {
+        } else if (this.health <= this.maxHealth * 0.25) {
             context.fillStyle = "rgba(245, 75, 66)"
         } else {
             context.fillStyle = this.color;
+        }
+        if (this.slowed) {
+            context.fillStyle = "#49E2FA";
+            // context.stroke();
         }
         context.fill();
     }

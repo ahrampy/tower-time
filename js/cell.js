@@ -81,8 +81,8 @@ class Cell{
             this.context.fillStyle = "rgba(68, 74, 110, 0.33)"
         } else if (this.occupied) {
             this.context.fillStyle = "rgba(224, 224, 224, 0.27)"
-        // } else if (this.attacked) {
-            // this.context.fillStyle = "rgb(206, 202, 202)"
+        // } else if (this.attackSlow) {
+        //     this.context.fillStyle = "rgb(206, 202, 202)"
         } else {
             this.context.fillStyle = "rgba(150, 151, 129, 0.06)"
         }

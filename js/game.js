@@ -547,17 +547,16 @@ class Game {
     gridAttacks() {
         for (let i = 0; i < this.attacks.length; i++) {
             const attack = this.attacks[i]
-            let slow = false;
-            if (attack.type === "water") {
-                slow = true;
-            }
             const gridCol = Math.floor(attack.location.x / towerTime.cellSize)
             const gridRow = Math.floor(attack.location.y / towerTime.cellSize)
             if (towerTime.grid[gridCol] && towerTime.grid[gridCol][gridRow]) {
                 const cell = towerTime.grid[gridCol][gridRow];
                 cell.attacked = true;
                 cell.attackDamage = attack.damage;
-                cell.attackSlow = slow;
+                if (attack.type === "Water") {
+                    cell.attackSlow = true;
+                    setTimeout(()=> cell.attackSlow = false, 1000); 
+                }
                 for (let j = 0; j < this.creeps.length; j++) {
                     if (cell === this.creeps[j].currentCell) {
                         attack.hit = true;
