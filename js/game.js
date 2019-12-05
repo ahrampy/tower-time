@@ -226,7 +226,7 @@ class Game {
                 type = "Earth";
                 range = 100;
                 cooldown = 1000;
-                damage = 35;
+                damage = 30;
                 speed = 6;
             } else if (i === 1) {
                 tileImgPath = "images/water/blue-tower-1.png"
