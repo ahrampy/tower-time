@@ -367,7 +367,9 @@ class Game {
 
     tileClicked() {        
         if (towerTime.placingTower === true) {
-            towerTime.towers.splice(towerTime.towers.length - 1, 1);
+            if (!towerTime.towers[towerTime.towers.length - 1].placed) {
+                towerTime.towers.splice(towerTime.towers.length - 1, 1);
+            }
         }
         if (towerTime.bits >= this.cost) {            
             towerTime.createTower(this);
