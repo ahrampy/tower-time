@@ -3,17 +3,21 @@
 class Creep {
     constructor(location) {
 
+        // movement
         this.location = location
         this.currentCell = null;
         this.velocity = new Vector(0,0);
         this.acceleration = new Vector(0, 0);
+
+        // default
         this.radius = 12;
+        this.color = "rgb(200, 200, 200)";
 
-        this.color = "rgb(200, 200, 200)" // default
-        this.maxHealth = (towerTime.wave * 500) //add to input
-        this.worth = 5 //add to input
-        this.pointValue = 100 //add to input
-
+        // stats
+        this.multiplier = 1 + Math.floor(towerTime.wave / 10);
+        this.maxHealth = (towerTime.wave * 500 * this.multiplier);
+        this.worth = 5 * this.multiplier;
+        this.pointValue = 100 * this.multiplier;
         this.health = this.maxHealth;
         this.alive = true;
         this.slowed = false;

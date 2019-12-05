@@ -25,6 +25,7 @@ class Game {
         // game stats
         this.lives = 20;
         this.bits = 200;
+        this.bits += 600; //test!
         this.score = 0;
         this.wave = 0;
         this.gameOver = false;
@@ -90,7 +91,8 @@ class Game {
 
     upgradeClick() {
         const tower = towerTime.selectedTower
-        if (tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
+
+        if (towerTime.selectedTower && tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
             towerTime.bits -= tower.upgrade;
             tower.handleUpgrade();
         }
@@ -186,10 +188,8 @@ class Game {
                 }
             } else {
                 tower.selected = false;
-                if (tower === towerTime.selectedTower) {
-                    // towerTime.selectedTower = null;
-                }
             }
+            
         }
         // const upgradeButton = document.getElementById("upgrade-button");
         // if (towerTime.selectedTower && !towerTime.selectedTower.canUpgrade) {
@@ -239,7 +239,7 @@ class Game {
                 type = "Fire";
                 range = 150;
                 cooldown = 200;
-                damage = 25;
+                damage = 20;
                 speed = 10;
             } else if (i === 3) {
                 tileImgPath = "images/air/yellow-tower-1.png"
@@ -247,7 +247,7 @@ class Game {
                 attackImgPath = "images/air/yellow-tower-atk-1.png"
                 type = "Air";
                 range = 200;
-                cooldown = 1600;
+                cooldown = 1200;
                 damage = 150;
                 speed = 15;
             }
@@ -306,6 +306,10 @@ class Game {
     }
 
     tileRollOver() {
+        if (towerTime.selectedTower) {
+            towerTime.selectedTower.selected = false;
+            towerTime.selectedTower = null;
+        }
         this.showTowerStats = true;
         this.style.backgroundColor = 'rgba(222, 255, 252, 0.3)';
         let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
@@ -351,7 +355,9 @@ class Game {
     }
 
     tileClicked() {        
-        if (towerTime.placingTower === true) return;
+        if (towerTime.placingTower === true) {
+            towerTime.towers.splice(towerTime.towers.length - 1, 1);
+        }
         if (towerTime.bits >= this.cost) {            
             towerTime.createTower(this);
             towerTime.placingTower = true;
@@ -418,8 +424,7 @@ class Game {
     showTowerInfo() {
         let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
         let towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
-        if (towerTime.selectedTower && !this.showTowerStats) {
-
+        if (towerTime.selectedTower) {
             towerEditButtons[0].style.opacity = 100
             towerEditButtons[1].style.opacity = 100
             for (let i = 0; i < towerInfoTiles.length; i++) {
@@ -454,40 +459,44 @@ class Game {
                     }
                     info.appendChild(value);
                 }
+                if (!towerTime.selectedTower.canUpgrade) {
+                    towerEditButtons[0].style.opacity = 0
+                    // towerEditButtons[1].style.opacity = 0
+                }
     
             }
-        // } else {
-        //     towerEditButtons[0].style.opacity = 0
-        //     towerEditButtons[1].style.opacity = 0
-        //     for (let i = 0; i < towerInfoTiles.length; i++) {
-        //         let info = towerInfoTiles[i];
+        } else {
+            towerEditButtons[0].style.opacity = 0
+            towerEditButtons[1].style.opacity = 0
+            // for (let i = 0; i < towerInfoTiles.length; i++) {
+            //     let info = towerInfoTiles[i];
 
-        //         if (info.innerHTML.indexOf('Type') != -1) {
-        //             info.innerHTML = '<h5>Type</h5>';
-        //             const value = document.createElement('p');
-        //             value.style.fontSize = '10pt';
-        //             value.innerHTML = "";
-        //             info.appendChild(value)
-        //         } else if (info.innerHTML.indexOf('Range') != -1) {
-        //             info.innerHTML = '<h5>Range</h5>';
-        //             const value = document.createElement('p');
-        //             value.style.fontSize = '10pt';
-        //             value.innerHTML = "";
-        //             info.appendChild(value);
-        //         } else if (info.innerHTML.indexOf('Damage') != -1) {
-        //             info.innerHTML = '<h5>Damage</h5>';
-        //             const value = document.createElement('p');
-        //             value.style.fontSize = '10pt';
-        //             value.innerHTML = "";
-        //             info.appendChild(value);
-        //         } else if (info.innerHTML.indexOf('Next') != -1) {
-        //             info.innerHTML = '<h5>Next</h5>';
-        //             const value = document.createElement('p');
-        //             value.style.fontSize = '10pt';
-        //             value.innerHTML = "";
-        //             info.appendChild(value);
-        //         }
-        //     }
+            //     if (info.innerHTML.indexOf('Type') != -1) {
+            //         info.innerHTML = '<h5>Type</h5>';
+            //         const value = document.createElement('p');
+            //         value.style.fontSize = '10pt';
+            //         value.innerHTML = "";
+            //         info.appendChild(value)
+            //     } else if (info.innerHTML.indexOf('Range') != -1) {
+            //         info.innerHTML = '<h5>Range</h5>';
+            //         const value = document.createElement('p');
+            //         value.style.fontSize = '10pt';
+            //         value.innerHTML = "";
+            //         info.appendChild(value);
+            //     } else if (info.innerHTML.indexOf('Damage') != -1) {
+            //         info.innerHTML = '<h5>Damage</h5>';
+            //         const value = document.createElement('p');
+            //         value.style.fontSize = '10pt';
+            //         value.innerHTML = "";
+            //         info.appendChild(value);
+            //     } else if (info.innerHTML.indexOf('Next') != -1) {
+            //         info.innerHTML = '<h5>Next</h5>';
+            //         const value = document.createElement('p');
+            //         value.style.fontSize = '10pt';
+            //         value.innerHTML = "";
+            //         info.appendChild(value);
+            //     }
+            // }
         }
     }
 
@@ -602,6 +611,9 @@ class Game {
                     cell.attackSlow = true;
                     setTimeout(()=> cell.attackSlow = false, 1000); 
                 }
+                if (attack.type === "Air") {
+                    return;
+                }
                 for (let j = 0; j < this.creeps.length; j++) {
                     if (cell === this.creeps[j].currentCell) {
                         attack.hit = true;
@@ -631,7 +643,7 @@ class Game {
     }
 
     newGame() {
-        window.location.reload(false); 
+        window.location.reload(false);
     }
 
     run() {
