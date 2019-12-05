@@ -233,7 +233,7 @@ class Game {
                 boardImgPath = "images/water/blue-tower-1.png"
                 attackImgPath = "images/water/blue-tower-atk-1.png"
                 type = "Water";
-                range = 150;
+                range = 120;
                 cooldown = 300;
                 damage = 10;
                 speed = 1;
@@ -242,7 +242,7 @@ class Game {
                 boardImgPath = "images/fire/red-tower-1.png"
                 attackImgPath = "images/fire/red-tower-atk-1.png"
                 type = "Fire";
-                range = 150;
+                range = 120;
                 cooldown = 200;
                 damage = 20;
                 speed = 10;
@@ -625,14 +625,15 @@ class Game {
             this.context.fillText("Tower Time", 400, 180);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 240);
-            this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 280);
+            this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 240);
+            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 270);
+            this.context.fillText("Score: Send another wave to get the highest score", 400, 300);
             this.context.font = "26px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Tower Abilities", 400, 340);
+            this.context.fillText("Tower Abilities", 400, 350);
             this.context.font = "14px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth - Basic        Water - Slows Creeps        Fire - Fast Attack        Air - Through Attack", 400, 370);
+            this.context.fillText("Earth - Basic        Water - Slows Creeps        Fire - Fast Attack        Air - Through Attack", 400, 380);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.fillText("Click 'Start' when Ready!", 400, 480);

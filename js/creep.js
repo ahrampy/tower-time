@@ -14,7 +14,7 @@ class Creep {
         this.color = "rgb(200, 200, 200)";
 
         // stats
-        this.multiplier = 1 + Math.floor(towerTime.wave / 5);
+        this.multiplier = 1 + Math.floor(towerTime.wave / 10);
         this.maxHealth = (towerTime.wave * 500 * this.multiplier);
         this.worth = 5 * this.multiplier;
         this.pointValue = 100 * this.multiplier;
