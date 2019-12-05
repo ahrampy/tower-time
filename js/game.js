@@ -72,6 +72,7 @@ class Game {
     startClick() {
         this.innerText = "Next Wave";
         towerTime.wave += 1;
+        towerTime.bits += (10 * towerTime.wave) / 2
         this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
         setTimeout(() => towerTime.loadCreeps(20), 500);
         setTimeout(() => this.style.backgroundColor = "", 100);
@@ -172,21 +173,27 @@ class Game {
 
             }
         } else {
-            for (let i = 0; i < towerTime.towers.length; i++) {
-                let tower = towerTime.towers[i]
-                if (tower.location.x === cell.center.x
-                    && tower.location.y === cell.center.y) {
-                    tower.selected = !tower.selected;
-                    if (tower.selected) {
-                        towerTime.selectedTower = tower;
-                    }
-                } else {
-                    tower.selected = false;
-                    if (tower === this.selectedTower) {
-                        towerTime.selectedTower = null;
-                    }
+        for (let i = 0; i < towerTime.towers.length; i++) {
+            let tower = towerTime.towers[i]
+            if (tower.location.x === cell.center.x
+                && tower.location.y === cell.center.y) {
+                tower.selected = !tower.selected;
+                if (tower.selected) {
+                    towerTime.selectedTower = tower;
+                }
+            } else {
+                tower.selected = false;
+                if (tower === towerTime.selectedTower) {
+                    // towerTime.selectedTower = null;
                 }
             }
+        }
+        // const upgradeButton = document.getElementById("upgrade-button");
+        // if (towerTime.selectedTower && !towerTime.selectedTower.canUpgrade) {
+        //         upgradeButton.style.opacity = 0
+        // } else {
+        //         upgradeButton.style.opacity = 100
+        // }
         }
     }
 
@@ -239,7 +246,7 @@ class Game {
                 range = 200;
                 cooldown = 1600;
                 damage = 150;
-                speed = 12;
+                speed = 15;
             }
 
 
@@ -580,6 +587,7 @@ class Game {
         this.context.fillStyle = "#333"
         this.context.textAlign = "center";
         this.context.fillText(`Final Score: ${this.score}`, 400, 280);
+        this.lives = 0;
         this.gameOver = true;
         const button = document.getElementById("start-button");
         button.innerText = "New Game";
