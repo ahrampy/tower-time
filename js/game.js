@@ -62,6 +62,9 @@ class Game {
         // track tower
         this.placingTower = false;
         this.selectedTower = null;
+
+        // show tower tile info
+        this.showTowerStats = false;
     }
 
     handleStartClick() {
@@ -303,10 +306,43 @@ class Game {
     }
 
     tileRollOver() {
+        this.showTowerStats = true;
         this.style.backgroundColor = 'rgba(222, 255, 252, 0.3)';
+        let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
+        for (let i = 0; i < towerInfoTiles.length; i++) {
+            let info = towerInfoTiles[i];
+
+            if (info.innerHTML.indexOf('Type') != -1) {
+                info.innerHTML = '<h5>Type</h5>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.type;
+                info.appendChild(value)
+            } else if (info.innerHTML.indexOf('Range') != -1) {
+                info.innerHTML = '<h5>Range</h5>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.range;
+                info.appendChild(value);
+            } else if (info.innerHTML.indexOf('Damage') != -1) {
+                info.innerHTML = '<h5>Damage</h5>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.damage;
+                info.appendChild(value);
+            } else if (info.innerHTML.indexOf('Next') != -1) {
+                info.innerHTML = '<h5>Next</h5>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.upgrade + " bits";
+                info.appendChild(value);
+            }
+
+        }
     }
 
     tileRollOut() {
+        this.showTowerStats = false;
         this.style.backgroundColor = 'rgba(68, 74, 110, 0.33)';
     }
 
@@ -382,7 +418,8 @@ class Game {
     showTowerInfo() {
         let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
         let towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
-        if (towerTime.selectedTower) {
+        if (towerTime.selectedTower && !this.showTowerStats) {
+
             towerEditButtons[0].style.opacity = 100
             towerEditButtons[1].style.opacity = 100
             for (let i = 0; i < towerInfoTiles.length; i++) {
@@ -419,39 +456,38 @@ class Game {
                 }
     
             }
-        } else {
-            towerEditButtons[0].style.opacity = 0
-            towerEditButtons[1].style.opacity = 0
-            for (let i = 0; i < towerInfoTiles.length; i++) {
-                let info = towerInfoTiles[i];
+        // } else {
+        //     towerEditButtons[0].style.opacity = 0
+        //     towerEditButtons[1].style.opacity = 0
+        //     for (let i = 0; i < towerInfoTiles.length; i++) {
+        //         let info = towerInfoTiles[i];
 
-                if (info.innerHTML.indexOf('Type') != -1) {
-                    info.innerHTML = '<h5>Type</h5>';
-                    const value = document.createElement('p');
-                    value.style.fontSize = '10pt';
-                    value.innerHTML = "";
-                    info.appendChild(value)
-                } else if (info.innerHTML.indexOf('Range') != -1) {
-                    info.innerHTML = '<h5>Range</h5>';
-                    const value = document.createElement('p');
-                    value.style.fontSize = '10pt';
-                    value.innerHTML = "";
-                    info.appendChild(value);
-                } else if (info.innerHTML.indexOf('Damage') != -1) {
-                    info.innerHTML = '<h5>Damage</h5>';
-                    const value = document.createElement('p');
-                    value.style.fontSize = '10pt';
-                    value.innerHTML = "";
-                    info.appendChild(value);
-                } else if (info.innerHTML.indexOf('Next') != -1) {
-                    info.innerHTML = '<h5>Next</h5>';
-                    const value = document.createElement('p');
-                    value.style.fontSize = '10pt';
-                    value.innerHTML = "";
-                    info.appendChild(value);
-                }
-
-            }
+        //         if (info.innerHTML.indexOf('Type') != -1) {
+        //             info.innerHTML = '<h5>Type</h5>';
+        //             const value = document.createElement('p');
+        //             value.style.fontSize = '10pt';
+        //             value.innerHTML = "";
+        //             info.appendChild(value)
+        //         } else if (info.innerHTML.indexOf('Range') != -1) {
+        //             info.innerHTML = '<h5>Range</h5>';
+        //             const value = document.createElement('p');
+        //             value.style.fontSize = '10pt';
+        //             value.innerHTML = "";
+        //             info.appendChild(value);
+        //         } else if (info.innerHTML.indexOf('Damage') != -1) {
+        //             info.innerHTML = '<h5>Damage</h5>';
+        //             const value = document.createElement('p');
+        //             value.style.fontSize = '10pt';
+        //             value.innerHTML = "";
+        //             info.appendChild(value);
+        //         } else if (info.innerHTML.indexOf('Next') != -1) {
+        //             info.innerHTML = '<h5>Next</h5>';
+        //             const value = document.createElement('p');
+        //             value.style.fontSize = '10pt';
+        //             value.innerHTML = "";
+        //             info.appendChild(value);
+        //         }
+        //     }
         }
     }
 
