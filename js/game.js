@@ -17,6 +17,8 @@ function animate() {
 
 class Game {
     constructor() {
+
+        // game objects
         this.towers = [];
         this.creeps = [];
         this.attacks = [];
@@ -25,7 +27,6 @@ class Game {
         // game stats
         this.lives = 20;
         this.bits = 200;
-        this.bits += 600; //test!
         this.score = 0;
         this.wave = 0;
         this.gameOver = false;
@@ -40,6 +41,10 @@ class Game {
         this.canvas.addEventListener('mouseover', this.handleCanvasMouseOver, false);
         this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false);
         this.context = this.canvas.getContext("2d");
+
+        // init
+        this.handleGameStart();
+        this.gameStarted = false;
 
         // grid specs
         this.numBlocks = 50;
@@ -74,6 +79,13 @@ class Game {
     }
 
     startClick() {
+        if (!towerTime.gameStarted) {
+            towerTime.gameStarted = true;
+            towerTime.handleGameStart();
+            towerTime.run();
+            this.innerText = "Send Wave";
+            return;
+        }
         this.innerText = "Next Wave";
         towerTime.wave += 1;
         towerTime.bits += (10 * towerTime.wave) / 2
@@ -178,25 +190,18 @@ class Game {
 
             }
         } else {
-        for (let i = 0; i < towerTime.towers.length; i++) {
-            let tower = towerTime.towers[i]
-            if (tower.location.x === cell.center.x
-                && tower.location.y === cell.center.y) {
-                tower.selected = !tower.selected;
-                if (tower.selected) {
-                    towerTime.selectedTower = tower;
+            for (let i = 0; i < towerTime.towers.length; i++) {
+                let tower = towerTime.towers[i]
+                if (tower.location.x === cell.center.x
+                    && tower.location.y === cell.center.y) {
+                    tower.selected = !tower.selected;
+                    if (tower.selected) {
+                        towerTime.selectedTower = tower;
+                    }
+                } else {
+                    tower.selected = false;
                 }
-            } else {
-                tower.selected = false;
             }
-            
-        }
-        // const upgradeButton = document.getElementById("upgrade-button");
-        // if (towerTime.selectedTower && !towerTime.selectedTower.canUpgrade) {
-        //         upgradeButton.style.opacity = 0
-        // } else {
-        //         upgradeButton.style.opacity = 100
-        // }
         }
     }
 
@@ -334,11 +339,17 @@ class Game {
                 value.style.fontSize = '10pt';
                 value.innerHTML = this.damage;
                 info.appendChild(value);
-            } else if (info.innerHTML.indexOf('Next') != -1) {
+            } else if (info.innerHTML.indexOf('Cooldown') != -1) {
+                info.innerHTML = '<h5>Cooldown</h5>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.cooldown;
+                info.appendChild(value);
+            }else if (info.innerHTML.indexOf('Next') != -1) {
                 info.innerHTML = '<h5>Next</h5>';
                 const value = document.createElement('p');
                 value.style.fontSize = '10pt';
-                value.innerHTML = this.upgrade + " bits";
+                value.innerHTML = this.upgrade + " b";
                 info.appendChild(value);
             }
 
@@ -448,12 +459,18 @@ class Game {
                     value.style.fontSize = '10pt';
                     value.innerHTML = towerTime.selectedTower.damage;
                     info.appendChild(value);
-                } else if (info.innerHTML.indexOf('Next') != -1) {
+                } else if (info.innerHTML.indexOf('Cooldown') != -1) {
+                    info.innerHTML = '<h5>Cooldown</h5>';
+                    const value = document.createElement('p');
+                    value.style.fontSize = '10pt';
+                    value.innerHTML = towerTime.selectedTower.cooldown;
+                    info.appendChild(value);
+                }else if (info.innerHTML.indexOf('Next') != -1) {
                     info.innerHTML = '<h5>Next</h5>';
                     const value = document.createElement('p');
                     value.style.fontSize = '10pt';
                     if (towerTime.selectedTower.canUpgrade) {
-                        value.innerHTML = towerTime.selectedTower.upgrade + " bits";
+                        value.innerHTML = towerTime.selectedTower.upgrade + " b";
                     } else {
                         value.innerHTML = "Max";
                     }
@@ -468,35 +485,6 @@ class Game {
         } else {
             towerEditButtons[0].style.opacity = 0
             towerEditButtons[1].style.opacity = 0
-            // for (let i = 0; i < towerInfoTiles.length; i++) {
-            //     let info = towerInfoTiles[i];
-
-            //     if (info.innerHTML.indexOf('Type') != -1) {
-            //         info.innerHTML = '<h5>Type</h5>';
-            //         const value = document.createElement('p');
-            //         value.style.fontSize = '10pt';
-            //         value.innerHTML = "";
-            //         info.appendChild(value)
-            //     } else if (info.innerHTML.indexOf('Range') != -1) {
-            //         info.innerHTML = '<h5>Range</h5>';
-            //         const value = document.createElement('p');
-            //         value.style.fontSize = '10pt';
-            //         value.innerHTML = "";
-            //         info.appendChild(value);
-            //     } else if (info.innerHTML.indexOf('Damage') != -1) {
-            //         info.innerHTML = '<h5>Damage</h5>';
-            //         const value = document.createElement('p');
-            //         value.style.fontSize = '10pt';
-            //         value.innerHTML = "";
-            //         info.appendChild(value);
-            //     } else if (info.innerHTML.indexOf('Next') != -1) {
-            //         info.innerHTML = '<h5>Next</h5>';
-            //         const value = document.createElement('p');
-            //         value.style.fontSize = '10pt';
-            //         value.innerHTML = "";
-            //         info.appendChild(value);
-            //     }
-            // }
         }
     }
 
@@ -624,6 +612,36 @@ class Game {
         }
     }
 
+    handleGameStart() {
+        if (!this.gameStarted) {
+            let towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
+            towerEditButtons[0].style.opacity = 0;
+            towerEditButtons[1].style.opacity = 0;
+            this.context.fillStyle = "rgba(200, 200, 200, .1)";
+            this.context.fillRect(0, 0, 800, 520);
+            this.context.font = "100px Trebuchet MS";
+            this.context.fillStyle = "#333";
+            this.context.textAlign = "center";
+            this.context.fillText("Tower Time", 400, 180);
+            this.context.font = "20px Trebuchet MS";
+            this.context.fillStyle = "rgba(68, 74, 110, 1)";
+            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 240);
+            this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 280);
+            this.context.font = "26px Trebuchet MS";
+            this.context.fillStyle = "#333";
+            this.context.fillText("Tower Abilities", 400, 340);
+            this.context.font = "14px Trebuchet MS";
+            this.context.fillStyle = "rgba(68, 74, 110, 1)";
+            this.context.fillText("Earth - Basic        Water - Slows Creeps        Fire - Fast Attack        Air - Through Attack", 400, 370);
+            this.context.font = "20px Trebuchet MS";
+            this.context.fillStyle = "#333";
+            this.context.fillText("Click 'Start' when Ready!", 400, 480);
+
+        } else {
+            this.render();
+        }
+    }
+
     handleGameOver() {
         this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
         this.context.fillRect(0, 0, 800, 520);
@@ -649,7 +667,7 @@ class Game {
     run() {
 
         this.updateInfo();
-        if (!this.gameOver) {
+        if (!this.gameOver && this.gameStarted) {
             this.render();
             this.showTowerInfo();
             this.gridAttacks();
