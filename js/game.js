@@ -23,19 +23,21 @@ class Game {
         this.grid = [];
 
         // game stats
-        this.lives = 20
-        this.bits = 200
-        this.score = 0
-        this.wave = 0 // test
+        this.lives = 20;
+        this.bits = 200;
+        this.score = 0;
+        this.wave = 0;
+        this.gameOver = false;
 
         // load canvas
         this.canvas = document.createElement("canvas");
-        this.canvas.width = 800
-        this.canvas.height = 520
-        document.getElementById('game-canvas').appendChild(this.canvas)
-        this.canvas.addEventListener('mousemove', this.handleCanvasMouseMoved, false)
-        this.canvas.addEventListener('mouseover', this.handleCanvasMouseOver, false)
-        this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false)
+        this.canvas.classList.add('canvas');
+        this.canvas.width = 800;
+        this.canvas.height = 520;
+        document.getElementById('game-canvas').appendChild(this.canvas);
+        this.canvas.addEventListener('mousemove', this.handleCanvasMouseMoved, false);
+        this.canvas.addEventListener('mouseover', this.handleCanvasMouseOver, false);
+        this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false);
         this.context = this.canvas.getContext("2d");
 
         // grid specs
@@ -70,7 +72,7 @@ class Game {
     startClick() {
         this.innerText = "Next Wave";
         towerTime.wave += 1;
-        this.style.backgroundColor = "rgba(68, 74, 110, 0.33)"
+        this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
         setTimeout(() => towerTime.loadCreeps(20), 500);
         setTimeout(() => this.style.backgroundColor = "", 100);
     }
@@ -567,35 +569,61 @@ class Game {
         }
     }
 
+    handleGameOver() {
+        this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
+        this.context.fillRect(0, 0, 800, 520);
+        this.context.font = "100px Trebuchet MS";
+        this.context.fillStyle = "#333"
+        this.context.textAlign = "center";
+        this.context.fillText("Game Over", 400, 210);
+        this.context.font = "40px Trebuchet MS";
+        this.context.fillStyle = "#333"
+        this.context.textAlign = "center";
+        this.context.fillText(`Final Score: ${this.score}`, 400, 280);
+        this.gameOver = true;
+        const button = document.getElementById("start-button");
+        button.innerText = "New Game";
+        button.addEventListener('click', this.newGame, false);
+    }
+
+    newGame() {
+        window.location.reload(false); 
+    }
+
     run() {
 
-        this.render();
         this.updateInfo();
-        this.showTowerInfo();
-        this.gridAttacks();
-        for (let c = 0; c < this.numCols; c++) {
-            for (let r = 0; r < this.numRows; r++)
-            this.grid[c][r].run();
-        }
-        for (let i = 0; i < this.towers.length; i++) {
-            if (!this.towers[i].removed) {
-                this.towers[i].run();
-            } else {
-                this.towers.splice(i, 1)
+        if (!this.gameOver) {
+            this.render();
+            this.showTowerInfo();
+            this.gridAttacks();
+            for (let c = 0; c < this.numCols; c++) {
+                for (let r = 0; r < this.numRows; r++)
+                this.grid[c][r].run();
             }
-        }
-        for (let i = 0; i < this.creeps.length; i++) {
-            if (this.creeps[i].alive) {
-                this.creeps[i].run();
-            } else {
-                this.creeps.splice(i, 1);
+            for (let i = 0; i < this.towers.length; i++) {
+                if (!this.towers[i].removed) {
+                    this.towers[i].run();
+                } else {
+                    this.towers.splice(i, 1);
+                }
             }
-        }
-        for (let i = 0; i < this.attacks.length; i++) {
-            if (!this.attacks[i].hit) {
-                this.attacks[i].run();
-            } else {
-                this.attacks.splice(i, 1);
+            for (let i = 0; i < this.creeps.length; i++) {
+                if (this.creeps[i].alive) {
+                    this.creeps[i].run();
+                } else {
+                    this.creeps.splice(i, 1);
+                }
+            }
+            for (let i = 0; i < this.attacks.length; i++) {
+                if (!this.attacks[i].hit) {
+                    this.attacks[i].run();
+                } else {
+                    this.attacks.splice(i, 1);
+                }
+            }
+            if (this.lives <= 0) {
+                setTimeout(this.handleGameOver(), 1000);
             }
         }
     }
