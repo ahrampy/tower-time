@@ -66,7 +66,7 @@ class Tower{
     handleUpgrade() {
         this.upgradeLevel += 1;
         this.upgrade *= 2;
-        this.damage *= 2.5;
+        this.damage *= round5(2.5);
         this.range += 25;
         this.speed += 2;
 
@@ -107,6 +107,7 @@ class Tower{
                 this.atkImg.src = "images/fire/red-tower-atk-3.png";
             }
         } else if (this.type === "Air") {
+            this.cooldown += 200;
             if (this.upgradeLevel === 2) {
                 this.img = new Image()
                 this.img.src = "images/air/yellow-tower-2.png"

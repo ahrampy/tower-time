@@ -15,6 +15,10 @@ function animate() {
     window.requestAnimationFrame(animate)
 }
 
+function round5(x) {
+    return Math.ceil(x / 5) * 5;
+}
+
 class Game {
     constructor() {
 
@@ -58,11 +62,12 @@ class Game {
         this.goal = null;
 
         // load buttons
-        this.tileDivs = this.createTileDivs();
+        this.tileDivs = this.createTiles();
         this.handleDomCallbacks(this.tileDivs);
         this.handleStartClick();
         this.handleEditClicks();
         this.handleEscPress();
+        // this.handleShiftPress(); // multiple tower creation
 
         // path finding
         this.validated = false;
@@ -91,6 +96,7 @@ class Game {
             return;
         }
         this.innerText = "Next Wave";
+        towerTime.bits = round5(towerTime.bits);
         towerTime.wave += 1;
         if (towerTime.wave % 10 === 0) {
             towerTime.multiplier += 0.5;
@@ -119,6 +125,16 @@ class Game {
             }
         })
     }
+
+    // handleShiftPress() {
+    //     document.addEventListener("keypress", event => {
+    //         if (event.keyCode === 16) {
+    //             if (towerTime.placingTower) {
+    //                 let checkPlaced = towerTime.towers.length;        
+    //             }
+    //         }
+    //     })
+    // }
 
     upgradeClick() {
         const tower = towerTime.selectedTower
@@ -224,7 +240,7 @@ class Game {
         }
     }
 
-    createTileDivs() {
+    createTiles() {
         const tileDivs = [];
         for (let i = 0; i < 4; i++) {
             const tileDiv = document.createElement("div");
@@ -232,6 +248,8 @@ class Game {
             let tileImgPath;
             let boardImgPath;
             let attackImgPath;
+            let cost;
+            let upgrade;
             let type;
             let range;
             let cooldown;
@@ -239,40 +257,48 @@ class Game {
             let speed;
 
             if (i === 0) {
-                tileImgPath = "images/earth/green-tower-1.png"
-                boardImgPath = "images/earth/green-tower-1.png"
-                attackImgPath = "images/earth/green-tower-atk-1.png"
+                tileImgPath = "images/earth/green-tower-1.png";
+                boardImgPath = "images/earth/green-tower-1.png";
+                attackImgPath = "images/earth/green-tower-atk-1.png";
+                cost = 15;
+                upgrade = 30;
                 type = "Earth";
                 range = 100;
                 cooldown = 1000;
                 damage = 30;
                 speed = 8;
             } else if (i === 1) {
-                tileImgPath = "images/water/blue-tower-1.png"
-                boardImgPath = "images/water/blue-tower-1.png"
-                attackImgPath = "images/water/blue-tower-atk-1.png"
+                tileImgPath = "images/water/blue-tower-1.png";
+                boardImgPath = "images/water/blue-tower-1.png";
+                attackImgPath = "images/water/blue-tower-atk-1.png";
+                cost = 30;
+                upgrade = 60;
                 type = "Water";
                 range = 120;
                 cooldown = 300;
                 damage = 10;
                 speed = 1;
             } else if (i === 2) {
-                tileImgPath = "images/fire/red-tower-1.png"
-                boardImgPath = "images/fire/red-tower-1.png"
-                attackImgPath = "images/fire/red-tower-atk-1.png"
+                tileImgPath = "images/fire/red-tower-1.png";
+                boardImgPath = "images/fire/red-tower-1.png";
+                attackImgPath = "images/fire/red-tower-atk-1.png";
+                cost = 50;
+                upgrade = 100;
                 type = "Fire";
                 range = 120;
                 cooldown = 200;
                 damage = 20;
                 speed = 12;
             } else if (i === 3) {
-                tileImgPath = "images/air/yellow-tower-1.png"
-                boardImgPath = "images/air/yellow-tower-1.png"
-                attackImgPath = "images/air/yellow-tower-atk-1.png"
+                tileImgPath = "images/air/yellow-tower-1.png";
+                boardImgPath = "images/air/yellow-tower-1.png";
+                attackImgPath = "images/air/yellow-tower-atk-1.png";
+                cost = 100;
+                upgrade = 200;
                 type = "Air";
-                range = 200;
-                cooldown = 1200;
-                damage = 150;
+                range = 140;
+                cooldown = 2200;
+                damage = 100;
                 speed = 16;
             }
 
@@ -287,8 +313,8 @@ class Game {
 
             document.getElementById('towers').appendChild(tileDiv);
 
-            tileDiv.cost = 15 * (i + 1);
-            tileDiv.upgrade = 30 * (i + 1);
+            tileDiv.cost = cost;
+            tileDiv.upgrade = upgrade;
             tileDiv.id = i;
             tileDiv.type = type;
             tileDiv.range = range;
@@ -308,9 +334,9 @@ class Game {
             } else if (i=== 1) {
                 towerName.innerText = "30 b"
             } else if (i === 2) {
-                towerName.innerText = "45 b"
+                towerName.innerText = "50 b"
             } else if (i === 3) {
-                towerName.innerText = "60 b"
+                towerName.innerText = "100 b"
             }
 
             tileDiv.appendChild(towerName)
@@ -392,6 +418,7 @@ class Game {
         }
         if (towerTime.bits >= this.cost) {            
             towerTime.createTower(this);
+            towerTime.currentTileDiv = this;
             towerTime.placingTower = true;
         }
     }
