@@ -29,7 +29,9 @@ class Game {
         this.bits = 200;
         this.score = 0;
         this.wave = 0;
-        this.multiplier = (1 + Math.floor(this.wave / 10) / 2); // increase difficulty
+        this.multiplier = 1; // increase difficulty
+        // this.multiplier = (1 + Math.floor(this.wave / 10)); // increase difficulty
+        this.creepHealth = this.wave * 500 * this.multiplier;
         this.gameOver = false;
 
         // load canvas
@@ -90,6 +92,10 @@ class Game {
         }
         this.innerText = "Next Wave";
         towerTime.wave += 1;
+        if (towerTime.wave % 10 === 0) {
+            towerTime.multiplier += 0.5;
+        }
+        towerTime.creepHealth = towerTime.wave * 500 * towerTime.multiplier;
         towerTime.bits += (10 * towerTime.wave) / 2
         this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
         setTimeout(() => towerTime.loadCreeps(20), 500);
@@ -441,6 +447,12 @@ class Game {
                 const value = document.createElement('p');
                 value.style.fontSize = '10pt';
                 value.innerHTML = this.wave;
+                info.appendChild(value);
+            } else if (info.innerHTML.indexOf('Creep') != -1) {
+                info.innerHTML = '<h4>Creep</h4> <br/>';
+                const value = document.createElement('p');
+                value.style.fontSize = '10pt';
+                value.innerHTML = this.creepHealth;
                 info.appendChild(value);
             }
 
