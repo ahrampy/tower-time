@@ -85,7 +85,7 @@ class Game {
             towerTime.gameStarted = true;
             towerTime.handleGameStart();
             towerTime.run();
-            this.innerText = "Send Wave";
+            this.innerText = "Start Game";
             return;
         }
         this.innerText = "Next Wave";
@@ -651,7 +651,7 @@ class Game {
             this.context.fillText("Earth: Basic    Water: Slows Creeps    Fire: Fast Attack    Air: Through Attack", 400, 410);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Click 'Start' when Ready!", 400, 480);
+            this.context.fillText("Click 'Play' when Ready!", 400, 480);
 
         } else {
             this.render();
