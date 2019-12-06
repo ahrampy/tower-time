@@ -29,6 +29,7 @@ class Game {
         this.bits = 200;
         this.score = 0;
         this.wave = 0;
+        this.multiplier = (1 + Math.floor(this.wave / 10) / 2); // increase difficulty
         this.gameOver = false;
 
         // load canvas
@@ -59,6 +60,7 @@ class Game {
         this.handleDomCallbacks(this.tileDivs);
         this.handleStartClick();
         this.handleEditClicks();
+        this.handleEscPress();
 
         // path finding
         this.validated = false;
@@ -99,6 +101,17 @@ class Game {
         const sellButton = document.getElementById("sell-button");
         upgradeButton.addEventListener('click', this.upgradeClick, false);
         sellButton.addEventListener('click', this.sellClick, false);
+    }
+
+    handleEscPress() {
+        document.addEventListener("keydown", event => {
+            if (event.keyCode === 27) {
+                towerTime.placingTower = false;
+                if (!towerTime.towers[towerTime.towers.length - 1].placed) {
+                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
+                }
+            }
+        })
     }
 
     upgradeClick() {
@@ -584,7 +597,7 @@ class Game {
 
     sendCreep() {
         const location = towerTime.start.center.copy();
-        const creep = new Creep(location)
+        const creep = new Creep(location, towerTime.multiplier)
         towerTime.creeps.push(creep)
     }
 

@@ -1,7 +1,7 @@
 'use strict'
 
 class Creep {
-    constructor(location) {
+    constructor(location, multiplier) {
 
         // movement
         this.location = location
@@ -14,7 +14,7 @@ class Creep {
         this.color = "rgb(200, 200, 200)";
 
         // stats
-        this.multiplier = 1 + Math.floor(towerTime.wave / 10);
+        this.multiplier = multiplier
         this.maxHealth = (towerTime.wave * 500 * this.multiplier);
         this.worth = 5 * this.multiplier;
         this.pointValue = 100 * this.multiplier;
