@@ -15,7 +15,7 @@ class Creep {
 
         // stats
         this.multiplier = multiplier
-        this.maxHealth = (towerTime.wave * 500 * this.multiplier);
+        this.maxHealth = (towerTime.wave * 300 * this.multiplier);
         this.worth = 5 * this.multiplier;
         this.pointValue = 100 * this.multiplier;
         this.health = this.maxHealth;

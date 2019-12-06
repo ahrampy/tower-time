@@ -37,7 +37,7 @@ class Game {
         // increase difficulty
         this.multiplier = 1;
 
-        this.creepHealth = this.wave * 500 * this.multiplier;
+        this.creepHealth = this.wave * 300 * this.multiplier;
         this.gameOver = false;
 
         // load canvas
@@ -106,7 +106,7 @@ class Game {
         if (towerTime.wave % 30 === 0) {
             towerTime.multiplier += 0.5;
         }
-        towerTime.creepHealth = towerTime.wave * 500 * towerTime.multiplier;
+        towerTime.creepHealth = towerTime.wave * 400 * towerTime.multiplier;
         towerTime.bits += (10 * towerTime.wave) / 2
         this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
         setTimeout(() => towerTime.loadCreeps(20), 500);
