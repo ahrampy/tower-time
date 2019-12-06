@@ -240,7 +240,7 @@ class Game {
                 range = 100;
                 cooldown = 1000;
                 damage = 30;
-                speed = 6;
+                speed = 8;
             } else if (i === 1) {
                 tileImgPath = "images/water/blue-tower-1.png"
                 boardImgPath = "images/water/blue-tower-1.png"
@@ -258,7 +258,7 @@ class Game {
                 range = 120;
                 cooldown = 200;
                 damage = 20;
-                speed = 10;
+                speed = 12;
             } else if (i === 3) {
                 tileImgPath = "images/air/yellow-tower-1.png"
                 boardImgPath = "images/air/yellow-tower-1.png"
@@ -267,7 +267,7 @@ class Game {
                 range = 200;
                 cooldown = 1200;
                 damage = 150;
-                speed = 15;
+                speed = 16;
             }
 
 
@@ -614,12 +614,12 @@ class Game {
                     cell.attackSlow = true;
                     setTimeout(()=> cell.attackSlow = false, 1000); 
                 }
-                if (attack.type === "Air") {
-                    return;
-                }
+
                 for (let j = 0; j < this.creeps.length; j++) {
                     if (cell === this.creeps[j].currentCell) {
-                        attack.hit = true;
+                        if (attack.type != "Air") {
+                            attack.hit = true;
+                        }
                     }
                 }
             }
@@ -637,18 +637,18 @@ class Game {
             this.context.font = "100px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.textAlign = "center";
-            this.context.fillText("Tower Time", 400, 180);
+            this.context.fillText("Tower Time", 400, 160);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
             this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 240);
-            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 270);
-            this.context.fillText("Score: Send another wave to get the highest score", 400, 300);
+            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 275);
+            this.context.fillText("Score: Send another wave to get the highest score", 400, 310);
             this.context.font = "26px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Tower Abilities", 400, 350);
-            this.context.font = "14px Trebuchet MS";
+            this.context.fillText("Tower Abilities", 400, 380);
+            this.context.font = "15px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth - Basic        Water - Slows Creeps        Fire - Fast Attack        Air - Through Attack", 400, 380);
+            this.context.fillText("Earth: Basic    Water: Slows Creeps    Fire: Fast Attack    Air: Through Attack", 400, 410);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.fillText("Click 'Start' when Ready!", 400, 480);
