@@ -93,7 +93,7 @@ class Game {
         this.innerText = "Next Wave";
         towerTime.wave += 1;
         if (towerTime.wave % 10 === 0) {
-            towerTime.multiplier += 0.5;
+            towerTime.multiplier += 1;
         }
         towerTime.creepHealth = towerTime.wave * 500 * towerTime.multiplier;
         towerTime.bits += (10 * towerTime.wave) / 2
