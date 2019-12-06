@@ -33,8 +33,10 @@ class Game {
         this.bits = 200;
         this.score = 0;
         this.wave = 0;
-        this.multiplier = 1; // increase difficulty
-        // this.multiplier = (1 + Math.floor(this.wave / 10)); // increase difficulty
+
+        // increase difficulty
+        this.multiplier = 1;
+
         this.creepHealth = this.wave * 500 * this.multiplier;
         this.gameOver = false;
 
@@ -101,11 +103,13 @@ class Game {
         if (towerTime.wave % 10 === 0) {
             towerTime.multiplier += 0.5;
         }
+        if (towerTime.wave % 30 === 0) {
+            towerTime.multiplier += 0.5;
+        }
         towerTime.creepHealth = towerTime.wave * 500 * towerTime.multiplier;
         towerTime.bits += (10 * towerTime.wave) / 2
         this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
         setTimeout(() => towerTime.loadCreeps(20), 500);
-        setTimeout(() => this.style.backgroundColor = "", 100);
     }
 
     handleEditClicks() {

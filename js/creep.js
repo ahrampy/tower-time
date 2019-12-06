@@ -104,7 +104,9 @@ class Creep {
         const context = towerTime.context;
         context.beginPath();
         context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
-        if (this.health < this.maxHealth && this.health > this.maxHealth*0.75) {
+        if (this.slowed) {
+            context.fillStyle = "#49E2FA";
+        } else if (this.health < this.maxHealth && this.health > this.maxHealth*0.75) {
             context.fillStyle = "rgba(245, 242, 66)"
         } else if (this.health <= this.maxHealth * 0.75 && this.health >= this.maxHealth * 0.5) {
             context.fillStyle = "rgba(245, 182, 66)"
@@ -114,10 +116,6 @@ class Creep {
             context.fillStyle = "rgba(245, 75, 66)"
         } else {
             context.fillStyle = this.color;
-        }
-        if (this.slowed) {
-            context.fillStyle = "#49E2FA";
-            // context.stroke();
         }
         context.fill();
     }
