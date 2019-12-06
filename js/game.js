@@ -33,12 +33,11 @@ class Game {
         this.bits = 200;
         this.score = 0;
         this.wave = 0;
+        this.gameOver = false;
 
         // increase difficulty
         this.multiplier = 1;
-
         this.creepHealth = this.wave * 400 * this.multiplier;
-        this.gameOver = false;
 
         // load canvas
         this.canvas = document.createElement("canvas");
