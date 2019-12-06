@@ -37,7 +37,7 @@ class Game {
         // increase difficulty
         this.multiplier = 1;
 
-        this.creepHealth = this.wave * 300 * this.multiplier;
+        this.creepHealth = this.wave * 400 * this.multiplier;
         this.gameOver = false;
 
         // load canvas
