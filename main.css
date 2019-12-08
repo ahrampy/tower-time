@@ -91,14 +91,34 @@ canvas {
     margin-left: 10px;
 }
 
-/* #mute-button {
+#spacer-div {
+    width: 100px;
+}
+
+#mute-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 #mute-button img {
-    width: 20px;
-    height: 20px;
-    filter: invert(17%);
-} */
+    width: 25px;
+    height: 25px;
+    padding: 10px;
+}
+
+#mute-button img:hover {
+    cursor: pointer;
+}
+
+.mute-off {
+    filter: invert(65%);
+}
+
+.mute-on {
+    filter: invert(15%);
+}
 
 #towers {
     color: rgb(187, 186, 186);

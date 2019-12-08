@@ -53,7 +53,11 @@ class Game {
         // init
         this.handleGameStart();
         this.gameStarted = false;
-        // this.music = null;
+
+        // audio
+        this.handleSoundButton();
+        this.muted = false;
+        this.music = document.createElement('audio');
 
         // grid specs
         this.numBlocks = 50;
@@ -65,13 +69,12 @@ class Game {
 
         // load buttons
         this.tileDivs = this.createTiles();
-        this.handleDomCallbacks(this.tileDivs);
+        this.handleTileCallbacks(this.tileDivs);
         this.handleStartClick();
         this.handleEditClicks();
-        this.handleKeyPress();
-        // this.handleShiftPress(); // multiple tower creation
+        this.handleKeyCallbacks();
 
-        // path finding
+        // Dijkstra's algorithm and the A Star procedure
         this.validated = false;
         this.loadGrid();
         this.findPath();
@@ -95,13 +98,24 @@ class Game {
             towerTime.handleGameStart();
             towerTime.run();
             this.innerText = "Start Game";
-            // towerTime.music = new Audio('sounds/splash.mp3');
-            // towerTime.music.play();
+            if (!towerTime.muted) {
+                // setTimeout(() => (
+                towerTime.music.setAttribute('src', 'sounds/splash.mp3');
+                // towerTime.music.load();
+                towerTime.music.playbackRate = 0.9
+                towerTime.music.play();
+                // ), 0);
+            }
             return;
-        // } else {
-        //     towerTime.music.pause();
-        //     towerTime.music = new Audio('sounds/in_game.mp3');
-        //     towerTime.music.play();
+        } else {
+            if (!towerTime.muted) {
+                // setTimeout(() => (
+                towerTime.music.setAttribute('src', 'sounds/in_game.mp3');
+                // towerTime.music.load();
+                towerTime.music.playbackRate = 0.95
+                towerTime.music.play();
+                // ), 0);
+            }
         }
         this.innerText = "Next Wave";
         towerTime.bits = round5(towerTime.bits);
@@ -115,17 +129,11 @@ class Game {
         towerTime.creepHealth = towerTime.wave * 400 * towerTime.multiplier;
         towerTime.bits += (10 * towerTime.wave) / 2
         this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
-        setTimeout(() => towerTime.loadCreeps(20), 500);
+        towerTime.loadCreeps(20);
     }
 
-    handleEditClicks() {
-        const upgradeButton = document.getElementById("upgrade-button");
-        const sellButton = document.getElementById("sell-button");
-        upgradeButton.addEventListener('click', this.upgradeClick, false);
-        sellButton.addEventListener('click', this.sellClick, false);
-    }
-
-    handleKeyPress() {
+    
+    handleKeyCallbacks() {
         document.addEventListener("keydown", event => {
             if (event.keyCode === 27) {
                 towerTime.placingTower = false;
@@ -164,20 +172,36 @@ class Game {
             
         })
     }
+    
+    handleSoundButton() {
+        const muteButton = document.getElementById("mute-button");
+        muteButton.addEventListener('click', this.audioToggle, false);
+    }
 
-    // handleShiftPress() {
-    //     document.addEventListener("keypress", event => {
-    //         if (event.keyCode === 16) {
-    //             if (towerTime.placingTower) {
-    //                 let checkPlaced = towerTime.towers.length;        
-    //             }
-    //         }
-    //     })
-    // }
+    audioToggle() {
+        if (towerTime.muted) {
+            this.classList.add('mute-off');
+            this.classList.remove('mute-on');
+            towerTime.muted = false;
+            towerTime.music.play();
+        } else {
+            this.classList.add('mute-on');
+            this.classList.remove('mute-off');
+            towerTime.music.pause();
+            towerTime.muted = true;
+        }
+    }
+    
+    handleEditClicks() {
+        const upgradeButton = document.getElementById("upgrade-button");
+        const sellButton = document.getElementById("sell-button");
+        upgradeButton.addEventListener('click', this.upgradeClick, false);
+        sellButton.addEventListener('click', this.sellClick, false);
+    }
 
     upgradeClick() {
         const tower = towerTime.selectedTower
-
+        
         if (towerTime.selectedTower && tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
             towerTime.bits -= tower.upgrade;
             tower.handleUpgrade();
@@ -384,7 +408,7 @@ class Game {
         return tileDivs;
     }
 
-    handleDomCallbacks(tiles) {
+    handleTileCallbacks(tiles) {
         for(let i = 0; i < tiles.length; i++) {
             const tileDiv = tiles[i];
             tileDiv.addEventListener('mouseover', this.tileRollOver, false)
@@ -571,7 +595,6 @@ class Game {
                 }
                 if (!towerTime.selectedTower.canUpgrade) {
                     towerEditButtons[0].style.opacity = 0
-                    // towerEditButtons[1].style.opacity = 0
                 }
     
             }
@@ -737,9 +760,11 @@ class Game {
     }
 
     handleGameOver() {
-        // towerTime.music.pause();
-        // towerTime.music = new Audio('sounds/game_over.mp3');
-        // towerTime.music.play();
+        if (!towerTime.muted) {
+            towerTime.music.setAttribute('src', 'sounds/game_over.mp3');
+            towerTime.music.playbackRate = 0.95;
+            towerTime.music.play();
+        }
         this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
         this.context.fillRect(0, 0, 800, 520);
         this.context.font = "100px Trebuchet MS";
