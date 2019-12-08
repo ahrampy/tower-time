@@ -53,6 +53,7 @@ class Game {
         // init
         this.handleGameStart();
         this.gameStarted = false;
+        // this.music = null;
 
         // grid specs
         this.numBlocks = 50;
@@ -67,7 +68,7 @@ class Game {
         this.handleDomCallbacks(this.tileDivs);
         this.handleStartClick();
         this.handleEditClicks();
-        this.handleEscPress();
+        this.handleKeyPress();
         // this.handleShiftPress(); // multiple tower creation
 
         // path finding
@@ -94,7 +95,13 @@ class Game {
             towerTime.handleGameStart();
             towerTime.run();
             this.innerText = "Start Game";
+            // towerTime.music = new Audio('sounds/splash.mp3');
+            // towerTime.music.play();
             return;
+        // } else {
+        //     towerTime.music.pause();
+        //     towerTime.music = new Audio('sounds/in_game.mp3');
+        //     towerTime.music.play();
         }
         this.innerText = "Next Wave";
         towerTime.bits = round5(towerTime.bits);
@@ -118,14 +125,43 @@ class Game {
         sellButton.addEventListener('click', this.sellClick, false);
     }
 
-    handleEscPress() {
+    handleKeyPress() {
         document.addEventListener("keydown", event => {
             if (event.keyCode === 27) {
                 towerTime.placingTower = false;
                 if (!towerTime.towers[towerTime.towers.length - 1].placed) {
                     towerTime.towers.splice(towerTime.towers.length - 1, 1);
                 }
+            } else if (event.keyCode === 49) {
+                towerTime.placingTower = false;
+                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
+                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
+                }
+                this.tileDivs[0].click();
+                towerTime.towers[towerTime.towers.length - 1].visible = true;
+            } else if (event.keyCode === 50) {
+                towerTime.placingTower = false;
+                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
+                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
+                }
+                this.tileDivs[1].click();
+                towerTime.towers[towerTime.towers.length - 1].visible = true;
+            } else if (event.keyCode === 51) {
+                towerTime.placingTower = false;
+                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
+                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
+                }
+                this.tileDivs[2].click();
+                towerTime.towers[towerTime.towers.length - 1].visible = true;
+            } else if (event.keyCode === 52) {
+                towerTime.placingTower = false;
+                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
+                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
+                }
+                this.tileDivs[3].click();
+                towerTime.towers[towerTime.towers.length - 1].visible = true;
             }
+            
         })
     }
 
@@ -300,7 +336,7 @@ class Game {
                 upgrade = 200;
                 type = "Air";
                 range = 140;
-                cooldown = 2200;
+                cooldown = 2000;
                 damage = 100;
                 speed = 16;
             }
@@ -351,10 +387,10 @@ class Game {
     handleDomCallbacks(tiles) {
         for(let i = 0; i < tiles.length; i++) {
             const tileDiv = tiles[i];
-            tileDiv.addEventListener('mouseover',this.tileRollOver, false)
-            tileDiv.addEventListener('mouseout',this.tileRollOut, false)
-            tileDiv.addEventListener('mousedown',this.tilePressed, false)
-            tileDiv.addEventListener('click',this.tileClicked, false)
+            tileDiv.addEventListener('mouseover', this.tileRollOver, false)
+            tileDiv.addEventListener('mouseout', this.tileRollOut, false)
+            tileDiv.addEventListener('mousedown', this.tilePressed, false)
+            tileDiv.addEventListener('click', this.tileClicked, false)
         }
     }
 
@@ -701,6 +737,9 @@ class Game {
     }
 
     handleGameOver() {
+        // towerTime.music.pause();
+        // towerTime.music = new Audio('sounds/game_over.mp3');
+        // towerTime.music.play();
         this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
         this.context.fillRect(0, 0, 800, 520);
         this.context.font = "100px Trebuchet MS";

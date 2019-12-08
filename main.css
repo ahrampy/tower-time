@@ -91,6 +91,15 @@ canvas {
     margin-left: 10px;
 }
 
+/* #mute-button {
+}
+
+#mute-button img {
+    width: 20px;
+    height: 20px;
+    filter: invert(17%);
+} */
+
 #towers {
     color: rgb(187, 186, 186);
     display: flex;

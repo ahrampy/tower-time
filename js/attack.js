@@ -11,6 +11,7 @@ class Attack {
         this.hit = false;
         this.damage = damage;
         this.speed = speed;
+
     }
 
     run() {

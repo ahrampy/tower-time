@@ -69,6 +69,8 @@ class Creep {
         if (towerTime.grid[col][row] === towerTime.goal) {
             this.alive = false;
             towerTime.lives -= 1;
+            // const die = new Audio('sounds/lose_life.mp3');
+            // die.play();
             return
         }
         if (towerTime.grid[col][row] && !towerTime.grid[col][row].occupied) {
