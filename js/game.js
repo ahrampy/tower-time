@@ -364,20 +364,18 @@ class Game {
                 cost = 100;
                 upgrade = 200;
                 type = "Air";
-                range = 140;
+                range = 150;
                 cooldown = 2000;
-                damage = 100;
+                damage = 120;
                 speed = 16;
             }
 
 
             tileDiv.tileDivImg = new Image();
             tileDiv.tileDivImg.src = boardImgPath;
-            // tileDiv.tileDivImg = addEventListener('load', this.hideElementImg, false);
 
             tileDiv.tileDivAttackImg = new Image();
             tileDiv.tileDivAttackImg.src = attackImgPath;
-            // tileDiv.tileDivAttackImg = addEventListener('load', this.hideElementImg, false);
 
             document.getElementById('towers').appendChild(tileDiv);
 
@@ -735,7 +733,7 @@ class Game {
 
     handleGameStart() {
         if (!this.gameStarted) {
-            let towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
+            const towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
             towerEditButtons[0].style.opacity = 0;
             towerEditButtons[1].style.opacity = 0;
             this.context.fillStyle = "rgba(200, 200, 200, .1)";
@@ -743,7 +741,10 @@ class Game {
             this.context.font = "100px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.textAlign = "center";
-            this.context.fillText("Tower Time", 400, 140);
+            this.context.fillText("Tower Time", 400, 130);
+            const titleUnderline = new Image();
+            titleUnderline.src = "images/title-underline.png";
+            this.context.drawImage(titleUnderline, 400, 140);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
             this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 200);
