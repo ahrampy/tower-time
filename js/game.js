@@ -152,7 +152,10 @@ class Game {
                 this.towerKey(2);
             } else if (event.keyCode === 52) {
                 this.towerKey(3);
-
+            } else if (event.keyCode === 8) {
+                this.sellClick();
+            } else if (event.keyCode === 81) {
+                this.upgradeClick();
             }
             
         })
@@ -198,33 +201,37 @@ class Game {
     }
 
     upgradeClick() {
-        const tower = towerTime.selectedTower
-        
-        if (towerTime.selectedTower && tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
-            towerTime.bits -= tower.upgrade;
-            tower.handleUpgrade();
+        if (towerTime.selectedTower) {
+            const tower = towerTime.selectedTower
+            
+            if (towerTime.selectedTower && tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
+                towerTime.bits -= tower.upgrade;
+                tower.handleUpgrade();
+            }
         }
     }
 
     sellClick() {
-        const tower = towerTime.selectedTower;
-
-        const gridCol = Math.floor(tower.location.x / towerTime.cellSize);
-        const gridRow = Math.floor(tower.location.y / towerTime.cellSize);
-
-        const cell = towerTime.grid[gridCol][gridRow];
-        cell.occupied = false;
-
-        towerTime.findPath();
-        for (let c = 0; c < towerTime.numCols; c++) {
-            for (let r = 0; r < towerTime.numRows; r++) {
-                towerTime.grid[c][r].loadAdjacentCells();
+        if (towerTime.selectedTower) {
+            const tower = towerTime.selectedTower;
+    
+            const gridCol = Math.floor(tower.location.x / towerTime.cellSize);
+            const gridRow = Math.floor(tower.location.y / towerTime.cellSize);
+    
+            const cell = towerTime.grid[gridCol][gridRow];
+            cell.occupied = false;
+    
+            towerTime.findPath();
+            for (let c = 0; c < towerTime.numCols; c++) {
+                for (let r = 0; r < towerTime.numRows; r++) {
+                    towerTime.grid[c][r].loadAdjacentCells();
+                }
             }
+    
+            towerTime.bits += tower.upgrade / 2;
+            towerTime.selectedTower = null;
+            tower.removed = true;
         }
-
-        towerTime.bits += tower.upgrade / 2;
-        towerTime.selectedTower = null;
-        tower.removed = true;
     }
 
     handleCanvasMouseMoved(event) {
@@ -753,7 +760,7 @@ class Game {
             this.context.fillText("Optional Hotkeys", 400, 400);
             this.context.font = "15px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth: 1    Water: 2    Fire: 3    Air: 4    Unselect: Esc", 400, 430);
+            this.context.fillText("Earth - 1    Water - 2    Fire - 3    Air - 4    Upgrade - Q    Sell - Backspace    Deselect - Esc", 400, 430);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.fillText("Click 'Play' when Ready!", 400, 490);
