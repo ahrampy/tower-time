@@ -97,7 +97,7 @@ class Game {
             towerTime.gameStarted = true;
             towerTime.handleGameStart();
             towerTime.run();
-            this.innerText = "Start Game";
+            this.innerText = "First Wave";
             if (!towerTime.muted) {
                 // setTimeout(() => (
                 towerTime.music.setAttribute('src', 'sounds/splash.mp3');
@@ -137,40 +137,38 @@ class Game {
         document.addEventListener("keydown", event => {
             if (event.keyCode === 27) {
                 towerTime.placingTower = false;
-                if (!towerTime.towers[towerTime.towers.length - 1].placed) {
+                if (towerTime.selectedTower) {
+                    towerTime.selectedTower.selected = false;
+                    towerTime.selectedTower = null;
+                }
+                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
                     towerTime.towers.splice(towerTime.towers.length - 1, 1);
                 }
             } else if (event.keyCode === 49) {
-                towerTime.placingTower = false;
-                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
-                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
-                }
-                this.tileDivs[0].click();
-                towerTime.towers[towerTime.towers.length - 1].visible = true;
+                this.towerKey(0);
             } else if (event.keyCode === 50) {
-                towerTime.placingTower = false;
-                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
-                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
-                }
-                this.tileDivs[1].click();
-                towerTime.towers[towerTime.towers.length - 1].visible = true;
+                this.towerKey(1);
             } else if (event.keyCode === 51) {
-                towerTime.placingTower = false;
-                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
-                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
-                }
-                this.tileDivs[2].click();
-                towerTime.towers[towerTime.towers.length - 1].visible = true;
+                this.towerKey(2);
             } else if (event.keyCode === 52) {
-                towerTime.placingTower = false;
-                if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
-                    towerTime.towers.splice(towerTime.towers.length - 1, 1);
-                }
-                this.tileDivs[3].click();
-                towerTime.towers[towerTime.towers.length - 1].visible = true;
+                this.towerKey(3);
+
             }
             
         })
+    }
+
+    towerKey(towerNum) {
+        towerTime.placingTower = false;
+        if (towerTime.towers.length && !towerTime.towers[towerTime.towers.length - 1].placed) {
+            towerTime.towers.splice(towerTime.towers.length - 1, 1);
+        }
+        this.tileDivs[towerNum].click();
+        let currentTower = towerTime.towers[towerTime.towers.length - 1];
+        if (currentTower.location.x === 0 && currentTower.location.y === 0) {
+            currentTower.location = new Vector(towerTime.canvas.mouseX, towerTime.canvas.mouseY);
+        }
+        currentTower.visible = true;
     }
     
     handleSoundButton() {
@@ -738,21 +736,27 @@ class Game {
             this.context.font = "100px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.textAlign = "center";
-            this.context.fillText("Tower Time", 400, 160);
+            this.context.fillText("Tower Time", 400, 140);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 240);
-            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 275);
-            this.context.fillText("Score: Send another wave to get the highest score", 400, 310);
+            this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 210);
+            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 245);
+            this.context.fillText("Score: Send another wave to get the highest score", 400, 280);
             this.context.font = "26px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Tower Abilities", 400, 380);
+            this.context.fillText("Tower Abilities", 400, 325);
             this.context.font = "15px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth: Basic    Water: Slows Creeps    Fire: Fast Attack    Air: Through Attack", 400, 410);
+            this.context.fillText("Earth: Basic    Water: Slows Creeps    Fire: Fast Attack    Air: Through Attack", 400, 355);
+            this.context.font = "26px Trebuchet MS";
+            this.context.fillStyle = "#333";
+            this.context.fillText("Optional Hotkeys", 400, 400);
+            this.context.font = "15px Trebuchet MS";
+            this.context.fillStyle = "rgba(68, 74, 110, 1)";
+            this.context.fillText("Earth: 1    Water: 2    Fire: 3    Air: 4    Unselect: Esc", 400, 430);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Click 'Play' when Ready!", 400, 480);
+            this.context.fillText("Click 'Play' when Ready!", 400, 490);
 
         } else {
             this.render();
