@@ -1,4 +1,4 @@
-# tower-time
+# Tower Time
 Canvas tower defense game.
 
 [Tower Time Live](https://towertime.herokuapp.com/)
