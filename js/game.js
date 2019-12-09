@@ -741,15 +741,19 @@ class Game {
             this.context.font = "100px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.textAlign = "center";
-            this.context.fillText("Tower Time", 400, 130);
+            this.context.fillText("Tower Time", 400, 125);
             const titleUnderline = new Image();
+            titleUnderline.onload = () => (
+                this.context.drawImage(titleUnderline,
+                    this.canvas.width / 2 - titleUnderline.width / 2,
+                    150)
+                )
             titleUnderline.src = "images/title-underline.png";
-            this.context.drawImage(titleUnderline, 400, 140);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Goal: Stop creeps from reaching the red square", 400, 200);
-            this.context.fillText("Play: Build, upgrade, and sell towers on open squares", 400, 235);
-            this.context.fillText("Score: Send another wave to get the highest score", 400, 270);
+            this.context.fillText("Goal:  Stop creeps from reaching the red square", 400, 200);
+            this.context.fillText("Play:  Build, upgrade, and sell towers on open squares", 400, 235);
+            this.context.fillText("Score:  Send another wave to get your highest score", 400, 270);
             this.context.font = "26px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.fillText("Tower Abilities", 400, 325);
