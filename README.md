@@ -11,7 +11,9 @@ Build, upgrade, sell towers to create a maze for creeps to traverse through, and
 * HTML5
 * CSS
 
-Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm or 'Brushfire' pathfinding combined with vector navigation. It features custom pixel animation and is a fully-featured game, with upgrade and sell options, and hotkeys to make for a polished user experience. 
+## About
+
+Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm or 'Brushfire' pathfinding combined with vector movement. It features custom pixel animation and is a fully-featured game, with upgrade / sell options, and optional hotkeys to make for a polished user experience.
 
 <img src="https://imgur.com/td8tiXC.png"/>
 <img src="https://imgur.com/vlwicHs.png"/>
