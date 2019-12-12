@@ -812,22 +812,25 @@ class Game {
                 this.grid[c][r].run();
             }
             for (let i = 0; i < this.towers.length; i++) {
-                if (!this.towers[i].removed) {
-                    this.towers[i].run();
+                let tower = this.towers[i];
+                if (!tower.removed) {
+                    tower.run();
                 } else {
                     this.towers.splice(i, 1);
                 }
             }
             for (let i = 0; i < this.creeps.length; i++) {
-                if (this.creeps[i].alive) {
-                    this.creeps[i].run();
+                let creep = this.creeps[i];
+                if (creep.alive) {
+                    creep.run();
                 } else {
                     this.creeps.splice(i, 1);
                 }
             }
             for (let i = 0; i < this.attacks.length; i++) {
-                if (!this.attacks[i].hit) {
-                    this.attacks[i].run();
+                let attack = this.attacks[i]
+                if (!attack.hit) {
+                    attack.run();
                 } else {
                     this.attacks.splice(i, 1);
                 }
