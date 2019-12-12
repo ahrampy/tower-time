@@ -59,6 +59,10 @@ class Game {
         this.muted = false;
         this.music = document.createElement('audio');
 
+        // auto send waves
+        this.handleAutoWaveButton();
+        this.autoWave = false;
+
         // grid specs
         this.numBlocks = 50;
         this.cellSize = 40;
@@ -74,7 +78,7 @@ class Game {
         this.handleEditClicks();
         this.handleKeyCallbacks();
 
-        // Dijkstra's algorithm and the A Star procedure
+        // Dijkstra's
         this.validated = false;
         this.loadGrid();
         this.findPath();
@@ -179,6 +183,11 @@ class Game {
         muteButton.addEventListener('click', this.audioToggle, false);
     }
 
+    handleAutoWaveButton() {
+        const autoWave = document.querySelector("input[name=auto-wave]");
+        autoWave.addEventListener('change', this.autoWaveToggle, false);
+    }
+
     audioToggle() {
         if (towerTime.muted) {
             this.classList.add('mute-off');
@@ -190,6 +199,14 @@ class Game {
             this.classList.remove('mute-off');
             towerTime.music.pause();
             towerTime.muted = true;
+        }
+    }
+
+    autoWaveToggle() {
+        if (this.checked) {
+            towerTime.autoWave = true;
+        } else {
+            towerTime.autoWave = false;
         }
     }
     
@@ -731,6 +748,13 @@ class Game {
         }
     }
 
+    checkWave() {
+        if (!towerTime.creeps.length && towerTime.autoWave) {
+            const send = document.getElementById("start-button");
+            send.click();
+        }
+    }
+
     handleGameStart() {
         if (!this.gameStarted) {
             const towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
@@ -807,6 +831,7 @@ class Game {
             this.render();
             this.showTowerInfo();
             this.gridAttacks();
+            this.checkWave();
             for (let c = 0; c < this.numCols; c++) {
                 for (let r = 0; r < this.numRows; r++)
                 this.grid[c][r].run();
