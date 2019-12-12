@@ -193,11 +193,11 @@ class Game {
             this.classList.add('mute-off');
             this.classList.remove('mute-on');
             towerTime.muted = false;
-            towerTime.music.play();
+            towerTime.music.muted = false;
         } else {
             this.classList.add('mute-on');
             this.classList.remove('mute-off');
-            towerTime.music.pause();
+            towerTime.music.muted = true;
             towerTime.muted = true;
         }
     }
