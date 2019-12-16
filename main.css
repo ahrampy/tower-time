@@ -2,8 +2,8 @@ body {
     background: #333;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
 }
@@ -240,7 +240,6 @@ canvas {
   width: 0;
 }
 
-/* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 15;
@@ -250,29 +249,20 @@ canvas {
   background-color: rgba(68, 74, 110, 0.815);
 }
 
-/* On mouse-over, add a grey background color */
-/* .auto-container:hover input ~ .checkmark {
-  background-color: rgb(187, 186, 186);
-} */
-
-/* When the checkbox is checked, add a blue background */
 .auto-container input:checked ~ .checkmark {
   background-color: rgb(187, 186, 186);
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-/* Show the checkmark when checked */
 .auto-container input:checked ~ .checkmark:after {
   display: block;
 }
 
-/* Style the checkmark/indicator */
 .auto-container .checkmark:after {
   left: 9px;
   top: 5px;

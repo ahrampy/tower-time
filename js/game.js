@@ -62,6 +62,7 @@ class Game {
         // auto send waves
         this.handleAutoWaveButton();
         this.autoWave = false;
+        this.sendingWave = false;
 
         // grid specs
         this.numBlocks = 50;
@@ -749,9 +750,14 @@ class Game {
     }
 
     checkWave() {
-        if (!towerTime.creeps.length && towerTime.autoWave) {
+        if (towerTime.autoWave && !towerTime.sendingWave && !towerTime.creeps.length ) {
             const send = document.getElementById("start-button");
             send.click();
+            towerTime.sendingWave = true;
+            setTimeout(()=>{
+                towerTime.sendingWave = false
+                debugger
+            }, 1000);
         }
     }
 
