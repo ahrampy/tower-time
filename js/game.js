@@ -756,7 +756,6 @@ class Game {
             towerTime.sendingWave = true;
             setTimeout(()=>{
                 towerTime.sendingWave = false
-                debugger
             }, 1000);
         }
     }
