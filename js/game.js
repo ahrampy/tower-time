@@ -806,9 +806,9 @@ class Game {
     }
 
     handleGameOver() {
+        towerTime.music.setAttribute('src', 'sounds/game_over.mp3');
+        towerTime.music.load();
         if (!towerTime.muted) {
-            towerTime.music.setAttribute('src', 'sounds/game_over.mp3');
-            towerTime.music.load();
             towerTime.music.playbackRate = 0.95;
             towerTime.music.play();
         }
