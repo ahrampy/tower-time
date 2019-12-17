@@ -110,6 +110,8 @@ class Game {
                 towerTime.music.playbackRate = 0.9
                 towerTime.music.play();
                 // ), 0);
+            } else {
+                towerTime.music.setAttribute('src', '');
             }
             return;
         } else {
@@ -120,6 +122,8 @@ class Game {
                 towerTime.music.playbackRate = 0.95
                 towerTime.music.play();
                 // ), 0);
+            } else {
+                towerTime.music.setAttribute('src', '');
             }
         }
         this.innerText = "Next Wave";
