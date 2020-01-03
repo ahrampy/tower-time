@@ -1,6 +1,6 @@
 'use strict'
 
-window.addEventListener('load', init, false)
+window.addEventListener('load', init, false);
 
 var towerTime;
 var FRAME_RATE = 100;
@@ -12,7 +12,7 @@ function init() {
 
 function animate() {
     towerTime.run();
-    window.requestAnimationFrame(animate)
+    window.requestAnimationFrame(animate);
 }
 
 function round5(x) {
@@ -667,12 +667,10 @@ class Game {
                 }
             })
         })
-
         for (let c = 0; c < this.numCols; c++) {
             for (let r = 0; r < this.numRows; r++)
                 this.grid[c][r].loadAdjacentCells();
         }
-
         const checkCells = [this.goal]
         while (checkCells.length) {
             const current = checkCells.shift();

@@ -80,7 +80,8 @@ class Creep {
         if (towerTime.grid[col][row] && !towerTime.grid[col][row].occupied) {
             this.currentCell = towerTime.grid[col][row];
             let nextCell = this.currentCell.smallestAdjacent;
-            this.acceleration = this.acceleration.subGetNew(nextCell.center, this.currentCell.center);
+            this.acceleration = this.acceleration.subGetNew(nextCell.center,
+                this.currentCell.center);
             this.acceleration.setMag(0.05);
         }
         
