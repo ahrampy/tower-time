@@ -29,3 +29,7 @@ Build, upgrade, sell towers to create a maze for enemies to traverse through, an
 
 <img src="https://i.imgur.com/weSGoxK.png"/>
 
+* Enemy vector movement and utilization
+
+<img src="https://i.imgur.com/zHEqY6U.png"/>
+
