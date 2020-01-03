@@ -24,3 +24,12 @@ Build, upgrade, sell towers to create a maze for enemies to traverse through, an
 * Every tenth level, the difficulty, along with points and income, increase to keep the game competative and challanging to commited players.
 
 <img src="https://i.imgur.com/P400Hzf.png"/>
+
+* Built-in simplified live path finding and valid tower placement checking
+
+<img src="https://i.imgur.com/weSGoxK.png"/>
+
+* Enemy vector utilization for movement
+
+<img src="https://i.imgur.com/zHEqY6U.png"/>
+
