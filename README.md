@@ -3,7 +3,7 @@ Canvas tower defense game.
 
 [Tower Time Live](https://towertime.herokuapp.com/)
 
-Build, upgrade, sell towers to create a maze for enemies to traverse through, and stop them from reaching the red square!
+Build, upgrade, and sell towers to create a maze for enemies to traverse through, and stop them from reaching the red square!
 
 ## Technologies
 
@@ -33,3 +33,6 @@ Build, upgrade, sell towers to create a maze for enemies to traverse through, an
 
 <img src="https://i.imgur.com/zHEqY6U.png"/>
 
+## Future Plans
+
+* Add Firebase backend to allow highscore list
