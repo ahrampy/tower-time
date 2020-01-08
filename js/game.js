@@ -65,7 +65,7 @@ class Game {
         this.sendingWave = false;
 
         // grid specs
-        this.numBlocks = 50;
+        this.numBlocks = 40;
         this.cellSize = 40;
         this.numCols = 20;
         this.numRows = 13;
