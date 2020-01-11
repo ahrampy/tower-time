@@ -218,59 +218,88 @@ canvas {
 }
 
 .auto-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  color: rgb(187, 186, 186);
-  font-size: 16px;
-  font-weight: 600;
-  width: 80px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    color: rgb(187, 186, 186);
+    font-size: 16px;
+    font-weight: 600;
+    width: 80px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .auto-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
 .checkmark {
-  position: absolute;
-  top: 15;
-  right: 10;
-  height: 25px;
-  width: 25px;
-  background-color: rgba(68, 74, 110, 0.815);
+    position: absolute;
+    top: 15;
+    right: 10;
+    height: 25px;
+    width: 25px;
+    background-color: rgba(68, 74, 110, 0.815);
 }
 
 .auto-container input:checked ~ .checkmark {
-  background-color: rgb(187, 186, 186);
+    background-color: rgb(187, 186, 186);
 }
 
 .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+    content: "";
+    position: absolute;
+    display: none;
 }
 
 .auto-container input:checked ~ .checkmark:after {
-  display: block;
+    display: block;
 }
 
 .auto-container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid rgba(68, 74, 110, 0.815);
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid rgba(68, 74, 110, 0.815);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    color: rgba(68, 74, 110, 0.816);
+}
+
+footer a {
+    text-decoration: none;
+    color: rgb(187, 186, 186);
+}
+
+footer a:hover {
+    color: black;
+}
+
+.git {
+    padding-left: 10px;
+}
+
+.git img {
+    /* filter: invert(8%); */
+}
+
+.git img:hover {
+    filter: invert(60%);
 }
