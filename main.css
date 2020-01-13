@@ -275,7 +275,7 @@ canvas {
     transform: rotate(45deg);
 }
 
-footer {
+#footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -283,12 +283,12 @@ footer {
     color: rgba(68, 74, 110, 0.816);
 }
 
-footer a {
+#footer a {
     text-decoration: none;
     color: rgb(187, 186, 186);
 }
 
-footer a:hover {
+#footer a:hover {
     color: black;
 }
 
