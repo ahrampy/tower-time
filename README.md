@@ -39,4 +39,4 @@ Enemies use a JavaScript vector "class" to traverse towers and block squares. Up
 
 ## Future Plans
 
-* Add Firebase backend to allow highscore list
+What had been repeatedly requested by testers and players is the addition of a highscore list, so I would add a simple Firebase backend to allow user to store their name along with their final score, and display a highscore list on the gameover screen. This would additionaly require some "locking down" of the game's interanal workings, which are currently too accesible on the browser;)
