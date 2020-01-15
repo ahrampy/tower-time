@@ -33,7 +33,7 @@ Live path finding and valid tower placement checking are an essential element to
 <img src="https://i.imgur.com/weSGoxK.png"/>
 
 #### Vectors
-Enemies use a JavaScript vector "class" to traverse towers and block squares. Upon choosing the correct direction based on Djikstra's path finding algorithm, they are propelled in that direction but limited to a defined speed, and "bounce" off of objects or a map border they get too close to by reversing their x and y velocities.
+Enemies use a JavaScript vector "class" to traverse towers and block squares. Upon choosing the correct direction based on Dijkstra's path creation pattern, they are propelled in that direction but limited to a defined speed, and "bounce" off of objects or a map border they get too close to by reversing their x and y velocities.
 
 <img src="https://i.imgur.com/zHEqY6U.png"/>
 
