@@ -13,23 +13,23 @@ Build, upgrade, and sell towers to create a maze for enemies to traverse through
 
 ## About
 
-* Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm or 'Brushfire' pathfinding combined with vector movement. It features custom pixel animation and is a fully-featured game, with upgrade / sell options, optional hotkeys to make for a polished user experience, and randomized map generation to always keep the game feeling fresh.
+#### Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm or 'Brushfire' pathfinding combined with vector movement. It features custom pixel animation and is a fully-featured game, with upgrade / sell options, optional hotkeys to make for a polished user experience, and randomized map generation to always keep the game feeling fresh.
 
 <img src="https://imgur.com/td8tiXC.png"/>
 
-* Different towers have different abilities, inluding decreasing the speed of enemies and being able to attack multiple targets with one shot.
+#### Different towers have different abilities, inluding decreasing the speed of enemies and being able to attack multiple targets with one shot.
 
 <img src="https://imgur.com/vlwicHs.png"/>
 
-* Every tenth level, the difficulty, along with points and income, increase to keep the game competative and challanging to commited players.
+#### Every tenth level, the difficulty, along with points and income, increase to keep the game competative and challanging to commited players.
 
 <img src="https://i.imgur.com/P400Hzf.png"/>
 
-* Built-in simplified live path finding and valid tower placement checking
+#### Built-in simplified live path finding and valid tower placement checking
 
 <img src="https://i.imgur.com/weSGoxK.png"/>
 
-* Enemy vector utilization for movement
+#### Enemy vector utilization for movement
 
 <img src="https://i.imgur.com/zHEqY6U.png"/>
 
