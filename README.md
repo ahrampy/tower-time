@@ -13,26 +13,30 @@ Build, upgrade, and sell towers to create a maze for enemies to traverse through
 
 ## About
 
-* Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm or 'Brushfire' pathfinding combined with vector movement. It features custom pixel animation and is a fully-featured game, with upgrade / sell options, optional hotkeys to make for a polished user experience, and randomized map generation to always keep the game feeling fresh.
+Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm or 'Brushfire' pathfinding combined with vector movement. It features custom pixel animation and is a fully-featured game, with upgrade / sell options, optional hotkeys to make for a polished user experience, and randomized map generation to always keep the game feeling fresh.
 
 <img src="https://imgur.com/td8tiXC.png"/>
 
-* Different towers have different abilities, inluding decreasing the speed of enemies and being able to attack multiple targets with one shot.
+#### Tower Abilities
+Different towers have different abilities, inluding decreasing the speed of enemies and being able to attack multiple targets with one shot. This adds a considerable strategic element to the game, giving players the chance to try out various combinations of towers and upgrade levels to make their maze more effective.
 
 <img src="https://imgur.com/vlwicHs.png"/>
 
-* Every tenth level, the difficulty, along with points and income, increase to keep the game competative and challanging to commited players.
+#### Difficulty
+Every tenth level, the difficulty, along with points and income, increase to keep the game competative and challanging to commited players. It scales at a balanced level to make it a continued challange, but not a defeating one. This was playtested extensively with different levels of players to make sure the challenge was a appropriate, and gave advanced players a feeling of achievement on reaching higher levels while giving newer players a clear indication that skill could bring them further.
 
 <img src="https://i.imgur.com/P400Hzf.png"/>
 
-* Built-in simplified live path finding and valid tower placement checking
+#### Path Finding
+Live path finding and valid tower placement checking are an essential element to the game, running a check for the fastest route for enemies every time a tower is placed or removed, and, before a tower is placed, making sure it does not block any other squares on the map.
 
 <img src="https://i.imgur.com/weSGoxK.png"/>
 
-* Enemy vector utilization for movement
+#### Vectors
+Enemies use a JavaScript vector "class" to traverse towers and block squares. Upon choosing the correct direction based on Dijkstra's path creation pattern, they are propelled in that direction but limited to a defined speed, and "bounce" off of objects or a map border they get too close to by reversing their x and y velocities.
 
 <img src="https://i.imgur.com/zHEqY6U.png"/>
 
 ## Future Plans
 
-* Add Firebase backend to allow highscore list
+What had been repeatedly requested by testers and players is the addition of a highscore list, so I would add a simple Firebase backend to allow user to store their name along with their final score, and display a highscore list on the gameover screen. This would additionaly require some "locking down" of the game's interanal workings, which are currently too accesible on the browser;)
