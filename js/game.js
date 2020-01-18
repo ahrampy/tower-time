@@ -772,31 +772,36 @@ class Game {
             this.context.font = "100px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.textAlign = "center";
-            this.context.fillText("Tower Time", 400, 125);
+            this.context.fillText("Tower Time", 400, 100);
             const titleUnderline = new Image();
             titleUnderline.onload = () => (
-                this.context.drawImage(titleUnderline, this.canvas.width / 2 - titleUnderline.width / 2, 150))
+                this.context.drawImage(titleUnderline, this.canvas.width / 2 - titleUnderline.width / 2, 110))
             titleUnderline.src = "images/title-underline.png";
-            this.context.font = "20px Trebuchet MS";
-            this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Play:  Build, upgrade, and sell towers on open squares", 400, 200);
-            this.context.fillText("Goal:  Stop creeps from reaching the red square", 400, 235);
-            this.context.fillText("Score:  Send another wave to get more points", 400, 270);
-            this.context.font = "26px Trebuchet MS";
+            this.context.font = "27px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Tower Abilities", 400, 325);
+            this.context.fillText("How to Play", 400, 155)
+            this.context.font = "16px Trebuchet MS";
+            this.context.fillStyle = "rgba(68, 74, 110, 1)";
+            this.context.fillText("Hover over towers below to see their stats, and click one to select it, then place it on any dark gray space.", 400, 190);
+            this.context.fillText("To upgrade or sell a tower, click on it once it has been placed; this will also show you its range.", 400, 220);
+            this.context.fillText("Once you have built some towers, click 'First Wave', and wave 1 will start." , 400, 250);
+            this.context.fillText("As you send and stop creeps, you will earn more bits; use bits to build and upgrade your towers." , 400, 280);
+            this.context.fillText("Only 20 creeps can reach the red square before you lose; see how high of a score you can get!" , 400, 310);
+            this.context.font = "25px Trebuchet MS";
+            this.context.fillStyle = "#333";
+            this.context.fillText("Tower Abilities", 400, 350);
             this.context.font = "15px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth: Basic    Water: Slows Creeps    Fire: Fast Attack    Air: Through Attack", 400, 355);
-            this.context.font = "26px Trebuchet MS";
+            this.context.fillText("Earth: Basic    Water: Slows Creeps    Fire: Fast Attack    Air: Through Attack", 400, 380);
+            this.context.font = "25px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Optional Hotkeys", 400, 400);
+            this.context.fillText("Optional Hotkeys", 400, 420);
             this.context.font = "15px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth - 1    Water - 2    Fire - 3    Air - 4    Upgrade - Q    Sell - S    Deselect - Esc", 400, 430);
+            this.context.fillText("Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc", 400, 450);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Click 'Play' when Ready!", 400, 490);
+            this.context.fillText("Click 'Play' when Ready!", 400, 500);
 
         } else {
             this.render();
