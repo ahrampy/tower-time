@@ -1,5 +1,5 @@
 # Tower Time
-Canvas tower defense game.
+A Javascript tower defense game.
 
 [Tower Time Live](https://towertime.herokuapp.com/)
 
