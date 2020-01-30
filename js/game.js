@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 window.addEventListener('load', init, false);
 
@@ -782,11 +782,11 @@ class Game {
             this.context.fillText("How to Play", 400, 155)
             this.context.font = "16px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Hover over towers below to see their stats, and click one to select it, then place it on any dark gray space.", 400, 190);
-            this.context.fillText("To upgrade or sell a tower, click on it once it has been placed; this will also show you its range.", 400, 220);
-            this.context.fillText("Once you have built some towers, click 'First Wave', and wave 1 will start." , 400, 250);
-            this.context.fillText("As you send and stop creeps, you will earn more bits; use bits to build and upgrade your towers." , 400, 280);
-            this.context.fillText("Only 20 creeps can reach the red square before you lose; see how high of a score you can get!" , 400, 310);
+            this.context.fillText("Hover over towers below to see their stats - Click one to select it - Place on any dark gray space", 400, 190);
+            this.context.fillText("Upgrade and sell placed towers - Select it on the board - You will also see its range", 400, 220);
+            this.context.fillText("After building some towers click 'First Wave' - This will send the first wave of creeps" , 400, 250);
+            this.context.fillText("Earn more bits by killing creeps - And sending the next wave" , 400, 280);
+            this.context.fillText("You lose a life if a creep reaches the red square - See how high of a score you can get!" , 400, 310);
             this.context.font = "25px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.fillText("Tower Abilities", 400, 350);

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 class Attack {
     constructor(location, angle, atkImg, type, damage, speed) {

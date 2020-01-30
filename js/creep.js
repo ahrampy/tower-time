@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 class Creep {
     constructor(location, multiplier) {

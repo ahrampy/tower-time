@@ -25,6 +25,27 @@ body:hover {
     color: rgb(187, 186, 186);
 }
 
+#tutorial-window {
+    position: absolute;
+    display: flex;
+    padding: 5px;
+    top: 15%;
+    right: 3%;
+    background-color: rgb(187, 186, 186);
+    border-radius: 5px;
+    z-index: -1;
+}
+
+.tutorial-info {
+    height: 460px;
+    width: 200px;
+}
+
+.info-icon img {
+    width: 30px;
+    height: 30px;
+}
+
 #game-controls {
     display: flex;
     justify-content: space-between;

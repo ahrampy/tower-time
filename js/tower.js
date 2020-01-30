@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 class Tower{
     constructor(cost, upgrade, img, atkImg, type, range, damage, cooldown, speed) {

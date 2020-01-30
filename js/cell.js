@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 class Cell{
     constructor(game, id, col, row) {
