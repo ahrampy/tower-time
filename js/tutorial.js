@@ -12,6 +12,18 @@ class Tutorial {
     this.score = document.getElementById('info-score');
     this.addListeners(this.score, "score");
 
+    this.wave = document.getElementById('info-wave');
+    this.addListeners(this.wave, "wave");
+
+    this.creep = document.getElementById('info-creep');
+    this.addListeners(this.creep, "creep");
+
+    this.lives = document.getElementById('info-lives');
+    this.addListeners(this.lives, "lives");
+
+    this.bits = document.getElementById('info-bits');
+    this.addListeners(this.bits, "bits");
+
     this.type = document.getElementById('tower-type');
     this.addListeners(this.type, "type");
 
@@ -46,18 +58,19 @@ class Tutorial {
   };
 
   showInfo(ele) {
+    const text = tutorial.textPar;
     if (ele === "score") {
-      tutorial.textPar.innerHTML = "score";
+      text.innerText = "your current score, increased by every enemy stopped before it reaches the red square";
     } else if (ele === "type") {
-      tutorial.textPar.innerHTML = "name of the current tower";
+      text.innerText = "the name of the current tower";
     } else if (ele === "damage") {
-      tutorial.textPar.innerHTML = "amount of damage current tower will deal every time it fires";
+      text.innerText = "amount of damage the current tower will deal every time it fires";
     } else if (ele === "range") {
-      tutorial.textPar.innerHTML = "distance from itself current tower will watch for enemies";
+      text.innerText = "distance the current tower will fire at enemies - shown by a light blue circle";
     } else if (ele === "cooldown") {
-      tutorial.textPar.innerHTML = "number of miliseconds current tower takes before firing again";
+      text.innerText = "number of miliseconds the current tower needs before firing again";
     } else if (ele === "next") {
-      tutorial.textPar.innerHTML = "cost of the current tower's next upgrade";
+      text.innerText = "cost of the current tower's next upgrade";
     };
   };
 
