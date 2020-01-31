@@ -3,10 +3,12 @@
 window.addEventListener('load', init, false);
 
 var towerTime;
+var tutrorial;
 var FRAME_RATE = 100;
 
 function init() {
     towerTime = new Game();
+    tutrorial = new Tutorial();
     window.setTimeout(animate, 100);
 }
 

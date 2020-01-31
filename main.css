@@ -28,16 +28,37 @@ body:hover {
 #tutorial-window {
     position: absolute;
     display: flex;
+    flex-direction: column;
     padding: 5px;
     top: 15%;
     right: 3%;
     background-color: rgb(187, 186, 186);
     border-radius: 5px;
-    z-index: -1;
+    z-index: 1;
 }
 
-.tutorial-info {
-    height: 460px;
+.info-icon {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#tutorial-text {
+    padding: 5px;
+}
+
+#tutorial-text p {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    line-height: 1.3em;
+    margin-top: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.show{
+    display: flex;
     width: 200px;
 }
 
@@ -78,6 +99,8 @@ body:hover {
 
 canvas {
     background: rgb(187, 186, 186);
+    position: relative;
+    z-index: 2;
 }
 
 #content-box {
