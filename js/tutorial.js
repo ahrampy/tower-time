@@ -7,34 +7,33 @@ class Tutorial {
     this.tutorialWindow.addEventListener("click", this.toggleInfo, false);
 
     this.textPar = document.getElementById('text-p');
-    this.default = 'move your mouse anywhere to learn more about it or click here to dismiss';
+    this.default = 'move your mouse anywhere to learn more or click here to dismiss';
 
-    this.topBar = document.getElementById('game-controls');
-    this.topBar.addEventListener('mouseover', () => this.showInfo("top"), false)
-    this.topBar.addEventListener('mouseout', this.hideInfo, false)
+    this.score = document.getElementById('info-score');
+    this.addListeners(this.score, "score");
 
     this.type = document.getElementById('tower-type');
-    this.type.addEventListener('mouseover', () => this.showInfo("type"), false);
-    this.type.addEventListener('mouseout', this.hideInfo, false);
+    this.addListeners(this.type, "type");
 
     this.damage = document.getElementById('tower-damage');
-    this.damage.addEventListener('mouseover', () => this.showInfo("damage"), false);
-    this.damage.addEventListener('mouseout', this.hideInfo, false);
+    this.addListeners(this.damage, "damage");
 
     this.range = document.getElementById('tower-range');
-    this.range.addEventListener('mouseover', () => this.showInfo("range"), false);
-    this.range.addEventListener('mouseout', this.hideInfo, false);
+    this.addListeners(this.range, "range");
 
     this.cooldown = document.getElementById('tower-cooldown');
-    this.cooldown.addEventListener('mouseover', () => this.showInfo("cooldown"), false);
-    this.cooldown.addEventListener('mouseout', this.hideInfo, false);
+    this.addListeners(this.cooldown, "cooldown");
 
     this.next = document.getElementById('tower-next');
-    this.next.addEventListener('mouseover', () => this.showInfo("next"), false);
-    this.next.addEventListener('mouseout', this.hideInfo, false);
+    this.addListeners(this.next, "next");
 
   };
 
+  addListeners(ele, name) {
+    ele.addEventListener("mouseover", () => this.showInfo(name), false);
+    ele.addEventListener("mouseout", this.hideInfo, false);
+  };
+ 
   toggleInfo() {
     const text = document.getElementById("tutorial-text");
     if (text.classList.contains("hidden")) {
@@ -47,8 +46,8 @@ class Tutorial {
   };
 
   showInfo(ele) {
-    if (ele === "top") {
-      tutorial.textPar.innerHTML = "top";
+    if (ele === "score") {
+      tutorial.textPar.innerHTML = "score";
     } else if (ele === "type") {
       tutorial.textPar.innerHTML = "name of the current tower";
     } else if (ele === "damage") {
