@@ -39,6 +39,24 @@ class Tutorial {
     this.next = document.getElementById('tower-next');
     this.addListeners(this.next, "next");
 
+    this.mute = document.getElementById('mute-button');
+    this.addListeners(this.mute, "mute");
+
+    this.auto = document.getElementById("auto-container");
+    this.addListeners(this.auto, "auto");
+
+    this.start = document.getElementById("start-button");
+    this.addListeners(this.start, "start");
+
+    this.towers = document.getElementById("towers");
+    this.addListeners(this.towers, "towers");
+
+    this.edit = document.getElementById("edit-tower-buttons");
+    this.addListeners(this.edit, "edit");
+
+    this.canvas = document.getElementById("game-canvas");
+    this.addListeners(this.canvas, "canvas");
+
   };
 
   addListeners(ele, name) {
@@ -60,18 +78,38 @@ class Tutorial {
   showInfo(ele) {
     const text = tutorial.textPar;
     if (ele === "score") {
-      text.innerText = "your current score, increased by every enemy stopped before it reaches the red square";
+      text.innerText = "your current score, get more points for every enemy stopped";
+    } else if (ele === "wave") {
+      text.innerText = "the amount of waves you have survived so far, keep it up!";
+    } else if (ele === "creep") {
+      text.innerText = "the amount damage needed to stop the most recent enemies - increases every wave";
+    } else if (ele === "lives") {
+      text.innerText = "your precious lives - if an enemy makes it to the red square, you lose a life - reach zero lives and the game is over";
+    } else if (ele === "bits") {
+      text.innerText = "this is your currency - spend it on towers and tower upgrades - stop enemies and send waves to make more";
     } else if (ele === "type") {
       text.innerText = "the name of the current tower";
     } else if (ele === "damage") {
       text.innerText = "amount of damage the current tower will deal every time it fires";
     } else if (ele === "range") {
-      text.innerText = "distance the current tower will fire at enemies - shown by a light blue circle";
+      text.innerText = "distance the current tower can watch for enemies to attack";
     } else if (ele === "cooldown") {
       text.innerText = "number of miliseconds the current tower needs before firing again";
     } else if (ele === "next") {
-      text.innerText = "cost of the current tower's next upgrade";
-    };
+      text.innerText = "cost of the current tower's next upgrade in bits";
+    } else if (ele === "mute") {
+      text.innerText = "toggle the game's music on or off";
+    } else if (ele === "auto") {
+      text.innerText = "select to send the next wave automatically if there are no more enemies";
+    } else if (ele === "start") {
+      text.innerText = "starts game and will send the next wave";
+    } else if (ele === "towers") {
+      text.innerText = "the four basic towers - hover over one to see its stats - click one to select it, move your mouse over the board, and click again to place the tower";
+    } else if (ele === "edit") {
+      text.innerText = "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for the last cost paid for it";
+    } else if (ele === "canvas") {
+      text.innerText = "the board - the dark gray sqaure on the left will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are occupied and act as walls for enemies - place towers anywhere else that doesn't block off light gray sqaures, and make more walls with your towers!";
+    }
   };
 
   hideInfo() {

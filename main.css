@@ -29,7 +29,7 @@ body:hover {
     position: absolute;
     display: flex;
     flex-direction: column;
-    padding: 5px;
+    padding: 10px;
     top: 15%;
     right: 3%;
     background-color: rgb(187, 186, 186);
@@ -260,7 +260,7 @@ canvas {
     background: rgba(68, 74, 110, 0.33);
 }
 
-.auto-container {
+#auto-container {
     display: flex;
     align-items: center;
     position: relative;
@@ -275,7 +275,7 @@ canvas {
     user-select: none;
 }
 
-.auto-container input {
+#auto-container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -292,7 +292,7 @@ canvas {
     background-color: rgba(68, 74, 110, 0.815);
 }
 
-.auto-container input:checked ~ .checkmark {
+#auto-container input:checked ~ .checkmark {
     background-color: rgb(187, 186, 186);
 }
 
@@ -302,11 +302,11 @@ canvas {
     display: none;
 }
 
-.auto-container input:checked ~ .checkmark:after {
+#auto-container input:checked ~ .checkmark:after {
     display: block;
 }
 
-.auto-container .checkmark:after {
+#auto-container .checkmark:after {
     left: 9px;
     top: 5px;
     width: 5px;
