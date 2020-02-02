@@ -565,8 +565,8 @@ class Game {
                 value.style.fontSize = '10pt';
                 value.innerHTML = this.wave;
                 info.appendChild(value);
-            } else if (info.innerHTML.indexOf('Creep') != -1) {
-                info.innerHTML = '<h4>Creep</h4> <br/>';
+            } else if (info.innerHTML.indexOf('Enemy') != -1) {
+                info.innerHTML = '<h4>Enemy</h4> <br/>';
                 const value = document.createElement('p');
                 value.style.fontSize = '10pt';
                 value.innerHTML = this.creepHealth;
