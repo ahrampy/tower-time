@@ -7,7 +7,7 @@ class Tutorial {
     this.tutorialWindow.addEventListener("click", this.toggleInfo, false);
 
     this.textPar = document.getElementById('text-p');
-    this.default = 'move your mouse anywhere to learn more or click here to dismiss';
+    this.default = 'move your mouse anywhere to learn more or click here to dismiss tooltips';
 
     this.score = document.getElementById('info-score');
     this.addListeners(this.score, "score");
@@ -78,15 +78,15 @@ class Tutorial {
   showInfo(ele) {
     const text = tutorial.textPar;
     if (ele === "score") {
-      text.innerText = "your current score, get more points for every enemy stopped";
+      text.innerText = "your current score - increases for every enemy stopped";
     } else if (ele === "wave") {
-      text.innerText = "the amount of waves you have survived so far, keep it up!";
+      text.innerText = "the amount of waves you have survived so far";
     } else if (ele === "creep") {
       text.innerText = "the amount damage needed to stop the most recent enemies - increases every wave";
     } else if (ele === "lives") {
       text.innerText = "your precious lives - if an enemy makes it to the red square, you lose a life - reach zero lives and the game is over";
     } else if (ele === "bits") {
-      text.innerText = "this is your currency - spend it on towers and tower upgrades - stop enemies and send waves to make more";
+      text.innerText = "spend your bank on towers and tower upgrades - increase it by stopping enemies and sending waves";
     } else if (ele === "type") {
       text.innerText = "the name of the current tower";
     } else if (ele === "damage") {
@@ -104,11 +104,11 @@ class Tutorial {
     } else if (ele === "start") {
       text.innerText = "starts game and will send the next wave";
     } else if (ele === "towers") {
-      text.innerText = "the four basic towers - hover over one to see its stats - click one to select it, move your mouse over the board, and click again to place the tower";
+      text.innerText = "the four tower types - hover over one to see its stats - click one to select it, move your mouse over the board, and click again to place the tower - the cost will be deducted from your bank";
     } else if (ele === "edit") {
-      text.innerText = "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for the last cost paid for it";
+      text.innerText = "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for its most recent cost";
     } else if (ele === "canvas") {
-      text.innerText = "the board - the dark gray sqaure on the left will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are occupied and act as walls for enemies - place towers anywhere else that doesn't block off light gray sqaures, and make more walls with your towers!";
+      text.innerText = "the board - the dark gray sqaure on the left will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are occupied and act as walls for enemies - place towers anywhere else that doesn't block off unoccupied sqaures, and make more walls with your towers!";
     }
   };
 

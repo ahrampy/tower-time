@@ -4,7 +4,6 @@ window.addEventListener('load', init, false);
 
 var towerTime;
 var tutorial;
-var FRAME_RATE = 100;
 
 function init() {
     towerTime = new Game();
@@ -420,13 +419,13 @@ class Game {
             const towerName = document.createElement("p");
 
             if (i === 0) {
-                towerName.innerText = "15 b"
+                towerName.innerText = "15 ¥"
             } else if (i=== 1) {
-                towerName.innerText = "30 b"
+                towerName.innerText = "30 ¥"
             } else if (i === 2) {
-                towerName.innerText = "50 b"
+                towerName.innerText = "50 ¥"
             } else if (i === 3) {
-                towerName.innerText = "100 b"
+                towerName.innerText = "100 ¥"
             }
 
             tileDiv.appendChild(towerName)
@@ -484,7 +483,7 @@ class Game {
                 info.innerHTML = '<h5>Next</h5>';
                 const value = document.createElement('p');
                 value.style.fontSize = '10pt';
-                value.innerHTML = this.upgrade + " b";
+                value.innerHTML = this.upgrade + " ¥";
                 info.appendChild(value);
             }
 
@@ -541,11 +540,11 @@ class Game {
         for (let i = 0; i < infoTiles.length; i++) {
             let info = infoTiles[i];
 
-            if (info.innerHTML.indexOf('Bits') != -1) {
-                info.innerHTML = '<h4>Bits</h4> <br/>';
+            if (info.innerHTML.indexOf('Bank') != -1) {
+                info.innerHTML = '<h4>Bank</h4> <br/>';
                 const value = document.createElement('p');
                 value.style.fontSize = '10pt';
-                value.innerHTML = this.bits;
+                value.innerHTML = this.bits + "	¥";
                 info.appendChild(value)
             } else if (info.innerHTML.indexOf('Lives') != -1) {
                 info.innerHTML = '<h4>Lives</h4> <br/>';
@@ -614,7 +613,7 @@ class Game {
                     const value = document.createElement('p');
                     value.style.fontSize = '10pt';
                     if (towerTime.selectedTower.canUpgrade) {
-                        value.innerHTML = towerTime.selectedTower.upgrade + " b";
+                        value.innerHTML = towerTime.selectedTower.upgrade + " ¥";
                     } else {
                         value.innerHTML = "Max";
                     }
@@ -774,36 +773,32 @@ class Game {
             this.context.font = "100px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.textAlign = "center";
-            this.context.fillText("Tower Time", 400, 100);
+            this.context.fillText("Tower Time", 400, 150);
             const titleUnderline = new Image();
             titleUnderline.onload = () => (
-                this.context.drawImage(titleUnderline, this.canvas.width / 2 - titleUnderline.width / 2, 110))
+                this.context.drawImage(titleUnderline, this.canvas.width / 2 - titleUnderline.width / 2, 170))
             titleUnderline.src = "images/title-underline.png";
             this.context.font = "27px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("How to Play", 400, 155)
-            this.context.font = "16px Trebuchet MS";
+            this.context.fillText("Click 'Play' to Start Building Towers", 400, 240)
+            this.context.font = "18px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Hover over towers below to see their stats - Click one to select it - Place on any dark gray space", 400, 190);
-            this.context.fillText("Upgrade and sell placed towers - Select it on the board - You will also see its range", 400, 220);
-            this.context.fillText("After building some towers click 'First Wave' - This will send the first wave of creeps" , 400, 250);
-            this.context.fillText("Earn more bits by killing creeps - And sending the next wave" , 400, 280);
-            this.context.fillText("You lose a life if a creep reaches the red square - See how high of a score you can get!" , 400, 310);
+            this.context.fillText("hover over anything to get tooltips", 400, 280);
             this.context.font = "25px Trebuchet MS";
             this.context.fillStyle = "#333";
             this.context.fillText("Tower Abilities", 400, 350);
             this.context.font = "15px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth: Basic    Water: Slows Creeps    Fire: Fast Attack    Air: Through Attack", 400, 380);
+            this.context.fillText("Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack", 400, 380);
             this.context.font = "25px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Optional Hotkeys", 400, 420);
+            this.context.fillText("Optional Hotkeys", 400, 430);
             this.context.font = "15px Trebuchet MS";
             this.context.fillStyle = "rgba(68, 74, 110, 1)";
-            this.context.fillText("Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc", 400, 450);
+            this.context.fillText("Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc", 400, 460);
             this.context.font = "20px Trebuchet MS";
             this.context.fillStyle = "#333";
-            this.context.fillText("Click 'Play' when Ready!", 400, 500);
+            // this.context.fillText("Click 'Play' when Ready!", 400, 500);
 
         } else {
             this.render();
