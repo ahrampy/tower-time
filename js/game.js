@@ -106,6 +106,7 @@ class Game {
             this.innerText = "First Wave";
             this.classList.remove('active');
             document.querySelector('#towers').classList.add('active');
+            document.querySelector('#info-bits').classList.add("active");
             // if (!towerTime.muted) {
             //     // setTimeout(() => (
             //     towerTime.music.setAttribute('src', 'sounds/splash.mp3');
@@ -131,6 +132,7 @@ class Game {
         }
         if (towerTime.wave === 0) {
             document.querySelector("#towers").classList.remove("active");
+            document.querySelector("#info-bits").classList.remove("active");
         }
         this.innerText = "Next Wave";
         towerTime.bits = round5(towerTime.bits);
@@ -762,6 +764,11 @@ class Game {
             send.classList.add("active");
         } else {
             send.classList.remove("active");
+        }
+        if (towerTime.wave === 0 && towerTime.bits < 50) { 
+            document.querySelector("#towers").classList.remove("active");
+            document.querySelector("#info-bits").classList.remove('active');
+            send.classList.add("active");
         }
     }
 
