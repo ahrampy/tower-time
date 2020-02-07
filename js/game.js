@@ -769,6 +769,7 @@ class Game {
             document.querySelector("#towers").classList.remove("active");
             document.querySelector("#info-bits").classList.remove('active');
             send.classList.add("active");
+            tutorial.showInfo("canvas");
         }
     }
 
