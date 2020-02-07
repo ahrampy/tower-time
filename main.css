@@ -3,7 +3,8 @@ body {
     background-image: url(/images/air_towers.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: center;
+    background-position-x: -70px;
+    background-position-y: -25px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
         -khtml-user-select: none;
@@ -77,7 +78,8 @@ body:hover {
     margin-top: 30px;
     height: 55px;
     width: 800px;
-    background: rgba(68, 74, 110, 0.33);
+    background: rgba(68, 74, 110, 0.8);
+    border-radius: 5px 5px 0 0;
 }
 
 #start-button {
@@ -139,7 +141,7 @@ canvas {
 }
 
 #spacer-div-1 {
-    width: 50px;
+    width: 60px;
 }
 
 /* #spacer-div-2 {
@@ -187,7 +189,8 @@ canvas {
     height: 50px;
     padding: 20px;
     padding-bottom: 40px;
-    background: rgba(68, 74, 110, 0.33);
+    background: rgba(68, 74, 110, 0.8);
+    border-radius: 0 0 0 5px;
 }
 
 #towers > div {
@@ -215,7 +218,8 @@ canvas {
 #tower-details {
     display: flex;
     width: 100%;
-    background: rgba(68, 74, 110, 0.33);
+    background: rgba(68, 74, 110, 0.8);
+    border-radius: 0 0 5px 0;
 }
 
 .detail-tile {
@@ -332,11 +336,11 @@ canvas {
 
 #footer a {
     text-decoration: none;
-    color: rgb(187, 186, 186);
+    color: #333;
 }
 
 #footer a:hover {
-    color: black;
+    color: ;
 }
 
 .git {
@@ -344,9 +348,9 @@ canvas {
 }
 
 .git img {
-    /* filter: invert(8%); */
+    filter: invert(20%);
 }
 
 .git img:hover {
-    filter: invert(60%);
+    filter: invert(40%);
 }

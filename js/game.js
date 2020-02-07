@@ -104,28 +104,28 @@ class Game {
             towerTime.handleGameStart();
             towerTime.run();
             this.innerText = "First Wave";
-            if (!towerTime.muted) {
-                // setTimeout(() => (
-                towerTime.music.setAttribute('src', 'sounds/splash.mp3');
-                towerTime.music.load();
-                towerTime.music.playbackRate = 0.9
-                towerTime.music.play();
-                // ), 0);
-            } else {
-                towerTime.music.setAttribute('src', '');
-            }
+            // if (!towerTime.muted) {
+            //     // setTimeout(() => (
+            //     towerTime.music.setAttribute('src', 'sounds/splash.mp3');
+            //     towerTime.music.load();
+            //     towerTime.music.playbackRate = 0.9
+            //     towerTime.music.play();
+            //     // ), 0);
+            // } else {
+            //     towerTime.music.setAttribute('src', '');
+            // }
             return;
         } else {
-            if (!towerTime.muted) {
-                // setTimeout(() => (
-                towerTime.music.setAttribute('src', 'sounds/in_game.mp3');
-                towerTime.music.load();
-                towerTime.music.playbackRate = 0.95
-                towerTime.music.play();
-                // ), 0);
-            } else {
-                towerTime.music.setAttribute('src', '');
-            }
+            // if (!towerTime.muted) {
+            //     // setTimeout(() => (
+            //     towerTime.music.setAttribute('src', 'sounds/in_game.mp3');
+            //     towerTime.music.load();
+            //     towerTime.music.playbackRate = 0.95
+            //     towerTime.music.play();
+            //     // ), 0);
+            // } else {
+            //     towerTime.music.setAttribute('src', '');
+            // }
         }
         this.innerText = "Next Wave";
         towerTime.bits = round5(towerTime.bits);

@@ -39,8 +39,8 @@ class Tutorial {
     this.next = document.getElementById('tower-next');
     this.addListeners(this.next, "next");
 
-    this.mute = document.getElementById('mute-button');
-    this.addListeners(this.mute, "mute");
+    // this.mute = document.getElementById('mute-button');
+    // this.addListeners(this.mute, "mute");
 
     this.auto = document.getElementById("auto-container");
     this.addListeners(this.auto, "auto");
@@ -97,8 +97,6 @@ class Tutorial {
       text.innerText = "number of miliseconds the current tower needs before firing again";
     } else if (ele === "next") {
       text.innerText = "cost of the current tower's next upgrade in bits";
-    } else if (ele === "mute") {
-      text.innerText = "toggle the game's music on or off";
     } else if (ele === "auto") {
       text.innerText = "select to send the next wave automatically if there are no more enemies";
     } else if (ele === "start") {
