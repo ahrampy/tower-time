@@ -104,6 +104,8 @@ class Game {
             towerTime.handleGameStart();
             towerTime.run();
             this.innerText = "First Wave";
+            this.classList.remove('active');
+            document.querySelector('#towers').classList.add('active');
             // if (!towerTime.muted) {
             //     // setTimeout(() => (
             //     towerTime.music.setAttribute('src', 'sounds/splash.mp3');
@@ -115,7 +117,7 @@ class Game {
             //     towerTime.music.setAttribute('src', '');
             // }
             return;
-        } else {
+        // } else {
             // if (!towerTime.muted) {
             //     // setTimeout(() => (
             //     towerTime.music.setAttribute('src', 'sounds/in_game.mp3');
@@ -126,6 +128,9 @@ class Game {
             // } else {
             //     towerTime.music.setAttribute('src', '');
             // }
+        }
+        if (towerTime.wave === 0) {
+            document.querySelector("#towers").classList.remove("active");
         }
         this.innerText = "Next Wave";
         towerTime.bits = round5(towerTime.bits);
@@ -141,7 +146,6 @@ class Game {
         this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
         towerTime.loadCreeps(20);
     }
-
     
     handleKeyCallbacks() {
         document.addEventListener("keydown", event => {
@@ -439,7 +443,6 @@ class Game {
             const tileDiv = tiles[i];
             tileDiv.addEventListener('mouseover', this.tileRollOver, false)
             tileDiv.addEventListener('mouseout', this.tileRollOut, false)
-            tileDiv.addEventListener('mousedown', this.tilePressed, false)
             tileDiv.addEventListener('click', this.tileClicked, false)
         }
     }
@@ -450,7 +453,6 @@ class Game {
             towerTime.selectedTower = null;
         }
         this.showTowerStats = true;
-        this.style.backgroundColor = 'rgba(222, 255, 252, 0.3)';
         let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
         for (let i = 0; i < towerInfoTiles.length; i++) {
             let info = towerInfoTiles[i];
@@ -492,11 +494,6 @@ class Game {
 
     tileRollOut() {
         this.showTowerStats = false;
-        this.style.backgroundColor = 'rgba(68, 74, 110, 0.33)';
-    }
-
-    tilePressed() {
-        this.style.backgroundColor = '#333333';
     }
 
     tileClicked() {        
@@ -753,13 +750,18 @@ class Game {
     }
 
     checkWave() {
+        const send = document.querySelector("#start-button");
         if (towerTime.autoWave && !towerTime.sendingWave && !towerTime.creeps.length ) {
-            const send = document.getElementById("start-button");
             send.click();
             towerTime.sendingWave = true;
             setTimeout(()=>{
                 towerTime.sendingWave = false
             }, 1000);
+        }
+        if (!towerTime.creeps.length && !towerTime.sendingWave && towerTime.wave > 0) {
+            send.classList.add("active");
+        } else {
+            send.classList.remove("active");
         }
     }
 
@@ -806,12 +808,12 @@ class Game {
     }
 
     handleGameOver() {
-        towerTime.music.setAttribute('src', 'sounds/game_over.mp3');
-        towerTime.music.load();
-        if (!towerTime.muted) {
-            towerTime.music.playbackRate = 0.95;
-            towerTime.music.play();
-        }
+        // towerTime.music.setAttribute('src', 'sounds/game_over.mp3');
+        // towerTime.music.load();
+        // if (!towerTime.muted) {
+        //     towerTime.music.playbackRate = 0.95;
+        //     towerTime.music.play();
+        // }
         this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
         this.context.fillRect(0, 0, 800, 520);
         this.context.font = "100px Trebuchet MS";

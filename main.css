@@ -37,12 +37,14 @@ body:hover {
     padding: 10px;
     top: 15%;
     right: 3%;
+    color: #333;
     background-color: rgb(187, 186, 186);
     border-radius: 5px;
     z-index: 1;
 }
 
 .info-icon {
+    filter: invert(20%);
     display: flex;
     justify-content: flex-end;
 }
@@ -200,6 +202,14 @@ canvas {
     border-radius: 100%;
 }
 
+#towers > div:hover {
+    background: rgb(187, 186, 186);
+}
+
+#towers > div:active {
+    background: rgb(136, 136, 136);
+}
+
 #towers > div > img {
     padding-top: -15px;
     width: 50px;
@@ -340,7 +350,7 @@ canvas {
 }
 
 #footer a:hover {
-    color: ;
+    color: #FFF;
 }
 
 .git {
@@ -352,5 +362,17 @@ canvas {
 }
 
 .git img:hover {
-    filter: invert(40%);
+    filter: invert(100%);
+}
+
+.active {
+    animation-name: blink;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+    0% {background-color: rgba(68, 74, 110, 0.8);}
+    50% {background-color: rgba(108, 117, 167, 0.8);}
+    100% {background-color: rgba(68, 74, 110, 0.8);}
 }

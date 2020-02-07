@@ -106,7 +106,9 @@ class Tutorial {
     } else if (ele === "edit") {
       text.innerText = "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for its most recent cost";
     } else if (ele === "canvas") {
-      text.innerText = "the board - the dark gray sqaure on the left will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are occupied and act as walls for enemies - place towers anywhere else that doesn't block off unoccupied sqaures, and make more walls with your towers!";
+      if (towerTime.gameStarted) {
+        text.innerText = "the board - the dark gray sqaure on the left will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are occupied and act as walls for enemies - place towers anywhere else that doesn't block off unoccupied sqaures, and make more walls with your towers!";
+      }
     }
   };
 
