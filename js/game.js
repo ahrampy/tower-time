@@ -56,9 +56,9 @@ class Game {
         this.gameStarted = false;
 
         // audio
-        this.handleSoundButton();
-        this.muted = false;
-        this.music = document.createElement('audio');
+        // this.handleSoundButton();
+        // this.muted = false;
+        // this.music = document.createElement('audio');
 
         // auto send waves
         this.handleAutoWaveButton();
@@ -184,29 +184,29 @@ class Game {
         currentTower.visible = true;
     }
     
-    handleSoundButton() {
-        const muteButton = document.getElementById("mute-button");
-        muteButton.addEventListener('click', this.audioToggle, false);
-    }
+    // handleSoundButton() {
+    //     const muteButton = document.getElementById("mute-button");
+    //     muteButton.addEventListener('click', this.audioToggle, false);
+    // }
 
     handleAutoWaveButton() {
         const autoWave = document.querySelector("input[name=auto-wave]");
         autoWave.addEventListener('change', this.autoWaveToggle, false);
     }
 
-    audioToggle() {
-        if (towerTime.muted) {
-            this.classList.add('mute-off');
-            this.classList.remove('mute-on');
-            towerTime.muted = false;
-            towerTime.music.muted = false;
-        } else {
-            this.classList.add('mute-on');
-            this.classList.remove('mute-off');
-            towerTime.music.muted = true;
-            towerTime.muted = true;
-        }
-    }
+    // audioToggle() {
+    //     if (towerTime.muted) {
+    //         this.classList.add('mute-off');
+    //         this.classList.remove('mute-on');
+    //         towerTime.muted = false;
+    //         towerTime.music.muted = false;
+    //     } else {
+    //         this.classList.add('mute-on');
+    //         this.classList.remove('mute-off');
+    //         towerTime.music.muted = true;
+    //         towerTime.muted = true;
+    //     }
+    // }
 
     autoWaveToggle() {
         if (this.checked) {

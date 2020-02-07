@@ -1,5 +1,9 @@
 body {
     background: #333;
+    background-image: url(/images/air_towers.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
         -khtml-user-select: none;
@@ -135,12 +139,12 @@ canvas {
 }
 
 #spacer-div-1 {
-    width: 10px;
+    width: 50px;
 }
 
-#spacer-div-2 {
+/* #spacer-div-2 {
     width: 15px;
-}
+} */
 
 #mute-button {
     display: flex;
