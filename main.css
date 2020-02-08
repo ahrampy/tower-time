@@ -1,156 +1,158 @@
 body {
-    background: #333;
-    background-image: url(/images/air_towers.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position-x: -70px;
-    background-position-y: -25px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+  background: #333;
+  background-image: url(/images/air_towers.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: -70px;
+  background-position-y: -25px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body:hover {
-    cursor: default;
+  cursor: default;
 }
 
 #holder {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #holder h1 {
-    color: rgb(187, 186, 186);
+  color: rgb(187, 186, 186);
 }
 
 #tutorial-window {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    top: 15%;
-    right: 3%;
-    color: #333;
-    background-color: rgba(207, 204, 204, 0.7);
-    border-radius: 5px;
-    z-index: 1;
-    transition: 0.5s;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  top: 15%;
+  right: 3%;
+  color: #333;
+  background-color: rgba(207, 204, 204, 0.7);
+  border-radius: 5px;
+  z-index: 1;
+  transition: 0.5s;
 }
 
 #tutorial-window:hover {
-    background-color: rgba(180, 179, 179, 0.5);
+  background-color: rgba(180, 179, 179, 0.5);
 }
 
 .info-icon {
-    filter: invert(20%);
-    display: flex;
-    justify-content: flex-end;
+  filter: invert(20%);
+  display: flex;
+  justify-content: flex-end;
 }
 
 #tutorial-text {
-    padding: 5px;
-    text-align: center;
+  padding: 5px;
+  text-align: center;
 }
 
 #tutorial-text p {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    line-height: 1.3em;
-    margin-top: 5px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  line-height: 1.3em;
+  margin-top: 5px;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
-.show{
-    width: 200px;
+.show {
+  width: 200px;
 }
 
 .info-icon img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 #game-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-    height: 55px;
-    width: 800px;
-    background: rgba(68, 74, 110, 0.8);
-    border-radius: 5px 5px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  height: 55px;
+  width: 800px;
+  background: rgba(68, 74, 110, 0.8);
+  border-radius: 5px 5px 0 0;
 }
 
 #start-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 120px;
-    background: rgba(68, 74, 110, 0.815);
-    border-radius: 0px 5px 0 0;
-    color: rgb(187, 186, 186);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 120px;
+  background: rgba(68, 74, 110, 0.815);
+  border-radius: 0px 5px 0 0;
+  color: rgb(187, 186, 186);
 }
 
 #start-button:hover {
-    cursor: pointer;
-    background: rgba(68, 74, 110, 0.33);
+  cursor: pointer;
+  background: rgba(68, 74, 110, 0.33);
 }
 
 #start-button > h3 {
-    padding: 0px;
-    margin: 0px;
+  padding: 0px;
+  margin: 0px;
 }
 
 canvas {
-    background: rgba(187, 186, 186, 0.8);
-    
-    position: relative;
-    z-index: 2;
+  background: rgba(187, 186, 186, 0.8);
+
+  position: relative;
+  z-index: 2;
 }
 
 #content-box {
-    display: flex;
-    width: 800px;
+  display: flex;
+  width: 800px;
 }
 
 #info {
-    display: flex;
-    justify-content: center;
-    margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  margin-left: 15px;
 }
 
 .info-tile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    margin: 0px;
-    color: rgb(187, 186, 186);
-    width: 100px;
-    height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
+  color: rgb(187, 186, 186);
+  width: 100px;
+  height: 55px;
 }
 
 .info-tile h4 {
-    text-align: center;
-    padding: 0px;
-    margin: 0px;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
 }
 
 .info-tile p {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 #spacer-div-1 {
-    width: 60px;
+  width: 60px;
 }
 
 /* #spacer-div-2 {
@@ -158,243 +160,243 @@ canvas {
 } */
 
 #mute-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #mute-button img {
-    width: 25px;
-    height: 25px;
-    padding: 10px;
+  width: 25px;
+  height: 25px;
+  padding: 10px;
 }
 
 #mute-button img:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .mute-off {
-    filter: invert(65%);
+  filter: invert(65%);
 }
 
 .mute-on {
-    filter: invert(19%);
+  filter: invert(19%);
 }
 
-
 #auto-wave {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 25px;
     height: 25px;
     padding: 10px; */
 }
 
 #towers {
-    color: rgb(187, 186, 186);
-    display: flex;
-    width: 340px;
-    height: 50px;
-    padding: 20px;
-    padding-bottom: 40px;
-    background: rgba(68, 74, 110, 0.8);
-    border-radius: 0 0 0 5px;
+  color: rgb(187, 186, 186);
+  display: flex;
+  width: 340px;
+  height: 50px;
+  padding: 20px;
+  padding-bottom: 40px;
+  background: rgba(68, 74, 110, 0.8);
+  border-radius: 0 0 0 5px;
 }
 
 #towers > div {
-    width: 50px;
-    height: 50px;
-    margin: 0px 15px;
-    border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  margin: 0px 15px;
+  border-radius: 100%;
 }
 
 #towers > div:hover {
-    background: rgb(187, 186, 186);
+  background: rgb(187, 186, 186);
 }
 
 #towers > div:active {
-    background: rgb(136, 136, 136);
+  background: rgb(136, 136, 136);
 }
 
 #towers > div > img {
-    padding-top: -15px;
-    width: 50px;
-    height: 50px;
+  padding-top: -15px;
+  width: 50px;
+  height: 50px;
 }
 
 #towers > div > img:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #towers p {
-    margin: 0px;
-    text-align: center;
+  margin: 0px;
+  text-align: center;
 }
 
 #tower-details {
-    display: flex;
-    width: 100%;
-    background: rgba(68, 74, 110, 0.8);
-    border-radius: 0 0 5px 0;
+  display: flex;
+  width: 100%;
+  background: rgba(68, 74, 110, 0.8);
+  border-radius: 0 0 5px 0;
 }
 
 .detail-tile {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    padding: 0px;
-    margin: 0px;
-    color: rgb(187, 186, 186);
-    width: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+  color: rgb(187, 186, 186);
+  width: 60px;
 }
 
 .detail-tile h4 {
-    margin: 0px;
-    padding: 0px;
-    size: 12px;
-    font-weight: lighter;
+  margin: 0px;
+  padding: 0px;
+  size: 12px;
+  font-weight: lighter;
 }
 
 .detail-tile p {
-    size: 10px;
-    margin: 0px;
-    padding: 0px;
+  size: 10px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #edit-tower-buttons {
-    display: flex;
-    flex-direction: column;
-    width: 120px;
-    height: 100%;
-    margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+  height: 100%;
+  margin-left: 20px;
 }
 
 #upgrade-button {
-    border-bottom: 1px solid rgba(68, 74, 110, 0.8);
-    border-radius: 0 0 0 5px;
+  border-bottom: 1px solid rgba(68, 74, 110, 0.8);
+  border-radius: 0 0 0 5px;
 }
 
 #sell-button {
-    border-radius: 5px 0 5px 0;
+  border-radius: 5px 0 5px 0;
 }
 
 #edit-tower-buttons h5 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0px;
-    height: 50%;
-    width: 100%;
-    background: rgba(68, 74, 110, 0.815);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  height: 50%;
+  width: 100%;
+  background: rgba(68, 74, 110, 0.815);
 }
 
 #edit-tower-buttons h5:hover {
-    cursor: pointer;
-    background: rgba(68, 74, 110, 0.33);
+  cursor: pointer;
+  background: rgba(68, 74, 110, 0.33);
 }
 
 #auto-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    color: rgb(187, 186, 186);
-    font-size: 16px;
-    font-weight: 600;
-    width: 80px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  color: rgb(187, 186, 186);
+  font-size: 16px;
+  font-weight: 600;
+  width: 80px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #auto-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
 }
 
 .checkmark {
-    position: absolute;
-    top: 15;
-    right: 10;
-    height: 25px;
-    width: 25px;
-    background-color: rgba(68, 74, 110, 0.815);
+  position: absolute;
+  top: 15;
+  right: 10;
+  height: 25px;
+  width: 25px;
+  background-color: rgba(68, 74, 110, 0.815);
 }
 
 #auto-container input:checked ~ .checkmark {
-    background-color: rgb(187, 186, 186);
+  background-color: rgb(187, 186, 186);
 }
 
 .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
+  content: "";
+  position: absolute;
+  display: none;
 }
 
 #auto-container input:checked ~ .checkmark:after {
-    display: block;
+  display: block;
 }
 
 #auto-container .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid rgba(68, 74, 110, 0.815);
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid rgba(68, 74, 110, 0.815);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 #footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 10px;
-    color: rgba(68, 74, 110, 0.816);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+  color: rgba(68, 74, 110, 0.816);
 }
 
 #footer a {
-    text-decoration: none;
-    color: #333;
+  text-decoration: none;
+  color: #333;
 }
 
 #footer a:hover {
-    color: #FFF;
+  color: #fff;
 }
 
 .git {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 .git img {
-    filter: invert(20%);
+  filter: invert(20%);
 }
 
 .git img:hover {
-    filter: invert(100%);
+  filter: invert(100%);
 }
 
 .active {
-    animation-name: blink;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
+  animation-name: blink;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
 }
 
 @keyframes blink {
-    0% {background-color: rgba(68, 74, 110, 0.8);}
-    50% {background-color: rgba(108, 117, 167, 0.8);}
-    100% {background-color: rgba(68, 74, 110, 0.8);}
-}
-
-.check {
-
-    color: rgba(255, 255, 255, 0.8);
+  0% {
+    background-color: rgba(68, 74, 110, 0.8);
+  }
+  50% {
+    background-color: rgba(108, 117, 167, 0.8);
+  }
+  100% {
+    background-color: rgba(68, 74, 110, 0.8);
+  }
 }

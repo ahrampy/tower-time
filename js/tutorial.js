@@ -1,42 +1,42 @@
-'use strict';
+"use strict";
 
 class Tutorial {
   constructor() {
-
-    this.tutorialWindow = document.querySelector('#tutorial-window');
+    this.tutorialWindow = document.querySelector("#tutorial-window");
     this.tutorialWindow.addEventListener("click", this.toggleInfo, false);
 
-    this.textPar = document.querySelector('#text-p');
-    this.default = 'move your mouse anywhere to learn more or click here to dismiss tooltips';
+    this.textPar = document.querySelector("#text-p");
+    this.default =
+      "move your mouse anywhere to learn more or click here to dismiss tooltips";
 
-    this.score = document.querySelector('#info-score');
+    this.score = document.querySelector("#info-score");
     this.addListeners(this.score, "score");
 
-    this.wave = document.querySelector('#info-wave');
+    this.wave = document.querySelector("#info-wave");
     this.addListeners(this.wave, "wave");
 
-    this.creep = document.querySelector('#info-creep');
+    this.creep = document.querySelector("#info-creep");
     this.addListeners(this.creep, "creep");
 
-    this.lives = document.querySelector('#info-lives');
+    this.lives = document.querySelector("#info-lives");
     this.addListeners(this.lives, "lives");
 
-    this.bits = document.querySelector('#info-bits');
+    this.bits = document.querySelector("#info-bits");
     this.addListeners(this.bits, "bits");
 
-    this.type = document.querySelector('#tower-type');
+    this.type = document.querySelector("#tower-type");
     this.addListeners(this.type, "type");
 
-    this.damage = document.querySelector('#tower-damage');
+    this.damage = document.querySelector("#tower-damage");
     this.addListeners(this.damage, "damage");
 
-    this.range = document.querySelector('#tower-range');
+    this.range = document.querySelector("#tower-range");
     this.addListeners(this.range, "range");
 
-    this.cooldown = document.querySelector('#tower-cooldown');
+    this.cooldown = document.querySelector("#tower-cooldown");
     this.addListeners(this.cooldown, "cooldown");
 
-    this.next = document.querySelector('#tower-next');
+    this.next = document.querySelector("#tower-next");
     this.addListeners(this.next, "next");
 
     // this.mute = document.querySelector('#mute-button');
@@ -56,32 +56,32 @@ class Tutorial {
 
     this.canvas = document.querySelector("#game-canvas");
     this.addListeners(this.canvas, "canvas");
-
-  };
+  }
 
   addListeners(ele, name) {
     ele.addEventListener("mouseover", () => this.showInfo(name), false);
     ele.addEventListener("mouseout", this.hideInfo, false);
-  };
- 
+  }
+
   toggleInfo() {
     const text = document.querySelector("#tutorial-text");
     if (text.classList.contains("hidden")) {
-      text.classList.remove('hidden');
+      text.classList.remove("hidden");
       text.classList.add("show");
     } else {
       text.classList.remove("show");
-      text.classList.add('hidden');
-    };
-  };
+      text.classList.add("hidden");
+    }
+  }
 
   showInfo(ele) {
     const text = tutorial.textPar;
     if (towerTime.wave === 0 && towerTime.gameStarted && ele === "canvas") {
       if (towerTime.bits >= 50) {
-        text.innerHTML = "to get started, place a few towers on the board"
+        text.innerHTML = "to get started, place a few towers on the board";
       } else {
-        text.innerHTML = "now that you have some towers, send the first wave - good luck!"
+        text.innerHTML =
+          "now that you have some towers, send the first wave - good luck!";
       }
     } else if (ele === "score") {
       text.innerText = "your current score - increases for every enemy stopped";
@@ -123,19 +123,14 @@ class Tutorial {
     } else if (ele === "canvas") {
       if (towerTime.gameStarted) {
         text.innerText =
-          "the board - the dark gray sqaure on the left will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are occupied and act as walls for enemies - place towers anywhere else that doesn't block off unoccupied sqaures, and make more walls with your towers!";
+          "the board - the dark gray sqaure will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are walls - place towers to make more walls!";
       }
     } else if (ele === "game-over") {
-      text.innerHTML = "nice try! see if you can beat this highscore next time"
+      text.innerHTML = "nice try! see if you can beat this highscore next time";
     }
-  };
+  }
 
   hideInfo() {
-    tutorial.textPar.innerHTML = tutorial.default
-  };
-
+    tutorial.textPar.innerHTML = tutorial.default;
+  }
 }
-
-
-
-
