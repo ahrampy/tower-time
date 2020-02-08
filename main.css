@@ -112,6 +112,7 @@ body:hover {
 
 canvas {
     background: rgba(187, 186, 186, 0.8);
+    
     position: relative;
     z-index: 2;
 }

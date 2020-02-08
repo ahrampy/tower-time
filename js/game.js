@@ -83,7 +83,7 @@ class Game {
         // Dijkstra's
         this.validated = false;
         this.loadGrid();
-        this.findPath();
+        this.loadPaths();
 
         // track tower
         this.placingTower = false;
@@ -251,7 +251,7 @@ class Game {
             const cell = towerTime.grid[gridCol][gridRow];
             cell.occupied = false;
     
-            towerTime.findPath();
+            towerTime.loadPaths();
             for (let c = 0; c < towerTime.numCols; c++) {
                 for (let r = 0; r < towerTime.numRows; r++) {
                     towerTime.grid[c][r].loadAdjacentCells();
@@ -293,30 +293,24 @@ class Game {
 
             if (!cell.occupied && cell !== towerTime.goal && cell !== towerTime.start) {
                 cell.occupied = true; 
+                towerTime.loadPaths();
 
-                towerTime.findPath();
-                for (let c = 0; c < towerTime.numCols; c++) {
-                    for (let r = 0; r < towerTime.numRows; r++) {
-                        towerTime.grid[c][r].loadAdjacentCells();
-                    }
-                }
+                let checkBlock = true;
+                let route = [towerTime.start];
                 
-                let checkBlock = false;
-
-                for (let c = 0; c < towerTime.numCols; c++) {
-                    for (let r = 0; r < towerTime.numRows; r++)
-                        if (towerTime.grid[c][r].value === -1 && !towerTime.grid[c][r].occupied) {
-                            checkBlock = true;
-                        }
+                while(route.length) {
+                    let cell = route.pop();
+                    if (cell.value === -1) continue;
+                    if (cell === towerTime.goal) {
+                        checkBlock = false;
+                        break;
+                    }
+                    route.push(cell.smallestAdjacent);
                 }
 
                 if (checkBlock) {
-                    cell.occupied = false
-                    towerTime.findPath();
-                    for (let c = 0; c < towerTime.numCols; c++) {
-                        for (let r = 0; r < towerTime.numRows; r++)
-                            towerTime.grid[c][r].loadAdjacentCells()
-                    }
+                    cell.occupied = false;
+                    towerTime.loadPaths();
                 } else {
                     towerTime.placeTower(cell.center);
                 }
@@ -324,7 +318,7 @@ class Game {
             }
         } else {
             for (let i = 0; i < towerTime.towers.length; i++) {
-                let tower = towerTime.towers[i]
+                let tower = towerTime.towers[i];
                 if (tower.location.x === cell.center.x
                     && tower.location.y === cell.center.y) {
                     tower.selected = !tower.selected;
@@ -635,8 +629,9 @@ class Game {
 
         for (let c = 0; c < this.numCols; c++) {
             this.grid.push([]);
-            for (let r = 0; r < this.numRows; r++)
+            for (let r = 0; r < this.numRows; r++) {
                 this.grid[c].push(new Cell(this, id++, c, r));
+            }
         }
 
         this.initBlocks();
@@ -644,8 +639,9 @@ class Game {
 
     initBlocks() {
         for (let c = 0; c < this.numCols; c++) {
-            for (let r = 0; r < this.numRows; r++)
+            for (let r = 0; r < this.numRows; r++) {
                 this.grid[c][r].occupied = false;
+            }
         }
 
         for (let i = 0; i < this.numBlocks; i++) {
@@ -659,7 +655,7 @@ class Game {
         this.goal.value = 0;
     }
 
-    findPath() {
+    loadPaths() {
         this.grid.forEach(col => {
             col.forEach(cell => {
                 if (cell !== this.goal) {
@@ -669,10 +665,11 @@ class Game {
             })
         })
         for (let c = 0; c < this.numCols; c++) {
-            for (let r = 0; r < this.numRows; r++)
+            for (let r = 0; r < this.numRows; r++) {
                 this.grid[c][r].loadAdjacentCells();
+            }
         }
-        const checkCells = [this.goal]
+        const checkCells = [this.goal];
         while (checkCells.length) {
             const current = checkCells.shift();
             for (let i = 0; i < current.adjacent.length; i++) {  
@@ -696,7 +693,6 @@ class Game {
     }
 
     ensureValidMap() {
-        
         let checkBlock = false;
 
         for (let c = 0; c < this.numCols; c++) {
@@ -708,7 +704,7 @@ class Game {
 
         if (checkBlock) {
             this.initBlocks();
-            this.findPath();
+            this.loadPaths();
         } else {
             this.validated = true
         }
