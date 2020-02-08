@@ -45,7 +45,7 @@ class Game {
         this.canvas.classList.add('canvas');
         this.canvas.width = 800;
         this.canvas.height = 520;
-        document.getElementById('game-canvas').appendChild(this.canvas);
+        document.querySelector('#game-canvas').appendChild(this.canvas);
         this.canvas.addEventListener('mousemove', this.handleCanvasMouseMoved, false);
         this.canvas.addEventListener('mouseover', this.handleCanvasMouseOver, false);
         this.canvas.addEventListener('click', this.handleCanvasMouseClicked, false);
@@ -94,7 +94,7 @@ class Game {
     }
 
     handleStartClick() {
-        const button = document.getElementById("start-button");
+        const button = document.querySelector("#start-button");
         button.addEventListener('click', this.startClick, false );
     }
 
@@ -191,7 +191,7 @@ class Game {
     }
     
     // handleSoundButton() {
-    //     const muteButton = document.getElementById("mute-button");
+    //     const muteButton = document.querySelector("#mute-button");
     //     muteButton.addEventListener('click', this.audioToggle, false);
     // }
 
@@ -223,8 +223,8 @@ class Game {
     }
     
     handleEditClicks() {
-        const upgradeButton = document.getElementById("upgrade-button");
-        const sellButton = document.getElementById("sell-button");
+        const upgradeButton = document.querySelector("#upgrade-button");
+        const sellButton = document.querySelector("#sell-button");
         upgradeButton.addEventListener('click', this.upgradeClick, false);
         sellButton.addEventListener('click', this.sellClick, false);
     }
@@ -406,7 +406,7 @@ class Game {
             tileDiv.tileDivAttackImg = new Image();
             tileDiv.tileDivAttackImg.src = attackImgPath;
 
-            document.getElementById('towers').appendChild(tileDiv);
+            document.querySelector('#towers').appendChild(tileDiv);
 
             tileDiv.cost = cost;
             tileDiv.upgrade = upgrade;
@@ -455,7 +455,7 @@ class Game {
             towerTime.selectedTower = null;
         }
         this.showTowerStats = true;
-        let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
+        let towerInfoTiles = document.querySelector('#tower-details').getElementsByClassName('detail-tile');
         for (let i = 0; i < towerInfoTiles.length; i++) {
             let info = towerInfoTiles[i];
 
@@ -535,7 +535,7 @@ class Game {
     }
 
     updateInfo() {
-        let infoTiles = document.getElementById('info').getElementsByClassName('info-tile');
+        let infoTiles = document.querySelectorAll('#info > .info-tile');
         for (let i = 0; i < infoTiles.length; i++) {
             let info = infoTiles[i];
 
@@ -575,8 +575,8 @@ class Game {
     }
 
     showTowerInfo() {
-        let towerInfoTiles = document.getElementById('tower-details').getElementsByClassName('detail-tile');
-        let towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
+        let towerInfoTiles = document.querySelector('#tower-details').getElementsByClassName('detail-tile');
+        let towerEditButtons = document.querySelector('#edit-tower-buttons').getElementsByClassName('edit-button');
         if (towerTime.selectedTower) {
             towerEditButtons[0].style.opacity = 100
             towerEditButtons[1].style.opacity = 100
@@ -775,7 +775,7 @@ class Game {
 
     handleGameStart() {
         if (!this.gameStarted) {
-            const towerEditButtons = document.getElementById('edit-tower-buttons').getElementsByClassName('edit-button');
+            const towerEditButtons = document.querySelector('#edit-tower-buttons').getElementsByClassName('edit-button');
             towerEditButtons[0].style.opacity = 0;
             towerEditButtons[1].style.opacity = 0;
             this.context.fillStyle = "rgba(200, 200, 200, .1)";
@@ -834,7 +834,7 @@ class Game {
         this.context.fillText(`Final Score: ${this.score}`, 400, 280);
         this.lives = 0;
         this.gameOver = true;
-        const button = document.getElementById("start-button");
+        const button = document.querySelector("#start-button");
         button.innerText = "New Game";
         button.addEventListener('click', this.newGame, false);
     }

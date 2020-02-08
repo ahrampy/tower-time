@@ -3,58 +3,58 @@
 class Tutorial {
   constructor() {
 
-    this.tutorialWindow = document.getElementById('tutorial-window');
+    this.tutorialWindow = document.querySelector('#tutorial-window');
     this.tutorialWindow.addEventListener("click", this.toggleInfo, false);
 
-    this.textPar = document.getElementById('text-p');
+    this.textPar = document.querySelector('#text-p');
     this.default = 'move your mouse anywhere to learn more or click here to dismiss tooltips';
 
-    this.score = document.getElementById('info-score');
+    this.score = document.querySelector('#info-score');
     this.addListeners(this.score, "score");
 
-    this.wave = document.getElementById('info-wave');
+    this.wave = document.querySelector('#info-wave');
     this.addListeners(this.wave, "wave");
 
-    this.creep = document.getElementById('info-creep');
+    this.creep = document.querySelector('#info-creep');
     this.addListeners(this.creep, "creep");
 
-    this.lives = document.getElementById('info-lives');
+    this.lives = document.querySelector('#info-lives');
     this.addListeners(this.lives, "lives");
 
-    this.bits = document.getElementById('info-bits');
+    this.bits = document.querySelector('#info-bits');
     this.addListeners(this.bits, "bits");
 
-    this.type = document.getElementById('tower-type');
+    this.type = document.querySelector('#tower-type');
     this.addListeners(this.type, "type");
 
-    this.damage = document.getElementById('tower-damage');
+    this.damage = document.querySelector('#tower-damage');
     this.addListeners(this.damage, "damage");
 
-    this.range = document.getElementById('tower-range');
+    this.range = document.querySelector('#tower-range');
     this.addListeners(this.range, "range");
 
-    this.cooldown = document.getElementById('tower-cooldown');
+    this.cooldown = document.querySelector('#tower-cooldown');
     this.addListeners(this.cooldown, "cooldown");
 
-    this.next = document.getElementById('tower-next');
+    this.next = document.querySelector('#tower-next');
     this.addListeners(this.next, "next");
 
-    // this.mute = document.getElementById('mute-button');
+    // this.mute = document.querySelector('#mute-button');
     // this.addListeners(this.mute, "mute");
 
-    this.auto = document.getElementById("auto-container");
+    this.auto = document.querySelector("#auto-container");
     this.addListeners(this.auto, "auto");
 
-    this.start = document.getElementById("start-button");
+    this.start = document.querySelector("#start-button");
     this.addListeners(this.start, "start");
 
-    this.towers = document.getElementById("towers");
+    this.towers = document.querySelector("#towers");
     this.addListeners(this.towers, "towers");
 
-    this.edit = document.getElementById("edit-tower-buttons");
+    this.edit = document.querySelector("#edit-tower-buttons");
     this.addListeners(this.edit, "edit");
 
-    this.canvas = document.getElementById("game-canvas");
+    this.canvas = document.querySelector("#game-canvas");
     this.addListeners(this.canvas, "canvas");
 
   };
@@ -65,7 +65,7 @@ class Tutorial {
   };
  
   toggleInfo() {
-    const text = document.getElementById("tutorial-text");
+    const text = document.querySelector("#tutorial-text");
     if (text.classList.contains("hidden")) {
       text.classList.remove('hidden');
       text.classList.add("show");
