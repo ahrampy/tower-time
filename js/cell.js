@@ -16,6 +16,7 @@ class Cell{
         this.value = -1;
         this.smallestAdjacent = null;
         this.smallestAdjacentIndex = 0;
+        this.cancelled = false;
         
         // check state
         this.occupied = false;
@@ -69,9 +70,14 @@ class Cell{
         this.smallestAdjacent = this.adjacent[this.smallestAdjacentIndex];
     }
 
+    cancel() {
+        this.cancelled = true;
+        setTimeout(() => (this.cancelled = false), 100);
+    }
+
     run(){
         this.render();
-        setTimeout(() => (this.attacked = false), 500)
+        setTimeout(() => (this.attacked = false), 500);
     }
 
     render(){
@@ -81,8 +87,8 @@ class Cell{
             this.context.fillStyle = "rgba(87, 95, 139, 0.8)";
         } else if (this.occupied) {
             this.context.fillStyle = "rgba(224, 224, 224, 0.6)"
-        // } else if (this.attackSlow) {
-        //     this.context.fillStyle = "rgb(206, 202, 202)"
+        } else if (this.cancelled) {
+            this.context.fillStyle = "rgba(255, 255, 255, 0.8)";
         } else {
             this.context.fillStyle = "rgba(150, 151, 129, 0.06)"
         }

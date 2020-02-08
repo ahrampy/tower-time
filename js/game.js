@@ -295,27 +295,42 @@ class Game {
                 cell.occupied = true; 
                 towerTime.loadPaths();
 
-                let checkBlock = true;
+                let checkPaths = towerTime.creeps.every(creep => {
+                    let checkBlock = false;
+                    let route = [creep.currentCell];
+                    while(route.length) {
+                        let cell = route.pop();
+                        if (cell.value === -1) continue;
+                        if (cell === towerTime.goal) {
+                            checkBlock = true;
+                            break;
+                        }
+                        route.push(cell.smallestAdjacent);
+                    }
+                    return checkBlock;
+                });
+
                 let route = [towerTime.start];
-                
+                let path = false;
+
                 while(route.length) {
                     let cell = route.pop();
                     if (cell.value === -1) continue;
                     if (cell === towerTime.goal) {
-                        checkBlock = false;
+                        path = true;
                         break;
                     }
                     route.push(cell.smallestAdjacent);
                 }
 
-                if (checkBlock) {
+                if (!checkPaths || !path) {
+                    cell.cancel();
                     cell.occupied = false;
                     towerTime.loadPaths();
                 } else {
                     towerTime.placeTower(cell.center);
                 }
-
-            }
+            };
         } else {
             for (let i = 0; i < towerTime.towers.length; i++) {
                 let tower = towerTime.towers[i];
