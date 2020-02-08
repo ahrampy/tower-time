@@ -11,7 +11,7 @@ class Creep {
 
         // default
         this.radius = 12;
-        this.color = "rgb(200, 200, 200)";
+        this.color = "rgb(225, 225, 225)";
 
         // stats
         this.multiplier = multiplier

@@ -38,9 +38,14 @@ body:hover {
     top: 15%;
     right: 3%;
     color: #333;
-    background-color: rgb(187, 186, 186);
+    background-color: rgba(207, 204, 204, 0.7);
     border-radius: 5px;
     z-index: 1;
+    transition: 0.5s;
+}
+
+#tutorial-window:hover {
+    background-color: rgba(180, 179, 179, 0.5);
 }
 
 .info-icon {
