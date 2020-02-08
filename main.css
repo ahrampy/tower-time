@@ -110,7 +110,7 @@ body:hover {
 }
 
 canvas {
-    background: rgb(187, 186, 186);
+    background: rgba(187, 186, 186, 0.8);
     position: relative;
     z-index: 2;
 }
@@ -380,4 +380,9 @@ canvas {
     0% {background-color: rgba(68, 74, 110, 0.8);}
     50% {background-color: rgba(108, 117, 167, 0.8);}
     100% {background-color: rgba(68, 74, 110, 0.8);}
+}
+
+.check {
+
+    color: rgba(87, 95, 139, 0.8);
 }

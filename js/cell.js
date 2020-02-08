@@ -76,11 +76,11 @@ class Cell{
 
     render(){
         if (this === towerTime.goal) {
-            this.context.fillStyle = "rgba(222, 23, 10, 0.7)"
+            this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
         } else if (this === towerTime.start) {
-            this.context.fillStyle = "rgba(68, 74, 110, 0.33)"
+            this.context.fillStyle = "rgba(87, 95, 139, 0.8)";
         } else if (this.occupied) {
-            this.context.fillStyle = "rgba(224, 224, 224, 0.27)"
+            this.context.fillStyle = "rgba(224, 224, 224, 0.6)"
         // } else if (this.attackSlow) {
         //     this.context.fillStyle = "rgb(206, 202, 202)"
         } else {

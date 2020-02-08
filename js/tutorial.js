@@ -125,6 +125,8 @@ class Tutorial {
         text.innerText =
           "the board - the dark gray sqaure on the left will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are occupied and act as walls for enemies - place towers anywhere else that doesn't block off unoccupied sqaures, and make more walls with your towers!";
       }
+    } else if (ele === "game-over") {
+      text.innerHTML = "nice try! see if you can beat this highscore next time"
     }
   };
 

@@ -837,6 +837,8 @@ class Game {
         const button = document.querySelector("#start-button");
         button.innerText = "New Game";
         button.addEventListener('click', this.newGame, false);
+        button.classList.add('active');
+        tutorial.showInfo('game-over');
     }
 
     newGame() {
