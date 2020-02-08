@@ -542,6 +542,10 @@ class Game {
       towerTime.createTower(this);
       towerTime.currentTileDiv = this;
       towerTime.placingTower = true;
+      if (towerTime.selectedTower) {
+          towerTime.selectedTower.selected = false;
+          towerTime.selectedTower = null;
+      }
     }
   }
 
