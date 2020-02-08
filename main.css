@@ -96,6 +96,7 @@ body:hover {
     height: 100%;
     width: 120px;
     background: rgba(68, 74, 110, 0.815);
+    border-radius: 0px 5px 0 0;
     color: rgb(187, 186, 186);
 }
 
@@ -265,7 +266,17 @@ canvas {
     display: flex;
     flex-direction: column;
     width: 120px;
+    height: 100%;
     margin-left: 20px;
+}
+
+#upgrade-button {
+    border-bottom: 1px solid rgba(68, 74, 110, 0.8);
+    border-radius: 0 0 0 5px;
+}
+
+#sell-button {
+    border-radius: 5px 0 5px 0;
 }
 
 #edit-tower-buttons h5 {

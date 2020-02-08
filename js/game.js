@@ -133,6 +133,7 @@ class Game {
         if (towerTime.wave === 0) {
             document.querySelector("#towers").classList.remove("active");
             document.querySelector("#info-bits").classList.remove("active");
+            tutorial.showInfo("start");
         }
         this.innerText = "Next Wave";
         towerTime.bits = round5(towerTime.bits);
