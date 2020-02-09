@@ -126,7 +126,7 @@ class Tutorial {
           "the board - the dark gray sqaure will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are walls - place towers to make more walls!";
       }
     } else if (ele === "game-over") {
-      text.innerHTML = "nice try! see if you can beat this highscore next time";
+      text.innerHTML = "nice! see if you can beat this score next time";
     }
   }
 
