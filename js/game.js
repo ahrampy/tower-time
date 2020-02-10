@@ -483,7 +483,6 @@ class Game {
     }
   }
 
-  //  TODO refactor
   tileRollOver() {
     if (towerTime.selectedTower) {
       towerTime.selectedTower.selected = false;
@@ -496,43 +495,32 @@ class Game {
     );
     for (let i = 0; i < towerInfoTiles.length; i++) {
       const info = towerInfoTiles[i];
+      const value = document.createElement("p");
+      value.style.fontSize = "10pt";
 
-      if (info.innerHTML.indexOf("Type") != -1) {
+      if (info.innerHTML.includes("Type")) {
         info.innerHTML = "<h5>Type</h5>";
-        // this.createP()
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.type;
         info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Range") != -1) {
+      } else if (info.innerHTML.includes("Range")) {
         info.innerHTML = "<h5>Range</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.range;
         info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Damage") != -1) {
+      } else if (info.innerHTML.includes("Damage")) {
         info.innerHTML = "<h5>Damage</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.damage;
         info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Cooldown") != -1) {
+      } else if (info.innerHTML.includes("Cooldown")) {
         info.innerHTML = "<h5>Cooldown</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.cooldown;
         info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Next") != -1) {
+      } else if (info.innerHTML.includes("Next")) {
         info.innerHTML = "<h5>Next</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.upgrade + " ¥";
         info.appendChild(value);
       }
     }
   }
-
-  createP(ele) {}
 
   tileRollOut() {
     this.showTowerStats = false;
