@@ -55,6 +55,11 @@ class Game {
       this.handleCanvasMouseOver,
       false
     );
+    this.canvas.addEventListener(
+      "mouseout",
+      this.handleCanvasMouseOut,
+      false
+    );
     this.canvas.addEventListener("click", this.handleCanvasMouseClicked, false);
     this.context = this.canvas.getContext("2d");
 
@@ -208,11 +213,6 @@ class Game {
   //     muteButton.addEventListener('click', this.audioToggle, false);
   // }
 
-  handleAutoWaveButton() {
-    const autoWave = document.querySelector("input[name=auto-wave]");
-    autoWave.addEventListener("change", this.autoWaveToggle, false);
-  }
-
   // audioToggle() {
   //     if (towerTime.muted) {
   //         this.classList.add('mute-off');
@@ -226,6 +226,12 @@ class Game {
   //         towerTime.muted = true;
   //     }
   // }
+
+  handleAutoWaveButton() {
+    const autoWave = document.querySelector("input[name=auto-wave]");
+    autoWave.addEventListener("change", this.autoWaveToggle, false);
+  }
+
 
   autoWaveToggle() {
     if (this.checked) {
@@ -291,6 +297,14 @@ class Game {
   handleCanvasMouseOver() {
     if (towerTime.towers.length < 1) return;
     towerTime.towers[towerTime.towers.length - 1].visible = true;
+  }
+
+  handleCanvasMouseOut() {
+    if (towerTime.placingTower) {
+      towerTime.placingTower = false;
+      towerTime.towers.splice(towerTime.towers.length - 1, 1);
+      console.log("um");
+    }
   }
 
   handleCanvasMouseClicked() {
@@ -475,20 +489,23 @@ class Game {
     }
   }
 
+  //  TODO refactor
   tileRollOver() {
     if (towerTime.selectedTower) {
       towerTime.selectedTower.selected = false;
       towerTime.selectedTower = null;
     }
+
     this.showTowerStats = true;
     let towerInfoTiles = document.querySelectorAll(
       "#tower-details > .detail-tile"
     );
     for (let i = 0; i < towerInfoTiles.length; i++) {
-      let info = towerInfoTiles[i];
+      const info = towerInfoTiles[i];
 
       if (info.innerHTML.indexOf("Type") != -1) {
         info.innerHTML = "<h5>Type</h5>";
+        // this.createP()
         const value = document.createElement("p");
         value.style.fontSize = "10pt";
         value.innerHTML = this.type;
@@ -519,6 +536,10 @@ class Game {
         info.appendChild(value);
       }
     }
+  }
+
+  createP(ele) {
+    
   }
 
   tileRollOut() {
@@ -565,6 +586,7 @@ class Game {
     towerTime.placingTower = false;
   }
 
+  // TODO refactor
   updateInfo() {
     let infoTiles = document.querySelectorAll("#info > .info-tile");
     for (let i = 0; i < infoTiles.length; i++) {
