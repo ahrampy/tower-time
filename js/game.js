@@ -153,7 +153,6 @@ class Game {
     }
     towerTime.creepHealth = towerTime.wave * 400 * towerTime.multiplier;
     towerTime.bits += 5 * towerTime.wave;
-    // this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
     towerTime.loadCreeps(20);
   }
 
@@ -189,14 +188,12 @@ class Game {
 
   towerKey(towerNum) {
     towerTime.placingTower = false;
-    if (
-      towerTime.towers.length &&
-      !towerTime.towers[towerTime.towers.length - 1].placed
-    ) {
-      towerTime.towers.splice(towerTime.towers.length - 1, 1);
+    const towers = towerTime.towers;
+    if (towers.length && !towers[towers.length - 1].placed) {
+      towers.splice(towers.length - 1, 1);
     }
     this.tileDivs[towerNum].click();
-    let currentTower = towerTime.towers[towerTime.towers.length - 1];
+    const currentTower = towers[towers.length - 1];
     if (currentTower.location.x === 0 && currentTower.location.y === 0) {
       currentTower.location = new Vector(
         towerTime.canvas.mouseX,
@@ -249,11 +246,7 @@ class Game {
     if (towerTime.selectedTower) {
       const tower = towerTime.selectedTower;
 
-      if (
-        towerTime.selectedTower &&
-        tower.canUpgrade &&
-        towerTime.bits - tower.upgrade >= 0
-      ) {
+      if (tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
         towerTime.bits -= tower.upgrade;
         tower.handleUpgrade();
       }
@@ -277,22 +270,21 @@ class Game {
         }
       }
 
-      towerTime.bits += tower.upgrade / 2;
-      towerTime.selectedTower = null;
       tower.removed = true;
+      towerTime.selectedTower = null;
+      towerTime.bits += tower.upgrade / 2;
     }
   }
 
   handleCanvasMouseMoved(event) {
     this.mouseX = event.offsetX;
     this.mouseY = event.offsetY;
-    if (towerTime.towers.length < 1) return;
-    if (
-      !towerTime.towers[towerTime.towers.length - 1].placed &&
-      towerTime.placingTower === true
-    ) {
-      towerTime.towers[towerTime.towers.length - 1].location.x = this.mouseX;
-      towerTime.towers[towerTime.towers.length - 1].location.y = this.mouseY;
+    const towers = towerTime.towers;
+    if (towers.length < 1) return;
+    const tower = towers[towers.length - 1];
+    if (!tower.placed && towerTime.placingTower === true) {
+      tower.location.x = this.mouseX;
+      tower.location.y = this.mouseY;
     }
   }
 
@@ -832,50 +824,51 @@ class Game {
   }
 
   handleGameStart() {
-      const towerEditButtons = document
-        .querySelectorAll("#edit-tower-buttons > .edit-button");
-      towerEditButtons[0].style.opacity = 0;
-      towerEditButtons[1].style.opacity = 0;
-      this.context.fillStyle = "rgba(200, 200, 200, .1)";
-      this.context.fillRect(0, 0, 800, 520);
-      this.context.font = "100px Trebuchet MS";
-      this.context.fillStyle = "#333";
-      this.context.textAlign = "center";
-      this.context.fillText("Tower Time", 400, 150);
-      const titleUnderline = new Image();
-      titleUnderline.onload = () =>
-        this.context.drawImage(
-          titleUnderline,
-          this.canvas.width / 2 - titleUnderline.width / 2,
-          170
-        );
-      titleUnderline.src = "images/title-underline.png";
-      this.context.font = "27px Trebuchet MS";
-      this.context.fillStyle = "#333";
-      this.context.fillText("Click 'Play' to Start Building Towers", 400, 240);
-      this.context.font = "18px Trebuchet MS";
-      this.context.fillStyle = "rgba(68, 74, 110, 1)";
-      this.context.fillText("hover over anything to get tooltips", 400, 280);
-      this.context.font = "25px Trebuchet MS";
-      this.context.fillStyle = "#333";
-      this.context.fillText("Tower Abilities", 400, 350);
-      this.context.font = "15px Trebuchet MS";
-      this.context.fillStyle = "rgba(68, 74, 110, 1)";
-      this.context.fillText(
-        "Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack",
-        400,
-        380
+    const towerEditButtons = document.querySelectorAll(
+      "#edit-tower-buttons > .edit-button"
+    );
+    towerEditButtons[0].style.opacity = 0;
+    towerEditButtons[1].style.opacity = 0;
+    this.context.fillStyle = "rgba(200, 200, 200, .1)";
+    this.context.fillRect(0, 0, 800, 520);
+    this.context.font = "100px Trebuchet MS";
+    this.context.fillStyle = "#333";
+    this.context.textAlign = "center";
+    this.context.fillText("Tower Time", 400, 150);
+    const titleUnderline = new Image();
+    titleUnderline.onload = () =>
+      this.context.drawImage(
+        titleUnderline,
+        this.canvas.width / 2 - titleUnderline.width / 2,
+        170
       );
-      this.context.font = "25px Trebuchet MS";
-      this.context.fillStyle = "#333";
-      this.context.fillText("Optional Hotkeys", 400, 430);
-      this.context.font = "15px Trebuchet MS";
-      this.context.fillStyle = "rgba(68, 74, 110, 1)";
-      this.context.fillText(
-        "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc",
-        400,
-        460
-      );
+    titleUnderline.src = "images/title-underline.png";
+    this.context.font = "27px Trebuchet MS";
+    this.context.fillStyle = "#333";
+    this.context.fillText("Click 'Play' to Start Building Towers", 400, 240);
+    this.context.font = "18px Trebuchet MS";
+    this.context.fillStyle = "rgba(68, 74, 110, 1)";
+    this.context.fillText("hover over anything to get tooltips", 400, 280);
+    this.context.font = "25px Trebuchet MS";
+    this.context.fillStyle = "#333";
+    this.context.fillText("Tower Abilities", 400, 350);
+    this.context.font = "15px Trebuchet MS";
+    this.context.fillStyle = "rgba(68, 74, 110, 1)";
+    this.context.fillText(
+      "Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack",
+      400,
+      380
+    );
+    this.context.font = "25px Trebuchet MS";
+    this.context.fillStyle = "#333";
+    this.context.fillText("Optional Hotkeys", 400, 430);
+    this.context.font = "15px Trebuchet MS";
+    this.context.fillStyle = "rgba(68, 74, 110, 1)";
+    this.context.fillText(
+      "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc",
+      400,
+      460
+    );
   }
 
   handleGameOver() {
@@ -949,6 +942,6 @@ class Game {
   }
 
   render() {
-    this.context.clearRect(0, 0, 800, 520);    
+    this.context.clearRect(0, 0, 800, 520);
   }
 }
