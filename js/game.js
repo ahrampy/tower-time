@@ -489,8 +489,9 @@ class Game {
       towerTime.selectedTower = null;
     }
     this.showTowerStats = true;
-    let towerInfoTiles = document
-      .querySelectorAll("#tower-details > .detail-tile");
+    let towerInfoTiles = document.querySelectorAll(
+      "#tower-details > .detail-tile"
+    );
     for (let i = 0; i < towerInfoTiles.length; i++) {
       let info = towerInfoTiles[i];
 
@@ -543,8 +544,8 @@ class Game {
       towerTime.currentTileDiv = this;
       towerTime.placingTower = true;
       if (towerTime.selectedTower) {
-          towerTime.selectedTower.selected = false;
-          towerTime.selectedTower = null;
+        towerTime.selectedTower.selected = false;
+        towerTime.selectedTower = null;
       }
     }
   }
@@ -762,9 +763,11 @@ class Game {
   }
 
   loadCreeps(numCreeps) {
-    for (let i = 0; i < numCreeps; i++) {
-      setTimeout(this.sendCreep, 1500 * i);
-    }
+    if (numCreeps === 0) return;
+    this.sendCreep();
+    setTimeout(() => {
+      this.loadCreeps(numCreeps - 1);
+    }, 1500);
   }
 
   sendCreep() {
@@ -829,10 +832,8 @@ class Game {
   }
 
   handleGameStart() {
-    if (!this.gameStarted) {
       const towerEditButtons = document
-        .querySelector("#edit-tower-buttons")
-        .getElementsByClassName("edit-button");
+        .querySelectorAll("#edit-tower-buttons > .edit-button");
       towerEditButtons[0].style.opacity = 0;
       towerEditButtons[1].style.opacity = 0;
       this.context.fillStyle = "rgba(200, 200, 200, .1)";
@@ -875,12 +876,6 @@ class Game {
         400,
         460
       );
-      this.context.font = "20px Trebuchet MS";
-      this.context.fillStyle = "#333";
-      // this.context.fillText("Click 'Play' when Ready!", 400, 500);
-    } else {
-      this.render();
-    }
   }
 
   handleGameOver() {
@@ -954,6 +949,6 @@ class Game {
   }
 
   render() {
-    this.context.clearRect(0, 0, 800, 520);
+    this.context.clearRect(0, 0, 800, 520);    
   }
 }
