@@ -137,14 +137,14 @@ class Game {
       //     towerTime.music.setAttribute('src', '');
       // }
     }
-    if (towerTime.wave === 0) {
+    this.innerText = "Next Wave";
+    towerTime.bits = round5(towerTime.bits);
+    towerTime.wave += 1;
+    if (towerTime.wave === 1) {
       document.querySelector("#towers").classList.remove("active");
       document.querySelector("#info-bits").classList.remove("active");
       tutorial.showInfo("start");
     }
-    this.innerText = "Next Wave";
-    towerTime.bits = round5(towerTime.bits);
-    towerTime.wave += 1;
     if (towerTime.wave % 10 === 0) {
       towerTime.multiplier += 0.5;
     }
@@ -152,8 +152,8 @@ class Game {
       towerTime.multiplier += 0.5;
     }
     towerTime.creepHealth = towerTime.wave * 400 * towerTime.multiplier;
-    towerTime.bits += (10 * towerTime.wave) / 2;
-    this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
+    towerTime.bits += 5 * towerTime.wave;
+    // this.style.backgroundColor = "rgba(68, 74, 110, 0.33)";
     towerTime.loadCreeps(20);
   }
 
