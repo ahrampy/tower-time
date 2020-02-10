@@ -501,24 +501,21 @@ class Game {
       if (info.innerHTML.includes("Type")) {
         info.innerHTML = "<h5>Type</h5>";
         value.innerHTML = this.type;
-        info.appendChild(value);
       } else if (info.innerHTML.includes("Range")) {
         info.innerHTML = "<h5>Range</h5>";
         value.innerHTML = this.range;
-        info.appendChild(value);
       } else if (info.innerHTML.includes("Damage")) {
         info.innerHTML = "<h5>Damage</h5>";
         value.innerHTML = this.damage;
-        info.appendChild(value);
       } else if (info.innerHTML.includes("Cooldown")) {
         info.innerHTML = "<h5>Cooldown</h5>";
         value.innerHTML = this.cooldown;
-        info.appendChild(value);
       } else if (info.innerHTML.includes("Next")) {
         info.innerHTML = "<h5>Next</h5>";
         value.innerHTML = this.upgrade + " ¥";
-        info.appendChild(value);
       }
+
+      info.appendChild(value);
     }
   }
 
@@ -571,38 +568,26 @@ class Game {
     let infoTiles = document.querySelectorAll("#info > .info-tile");
     for (let i = 0; i < infoTiles.length; i++) {
       let info = infoTiles[i];
+      const value = document.createElement("p");
+      value.style.fontSize = "10pt";
 
       if (info.innerHTML.indexOf("Bank") != -1) {
         info.innerHTML = "<h4>Bank</h4> <br/>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.bits + "	¥";
-        info.appendChild(value);
       } else if (info.innerHTML.indexOf("Lives") != -1) {
         info.innerHTML = "<h4>Lives</h4> <br/>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.lives;
-        info.appendChild(value);
       } else if (info.innerHTML.indexOf("Score") != -1) {
         info.innerHTML = "<h4>Score</h4> <br/>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.score;
-        info.appendChild(value);
       } else if (info.innerHTML.indexOf("Wave") != -1) {
         info.innerHTML = "<h4>Wave</h4> <br/>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.wave;
-        info.appendChild(value);
       } else if (info.innerHTML.indexOf("Enemy") != -1) {
         info.innerHTML = "<h4>Enemy</h4> <br/>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
         value.innerHTML = this.creepHealth;
-        info.appendChild(value);
       }
+      info.appendChild(value);
     }
   }
 
