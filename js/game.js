@@ -55,11 +55,7 @@ class Game {
       this.handleCanvasMouseOver,
       false
     );
-    this.canvas.addEventListener(
-      "mouseout",
-      this.handleCanvasMouseOut,
-      false
-    );
+    this.canvas.addEventListener("mouseout", this.handleCanvasMouseOut, false);
     this.canvas.addEventListener("click", this.handleCanvasMouseClicked, false);
     this.context = this.canvas.getContext("2d");
 
@@ -232,7 +228,6 @@ class Game {
     autoWave.addEventListener("change", this.autoWaveToggle, false);
   }
 
-
   autoWaveToggle() {
     if (this.checked) {
       towerTime.autoWave = true;
@@ -303,7 +298,6 @@ class Game {
     if (towerTime.placingTower) {
       towerTime.placingTower = false;
       towerTime.towers.splice(towerTime.towers.length - 1, 1);
-      console.log("um");
     }
   }
 
@@ -538,9 +532,7 @@ class Game {
     }
   }
 
-  createP(ele) {
-    
-  }
+  createP(ele) {}
 
   tileRollOut() {
     this.showTowerStats = false;
