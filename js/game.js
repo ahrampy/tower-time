@@ -154,6 +154,7 @@ class Game {
     }
     towerTime.creepHealth = towerTime.wave * 400 * towerTime.multiplier;
     towerTime.bits += 5 * towerTime.wave;
+    // const time = new Date();
     towerTime.loadCreeps(20);
   }
 
@@ -563,7 +564,6 @@ class Game {
     towerTime.placingTower = false;
   }
 
-  // TODO refactor
   updateInfo() {
     let infoTiles = document.querySelectorAll("#info > .info-tile");
     for (let i = 0; i < infoTiles.length; i++) {
@@ -743,6 +743,10 @@ class Game {
 
   loadCreeps(numCreeps) {
     if (numCreeps === 0) return;
+
+    // const current = new Date();
+    // console.log(time.getSeconds());
+    
     this.sendCreep();
     setTimeout(() => {
       this.loadCreeps(numCreeps - 1);
