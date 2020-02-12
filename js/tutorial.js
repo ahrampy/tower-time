@@ -78,10 +78,10 @@ class Tutorial {
     const text = tutorial.textPar;
     if (towerTime.wave === 0 && towerTime.gameStarted && ele === "canvas") {
       if (towerTime.bits >= 50) {
-        text.innerHTML = "to get started, place a few towers on the board";
+        text.innerHTML = "to get started, place a few towers on the board from the menu below";
       } else {
         text.innerHTML =
-          "now that you have some towers, send the first wave - good luck!";
+          "now that you have some towers, its time to send the first wave - good luck!";
       }
     } else if (ele === "score") {
       text.innerText = "your current score - increases for every enemy stopped";

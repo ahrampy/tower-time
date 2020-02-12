@@ -746,7 +746,7 @@ class Game {
 
     // const current = new Date();
     // console.log(time.getSeconds());
-    
+
     this.sendCreep();
     setTimeout(() => {
       this.loadCreeps(numCreeps - 1);
