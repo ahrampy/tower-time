@@ -4,12 +4,12 @@ window.addEventListener("load", init, false);
 
 var towerTime;
 var tutorial;
-// var scores;
+var scores;
 
 function init() {
   towerTime = new Game();
   tutorial = new Tutorial();
-  // scores = new Scores();
+  scores = new Scores();
   window.setTimeout(animate, 100);
 }
 
@@ -867,7 +867,7 @@ class Game {
     //     towerTime.music.playbackRate = 0.95;
     //     towerTime.music.play();
     // }
-    
+
     setTimeout(() => {
       this.canvas.classList.add("over");
     }, 2000);
@@ -907,14 +907,14 @@ class Game {
 
   handleScores(screen) {
     // const highScores = "";
-    // const form = document.createElement("form");
-    // const input = document.createElement("input");
-    // input.classList.add("nameInput");
-    // input.placeholder = "name";
-    // // input.classList.add("score-name");
-    // form.appendChild(input);
-    // screen.appendChild(form);
-    // form.addEventListener("submit", this.addScore);
+    const form = document.createElement("form");
+    const input = document.createElement("input");
+    input.classList.add("nameInput");
+    input.placeholder = "add your name";
+    // input.classList.add("score-name");
+    form.appendChild(input);
+    screen.appendChild(form);
+    form.addEventListener("submit", this.addScore);
   }
 
   addScore(event) {
@@ -922,7 +922,6 @@ class Game {
     const name = document.querySelector(".nameInput").value
     // const 
     scores.addScore(name, towerTime.score);
-
   }
 
   newGame() {
