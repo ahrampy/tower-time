@@ -1,5 +1,5 @@
 .DS_Store
-./sounds
-./images/alt
-node_modules
-.env
+/sounds
+/node_modules
+/images/alt
+.keys.js

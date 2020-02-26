@@ -867,21 +867,22 @@ class Game {
     //     towerTime.music.playbackRate = 0.95;
     //     towerTime.music.play();
     // }
-    // setTimeout(() => {
-    //   this.canvas.classList.add("over");
-    // }, 2000);
-    // setTimeout(() => {
-    //   const gameOverScreen = document.createElement("div");
-    //   document.querySelector("#game-canvas").appendChild(gameOverScreen);
-    //   document.querySelector("#game-canvas").removeChild(this.canvas);
-    //   gameOverScreen.classList.add("game-over");
-    //   setTimeout(() => {
-    //     gameOverScreen.classList.add("scores");
-    //     setTimeout(() => {
-    //       towerTime.handleScores(gameOverScreen);
-    //     }, 500);
-    //   }, 500);
-    // }, 5000);
+    
+    setTimeout(() => {
+      this.canvas.classList.add("over");
+    }, 2000);
+    setTimeout(() => {
+      const gameOverScreen = document.createElement("div");
+      document.querySelector("#game-canvas").appendChild(gameOverScreen);
+      document.querySelector("#game-canvas").removeChild(this.canvas);
+      gameOverScreen.classList.add("game-over");
+      setTimeout(() => {
+        gameOverScreen.classList.add("scores");
+        setTimeout(() => {
+          towerTime.handleScores(gameOverScreen);
+        }, 500);
+      }, 500);
+    }, 5000);
 
     this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
     this.context.fillRect(0, 0, 800, 520);
