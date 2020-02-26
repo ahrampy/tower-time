@@ -743,10 +743,6 @@ class Game {
 
   loadCreeps(numCreeps) {
     if (numCreeps === 0) return;
-
-    // const current = new Date();
-    // console.log(time.getSeconds());
-
     this.sendCreep();
     setTimeout(() => {
       this.loadCreeps(numCreeps - 1);

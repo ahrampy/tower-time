@@ -37,7 +37,7 @@
           <!-- <div id="spacer-div-2"> </div> -->
           <label id="auto-container"
             >Auto
-            <input name="auto-wave" type="checkbox"/>
+            <input name="auto-wave" type="checkbox" />
             <span class="checkmark"></span>
           </label>
         </div>
@@ -83,5 +83,30 @@
           <img src="./images/git.png" alt="git" /> </a
       ></span>
     </footer>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCUl00bvLb_3Ytr6Wj_L-XIp-bVX4Yb8b0",
+        authDomain: "tower-time.firebaseapp.com",
+        databaseURL: "https://tower-time.firebaseio.com",
+        projectId: "tower-time",
+        storageBucket: "tower-time.appspot.com",
+        messagingSenderId: "114254327718",
+        appId: "1:114254327718:web:7d6db95c7f120f99452967",
+        measurementId: "G-0BEHEHSDDL"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
   </body>
 </html>
