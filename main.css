@@ -49,6 +49,27 @@ body:hover {
   background-color: rgba(180, 179, 179, 0.5);
 }
 
+.canvas {
+  transition: 3s;
+}
+
+.over {
+  z-index: 0;
+  opacity: 0;
+}
+
+.game-over {
+  height: 520;
+  width: 800;
+  opacity: .3;
+  z-index: 2;
+  transition: 3s;
+}
+
+.back {
+  background-color: #333;
+}
+
 .info-icon {
   filter: invert(20%);
   display: flex;

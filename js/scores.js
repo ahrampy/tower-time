@@ -1,6 +1,6 @@
 "use strict";
 
-class Score {
+class Scores {
   constructor() {
     this.loadFireBase();
   }
@@ -19,7 +19,7 @@ class Score {
     firebase.initializeApp(firebaseConfig);
   }
 
-  writeUserData(name, score) {
+  addScore(name, score) {
     firebase
       .database()
       .ref("scores/" + Date.now())

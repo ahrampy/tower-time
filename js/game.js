@@ -4,12 +4,12 @@ window.addEventListener("load", init, false);
 
 var towerTime;
 var tutorial;
-var score;
+var scores;
 
 function init() {
   towerTime = new Game();
   tutorial = new Tutorial();
-  score = new Score();
+  scores = new Scores();
   window.setTimeout(animate, 100);
 }
 
@@ -17,7 +17,7 @@ function animate() {
   towerTime.run();
   window.requestAnimationFrame(animate);
 }
- 
+
 function round5(x) {
   return Math.ceil(x / 5) * 5;
 }
@@ -31,7 +31,7 @@ class Game {
     this.grid = [];
 
     // game stats
-    this.lives = 20;
+    this.lives = 1;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
@@ -867,6 +867,22 @@ class Game {
     //     towerTime.music.playbackRate = 0.95;
     //     towerTime.music.play();
     // }
+    setTimeout(() => {
+      this.canvas.classList.add("over");
+    }, 2000);
+    setTimeout(() => {
+      const gameOverScreen = document.createElement("div");
+      document.querySelector("#game-canvas").appendChild(gameOverScreen);
+      document.querySelector("#game-canvas").removeChild(this.canvas);
+      gameOverScreen.classList.add("game-over");
+      setTimeout(() => {
+        gameOverScreen.classList.add("back");
+        setTimeout(() => {
+          towerTime.handleScores(gameOverScreen);
+        }, 1000);
+      }, 1000);
+    }, 5000);
+
     this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
     this.context.fillRect(0, 0, 800, 520);
     this.context.font = "100px Trebuchet MS";
@@ -884,6 +900,14 @@ class Game {
     button.addEventListener("click", this.newGame, false);
     button.classList.add("active");
     tutorial.showInfo("game-over");
+  }
+
+  handleScores(screen) {
+    const highScores = "";
+    const input = document.createElement("input");
+    input.classList.add("nameInput");
+    input.placeholder = "name";
+    screen.appendChild(input);
   }
 
   newGame() {
