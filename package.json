@@ -13,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/ahrampy/tower-time/issues"
   },
-  "homepage": "https://github.com/ahrampy/tower-time#readme"
+  "homepage": "https://github.com/ahrampy/tower-time#readme",
+  "dependencies": {
+    "firebase": "^7.9.1"
+  }
 }

@@ -1,3 +1,4 @@
 .DS_Store
 ./sounds
 ./images/alt
+node_modules
