@@ -2,3 +2,4 @@
 ./sounds
 ./images/alt
 node_modules
+.env

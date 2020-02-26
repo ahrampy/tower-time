@@ -1,4 +1,5 @@
 "use strict";
+import 
 
 class Scores {
   constructor() {
@@ -7,7 +8,6 @@ class Scores {
  
   loadFireBase(){
     var firebaseConfig = {
-      apiKey: "AIzaSyCUl00bvLb_3Ytr6Wj_L-XIp-bVX4Yb8b0",
       authDomain: "tower-time.firebaseapp.com",
       databaseURL: "https://tower-time.firebaseio.com",
       projectId: "tower-time",
