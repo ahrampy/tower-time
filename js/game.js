@@ -31,7 +31,7 @@ class Game {
     this.grid = [];
 
     // game stats
-    this.lives = 1;
+    this.lives = 20;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
@@ -867,21 +867,21 @@ class Game {
     //     towerTime.music.playbackRate = 0.95;
     //     towerTime.music.play();
     // }
-    setTimeout(() => {
-      this.canvas.classList.add("over");
-    }, 2000);
-    setTimeout(() => {
-      const gameOverScreen = document.createElement("div");
-      document.querySelector("#game-canvas").appendChild(gameOverScreen);
-      document.querySelector("#game-canvas").removeChild(this.canvas);
-      gameOverScreen.classList.add("game-over");
-      setTimeout(() => {
-        gameOverScreen.classList.add("back");
-        setTimeout(() => {
-          towerTime.handleScores(gameOverScreen);
-        }, 1000);
-      }, 1000);
-    }, 5000);
+    // setTimeout(() => {
+    //   this.canvas.classList.add("over");
+    // }, 2000);
+    // setTimeout(() => {
+    //   const gameOverScreen = document.createElement("div");
+    //   document.querySelector("#game-canvas").appendChild(gameOverScreen);
+    //   document.querySelector("#game-canvas").removeChild(this.canvas);
+    //   gameOverScreen.classList.add("game-over");
+    //   setTimeout(() => {
+    //     gameOverScreen.classList.add("scores");
+    //     setTimeout(() => {
+    //       towerTime.handleScores(gameOverScreen);
+    //     }, 500);
+    //   }, 500);
+    // }, 5000);
 
     this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
     this.context.fillRect(0, 0, 800, 520);
@@ -893,6 +893,8 @@ class Game {
     this.context.fillStyle = "#333";
     this.context.textAlign = "center";
     this.context.fillText(`Final Score: ${this.score}`, 400, 280);
+    this.context.font = "25px Trebuchet MS";
+    this.context.fillText(`High scores are coming! Check back soon ;)`, 400, 330);
     this.lives = 0;
     this.gameOver = true;
     const button = document.querySelector("#start-button");
@@ -903,11 +905,23 @@ class Game {
   }
 
   handleScores(screen) {
-    const highScores = "";
-    const input = document.createElement("input");
-    input.classList.add("nameInput");
-    input.placeholder = "name";
-    screen.appendChild(input);
+    // const highScores = "";
+    // const form = document.createElement("form");
+    // const input = document.createElement("input");
+    // input.classList.add("nameInput");
+    // input.placeholder = "name";
+    // // input.classList.add("score-name");
+    // form.appendChild(input);
+    // screen.appendChild(form);
+    // form.addEventListener("submit", this.addScore);
+  }
+
+  addScore(event) {
+    event.preventDefault();
+    const name = document.querySelector(".nameInput").value
+    // const 
+    scores.addScore(name, towerTime.score);
+
   }
 
   newGame() {

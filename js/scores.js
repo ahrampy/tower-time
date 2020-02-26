@@ -26,7 +26,7 @@ class Scores {
       .set({
         name: name,
         score: score
-      });
+      });      
   }
 
 }

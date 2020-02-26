@@ -63,11 +63,23 @@ body:hover {
   width: 800;
   opacity: .3;
   z-index: 2;
-  transition: 3s;
+  transition: 2s;
 }
 
-.back {
+.scores {
   background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scores input {
+  background-color: #333;
+  opacity: 1;
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.5em;
 }
 
 .info-icon {
