@@ -4,12 +4,12 @@ window.addEventListener("load", init, false);
 
 var towerTime;
 var tutorial;
-var scores;
+// var scores;
 
 function init() {
   towerTime = new Game();
   tutorial = new Tutorial();
-  scores = new Scores();
+  // scores = new Scores();
   window.setTimeout(animate, 100);
 }
 
