@@ -80,6 +80,10 @@ body:hover {
   text-align: center;
   font-size: 30px;
   line-height: 1.5em;
+  text-decoration: none;
+  outline: none;
+  border: 2px solid rgb(121, 121, 121);
+  border-radius: 5px;
 }
 
 .info-icon {

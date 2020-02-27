@@ -2,7 +2,6 @@
 
 window.addEventListener("load", init, false);
 
-// init global vars to avoid class bindings
 var tt;
 var tutorial;
 var scores;
@@ -417,10 +416,10 @@ class Game {
         cost = 50;
         upgrade = 100;
         type = "Fire";
-        range = 120;
+        range = 100;
         cooldown = 200;
         damage = 20;
-        speed = 12;
+        speed = 10;
       } else if (i === 3) {
         tileImgPath = "images/air/yellow-tower-1.png";
         boardImgPath = "images/air/yellow-tower-1.png";

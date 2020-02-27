@@ -90,7 +90,7 @@ class Tower {
   handleUpgrade() {
     this.upgradeLevel += 1;
     this.upgrade *= 2;
-    this.damage = round5(this.damage * 2.5);
+    this.damage = Math.ceil((this.damage * 2.5) / 5) * 5;
     this.range += 25;
     this.speed += 2;
 
