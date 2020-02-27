@@ -2,24 +2,21 @@
 
 window.addEventListener("load", init, false);
 
-var towerTime;
+// init global vars to avoid class bindings
+var tt;
 var tutorial;
 var scores;
 
 function init() {
-  towerTime = new Game();
+  tt = new Game();
   tutorial = new Tutorial();
   scores = new Scores();
   window.setTimeout(animate, 100);
 }
 
 function animate() {
-  towerTime.run();
+  tt.run();
   window.requestAnimationFrame(animate);
-}
-
-function round5(x) {
-  return Math.ceil(x / 5) * 5;
 }
 
 class Game {
@@ -109,70 +106,69 @@ class Game {
   }
 
   startClick() {
-    if (!towerTime.gameStarted) {
-      towerTime.gameStarted = true;
-      towerTime.handleGameStart();
-      towerTime.run();
+    if (!tt.gameStarted) {
+      tt.gameStarted = true;
+      tt.handleGameStart();
+      tt.run();
       this.innerText = "First Wave";
       this.classList.remove("active");
       document.querySelector("#towers").classList.add("active");
       document.querySelector("#info-bits").classList.add("active");
-      // if (!towerTime.muted) {
+      // if (!tt.muted) {
       //     // setTimeout(() => (
-      //     towerTime.music.setAttribute('src', 'sounds/splash.mp3');
-      //     towerTime.music.load();
-      //     towerTime.music.playbackRate = 0.9
-      //     towerTime.music.play();
+      //     tt.music.setAttribute('src', 'sounds/splash.mp3');
+      //     tt.music.load();
+      //     tt.music.playbackRate = 0.9
+      //     tt.music.play();
       //     // ), 0);
       // } else {
-      //     towerTime.music.setAttribute('src', '');
+      //     tt.music.setAttribute('src', '');
       // }
       return;
       // } else {
-      // if (!towerTime.muted) {
+      // if (!tt.muted) {
       //     // setTimeout(() => (
-      //     towerTime.music.setAttribute('src', 'sounds/in_game.mp3');
-      //     towerTime.music.load();
-      //     towerTime.music.playbackRate = 0.95
-      //     towerTime.music.play();
+      //     tt.music.setAttribute('src', 'sounds/in_game.mp3');
+      //     tt.music.load();
+      //     tt.music.playbackRate = 0.95
+      //     tt.music.play();
       //     // ), 0);
       // } else {
-      //     towerTime.music.setAttribute('src', '');
+      //     tt.music.setAttribute('src', '');
       // }
     }
     this.innerText = "Next Wave";
-    towerTime.bits = round5(towerTime.bits);
-    towerTime.wave += 1;
-    if (towerTime.wave === 1) {
+    tt.bits = Math.ceil(tt.bits / 5) * 5;
+    tt.wave += 1;
+    if (tt.wave === 1) {
       document.querySelector("#towers").classList.remove("active");
       document.querySelector("#info-bits").classList.remove("active");
       tutorial.showInfo("start");
     }
-    if (towerTime.wave % 10 === 0) {
-      towerTime.multiplier += 0.5;
+    if (tt.wave % 10 === 0) {
+      tt.multiplier += 0.5;
     }
-    if (towerTime.wave % 30 === 0) {
-      towerTime.multiplier += 0.5;
+    if (tt.wave % 30 === 0) {
+      tt.multiplier += 0.5;
     }
-    towerTime.creepHealth = towerTime.wave * 400 * towerTime.multiplier;
-    towerTime.bits += 5 * towerTime.wave;
-    // const time = new Date();
-    towerTime.loadCreeps(20);
+    tt.creepHealth = tt.wave * 400 * tt.multiplier;
+    tt.bits += 5 * tt.wave;
+    tt.loadCreeps(20);
   }
 
   handleKeyCallbacks() {
     document.addEventListener("keydown", event => {
       if (event.keyCode === 27) {
-        towerTime.placingTower = false;
-        if (towerTime.selectedTower) {
-          towerTime.selectedTower.selected = false;
-          towerTime.selectedTower = null;
+        tt.placingTower = false;
+        if (tt.selectedTower) {
+          tt.selectedTower.selected = false;
+          tt.selectedTower = null;
         }
         if (
-          towerTime.towers.length &&
-          !towerTime.towers[towerTime.towers.length - 1].placed
+          tt.towers.length &&
+          !tt.towers[tt.towers.length - 1].placed
         ) {
-          towerTime.towers.splice(towerTime.towers.length - 1, 1);
+          tt.towers.splice(tt.towers.length - 1, 1);
         }
       } else if (event.keyCode === 49) {
         this.towerKey(0);
@@ -191,8 +187,8 @@ class Game {
   }
 
   towerKey(towerNum) {
-    towerTime.placingTower = false;
-    const towers = towerTime.towers;
+    tt.placingTower = false;
+    const towers = tt.towers;
     if (towers.length && !towers[towers.length - 1].placed) {
       towers.splice(towers.length - 1, 1);
     }
@@ -200,8 +196,8 @@ class Game {
     const currentTower = towers[towers.length - 1];
     if (currentTower.location.x === 0 && currentTower.location.y === 0) {
       currentTower.location = new Vector(
-        towerTime.canvas.mouseX,
-        towerTime.canvas.mouseY
+        tt.canvas.mouseX,
+        tt.canvas.mouseY
       );
     }
     currentTower.visible = true;
@@ -213,16 +209,16 @@ class Game {
   // }
 
   // audioToggle() {
-  //     if (towerTime.muted) {
+  //     if (tt.muted) {
   //         this.classList.add('mute-off');
   //         this.classList.remove('mute-on');
-  //         towerTime.muted = false;
-  //         towerTime.music.muted = false;
+  //         tt.muted = false;
+  //         tt.music.muted = false;
   //     } else {
   //         this.classList.add('mute-on');
   //         this.classList.remove('mute-off');
-  //         towerTime.music.muted = true;
-  //         towerTime.muted = true;
+  //         tt.music.muted = true;
+  //         tt.muted = true;
   //     }
   // }
 
@@ -233,9 +229,9 @@ class Game {
 
   autoWaveToggle() {
     if (this.checked) {
-      towerTime.autoWave = true;
+      tt.autoWave = true;
     } else {
-      towerTime.autoWave = false;
+      tt.autoWave = false;
     }
   }
 
@@ -247,60 +243,60 @@ class Game {
   }
 
   upgradeClick() {
-    if (towerTime.selectedTower) {
-      const tower = towerTime.selectedTower;
+    if (tt.selectedTower) {
+      const tower = tt.selectedTower;
 
-      if (tower.canUpgrade && towerTime.bits - tower.upgrade >= 0) {
-        towerTime.bits -= tower.upgrade;
+      if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
+        tt.bits -= tower.upgrade;
         tower.handleUpgrade();
       }
     }
   }
 
   sellClick() {
-    if (towerTime.selectedTower) {
-      const tower = towerTime.selectedTower;
+    if (tt.selectedTower) {
+      const tower = tt.selectedTower;
 
-      const gridCol = Math.floor(tower.location.x / towerTime.cellSize);
-      const gridRow = Math.floor(tower.location.y / towerTime.cellSize);
+      const gridCol = Math.floor(tower.location.x / tt.cellSize);
+      const gridRow = Math.floor(tower.location.y / tt.cellSize);
 
-      const cell = towerTime.grid[gridCol][gridRow];
+      const cell = tt.grid[gridCol][gridRow];
       cell.occupied = false;
 
-      towerTime.loadPaths();
-      for (let c = 0; c < towerTime.numCols; c++) {
-        for (let r = 0; r < towerTime.numRows; r++) {
-          towerTime.grid[c][r].loadAdjacentCells();
+      tt.loadPaths();
+      for (let c = 0; c < tt.numCols; c++) {
+        for (let r = 0; r < tt.numRows; r++) {
+          tt.grid[c][r].loadAdjacentCells();
         }
       }
 
       tower.removed = true;
-      towerTime.selectedTower = null;
-      towerTime.bits += tower.upgrade / 2;
+      tt.selectedTower = null;
+      tt.bits += tower.upgrade / 2;
     }
   }
 
   handleCanvasMouseMoved(event) {
     this.mouseX = event.offsetX;
     this.mouseY = event.offsetY;
-    const towers = towerTime.towers;
+    const towers = tt.towers;
     if (towers.length < 1) return;
     const tower = towers[towers.length - 1];
-    if (!tower.placed && towerTime.placingTower === true) {
+    if (!tower.placed && tt.placingTower === true) {
       tower.location.x = this.mouseX;
       tower.location.y = this.mouseY;
     }
   }
 
   handleCanvasMouseOver() {
-    if (towerTime.towers.length < 1) return;
-    towerTime.towers[towerTime.towers.length - 1].visible = true;
+    if (tt.towers.length < 1) return;
+    tt.towers[tt.towers.length - 1].visible = true;
   }
 
   handleCanvasMouseOut() {
-    if (towerTime.placingTower) {
-      towerTime.placingTower = false;
-      towerTime.towers.splice(towerTime.towers.length - 1, 1);
+    if (tt.placingTower) {
+      tt.placingTower = false;
+      tt.towers.splice(tt.towers.length - 1, 1);
     }
   }
 
@@ -308,27 +304,27 @@ class Game {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
-    const gridCol = Math.floor(mouseX / towerTime.cellSize);
-    const gridRow = Math.floor(mouseY / towerTime.cellSize);
+    const gridCol = Math.floor(mouseX / tt.cellSize);
+    const gridRow = Math.floor(mouseY / tt.cellSize);
 
-    const cell = towerTime.grid[gridCol][gridRow];
+    const cell = tt.grid[gridCol][gridRow];
 
-    if (towerTime.placingTower) {
+    if (tt.placingTower) {
       if (
         !cell.occupied &&
-        cell !== towerTime.goal &&
-        cell !== towerTime.start
+        cell !== tt.goal &&
+        cell !== tt.start
       ) {
         cell.occupied = true;
-        towerTime.loadPaths();
+        tt.loadPaths();
 
-        let checkPaths = towerTime.creeps.every(creep => {
+        let checkPaths = tt.creeps.every(creep => {
           let checkBlock = false;
           let route = [creep.currentCell];
           while (route.length) {
             let cell = route.pop();
             if (cell.value === -1) continue;
-            if (cell === towerTime.goal) {
+            if (cell === tt.goal) {
               checkBlock = true;
               break;
             }
@@ -337,13 +333,13 @@ class Game {
           return checkBlock;
         });
 
-        let route = [towerTime.start];
+        let route = [tt.start];
         let path = false;
 
         while (route.length) {
           let cell = route.pop();
           if (cell.value === -1) continue;
-          if (cell === towerTime.goal) {
+          if (cell === tt.goal) {
             path = true;
             break;
           }
@@ -353,21 +349,21 @@ class Game {
         if (!checkPaths || !path) {
           cell.cancel();
           cell.occupied = false;
-          towerTime.loadPaths();
+          tt.loadPaths();
         } else {
-          towerTime.placeTower(cell.center);
+          tt.placeTower(cell.center);
         }
       }
     } else {
-      for (let i = 0; i < towerTime.towers.length; i++) {
-        let tower = towerTime.towers[i];
+      for (let i = 0; i < tt.towers.length; i++) {
+        let tower = tt.towers[i];
         if (
           tower.location.x === cell.center.x &&
           tower.location.y === cell.center.y
         ) {
           tower.selected = !tower.selected;
           if (tower.selected) {
-            towerTime.selectedTower = tower;
+            tt.selectedTower = tower;
           }
         } else {
           tower.selected = false;
@@ -487,9 +483,9 @@ class Game {
   }
 
   tileRollOver() {
-    if (towerTime.selectedTower) {
-      towerTime.selectedTower.selected = false;
-      towerTime.selectedTower = null;
+    if (tt.selectedTower) {
+      tt.selectedTower.selected = false;
+      tt.selectedTower = null;
     }
 
     this.showTowerStats = true;
@@ -527,18 +523,18 @@ class Game {
   }
 
   tileClicked() {
-    if (towerTime.placingTower === true) {
-      if (!towerTime.towers[towerTime.towers.length - 1].placed) {
-        towerTime.towers.splice(towerTime.towers.length - 1, 1);
+    if (tt.placingTower === true) {
+      if (!tt.towers[tt.towers.length - 1].placed) {
+        tt.towers.splice(tt.towers.length - 1, 1);
       }
     }
-    if (towerTime.bits >= this.cost) {
-      towerTime.createTower(this);
-      towerTime.currentTileDiv = this;
-      towerTime.placingTower = true;
-      if (towerTime.selectedTower) {
-        towerTime.selectedTower.selected = false;
-        towerTime.selectedTower = null;
+    if (tt.bits >= this.cost) {
+      tt.createTower(this);
+      tt.currentTileDiv = this;
+      tt.placingTower = true;
+      if (tt.selectedTower) {
+        tt.selectedTower.selected = false;
+        tt.selectedTower = null;
       }
     }
   }
@@ -559,11 +555,11 @@ class Game {
   }
 
   placeTower(location) {
-    const tower = towerTime.towers[towerTime.towers.length - 1];
+    const tower = tt.towers[tt.towers.length - 1];
     tower.location = new Vector(location.x, location.y);
     this.bits -= tower.cost;
     tower.placed = true;
-    towerTime.placingTower = false;
+    tt.placingTower = false;
   }
 
   updateInfo() {
@@ -600,7 +596,7 @@ class Game {
     let towerEditButtons = document
       .querySelector("#edit-tower-buttons")
       .getElementsByClassName("edit-button");
-    if (towerTime.selectedTower) {
+    if (tt.selectedTower) {
       towerEditButtons[0].style.opacity = 100;
       towerEditButtons[1].style.opacity = 100;
       for (let i = 0; i < towerInfoTiles.length; i++) {
@@ -610,38 +606,38 @@ class Game {
           info.innerHTML = "<h5>Type</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = towerTime.selectedTower.type;
+          value.innerHTML = tt.selectedTower.type;
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Range") != -1) {
           info.innerHTML = "<h5>Range</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = towerTime.selectedTower.range;
+          value.innerHTML = tt.selectedTower.range;
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Damage") != -1) {
           info.innerHTML = "<h5>Damage</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = towerTime.selectedTower.damage;
+          value.innerHTML = tt.selectedTower.damage;
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Cooldown") != -1) {
           info.innerHTML = "<h5>Cooldown</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = towerTime.selectedTower.cooldown;
+          value.innerHTML = tt.selectedTower.cooldown;
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Next") != -1) {
           info.innerHTML = "<h5>Next</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          if (towerTime.selectedTower.canUpgrade) {
-            value.innerHTML = towerTime.selectedTower.upgrade + " ¥";
+          if (tt.selectedTower.canUpgrade) {
+            value.innerHTML = tt.selectedTower.upgrade + " ¥";
           } else {
             value.innerHTML = "Max";
           }
           info.appendChild(value);
         }
-        if (!towerTime.selectedTower.canUpgrade) {
+        if (!tt.selectedTower.canUpgrade) {
           towerEditButtons[0].style.opacity = 0;
         }
       }
@@ -752,18 +748,18 @@ class Game {
   }
 
   sendCreep() {
-    const location = towerTime.start.center.copy();
-    const creep = new Creep(location, towerTime.multiplier);
-    towerTime.creeps.push(creep);
+    const location = tt.start.center.copy();
+    const creep = new Creep(location, tt.multiplier);
+    tt.creeps.push(creep);
   }
 
   gridAttacks() {
     for (let i = 0; i < this.attacks.length; i++) {
       const attack = this.attacks[i];
-      const gridCol = Math.floor(attack.location.x / towerTime.cellSize);
-      const gridRow = Math.floor(attack.location.y / towerTime.cellSize);
-      if (towerTime.grid[gridCol] && towerTime.grid[gridCol][gridRow]) {
-        const cell = towerTime.grid[gridCol][gridRow];
+      const gridCol = Math.floor(attack.location.x / tt.cellSize);
+      const gridRow = Math.floor(attack.location.y / tt.cellSize);
+      if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
+        const cell = tt.grid[gridCol][gridRow];
         cell.attacked = true;
         cell.attackDamage = attack.damage;
         if (attack.type === "Water") {
@@ -785,26 +781,26 @@ class Game {
   checkWave() {
     const send = document.querySelector("#start-button");
     if (
-      towerTime.autoWave &&
-      !towerTime.sendingWave &&
-      !towerTime.creeps.length
+      tt.autoWave &&
+      !tt.sendingWave &&
+      !tt.creeps.length
     ) {
       send.click();
-      towerTime.sendingWave = true;
+      tt.sendingWave = true;
       setTimeout(() => {
-        towerTime.sendingWave = false;
+        tt.sendingWave = false;
       }, 1000);
     }
     if (
-      !towerTime.creeps.length &&
-      !towerTime.sendingWave &&
-      towerTime.wave > 0
+      !tt.creeps.length &&
+      !tt.sendingWave &&
+      tt.wave > 0
     ) {
       send.classList.add("active");
     } else {
       send.classList.remove("active");
     }
-    if (towerTime.wave === 0 && towerTime.bits < 50) {
+    if (tt.wave === 0 && tt.bits < 50) {
       document.querySelector("#towers").classList.remove("active");
       document.querySelector("#info-bits").classList.remove("active");
       send.classList.add("active");
@@ -861,11 +857,11 @@ class Game {
   }
 
   handleGameOver() {
-    // towerTime.music.setAttribute('src', 'sounds/game_over.mp3');
-    // towerTime.music.load();
-    // if (!towerTime.muted) {
-    //     towerTime.music.playbackRate = 0.95;
-    //     towerTime.music.play();
+    // tt.music.setAttribute('src', 'sounds/game_over.mp3');
+    // tt.music.load();
+    // if (!tt.muted) {
+    //     tt.music.playbackRate = 0.95;
+    //     tt.music.play();
     // }
 
     setTimeout(() => {
@@ -879,7 +875,7 @@ class Game {
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
         setTimeout(() => {
-          towerTime.handleScores(gameOverScreen);
+          tt.handleScores(gameOverScreen);
         }, 500);
       }, 500);
     }, 5000);
@@ -921,7 +917,7 @@ class Game {
     event.preventDefault();
     const name = document.querySelector(".nameInput").value
     // const 
-    scores.addScore(name, towerTime.score);
+    scores.addScore(name, tt.score);
   }
 
   newGame() {

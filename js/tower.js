@@ -48,16 +48,16 @@ class Tower {
   }
 
   findTarget() {
-    for (let i = 0; i < towerTime.creeps.length; i++) {
+    for (let i = 0; i < tt.creeps.length; i++) {
       if (
-        towerTime.creeps[i].location.dist(this.location) < this.range &&
-        towerTime.creeps[i].alive
+        tt.creeps[i].location.dist(this.location) < this.range &&
+        tt.creeps[i].alive
       ) {
         this.follow = false;
-        return towerTime.creeps[i].location;
+        return tt.creeps[i].location;
       }
     }
-    this.target = new Vector(towerTime.canvas.mouseX, towerTime.canvas.mouseY);
+    this.target = new Vector(tt.canvas.mouseX, tt.canvas.mouseY);
     this.follow = true;
     return this.target;
   }
@@ -70,7 +70,7 @@ class Tower {
       dist < this.range &&
       this.placed &&
       mils - this.lastFired > this.cooldown &&
-      towerTime.creeps.length !== 0 &&
+      tt.creeps.length !== 0 &&
       !this.follow
     ) {
       this.lastFired = mils;
@@ -83,7 +83,7 @@ class Tower {
         this.damage,
         this.speed
       );
-      towerTime.attacks.push(attack);
+      tt.attacks.push(attack);
     }
   }
 
@@ -164,7 +164,7 @@ class Tower {
   }
 
   render() {
-    const context = towerTime.context;
+    const context = tt.context;
     context.save();
     if (this.visible) {
       if (!this.placed || this.selected) {

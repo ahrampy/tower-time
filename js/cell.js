@@ -87,9 +87,9 @@ class Cell {
   }
 
   render() {
-    if (this === towerTime.goal) {
+    if (this === tt.goal) {
       this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
-    } else if (this === towerTime.start) {
+    } else if (this === tt.start) {
       this.context.fillStyle = "rgba(87, 95, 139, 0.8)";
     } else if (this.occupied) {
       this.context.fillStyle = "rgba(224, 224, 224, 0.6)";

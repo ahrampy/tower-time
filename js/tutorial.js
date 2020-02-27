@@ -76,8 +76,8 @@ class Tutorial {
 
   showInfo(ele) {
     const text = tutorial.textPar;
-    if (towerTime.wave === 0 && towerTime.gameStarted && ele === "canvas") {
-      if (towerTime.bits >= 50) {
+    if (tt.wave === 0 && tt.gameStarted && ele === "canvas") {
+      if (tt.bits >= 50) {
         text.innerHTML =
           "to get started, place a few towers on the board from the menu below";
       } else {
@@ -122,7 +122,7 @@ class Tutorial {
       text.innerText =
         "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for its most recent cost";
     } else if (ele === "canvas") {
-      if (towerTime.gameStarted) {
+      if (tt.gameStarted) {
         text.innerText =
           "the board - the dark gray sqaure will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are walls - place towers to make more walls!";
       }

@@ -32,7 +32,7 @@ class Attack {
   }
 
   render() {
-    const context = towerTime.context;
+    const context = tt.context;
     context.save();
 
     // context.beginPath();

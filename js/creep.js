@@ -16,7 +16,7 @@ class Creep {
     this.multiplier = multiplier;
     this.worth = 5 * this.multiplier;
     this.pointValue = 100 * this.multiplier;
-    this.maxHealth = towerTime.wave * 400 * this.multiplier;
+    this.maxHealth = tt.wave * 400 * this.multiplier;
     this.health = this.maxHealth;
     this.alive = true;
     this.slowed = false;
@@ -32,12 +32,12 @@ class Creep {
   }
 
   checkWalls() {
-    let col = Math.floor(this.location.x / towerTime.cellSize);
-    let row = Math.floor(this.location.y / towerTime.cellSize);
+    let col = Math.floor(this.location.x / tt.cellSize);
+    let row = Math.floor(this.location.y / tt.cellSize);
     if (
-      towerTime.grid &&
-      towerTime.grid[col] &&
-      towerTime.grid[col][row].occupied
+      tt.grid &&
+      tt.grid[col] &&
+      tt.grid[col][row].occupied
     ) {
       // if (this.velocity.x > this.velocity.y) {
       this.velocity.x = -this.velocity.x;
@@ -59,20 +59,20 @@ class Creep {
 
   checkAlive() {
     if (this.health <= 0) {
-      towerTime.bits += this.worth;
-      towerTime.score += this.pointValue;
+      tt.bits += this.worth;
+      tt.score += this.pointValue;
       this.alive = false;
     }
   }
 
   move() {
-    let col = Math.floor(this.location.x / towerTime.cellSize);
-    let row = Math.floor(this.location.y / towerTime.cellSize);
+    let col = Math.floor(this.location.x / tt.cellSize);
+    let row = Math.floor(this.location.y / tt.cellSize);
 
-    if (towerTime.grid[col][row] === towerTime.goal) {
+    if (tt.grid[col][row] === tt.goal) {
       this.alive = false;
-      towerTime.lives -= 1;
-      // if (!towerTime.muted) {
+      tt.lives -= 1;
+      // if (!tt.muted) {
       //     const lose = new Audio;
       //     lose.setAttribute('src', 'sounds/lose_life.mp3');
       //     lose.load();
@@ -80,8 +80,8 @@ class Creep {
       // }
       return;
     }
-    if (towerTime.grid[col][row] && !towerTime.grid[col][row].occupied) {
-      this.currentCell = towerTime.grid[col][row];
+    if (tt.grid[col][row] && !tt.grid[col][row].occupied) {
+      this.currentCell = tt.grid[col][row];
       let nextCell = this.currentCell.smallestAdjacent;
       this.acceleration = this.acceleration.subGetNew(
         nextCell.center,
@@ -112,7 +112,7 @@ class Creep {
   }
 
   render() {
-    const context = towerTime.context;
+    const context = tt.context;
     context.beginPath();
     context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
     if (this.slowed) {
