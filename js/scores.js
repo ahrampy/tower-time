@@ -24,8 +24,8 @@ class Scores {
   addScore(name, score) {
     firebase
       .database()
-      .ref("scores/" + Date.now())
-      .set({
+      .ref("scores/")
+      .push({
         name: name,
         score: score
       });      

@@ -901,7 +901,10 @@ class Game {
   }
 
   handleScores(screen) {
-    // const highScores = "";
+    // const highscores = firebase.database().ref('scores')
+    // const scoreHolder = document.createElement("ol")
+    // console.log(highscores);
+    
     const form = document.createElement("form");
     const input = document.createElement("input");
     input.classList.add("nameInput");
