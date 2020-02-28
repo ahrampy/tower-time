@@ -27,7 +27,7 @@ class Game {
     this.grid = [];
 
     // game stats
-    this.lives = 20;
+    this.lives = 0;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
@@ -163,10 +163,7 @@ class Game {
           tt.selectedTower.selected = false;
           tt.selectedTower = null;
         }
-        if (
-          tt.towers.length &&
-          !tt.towers[tt.towers.length - 1].placed
-        ) {
+        if (tt.towers.length && !tt.towers[tt.towers.length - 1].placed) {
           tt.towers.splice(tt.towers.length - 1, 1);
         }
       } else if (event.keyCode === 49) {
@@ -194,10 +191,7 @@ class Game {
     this.tileDivs[towerNum].click();
     const currentTower = towers[towers.length - 1];
     if (currentTower.location.x === 0 && currentTower.location.y === 0) {
-      currentTower.location = new Vector(
-        tt.canvas.mouseX,
-        tt.canvas.mouseY
-      );
+      currentTower.location = new Vector(tt.canvas.mouseX, tt.canvas.mouseY);
     }
     currentTower.visible = true;
   }
@@ -309,11 +303,7 @@ class Game {
     const cell = tt.grid[gridCol][gridRow];
 
     if (tt.placingTower) {
-      if (
-        !cell.occupied &&
-        cell !== tt.goal &&
-        cell !== tt.start
-      ) {
+      if (!cell.occupied && cell !== tt.goal && cell !== tt.start) {
         cell.occupied = true;
         tt.loadPaths();
 
@@ -779,22 +769,14 @@ class Game {
 
   checkWave() {
     const send = document.querySelector("#start-button");
-    if (
-      tt.autoWave &&
-      !tt.sendingWave &&
-      !tt.creeps.length
-    ) {
+    if (tt.autoWave && !tt.sendingWave && !tt.creeps.length) {
       send.click();
       tt.sendingWave = true;
       setTimeout(() => {
         tt.sendingWave = false;
       }, 1000);
     }
-    if (
-      !tt.creeps.length &&
-      !tt.sendingWave &&
-      tt.wave > 0
-    ) {
+    if (!tt.creeps.length && !tt.sendingWave && tt.wave > 0) {
       send.classList.add("active");
     } else {
       send.classList.remove("active");
@@ -863,21 +845,21 @@ class Game {
     //     tt.music.play();
     // }
 
-    setTimeout(() => {
-      this.canvas.classList.add("over");
-    }, 2000);
-    setTimeout(() => {
-      const gameOverScreen = document.createElement("div");
-      document.querySelector("#game-canvas").appendChild(gameOverScreen);
-      document.querySelector("#game-canvas").removeChild(this.canvas);
-      gameOverScreen.classList.add("game-over");
-      setTimeout(() => {
-        gameOverScreen.classList.add("scores");
-        setTimeout(() => {
-          tt.handleScores(gameOverScreen);
-        }, 500);
-      }, 500);
-    }, 5000);
+    // setTimeout(() => {
+    this.canvas.classList.add("over");
+    // }, 2000);
+    // setTimeout(() => {
+    const gameOverScreen = document.createElement("div");
+    document.querySelector("#game-canvas").appendChild(gameOverScreen);
+    document.querySelector("#game-canvas").removeChild(this.canvas);
+    gameOverScreen.classList.add("game-over");
+    // setTimeout(() => {
+    gameOverScreen.classList.add("scores");
+    // setTimeout(() => {
+    scores.handleScores(gameOverScreen);
+    // }, 500);
+    // }, 500);
+    // }, 5000);
 
     this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
     this.context.fillRect(0, 0, 800, 520);
@@ -890,7 +872,11 @@ class Game {
     this.context.textAlign = "center";
     this.context.fillText(`Final Score: ${this.score}`, 400, 280);
     this.context.font = "25px Trebuchet MS";
-    this.context.fillText(`High scores are coming! Check back soon ;)`, 400, 330);
+    this.context.fillText(
+      `High scores are coming! Check back soon ;)`,
+      400,
+      330
+    );
     this.lives = 0;
     this.gameOver = true;
     const button = document.querySelector("#start-button");
@@ -898,28 +884,6 @@ class Game {
     button.addEventListener("click", this.newGame, false);
     button.classList.add("active");
     tutorial.showInfo("game-over");
-  }
-
-  handleScores(screen) {
-    // const highscores = firebase.database().ref('scores')
-    // const scoreHolder = document.createElement("ol")
-    // console.log(highscores);
-    
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-    input.classList.add("nameInput");
-    input.placeholder = "add your name";
-    // input.classList.add("score-name");
-    form.appendChild(input);
-    screen.appendChild(form);
-    form.addEventListener("submit", this.addScore);
-  }
-
-  addScore(event) {
-    event.preventDefault();
-    const name = document.querySelector(".nameInput").value
-    // const 
-    scores.addScore(name, tt.score);
   }
 
   newGame() {

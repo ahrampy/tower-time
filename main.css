@@ -71,11 +71,15 @@ body:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.score-list {
+  /* min-width: 200px; */
 }
 
 .scores input {
   background-color: #333;
-  opacity: 1;
   color: #fff;
   text-align: center;
   font-size: 30px;
@@ -84,6 +88,19 @@ body:hover {
   outline: none;
   border: 2px solid rgb(121, 121, 121);
   border-radius: 5px;
+}
+
+.scores ol {
+  color: #fff;
+  padding: 20px;
+  padding-left: 60px;
+  border: 2px solid rgb(121, 121, 121);
+  border-radius: 5px;
+}
+
+.scores li {
+  font-size: 25px;
+  padding-left: 10px;
 }
 
 .info-icon {
