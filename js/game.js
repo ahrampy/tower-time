@@ -97,9 +97,12 @@ class Game {
 
     // show tower tile info
     this.showTowerStats = false;
-    this.checker = 220;
-    this.counter = 0;
-    this.lastTime = new Date();
+
+    // anti-cheat
+    this.cr = 220;
+    this.c = 0;
+    this.t = new Date();
+    this.f;
   }
 
   handleStartClick() {
@@ -140,9 +143,9 @@ class Game {
       // }
     }
     this.innerText = "Next Wave";
-    tt.checker -= tt.bits;
+    tt.cr -= tt.bits;
     tt.bits = Math.ceil(tt.bits / 5) * 5;
-    tt.checker += tt.bits;
+    tt.cr += tt.bits;
     tt.wave += 1;
     if (tt.wave === 1) {
       document.querySelector("#towers").classList.remove("active");
@@ -157,7 +160,7 @@ class Game {
     }
     tt.creepHealth = tt.wave * 400 * tt.multiplier;
     tt.bits += 5 * tt.wave;
-    tt.checker += 5 * tt.wave;
+    tt.cr += 5 * tt.wave;
     tt.loadCreeps(20);
   }
 
@@ -247,7 +250,7 @@ class Game {
 
       if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
         tt.bits -= tower.upgrade;
-        tt.checker -= tower.upgrade;
+        tt.cr -= tower.upgrade;
         tower.handleUpgrade();
       }
     }
@@ -273,7 +276,7 @@ class Game {
       tower.removed = true;
       tt.selectedTower = null;
       tt.bits += tower.upgrade / 2;
-      tt.checker += tower.upgrade / 2;
+      tt.cr += tower.upgrade / 2;
     }
   }
 
@@ -555,7 +558,7 @@ class Game {
     const tower = tt.towers[tt.towers.length - 1];
     tower.location = new Vector(location.x, location.y);
     this.bits -= tower.cost;
-    this.checker -= tower.cost;
+    this.cr -= tower.cost;
     tower.placed = true;
     tt.placingTower = false;
   }
@@ -853,10 +856,15 @@ class Game {
     //     tt.music.playbackRate = 0.95;
     //     tt.music.play();
     // }
-
+    const highscores = firebase
+      .database()
+      .ref("scores")
+      .orderByChild("score")
+      .limitToLast(10);
     setTimeout(() => {
       this.canvas.classList.add("over");
-    }, 2000);
+    }, 3000);
+    tt.f = tt.score;
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
       document.querySelector("#game-canvas").appendChild(gameOverScreen);
@@ -865,7 +873,7 @@ class Game {
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
         setTimeout(() => {
-          scores.handleScores(gameOverScreen);
+          scores.handleScores(gameOverScreen, highscores);
         }, 500);
       }, 500);
     }, 5000);
@@ -902,20 +910,18 @@ class Game {
   run() {
     this.updateInfo();
 
-    if (new Date() - this.lastTime > 1000) {
-      this.checker++ 
-      this.counter++
-      this.lastTime = new Date();      
-    };
-
-    if (this.checker !== this.lives + this.score + this.bits + this.counter && !this.gameOver) {
-      console.log("oh so you think you're clever huh?")
-      setTimeout(()=> {
-        tt.score = 0;
-        tt.lives = 0;
-      }, )
+    if (new Date() - this.t > 1000) {
+      this.cr++;
+      this.c++;
+      this.t = new Date();
     }
-    
+
+    if (this.cr !== this.lives + this.score + this.bits + this.c) {
+      console.log("oh so you think you're clever");
+      this.score = 0;
+      this.cr = this.lives + this.score + this.bits + this.c;
+    }
+
     if (!this.gameOver && this.gameStarted) {
       this.render();
       this.showTowerInfo();

@@ -63,7 +63,6 @@ body:hover {
   width: 800;
   opacity: .4;
   z-index: 2;
-  transition: 1s;
 }
 
 .scores {
@@ -71,21 +70,22 @@ body:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-.scores {
   background-color: black;
   background-image: radial-gradient(
-    rgba(0, 150, 0, 0.75), black 120%
+    rgba(33, 75, 147, 0.815), black 120%
   );
   color: white;
   font: 1.3rem Inconsolata, monospace;
   text-shadow: 0 0 5px #C8C8C8;
+  transition: 2s;
 }
 
-.score-list {
-  height: 290px;
-  min-width: 140px;
+.score-terminal {
+  display: flex;
+}
+
+.scores h2 {
+  padding-left: 30px;
 }
 
 .scores input {
@@ -94,16 +94,18 @@ body:hover {
   text-align: center;
   font-size: 30px;
   line-height: 1.5em;
+  width: 200px;
   text-decoration: none;
   outline: none;
-  border: 2px solid rgb(121, 121, 121);
-  border-radius: 5px;
+  border: 3px solid rgb(70, 70, 70);
+  /* border-radius: 5px; */
 }
 
 .scores ol {
   color: #fff;
   padding: 20px;
-  padding-left: 60px;
+  list-style: none;
+  min-width: 80px;
   /* border: 2px solid rgb(121, 121, 121);
   border-radius: 5px; */
 }
