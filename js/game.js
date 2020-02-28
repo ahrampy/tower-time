@@ -1,5 +1,4 @@
 "use strict";
-const babel = "../node_modules/@babel/core";
 
 window.addEventListener("load", init, false);
 
