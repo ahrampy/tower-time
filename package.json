@@ -16,5 +16,9 @@
   "homepage": "https://github.com/ahrampy/tower-time#readme",
   "dependencies": {
     "firebase": "^7.9.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6"
   }
 }

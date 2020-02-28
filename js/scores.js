@@ -1,7 +1,5 @@
 "use strict";
 
-const key = "../keys.js".key;
-
 class Scores {
   constructor() {
     this.loadFireBase();
@@ -9,7 +7,6 @@ class Scores {
 
   loadFireBase() {
     var firebaseConfig = {
-      apiKey: key,
       authDomain: "tower-time.firebaseapp.com",
       databaseURL: "https://tower-time.firebaseio.com",
       projectId: "tower-time",

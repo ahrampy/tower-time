@@ -1,4 +1,5 @@
 "use strict";
+const babel = "../node_modules/@babel/core";
 
 window.addEventListener("load", init, false);
 
@@ -889,11 +890,6 @@ class Game {
     this.context.textAlign = "center";
     this.context.fillText(`Final Score: ${this.score}`, 400, 280);
     this.context.font = "25px Trebuchet MS";
-    this.context.fillText(
-      `High scores are coming! Check back soon ;)`,
-      400,
-      330
-    );
     this.lives = 0;
     this.gameOver = true;
     const button = document.querySelector("#start-button");
