@@ -32,6 +32,8 @@ class Scores {
   }
 
   handleScores(screen) {
+    const scoreTerminal = document.createElement("div");
+        scoreTerminal.classList.add("score-terminal");
     const scoreList = document.createElement("ol");
     scoreList.classList.add("score-list");
     let lowestShowing;
@@ -55,7 +57,8 @@ class Scores {
       });
       lowestShowing = scores[9][0];
     });
-    screen.appendChild(scoreList);
+    scoreTerminal.appendChild(scoreList);
+    screen.appendChild(scoreTerminal);
     const form = document.createElement("form");
     const input = document.createElement("input");
     input.classList.add("nameInput");

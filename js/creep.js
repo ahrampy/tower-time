@@ -61,6 +61,7 @@ class Creep {
     if (this.health <= 0) {
       tt.bits += this.worth;
       tt.score += this.pointValue;
+      tt.checker += this.worth + this.pointValue;
       this.alive = false;
     }
   }
@@ -72,6 +73,7 @@ class Creep {
     if (tt.grid[col][row] === tt.goal) {
       this.alive = false;
       tt.lives -= 1;
+      tt.checker -= 1;
       // if (!tt.muted) {
       //     const lose = new Audio;
       //     lose.setAttribute('src', 'sounds/lose_life.mp3');

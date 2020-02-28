@@ -97,6 +97,9 @@ class Game {
 
     // show tower tile info
     this.showTowerStats = false;
+    this.checker = 220;
+    this.counter = 0;
+    this.lastTime = new Date();
   }
 
   handleStartClick() {
@@ -137,7 +140,9 @@ class Game {
       // }
     }
     this.innerText = "Next Wave";
+    tt.checker -= tt.bits;
     tt.bits = Math.ceil(tt.bits / 5) * 5;
+    tt.checker += tt.bits;
     tt.wave += 1;
     if (tt.wave === 1) {
       document.querySelector("#towers").classList.remove("active");
@@ -152,6 +157,7 @@ class Game {
     }
     tt.creepHealth = tt.wave * 400 * tt.multiplier;
     tt.bits += 5 * tt.wave;
+    tt.checker += 5 * tt.wave;
     tt.loadCreeps(20);
   }
 
@@ -241,6 +247,7 @@ class Game {
 
       if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
         tt.bits -= tower.upgrade;
+        tt.checker -= tower.upgrade;
         tower.handleUpgrade();
       }
     }
@@ -266,6 +273,7 @@ class Game {
       tower.removed = true;
       tt.selectedTower = null;
       tt.bits += tower.upgrade / 2;
+      tt.checker += tower.upgrade / 2;
     }
   }
 
@@ -311,13 +319,13 @@ class Game {
           let checkBlock = false;
           let route = [creep.currentCell];
           while (route.length) {
-            let cell = route.pop();
-            if (cell.value === -1) continue;
-            if (cell === tt.goal) {
+            let currCell = route.pop();
+            if (currCell.value === -1) continue;
+            if (currCell === tt.goal) {
               checkBlock = true;
               break;
             }
-            route.push(cell.smallestAdjacent);
+            route.push(currCell.smallestAdjacent);
           }
           return checkBlock;
         });
@@ -547,6 +555,7 @@ class Game {
     const tower = tt.towers[tt.towers.length - 1];
     tower.location = new Vector(location.x, location.y);
     this.bits -= tower.cost;
+    this.checker -= tower.cost;
     tower.placed = true;
     tt.placingTower = false;
   }
@@ -892,6 +901,21 @@ class Game {
 
   run() {
     this.updateInfo();
+
+    if (new Date() - this.lastTime > 1000) {
+      this.checker++ 
+      this.counter++
+      this.lastTime = new Date();      
+    };
+
+    if (this.checker !== this.lives + this.score + this.bits + this.counter && !this.gameOver) {
+      console.log("oh so you think you're clever huh?")
+      setTimeout(()=> {
+        tt.score = 0;
+        tt.lives = 0;
+      }, )
+    }
+    
     if (!this.gameOver && this.gameStarted) {
       this.render();
       this.showTowerInfo();

@@ -61,21 +61,31 @@ body:hover {
 .game-over {
   height: 520;
   width: 800;
-  opacity: .3;
+  opacity: .4;
   z-index: 2;
-  transition: 2s;
+  transition: 1s;
 }
 
 .scores {
-  background-color: #333;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+.scores {
+  background-color: black;
+  background-image: radial-gradient(
+    rgba(0, 150, 0, 0.75), black 120%
+  );
+  color: white;
+  font: 1.3rem Inconsolata, monospace;
+  text-shadow: 0 0 5px #C8C8C8;
+}
+
 .score-list {
-  /* min-width: 200px; */
+  height: 290px;
+  min-width: 140px;
 }
 
 .scores input {
@@ -94,8 +104,8 @@ body:hover {
   color: #fff;
   padding: 20px;
   padding-left: 60px;
-  border: 2px solid rgb(121, 121, 121);
-  border-radius: 5px;
+  /* border: 2px solid rgb(121, 121, 121);
+  border-radius: 5px; */
 }
 
 .scores li {
