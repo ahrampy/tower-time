@@ -27,7 +27,7 @@ class Game {
     this.grid = [];
 
     // game stats
-    this.lives = 0;
+    this.lives = 20;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
@@ -845,21 +845,21 @@ class Game {
     //     tt.music.play();
     // }
 
-    // setTimeout(() => {
-    this.canvas.classList.add("over");
-    // }, 2000);
-    // setTimeout(() => {
-    const gameOverScreen = document.createElement("div");
-    document.querySelector("#game-canvas").appendChild(gameOverScreen);
-    document.querySelector("#game-canvas").removeChild(this.canvas);
-    gameOverScreen.classList.add("game-over");
-    // setTimeout(() => {
-    gameOverScreen.classList.add("scores");
-    // setTimeout(() => {
-    scores.handleScores(gameOverScreen);
-    // }, 500);
-    // }, 500);
-    // }, 5000);
+    setTimeout(() => {
+      this.canvas.classList.add("over");
+    }, 2000);
+    setTimeout(() => {
+      const gameOverScreen = document.createElement("div");
+      document.querySelector("#game-canvas").appendChild(gameOverScreen);
+      document.querySelector("#game-canvas").removeChild(this.canvas);
+      gameOverScreen.classList.add("game-over");
+      setTimeout(() => {
+        gameOverScreen.classList.add("scores");
+        setTimeout(() => {
+          scores.handleScores(gameOverScreen);
+        }, 500);
+      }, 500);
+    }, 5000);
 
     this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
     this.context.fillRect(0, 0, 800, 520);

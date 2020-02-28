@@ -36,28 +36,31 @@ class Scores {
     scoreList.classList.add("score-list");
     let lowestShowing;
     const highscores = firebase
-      .database()
-      .ref("scores")
-      .orderByChild("score")
-      .limitToLast(10);
+    .database()
+    .ref("scores")
+    .orderByChild("score")
+    .limitToLast(10);
     highscores.on("value", snap => {
-      const scores = snap.val();
-      const idArr = Object.keys(scores).reverse();
+      const data = snap.val();
+      const idArr = Object.keys(data);
+      const scores = [];
       for (let i = 0; i < idArr.length; i++) {
-        const name = scores[idArr[i]].name;
-        const score = scores[idArr[i]].score;
-        const li = document.createElement("li");
-        li.innerText = score + ": " + name;
-        scoreList.appendChild(li);
+        scores.push([data[idArr[i]].score, data[idArr[i]].name]);
       }
-      lowestShowing = scores[idArr[9]].score;
+      this.sortScores(scores);
+      scores.forEach(score => {
+        const li = document.createElement("li");
+        li.innerText = score[0] + ": " + score[1];
+        scoreList.appendChild(li);
+      });
+      lowestShowing = scores[9][0];
     });
     screen.appendChild(scoreList);
     const form = document.createElement("form");
     const input = document.createElement("input");
     input.classList.add("nameInput");
     input.placeholder = "add your name";
-    // input.classList.add("score-name");
+    input.maxLength = 10;
     form.appendChild(input);
     screen.appendChild(form);
     form.addEventListener("submit", event =>
@@ -74,5 +77,21 @@ class Scores {
     }
     name.style.visibility = "hidden";
     this.update(name.value, tt.score);
+  }
+
+  sortScores(arr) {
+    let swapped;
+    do {
+      swapped = false;
+      for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i][0] < arr[i + 1][0]) {
+          let tmp = arr[i];
+          arr[i] = arr[i + 1];
+          arr[i + 1] = tmp;
+          swapped = true;
+        }
+      }
+    } while (swapped);
+    return arr;
   }
 }
