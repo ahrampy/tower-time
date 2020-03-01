@@ -1,2 +1,4 @@
 new music
-uglify
+refactor: setTimeout => requestAnimationFrame
+bug:  game.js(180ish?) cannot read value of null on placement with 100+ creeps, tower placement directly on creeps
+firebase: admin priveleges, multiple snapshots to avoid additional appendages to DOM
