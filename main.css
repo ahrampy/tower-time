@@ -98,7 +98,6 @@ body:hover {
   text-decoration: none;
   outline: none;
   border: 3px solid rgb(70, 70, 70);
-  /* border-radius: 5px; */
 }
 
 .scores ol {
@@ -106,8 +105,6 @@ body:hover {
   padding: 20px;
   list-style: none;
   min-width: 80px;
-  /* border: 2px solid rgb(121, 121, 121);
-  border-radius: 5px; */
 }
 
 .scores li {
@@ -179,7 +176,7 @@ body:hover {
 }
 
 canvas {
-  background: rgba(187, 186, 186, 0.8);
+  background: rgba(187, 186, 186, .6);
 
   position: relative;
   z-index: 2;
@@ -218,12 +215,12 @@ canvas {
 }
 
 #spacer-div-1 {
-  width: 60px;
+  width: 20px;
 }
 
-/* #spacer-div-2 {
+#spacer-div-2 {
     width: 15px;
-} */
+}
 
 #mute-button {
   display: flex;
@@ -253,9 +250,6 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 25px;
-    height: 25px;
-    padding: 10px; */
 }
 
 #towers {

@@ -40,11 +40,8 @@ class Creep {
       tt.grid[col] &&
       tt.grid[col][row].occupied
     ) {
-      // if (this.velocity.x > this.velocity.y) {
       this.velocity.x = -this.velocity.x;
-      // } else {
       this.velocity.y = -this.velocity.y;
-      // }
     }
   }
 

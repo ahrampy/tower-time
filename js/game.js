@@ -61,10 +61,9 @@ class Game {
     this.handleGameStart();
     this.gameStarted = false;
 
-    // audio
+    // music
     // this.handleSoundButton();
     // this.muted = false;
-    // this.music = document.createElement('audio');
 
     // auto send waves
     this.handleAutoWaveButton();
@@ -120,27 +119,9 @@ class Game {
       document.querySelector("#towers").classList.add("active");
       document.querySelector("#info-bits").classList.add("active");
       // if (!tt.muted) {
-      //     // setTimeout(() => (
-      //     tt.music.setAttribute('src', 'sounds/splash.mp3');
-      //     tt.music.load();
-      //     tt.music.playbackRate = 0.9
-      //     tt.music.play();
-      //     // ), 0);
-      // } else {
-      //     tt.music.setAttribute('src', '');
+      //   music.play();
       // }
       return;
-      // } else {
-      // if (!tt.muted) {
-      //     // setTimeout(() => (
-      //     tt.music.setAttribute('src', 'sounds/in_game.mp3');
-      //     tt.music.load();
-      //     tt.music.playbackRate = 0.95
-      //     tt.music.play();
-      //     // ), 0);
-      // } else {
-      //     tt.music.setAttribute('src', '');
-      // }
     }
     this.innerText = "Next Wave";
     tt.cr -= tt.bits;
@@ -154,6 +135,7 @@ class Game {
     }
     if (tt.wave % 10 === 0) {
       tt.multiplier += 0.5;
+      // music.beatParams.bpm += 1;
     }
     if (tt.wave % 30 === 0) {
       tt.multiplier += 0.5;
@@ -206,22 +188,22 @@ class Game {
   }
 
   // handleSoundButton() {
-  //     const muteButton = document.querySelector("#mute-button");
-  //     muteButton.addEventListener('click', this.audioToggle, false);
+  //   const muteButton = document.querySelector("#mute-button");
+  //   muteButton.addEventListener("click", this.audioToggle, false);
   // }
 
   // audioToggle() {
-  //     if (tt.muted) {
-  //         this.classList.add('mute-off');
-  //         this.classList.remove('mute-on');
-  //         tt.muted = false;
-  //         tt.music.muted = false;
-  //     } else {
-  //         this.classList.add('mute-on');
-  //         this.classList.remove('mute-off');
-  //         tt.music.muted = true;
-  //         tt.muted = true;
-  //     }
+  //   if (tt.muted) {
+  //     this.classList.add("mute-off");
+  //     this.classList.remove("mute-on");
+  //     tt.muted = false;
+  //     music.play();
+  //   } else {
+  //     this.classList.add("mute-on");
+  //     this.classList.remove("mute-off");
+  //     tt.muted = true;
+  //     music.stop();
+  //   }
   // }
 
   handleAutoWaveButton() {
@@ -247,7 +229,6 @@ class Game {
   upgradeClick() {
     if (tt.selectedTower) {
       const tower = tt.selectedTower;
-
       if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
         tt.bits -= tower.upgrade;
         tt.cr -= tower.upgrade;
@@ -323,12 +304,14 @@ class Game {
           let route = [creep.currentCell];
           while (route.length) {
             let currCell = route.pop();
-            if (currCell.value === -1) continue;
-            if (currCell === tt.goal) {
-              checkBlock = true;
-              break;
+            if (currCell) {
+              if (currCell.value === -1) continue;
+              if (currCell === tt.goal) {
+                checkBlock = true;
+                break;
+              }
+              route.push(currCell.smallestAdjacent);
             }
-            route.push(currCell.smallestAdjacent);
           }
           return checkBlock;
         });
@@ -850,12 +833,6 @@ class Game {
   }
 
   handleGameOver() {
-    // tt.music.setAttribute('src', 'sounds/game_over.mp3');
-    // tt.music.load();
-    // if (!tt.muted) {
-    //     tt.music.playbackRate = 0.95;
-    //     tt.music.play();
-    // }
     const highscores = firebase
       .database()
       .ref("scores")
@@ -865,6 +842,7 @@ class Game {
       this.canvas.classList.add("over");
     }, 3000);
     tt.f = tt.score;
+    // music.stop();
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
       document.querySelector("#game-canvas").appendChild(gameOverScreen);
@@ -905,11 +883,11 @@ class Game {
   run() {
     this.updateInfo();
 
-    if (new Date() - this.t > 1000) {
-      this.cr++;
-      this.c++;
-      this.t = new Date();
-    }
+    // if (new Date() - this.t > 5000) {
+    //   this.cr++;
+    //   this.c++;
+    //   this.t = new Date();
+    // }
 
     if (this.cr !== this.lives + this.score + this.bits + this.c) {
       console.log("oh so you think you're clever");
