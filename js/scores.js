@@ -20,9 +20,9 @@ class Scores {
   }
 
   update(name, score) {
-    // firebase
-    //   .auth()
-    //   .signInAnonymously()
+    firebase
+      .auth()
+      .signInAnonymously()
     // firebase.auth().onAuthStateChanged(function(user) {
     //   if (user) {
     //     // User is signed in.
