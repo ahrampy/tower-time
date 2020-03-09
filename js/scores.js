@@ -20,23 +20,14 @@ class Scores {
   }
 
   update(name, score) {
+    firebase.auth().signInAnonymously();
     firebase
-      .auth()
-      .signInAnonymously()
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (user) {
-    //     // User is signed in.
-    //     var isAnonymous = user.isAnonymous;
-    //     var uid = user.uid;
-        firebase
-          .database()
-          .ref("scores")
-          .push({
-            name: name,
-            score: score
-          });
-      // }
-    // });
+      .database()
+      .ref("scores")
+      .push({
+        name: name,
+        score: score
+      });
   }
 
   handleScores(screen, highscores) {
@@ -112,8 +103,8 @@ class Scores {
     const scoreList = document.querySelectorAll(".score-div");
     if (tt.score >= lowestShowing) {
       scoreList.forEach(div => {
-        div.querySelector("ol").innerHTML = ""
-      })
+        div.querySelector("ol").innerHTML = "";
+      });
     }
     name.style.visibility = "hidden";
     if (tt.f === tt.score) {
