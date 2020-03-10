@@ -1,5 +1,4 @@
 new music: https://openmusic.gallery/play/1636
 refactor: setTimeout => requestAnimationFrame()
-bug: tower placement directly on creeps
+bug: tower placement directly on creeps, many creep mislabel as invalid tower placement
 firebase: admin priveleges, multiple snapshots to avoid additional appendages to DOM
-game: select multiple of the same tower
