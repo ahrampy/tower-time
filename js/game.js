@@ -55,6 +55,11 @@ class Game {
     );
     this.canvas.addEventListener("mouseout", this.handleCanvasMouseOut, false);
     this.canvas.addEventListener("click", this.handleCanvasMouseClicked, false);
+    this.canvas.addEventListener(
+      "dblclick",
+      this.handleCanvasMouseDoubleClicked,
+      false
+    );
     this.context = this.canvas.getContext("2d");
 
     // init
@@ -93,6 +98,7 @@ class Game {
     // track tower
     this.placingTower = false;
     this.selectedTower = null;
+    this.towersArr = [];
 
     // show tower tile info
     this.showTowerStats = false;
@@ -227,7 +233,15 @@ class Game {
   }
 
   upgradeClick() {
-    if (tt.selectedTower) {
+    if (tt.towersArr.length) {
+      tt.towersArr.forEach(tower => {
+        if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
+          tt.bits -= tower.upgrade;
+          tt.cr -= tower.upgrade;
+          tower.handleUpgrade();
+        }
+      });
+    } else if (tt.selectedTower) {
       const tower = tt.selectedTower;
       if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
         tt.bits -= tower.upgrade;
@@ -238,7 +252,28 @@ class Game {
   }
 
   sellClick() {
-    if (tt.selectedTower) {
+    if (tt.towersArr.length) {
+      tt.towersArr.forEach(tower => {
+        const gridCol = Math.floor(tower.location.x / tt.cellSize);
+        const gridRow = Math.floor(tower.location.y / tt.cellSize);
+
+        const cell = tt.grid[gridCol][gridRow];
+        cell.occupied = false;
+        tower.removed = true;
+        tt.bits += tower.upgrade / 2;
+        tt.cr += tower.upgrade / 2;
+      });
+
+      tt.selectedTower = null;
+      tt.towersArr = [];
+
+      tt.loadPaths();
+      for (let c = 0; c < tt.numCols; c++) {
+        for (let r = 0; r < tt.numRows; r++) {
+          tt.grid[c][r].loadAdjacentCells();
+        }
+      }
+    } else if (tt.selectedTower) {
       const tower = tt.selectedTower;
 
       const gridCol = Math.floor(tower.location.x / tt.cellSize);
@@ -351,6 +386,39 @@ class Game {
         } else {
           tower.selected = false;
         }
+      }
+      tt.towersArr = [];
+    }
+  }
+
+  handleCanvasMouseDoubleClicked() {
+    const mouseX = event.offsetX;
+    const mouseY = event.offsetY;
+
+    const gridCol = Math.floor(mouseX / tt.cellSize);
+    const gridRow = Math.floor(mouseY / tt.cellSize);
+
+    const cell = tt.grid[gridCol][gridRow];
+
+    for (let i = 0; i < tt.towers.length; i++) {
+      let tower = tt.towers[i];
+      if (
+        tower.location.x === cell.center.x &&
+        tower.location.y === cell.center.y
+      ) {
+        tt.selectAllTowers(tower.type, tower.upgradeLevel);
+        return;
+      }
+    }
+  }
+
+  selectAllTowers(type, level) {
+    tt.towersArr = [];
+    for (let i = 0; i < tt.towers.length; i++) {
+      let tower = tt.towers[i];
+      if (tower.type === type && tower.upgradeLevel === level) {
+        tt.towersArr.push(tower);
+        tower.selected = true;
       }
     }
   }
@@ -892,6 +960,8 @@ class Game {
     if (this.cr !== this.lives + this.score + this.bits + this.c) {
       console.log("oh so you think you're clever");
       this.score = 0;
+      this.bits = 0;
+      this.lives = 1;
       this.cr = this.lives + this.score + this.bits + this.c;
     }
 
