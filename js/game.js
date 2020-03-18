@@ -77,7 +77,7 @@ class Game {
 
     // grid specs
     this.numBlocks = 40;
-    this.cellSize = 40;
+    this.cellSize = this.mobile ? 20 : 40;
     this.numCols = 20;
     this.numRows = 13;
     this.start = null;
@@ -86,6 +86,7 @@ class Game {
     // load buttons
     this.tileDivs = this.createTiles();
     this.handleTileCallbacks(this.tileDivs);
+    this.startButton = document.querySelector("#start-button");
     this.handleStartClick();
     this.handleEditClicks();
     this.handleKeyCallbacks();
@@ -111,8 +112,7 @@ class Game {
   }
 
   handleStartClick() {
-    const button = document.querySelector("#start-button");
-    button.addEventListener("click", this.startClick, false);
+    this.startButton.addEventListener("click", this.startClick, false);
   }
 
   startClick() {
@@ -831,23 +831,22 @@ class Game {
   }
 
   checkWave() {
-    const send = document.querySelector("#start-button");
     if (tt.autoWave && !tt.sendingWave && !tt.creeps.length) {
-      send.click();
+      tt.startButton.click();
       tt.sendingWave = true;
       setTimeout(() => {
         tt.sendingWave = false;
       }, 1000);
     }
     if (!tt.creeps.length && !tt.sendingWave && tt.wave > 0) {
-      send.classList.add("active");
+      tt.startButton.classList.add("active");
     } else {
-      send.classList.remove("active");
+      tt.startButton.classList.remove("active");
     }
     if (tt.wave === 0 && tt.bits < 50) {
       document.querySelector("#towers").classList.remove("active");
       document.querySelector("#info-bits").classList.remove("active");
-      send.classList.add("active");
+      tt.startButton.classList.add("active");
       tutorial.showInfo("canvas");
     }
   }

@@ -1,0 +1,78 @@
+html, body {
+  margin: 0px;
+  padding: 0px;
+  vertical-align: baseline;
+}
+
+#holder {
+  flex-direction: row;
+}
+
+#tutorial-window {
+  display: none;
+}
+
+#game-controls {
+  margin: 0px;
+  flex-direction: column;
+  width: 100%;
+  height: 520px;
+  padding: 0px;
+  border-radius: 0px;
+}
+
+#auto-container {
+  display: none;
+}
+
+#info {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  width: 100%;
+  margin: 0px;
+}
+
+.info-tile {
+  flex-direction: column-reverse;
+  justify-content: center;
+  width: 100%;
+}
+
+.info-tile h4 {
+  padding: 0px;
+  margin: 0px;
+}
+
+.info-tile p {
+  padding: 0px;
+  margin: 0px;
+}
+
+#start-button {
+  flex-direction: column;
+}
+
+#game-canvas {
+}
+
+#content-box {
+  flex-direction: column;
+}
+
+#towers {
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 0px;
+  height: 380px;
+  border-radius: 0px;
+}
+
+.tower-stat {
+  display: none;
+}
+
+#footer {
+  display: none;
+}

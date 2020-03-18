@@ -11,8 +11,14 @@
     <script src="./js/tutorial.js"></script>
     <script src="./js/scores.js"></script>
     <link rel="stylesheet" type="text/css" href="./main.css" />
+    <link rel='stylesheet' media='screen and (max-height: 700px)' href='./mobile.css' />
   </head>
   <body>
+    <div id="flip-message">
+      <p>
+        to play towertime on mobile, swith to landscape mode
+      </p>
+    </div>
     <div id="holder">
       <div id="game-controls">
         <div id="info">
@@ -46,15 +52,15 @@
           <h3>Play</h3>
         </div>
       </div>
-      <div id="game-canvas" width="600px" height="600px"></div>
+      <div id="game-canvas"></div>
       <div id="content-box">
         <div id="towers"></div>
         <div id="tower-details">
-          <div id="tower-type" class="detail-tile"><h5>Type</h5></div>
-          <div id="tower-damage" class="detail-tile"><h5>Damage</h5></div>
-          <div id="tower-range" class="detail-tile"><h5>Range</h5></div>
-          <div id="tower-cooldown" class="detail-tile"><h5>Cooldown</h5></div>
-          <div id="tower-next" class="detail-tile"><h5>Next</h5></div>
+          <div id="tower-type" class="tower-stat detail-tile"><h5>Type</h5></div>
+          <div id="tower-damage" class="tower-stat detail-tile"><h5>Damage</h5></div>
+          <div id="tower-range" class="tower-stat detail-tile"><h5>Range</h5></div>
+          <div id="tower-cooldown" class="tower-stat detail-tile"><h5>Cooldown</h5></div>
+          <div id="tower-next" class="tower-stat detail-tile"><h5>Next</h5></div>
           <div id="edit-tower-buttons" class="detail-tile">
             <h5 id="upgrade-button" class="edit-button">Upgrade</h5>
             <h5 id="sell-button" class="edit-button">Sell</h5>
@@ -77,8 +83,8 @@
       <span
         >created by
         <a target="_blank" href="https://www.ahrampy.com/">Adrian Rampy</a>
-        &copy; 2020</span
-      >
+        &copy; 2020
+      </span>
       <span class="git"
         ><a target="_blank" href="https://github.com/ahrampy/tower-time">
           <img src="./images/git.png" alt="git" /> </a
@@ -86,7 +92,6 @@
     </footer>
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-auth.js"></script>
-
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-auth.js"></script> -->
   </body>
 </html>
