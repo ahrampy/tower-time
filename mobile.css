@@ -15,7 +15,7 @@ html, body {
 #game-controls {
   margin: 0px;
   flex-direction: column;
-  width: 100%;
+  width: 10%;
   height: 520px;
   padding: 0px;
   border-radius: 0px;
@@ -30,7 +30,7 @@ html, body {
   flex-direction: column;
   /* justify-content: center;
   align-items: center; */
-  width: 100%;
+  width: 10%;
   margin: 0px;
 }
 
