@@ -4,8 +4,15 @@ html, body {
   vertical-align: baseline;
 }
 
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
 #holder {
   flex-direction: row;
+  width: 100vw;
+  height: 100vh;
 }
 
 #tutorial-window {
@@ -19,6 +26,7 @@ html, body {
   height: 520px;
   padding: 0px;
   border-radius: 0px;
+  display: none
 }
 
 #auto-container {
@@ -55,6 +63,7 @@ html, body {
 }
 
 #game-canvas {
+
 }
 
 #content-box {
@@ -67,6 +76,11 @@ html, body {
   padding: 20px 0px;
   height: 380px;
   border-radius: 0px;
+  display: none;
+}
+
+#tower-details {
+  display: none;
 }
 
 .tower-stat {
