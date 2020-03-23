@@ -1,5 +1,4 @@
 new music: https://openmusic.gallery/play/1636 // optimize or replace
-optimization: typescript public and private class rework
 bug: tower placement directly on creeps, 100+ creep occasional mislabel of invalid tower placement
 mobile: css layout?
 firebase: admin priveleges, multiple snapshots to avoid additional appendages to DOM
