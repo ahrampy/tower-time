@@ -2,6 +2,20 @@
   <head>
     <title>Tower Time</title>
     <link rel="icon" type="image" href="./favicon.ico" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-MYYTKJMF3Y"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-MYYTKJMF3Y");
+    </script>
     <script src="./js/vector.js"></script>
     <script src="./js/cell.js"></script>
     <script src="./js/game.js"></script>
@@ -11,7 +25,11 @@
     <script src="./js/tutorial.js"></script>
     <script src="./js/scores.js"></script>
     <link rel="stylesheet" type="text/css" href="./main.css" />
-    <link rel='stylesheet' media='screen and (max-height: 700px)' href='./mobile.css' />
+    <!-- <link
+      rel="stylesheet"
+      media="screen and (max-height: 700px)"
+      href="./mobile.css"
+    /> -->
   </head>
   <body>
     <div id="flip-message">
@@ -56,11 +74,21 @@
       <div id="content-box">
         <div id="towers"></div>
         <div id="tower-details">
-          <div id="tower-type" class="tower-stat detail-tile"><h5>Type</h5></div>
-          <div id="tower-damage" class="tower-stat detail-tile"><h5>Damage</h5></div>
-          <div id="tower-range" class="tower-stat detail-tile"><h5>Range</h5></div>
-          <div id="tower-cooldown" class="tower-stat detail-tile"><h5>Cooldown</h5></div>
-          <div id="tower-next" class="tower-stat detail-tile"><h5>Next</h5></div>
+          <div id="tower-type" class="tower-stat detail-tile">
+            <h5>Type</h5>
+          </div>
+          <div id="tower-damage" class="tower-stat detail-tile">
+            <h5>Damage</h5>
+          </div>
+          <div id="tower-range" class="tower-stat detail-tile">
+            <h5>Range</h5>
+          </div>
+          <div id="tower-cooldown" class="tower-stat detail-tile">
+            <h5>Cooldown</h5>
+          </div>
+          <div id="tower-next" class="tower-stat detail-tile">
+            <h5>Next</h5>
+          </div>
           <div id="edit-tower-buttons" class="detail-tile">
             <h5 id="upgrade-button" class="edit-button">Upgrade</h5>
             <h5 id="sell-button" class="edit-button">Sell</h5>
