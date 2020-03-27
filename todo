@@ -1,4 +1,3 @@
 new music: howler.js
 bug: tower placement directly on creeps, 100+ creep occasional mislabel of invalid tower placement
 mobile: css layout? / cordova
-firebase: admin priveleges, multiple snapshots to avoid additional DOM appendages
