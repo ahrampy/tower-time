@@ -72,6 +72,13 @@ class Creep {
       this.alive = false;
       tt.lives -= 1;
       tt.cr -= 1;
+      const lives = document.querySelector('#info-lives');
+      if (!lives.classList.contains('flashing')) {
+        lives.classList.add("flashing");
+        setTimeout(() => {
+          lives.classList.remove("flashing");
+        }, 1000);
+      }
       // if (!tt.muted) {
       //     const lose = new Audio;
       //     lose.setAttribute('src', 'sounds/lose_life.mp3');

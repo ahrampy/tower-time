@@ -212,6 +212,16 @@ canvas {
   margin-left: 10px;
 }
 
+#info-bits {
+  translate: ;
+}
+
+.flashing {
+  animation-name: flash;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+}
+
 #spacer-div-1 {
   width: 20px;
 }
@@ -456,6 +466,18 @@ canvas {
   }
   100% {
     background-color: rgba(68, 74, 110, 0.8);
+  }
+}
+
+@keyframes flash {
+  0% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: rgba(108, 117, 167, 0.8);
+  }
+  100% {
+    background-color: inherit;
   }
 }
 

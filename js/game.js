@@ -587,6 +587,14 @@ class Game {
         tt.selectedTower.selected = false;
         tt.selectedTower = null;
       }
+    } else {
+      const bank = document.querySelector("#info-bits");
+      if (!bank.classList.contains("flashing")) {
+        bank.classList.add("flashing");
+        setTimeout(() => {
+          bank.classList.remove("flashing");
+        }, 1000);
+      }
     }
   }
 
