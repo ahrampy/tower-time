@@ -9,7 +9,7 @@ Build, upgrade, and sell towers to create a maze for enemies to traverse through
 
 * Javascript
 * HTML5
-* CSS
+* CSS3
 * FireBase
 
 ## About
