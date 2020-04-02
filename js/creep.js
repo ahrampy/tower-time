@@ -35,11 +35,7 @@ class Creep {
   checkWalls() {
     let col = Math.floor(this.location.x / tt.cellSize);
     let row = Math.floor(this.location.y / tt.cellSize);
-    if (
-      tt.grid &&
-      tt.grid[col] &&
-      tt.grid[col][row].occupied
-    ) {
+    if (tt.grid && tt.grid[col] && tt.grid[col][row].occupied) {
       this.velocity.x = -this.velocity.x;
       this.velocity.y = -this.velocity.y;
     }
@@ -72,8 +68,8 @@ class Creep {
       this.alive = false;
       tt.lives -= 1;
       tt.cr -= 1;
-      const lives = document.querySelector('#info-lives');
-      if (!lives.classList.contains('flashing')) {
+      const lives = document.querySelector("#info-lives");
+      if (!lives.classList.contains("flashing")) {
         lives.classList.add("flashing");
         setTimeout(() => {
           lives.classList.remove("flashing");

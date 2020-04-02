@@ -79,7 +79,7 @@ class Tutorial {
     if (tt.wave === 0 && tt.gameStarted && ele === "canvas") {
       if (tt.bits >= 50) {
         text.innerHTML =
-          "to get started, place a few towers on the board from the menu below";
+          "to get started, use your bank to place towers on the board from the blinking menu on the bottom left";
       } else {
         text.innerHTML =
           "now that you have some towers, its time to send the first wave - good luck!";
