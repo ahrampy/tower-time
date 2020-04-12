@@ -23,6 +23,7 @@ class Game {
     // game objects
     this.towers = [];
     this.creeps = [];
+    this.stage = [];
     this.attacks = [];
     this.grid = [];
 
@@ -129,19 +130,18 @@ class Game {
       // }
       return;
     }
-    this.innerText = "Next Wave";
     tt.cr -= tt.bits;
     tt.bits = Math.ceil(tt.bits / 5) * 5;
     tt.cr += tt.bits;
     tt.wave += 1;
     if (tt.wave === 1) {
+      this.innerText = "Next Wave";
       document.querySelector("#towers").classList.remove("active");
       document.querySelector("#info-bits").classList.remove("active");
       tutorial.showInfo("start");
     }
     if (tt.wave % 10 === 0) {
       tt.multiplier += 0.5;
-      // music.beatParams.bpm += 1;
     }
     if (tt.wave % 30 === 0) {
       tt.multiplier += 0.5;
@@ -153,7 +153,7 @@ class Game {
   }
 
   handleKeyCallbacks() {
-    document.addEventListener("keydown", event => {
+    document.addEventListener("keydown", (event) => {
       if (event.keyCode === 27) {
         tt.placingTower = false;
         if (tt.selectedTower) {
@@ -234,7 +234,7 @@ class Game {
 
   upgradeClick() {
     if (tt.towersArr.length) {
-      tt.towersArr.forEach(tower => {
+      tt.towersArr.forEach((tower) => {
         if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
           tt.bits -= tower.upgrade;
           tt.cr -= tower.upgrade;
@@ -253,7 +253,7 @@ class Game {
 
   sellClick() {
     if (tt.towersArr.length) {
-      tt.towersArr.forEach(tower => {
+      tt.towersArr.forEach((tower) => {
         const gridCol = Math.floor(tower.location.x / tt.cellSize);
         const gridRow = Math.floor(tower.location.y / tt.cellSize);
 
@@ -334,7 +334,7 @@ class Game {
         cell.occupied = true;
         tt.loadPaths();
 
-        let checkPaths = tt.creeps.every(creep => {
+        let checkPaths = tt.creeps.every((creep) => {
           let checkBlock = false;
           let route = [creep.currentCell];
           while (route.length) {
@@ -745,8 +745,8 @@ class Game {
   }
 
   loadPaths() {
-    this.grid.forEach(col => {
-      col.forEach(cell => {
+    this.grid.forEach((col) => {
+      col.forEach((cell) => {
         if (cell !== this.goal) {
           cell.value = -1;
           cell.adjacent = [];
@@ -800,17 +800,20 @@ class Game {
   }
 
   loadCreeps(numCreeps) {
-    if (numCreeps === 0) return;
+    for (let i = 0; i < numCreeps; i++) {
+      const location = tt.start.center.copy();
+      const creep = new Creep(location, tt.multiplier);
+      tt.stage.push(creep);
+    }
     this.sendCreep();
-    setTimeout(() => {
-      this.loadCreeps(numCreeps - 1);
-    }, 1500);
   }
 
   sendCreep() {
-    const location = tt.start.center.copy();
-    const creep = new Creep(location, tt.multiplier);
-    tt.creeps.push(creep);
+    if (tt.stage.length === 0) return;
+    tt.creeps.push(tt.stage.shift());
+    setTimeout(() => {
+      this.sendCreep();
+    }, 1500);
   }
 
   gridAttacks() {
