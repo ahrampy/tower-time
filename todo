@@ -1,3 +1,10 @@
 new music: howler.js
-bug: tower placement directly on creeps, 100+ creep occasional mislabel of invalid tower placement
 mobile: css layout / cordova ?
+
+ui:
+  add new start button,
+  hide top and bottom layout on intial screen,
+  change wave button active times,
+  info window pop-out(s) for tutorial / towertypes and hotkeys
+  
+game: update send wave logic to reflect single creep limit
