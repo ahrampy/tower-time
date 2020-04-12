@@ -45,7 +45,7 @@ class Tutorial {
     this.auto = document.querySelector("#auto-container");
     this.addListeners(this.auto, "auto");
 
-    this.start = document.querySelector("#start-button");
+    this.start = document.querySelector("#wave-button");
     this.addListeners(this.start, "start");
 
     this.towers = document.querySelector("#towers");

@@ -87,7 +87,7 @@ class Game {
     // load buttons
     this.tileDivs = this.createTiles();
     this.handleTileCallbacks(this.tileDivs);
-    this.startButton = document.querySelector("#start-button");
+    this.startButton = document.querySelector("#wave-button");
     this.handleStartClick();
     this.handleEditClicks();
     this.handleKeyCallbacks();
@@ -130,9 +130,6 @@ class Game {
       // }
       return;
     }
-    tt.cr -= tt.bits;
-    tt.bits = Math.ceil(tt.bits / 5) * 5;
-    tt.cr += tt.bits;
     tt.wave += 1;
     if (tt.wave === 1) {
       this.innerText = "Next Wave";
@@ -140,6 +137,13 @@ class Game {
       document.querySelector("#info-bits").classList.remove("active");
       tutorial.showInfo("start");
     }
+    tt.nextWave();
+  }
+
+  nextWave() {
+    tt.cr -= tt.bits;
+    tt.bits = Math.ceil(tt.bits / 5) * 5;
+    tt.cr += tt.bits;
     if (tt.wave % 10 === 0) {
       tt.multiplier += 0.5;
     }
@@ -868,46 +872,46 @@ class Game {
     );
     towerEditButtons[0].style.opacity = 0;
     towerEditButtons[1].style.opacity = 0;
-    this.context.fillStyle = "rgba(200, 200, 200, .1)";
-    this.context.fillRect(0, 0, 800, 520);
-    this.context.font = "100px Trebuchet MS";
-    this.context.fillStyle = "#333";
     this.context.textAlign = "center";
-    this.context.fillText("Tower Time", 400, 150);
-    const titleUnderline = new Image();
-    titleUnderline.onload = () =>
+    // this.context.fillStyle = "rgba(200, 200, 200, .1)";
+    // this.context.fillRect(0, 0, 800, 520);
+    // this.context.font = "100px Trebuchet MS";
+    // this.context.fillStyle = "#333";
+    // this.context.fillText("Tower Time", 400, 110);
+    const title = new Image();
+    title.onload = () =>
       this.context.drawImage(
-        titleUnderline,
-        this.canvas.width / 2 - titleUnderline.width / 2,
-        170
+        title,
+        this.canvas.width / 2 - title.width / 2,
+        30
       );
-    titleUnderline.src = "images/title-underline.png";
+    title.src = "images/tower-time-title.png";
     this.context.font = "27px Trebuchet MS";
     this.context.fillStyle = "#333";
-    this.context.fillText("Click 'Play' to Start Building Towers", 400, 240);
     this.context.font = "18px Trebuchet MS";
     this.context.fillStyle = "rgba(68, 74, 110, 1)";
-    this.context.fillText("hover over anything to get tooltips", 400, 280);
     this.context.font = "25px Trebuchet MS";
     this.context.fillStyle = "#333";
-    this.context.fillText("Tower Abilities", 400, 350);
+    this.context.fillText("Tower Abilities", 400, 340);
     this.context.font = "15px Trebuchet MS";
     this.context.fillStyle = "rgba(68, 74, 110, 1)";
     this.context.fillText(
       "Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack",
       400,
-      380
+      370
     );
     this.context.font = "25px Trebuchet MS";
     this.context.fillStyle = "#333";
-    this.context.fillText("Optional Hotkeys", 400, 430);
+    this.context.fillText("Optional Hotkeys", 400, 425);
     this.context.font = "15px Trebuchet MS";
     this.context.fillStyle = "rgba(68, 74, 110, 1)";
     this.context.fillText(
       "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc",
       400,
-      460
+      455
     );
+        this.context.fillText("hover over anything to get tooltips", 400, 500);
+
   }
 
   handleGameOver() {
@@ -947,7 +951,7 @@ class Game {
     this.context.font = "25px Trebuchet MS";
     this.lives = 0;
     this.gameOver = true;
-    const button = document.querySelector("#start-button");
+    const button = document.querySelector("#wave-button");
     button.innerText = "New Game";
     button.addEventListener("click", this.newGame, false);
     button.classList.add("active");

@@ -21,6 +21,7 @@ body:hover {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   color: #333;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,12 +42,29 @@ body:hover {
   color: #333;
   background-color: rgba(207, 204, 204, 0.7);
   border-radius: 5px;
-  z-index: 1;
+  z-index: 0;
   transition: 0.5s;
 }
 
 #tutorial-window:hover {
   background-color: rgba(180, 179, 179, 0.5);
+}
+
+#start {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 200px;
+  margin-left: -100px;
+  background: rgba(68, 74, 110, 0.815);
+  border-radius: 5px;
+  color: rgb(187, 186, 186);
+  font-size: 30px;
 }
 
 .canvas {
@@ -152,7 +170,7 @@ body:hover {
   border-radius: 5px 5px 0 0;
 }
 
-#start-button {
+#wave-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,21 +181,20 @@ body:hover {
   color: rgb(187, 186, 186);
 }
 
-#start-button:hover {
+#wave-button:hover {
   cursor: pointer;
   background: rgba(68, 74, 110, 0.33);
 }
 
-#start-button > h3 {
+#wave-button > h3 {
   padding: 0px;
   margin: 0px;
 }
 
 canvas {
   background: rgba(187, 186, 186, 0.6);
-
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 #content-box {
