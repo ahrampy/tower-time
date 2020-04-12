@@ -34,6 +34,9 @@ class Game {
     this.wave = 0;
     this.gameOver = false;
 
+    // creep timeout
+    this.time = new Date();
+
     // increase difficulty
     this.multiplier = 1;
     this.creepHealth = this.wave * 400 * this.multiplier;
@@ -97,7 +100,7 @@ class Game {
     this.loadGrid();
     this.loadPaths();
 
-    // track tower
+    // track towers
     this.placingTower = false;
     this.selectedTower = null;
     this.towersArr = [];
@@ -108,7 +111,6 @@ class Game {
     // anti-cheat
     this.cr = 220;
     this.c = 0;
-    this.t = new Date();
     this.f;
   }
 
@@ -124,7 +126,6 @@ class Game {
       this.innerText = "First Wave";
       this.classList.remove("active");
       document.querySelector("#towers").classList.add("active");
-      document.querySelector("#info-bits").classList.add("active");
       // if (!tt.muted) {
       //   music.play();
       // }
@@ -134,7 +135,6 @@ class Game {
     if (tt.wave === 1) {
       this.innerText = "Next Wave";
       document.querySelector("#towers").classList.remove("active");
-      document.querySelector("#info-bits").classList.remove("active");
       tutorial.showInfo("start");
     }
     tt.nextWave();
@@ -809,16 +809,16 @@ class Game {
       const creep = new Creep(location, tt.multiplier);
       tt.stage.push(creep);
     }
-    this.sendCreep();
+    // this.sendCreep();
   }
 
-  sendCreep() {
-    if (tt.stage.length === 0) return;
-    tt.creeps.push(tt.stage.shift());
-    setTimeout(() => {
-      this.sendCreep();
-    }, 1500);
-  }
+  // sendCreep() {
+  //   if (tt.stage.length === 0) return;
+  //   tt.creeps.push(tt.stage.shift());
+  //   setTimeout(() => {
+  //     this.sendCreep();
+  //   }, 1500);
+  // }
 
   gridAttacks() {
     for (let i = 0; i < this.attacks.length; i++) {
@@ -873,11 +873,6 @@ class Game {
     towerEditButtons[0].style.opacity = 0;
     towerEditButtons[1].style.opacity = 0;
     this.context.textAlign = "center";
-    // this.context.fillStyle = "rgba(200, 200, 200, .1)";
-    // this.context.fillRect(0, 0, 800, 520);
-    // this.context.font = "100px Trebuchet MS";
-    // this.context.fillStyle = "#333";
-    // this.context.fillText("Tower Time", 400, 110);
     const title = new Image();
     title.onload = () =>
       this.context.drawImage(
@@ -910,8 +905,7 @@ class Game {
       400,
       455
     );
-        this.context.fillText("hover over anything to get tooltips", 400, 500);
-
+    this.context.fillText("hover over anything to get tooltips", 400, 500);
   }
 
   handleGameOver() {
@@ -965,12 +959,6 @@ class Game {
   run() {
     this.updateInfo();
 
-    // if (new Date() - this.t > 5000) {
-    //   this.cr++;
-    //   this.c++;
-    //   this.t = new Date();
-    // }
-
     if (this.cr !== this.lives + this.score + this.bits + this.c) {
       console.log("oh so you think you're clever");
       this.score = 0;
@@ -984,6 +972,10 @@ class Game {
       this.showTowerInfo();
       this.gridAttacks();
       this.checkWave();
+      if (this.stage.length && new Date() - this.time > 1500) {
+        tt.creeps.push(tt.stage.shift());
+        this.time = new Date();
+      }
       for (let c = 0; c < this.numCols; c++) {
         for (let r = 0; r < this.numRows; r++) this.grid[c][r].run();
       }
