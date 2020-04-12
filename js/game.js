@@ -84,9 +84,9 @@ class Game {
     this.goal = null;
 
     // load buttons
+    this.waveButton = document.querySelector("#wave-button");
     this.tileDivs = this.createTiles();
     this.handleTileCallbacks(this.tileDivs);
-    this.startButton = document.querySelector("#wave-button");
     this.handleStartClick();
     this.handleEditClicks();
     this.handleKeyCallbacks();
@@ -111,7 +111,7 @@ class Game {
   }
 
   handleStartClick() {
-    this.startButton.addEventListener("click", this.startClick, false);
+    this.waveButton.addEventListener("click", this.startClick, false);
   }
 
   startClick() {
@@ -843,21 +843,21 @@ class Game {
 
   checkWave() {
     if (tt.autoWave && !tt.sendingWave && !tt.creeps.length) {
-      tt.startButton.click();
+      tt.waveButton.click();
       tt.sendingWave = true;
       setTimeout(() => {
         tt.sendingWave = false;
       }, 1000);
     }
     if (!tt.creeps.length && !tt.sendingWave && tt.wave > 0) {
-      tt.startButton.classList.add("active");
+      tt.waveButton.classList.add("active");
     } else {
-      tt.startButton.classList.remove("active");
+      tt.waveButton.classList.remove("active");
     }
     if (tt.wave === 0 && tt.bits < 50) {
       document.querySelector("#towers").classList.remove("active");
       document.querySelector("#info-bits").classList.remove("active");
-      tt.startButton.classList.add("active");
+      tt.waveButton.classList.add("active");
       tutorial.showInfo("canvas");
     }
   }
@@ -914,13 +914,12 @@ class Game {
       this.canvas.classList.add("over");
     }, 3000);
     tt.f = tt.score;
-    // music.stop();
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
+      gameOverScreen.classList.add("game-over");
       document
         .querySelector("#canvas-wrapper")
         .replaceChild(gameOverScreen, this.canvas);
-      gameOverScreen.classList.add("game-over");
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
         setTimeout(() => {
@@ -942,27 +941,41 @@ class Game {
     this.context.font = "25px Trebuchet MS";
     this.lives = 0;
     this.gameOver = true;
-    const button = document.querySelector("#wave-button");
-    button.innerText = "New Game";
-    button.addEventListener("click", this.newGame, false);
-    button.classList.add("active");
+    const waveButton = document.querySelector("#wave-button");
+    waveButton.innerText = "New Game";
+    waveButton.addEventListener("click", this.newGame, false);
+    waveButton.classList.add("active");
     tutorial.showInfo("game-over");
   }
 
   newGame() {
-    window.location.reload(false);
+    const gameOverScreen = document.querySelector(".game-over");
+    const newCanvas = document.createElement("canvas");
+    const waveButton = document.querySelector("#wave-button");
+    const towers = document.querySelector("#towers");
+    newCanvas.id = "game-canvas";
+    newCanvas.width = 800;
+    newCanvas.height = 520;
+    document
+      .querySelector("#canvas-wrapper")
+      .replaceChild(newCanvas, gameOverScreen);
+    while (towers.firstChild) {
+      towers.removeChild(towers.lastChild);
+    }
+    waveButton.removeEventListener("click", tt.newGame, false);
+    tt = new Game();
   }
 
   run() {
     this.updateInfo();
 
-    if (this.cr !== this.lives + this.score + this.bits + this.c) {
-      console.log("oh so you think you're clever");
-      this.score = 0;
-      this.bits = 0;
-      this.lives = 1;
-      this.cr = this.lives + this.score + this.bits + this.c;
-    }
+    // if (this.cr !== this.lives + this.score + this.bits + this.c) {
+    //   console.log("oh so you think you're clever");
+    //   this.score = 0;
+    //   this.bits = 0;
+    //   this.lives = 1;
+    //   this.cr = this.lives + this.score + this.bits + this.c;
+    // }
 
     if (!this.gameOver && this.gameStarted) {
       this.render();
