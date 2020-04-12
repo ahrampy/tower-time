@@ -41,12 +41,8 @@ class Game {
     this.multiplier = 1;
     this.creepHealth = this.wave * 400 * this.multiplier;
 
-    // load canvas
-    this.canvas = document.createElement("canvas");
-    this.canvas.classList.add("canvas");
-    this.canvas.width = 800;
-    this.canvas.height = 520;
-    document.querySelector("#game-canvas").appendChild(this.canvas);
+    // canvas handlers
+    this.canvas = document.querySelector("#game-canvas");
     this.canvas.addEventListener(
       "mousemove",
       this.handleCanvasMouseMoved,
@@ -921,8 +917,9 @@ class Game {
     // music.stop();
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
-      document.querySelector("#game-canvas").appendChild(gameOverScreen);
-      document.querySelector("#game-canvas").removeChild(this.canvas);
+      document
+        .querySelector("#canvas-wrapper")
+        .replaceChild(gameOverScreen, this.canvas);
       gameOverScreen.classList.add("game-over");
       setTimeout(() => {
         gameOverScreen.classList.add("scores");

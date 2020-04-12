@@ -67,10 +67,6 @@ body:hover {
   font-size: 30px;
 }
 
-.canvas {
-  transition: 3s;
-}
-
 .over {
   z-index: 0;
   opacity: 0;
@@ -195,6 +191,7 @@ canvas {
   background: rgba(187, 186, 186, 0.6);
   position: relative;
   z-index: 1;
+  transition: 3s;
 }
 
 #content-box {
