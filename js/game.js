@@ -870,13 +870,17 @@ class Game {
     towerEditButtons[1].style.opacity = 0;
     this.context.textAlign = "center";
     const title = new Image();
+    title.src = "images/splash/tower-time-title.png";
     title.onload = () =>
       this.context.drawImage(
         title,
         this.canvas.width / 2 - title.width / 2,
         30
       );
-    title.src = "images/tower-time-title.png";
+    const play = new Image();
+    play.src = "images/splash/play-button.png";
+    play.onload = () =>
+      this.context.drawImage(play, this.canvas.width / 2 - play.width / 2, 150);
     this.context.font = "27px Trebuchet MS";
     this.context.fillStyle = "#333";
     this.context.font = "18px Trebuchet MS";

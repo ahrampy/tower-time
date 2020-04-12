@@ -50,23 +50,6 @@ body:hover {
   background-color: rgba(180, 179, 179, 0.5);
 }
 
-#start {
-  position: absolute;
-  left: 50%;
-  top: 38%;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  width: 200px;
-  margin-left: -100px;
-  background: rgba(68, 74, 110, 0.815);
-  border-radius: 5px;
-  color: rgb(187, 186, 186);
-  font-size: 30px;
-}
-
 .over {
   z-index: 0;
   opacity: 0;
