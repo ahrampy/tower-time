@@ -44,6 +44,7 @@ body:hover {
   border-radius: 5px;
   z-index: 0;
   transition: 0.5s;
+  opacity: 0;
 }
 
 #tutorial-window:hover {
@@ -147,11 +148,12 @@ body:hover {
   width: 800px;
   background: rgba(68, 74, 110, 0.8);
   border-radius: 5px 5px 0 0;
+  opacity: 0;
 }
 
 #play-button {
   position: absolute;
-  top: 30%;
+  top: 32%;
   left: 50%;
   margin-left: -117.5px;
   width: 235px;
@@ -185,7 +187,7 @@ body:hover {
 }
 
 canvas {
-  background: rgba(187, 186, 186, 0.6);
+  /* background: rgba(187, 186, 186, 0.6); */
   position: relative;
   z-index: 1;
   transition: 3s;
@@ -194,6 +196,7 @@ canvas {
 #content-box {
   display: flex;
   width: 800px;
+  opacity: 0;
 }
 
 #info {

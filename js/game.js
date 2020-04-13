@@ -917,20 +917,23 @@ class Game {
       e.preventDefault();
       playButton.style.backgroundImage =
         "url('../images/splash/play-button-hover.png')";
-      setTimeout(this.removeTitleScreen(playButton), 500);
+      setTimeout(this.handleStart(playButton), 400);
     });
   }
 
-  removeTitleScreen(playButton) {
+  handleStart(playButton) {
     playButton.style.display = "none";
     tt.gameStarted = true;
     tt.handleGameStart();
     tt.run();
-    this.innerText = "First Wave";
     document.querySelector("#towers").classList.add("active");
+    document.querySelector("#game-controls").style.opacity = 100;
+    document.querySelector("#content-box").style.opacity = 100;
+    document.querySelector("#tutorial-window").style.opacity = 100;
   }
 
   handleGameOver() {
+    document.querySelector("#wave-button").style.opacity = 0;
     const highscores = firebase
       .database()
       .ref("scores")
@@ -949,6 +952,7 @@ class Game {
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
         setTimeout(() => {
+          document.querySelector("#wave-button").style.opacity = 100;
           scores.handleScores(gameOverScreen, highscores);
         }, 500);
       }, 500);
@@ -966,7 +970,7 @@ class Game {
     this.context.fillText(`Final Score: ${this.score}`, 400, 280);
     this.context.font = "25px Trebuchet MS";
     this.lives = 0;
-    this.gameOver = true;
+    this.gameOver = true;    
     const waveButton = document.querySelector("#wave-button");
     waveButton.innerText = "New Game";
     waveButton.addEventListener("click", this.newGame, false);
@@ -974,11 +978,13 @@ class Game {
     tutorial.showInfo("game-over");
   }
 
-  newGame() {
+  newGame() {    
     const gameOverScreen = document.querySelector(".game-over");
     const newCanvas = document.createElement("canvas");
     const playButton = document.querySelector("#play-button");
+    const waveButton = document.querySelector("#wave-button");
     const towers = document.querySelector("#towers");
+    waveButton.removeEventListener("click", tt.newGame, false);
     newCanvas.id = "game-canvas";
     newCanvas.width = 800;
     newCanvas.height = 520;
@@ -988,8 +994,13 @@ class Game {
     while (towers.firstChild) {
       towers.removeChild(towers.lastChild);
     }
+    waveButton.innerText = "First Wave";
+    waveButton.classList.remove("active");
+    document.querySelector("#game-controls").style.opacity = 0;
+    document.querySelector("#content-box").style.opacity = 0;
+    document.querySelector("#tutorial-window").style.opacity = 0;
+    playButton.style.display = "";
     tt = new Game();
-    playButton.style.display = ''
   }
 
   run() {

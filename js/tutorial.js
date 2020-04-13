@@ -117,7 +117,7 @@ class Tutorial {
       text.innerText = "starts game and will send the next wave";
     } else if (ele === "towers") {
       text.innerText =
-        "the four tower types - hover over one to see its stats - click one to select it, move your mouse over the board, and click again to place the tower - the cost will be deducted from your bank";
+        "hover over a tower to see its stats - click one to select it, move your mouse over the board, and click again to place the tower - the cost will be deducted from your bank";
     } else if (ele === "edit") {
       text.innerText =
         "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for its most recent cost";
