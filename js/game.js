@@ -21,21 +21,20 @@ function animate() {
 class Game {
   constructor() {
     // game objects
-    this.towers = [];
-    this.creeps = [];
-    this.stage = [];
-    this.attacks = [];
     this.grid = [];
+    this.towers = [];
+    this.attacks = [];
 
+    // creep management
+    this.creeps = [];
+    this.stages = {};
+ 
     // game stats
-    this.lives = 20;
+    this.lives = 500;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
     this.gameOver = false;
-
-    // creep timeout
-    this.time = new Date();
 
     // increase difficulty
     this.multiplier = 1;
@@ -788,21 +787,26 @@ class Game {
   }
 
   loadCreeps(numCreeps) {
+    const creeps = [];
     for (let i = 0; i < numCreeps; i++) {
-      const location = tt.start.center.copy();
-      const creep = new Creep(location, tt.multiplier);
-      tt.stage.push(creep);
+      const location = this.start.center.copy();
+      const creep = new Creep(location, this.multiplier);
+      creeps.push(creep);
     }
-    // this.sendCreep();
+    this.stages[this.wave] = [creeps, new Date()];
   }
 
-  // sendCreep() {
-  //   if (tt.stage.length === 0) return;
-  //   tt.creeps.push(tt.stage.shift());
-  //   setTimeout(() => {
-  //     this.sendCreep();
-  //   }, 1500);
-  // }
+  sendCreeps() {
+    const curr = new Date();
+    for (const wave in this.stages) {
+      const creeps = this.stages[wave][0]
+      const lastSent = this.stages[wave][1]
+        if (creeps.length && curr - lastSent > 1500) {
+          tt.creeps.push(creeps.shift());
+          this.stages[wave][1] = curr;
+        }
+    }
+  }
 
   gridAttacks() {
     for (let i = 0; i < this.attacks.length; i++) {
@@ -970,7 +974,7 @@ class Game {
     this.context.fillText(`Final Score: ${this.score}`, 400, 280);
     this.context.font = "25px Trebuchet MS";
     this.lives = 0;
-    this.gameOver = true;    
+    this.gameOver = true;
     const waveButton = document.querySelector("#wave-button");
     waveButton.innerText = "New Game";
     waveButton.addEventListener("click", this.newGame, false);
@@ -978,7 +982,7 @@ class Game {
     tutorial.showInfo("game-over");
   }
 
-  newGame() {    
+  newGame() {
     const gameOverScreen = document.querySelector(".game-over");
     const newCanvas = document.createElement("canvas");
     const playButton = document.querySelector("#play-button");
@@ -1019,10 +1023,7 @@ class Game {
       this.showTowerInfo();
       this.gridAttacks();
       this.checkWave();
-      if (this.stage.length && new Date() - this.time > 1500) {
-        tt.creeps.push(tt.stage.shift());
-        this.time = new Date();
-      }
+      this.sendCreeps();
       for (let c = 0; c < this.numCols; c++) {
         for (let r = 0; r < this.numRows; r++) this.grid[c][r].run();
       }
