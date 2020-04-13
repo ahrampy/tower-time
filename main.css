@@ -149,6 +149,20 @@ body:hover {
   border-radius: 5px 5px 0 0;
 }
 
+#play-button {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin-left: -117.5px;
+  width: 235px;
+  height: 125px;
+  background-color: inherit;
+  background-repeat: no-repeat;
+  z-index: 2;
+  outline: none;
+  border: none;
+}
+
 #wave-button {
   display: flex;
   justify-content: center;

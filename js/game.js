@@ -115,18 +115,6 @@ class Game {
   }
 
   startClick() {
-    if (!tt.gameStarted) {
-      tt.gameStarted = true;
-      tt.handleGameStart();
-      tt.run();
-      this.innerText = "First Wave";
-      this.classList.remove("active");
-      document.querySelector("#towers").classList.add("active");
-      // if (!tt.muted) {
-      //   music.play();
-      // }
-      return;
-    }
     tt.wave += 1;
     if (tt.wave === 1) {
       this.innerText = "Next Wave";
@@ -877,10 +865,7 @@ class Game {
         this.canvas.width / 2 - title.width / 2,
         30
       );
-    const play = new Image();
-    play.src = "images/splash/play-button.png";
-    play.onload = () =>
-      this.context.drawImage(play, this.canvas.width / 2 - play.width / 2, 150);
+    this.addPlayButton();
     this.context.font = "27px Trebuchet MS";
     this.context.fillStyle = "#333";
     this.context.font = "18px Trebuchet MS";
@@ -906,6 +891,43 @@ class Game {
       455
     );
     this.context.fillText("hover over anything to get tooltips", 400, 500);
+  }
+
+  addPlayButton() {
+    const playButton = document.querySelector("#play-button");
+    playButton.style.backgroundImage =
+      "url('../images/splash/play-button.png')";
+    playButton.addEventListener("mouseover", () => {
+      playButton.style.backgroundImage =
+        "url('../images/splash/play-button-hover.png')";
+    });
+    playButton.addEventListener("mouseout", () => {
+      playButton.style.backgroundImage =
+        "url('../images/splash/play-button.png')";
+    });
+    playButton.addEventListener("mousedown", () => {
+      playButton.style.backgroundImage =
+        "url('../images/splash/play-button-pressed.png')";
+    });
+    playButton.addEventListener("mouseup", () => {
+      playButton.style.backgroundImage =
+        "url('../images/splash/play-button-hover.png')";
+    });
+    playButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      playButton.style.backgroundImage =
+        "url('../images/splash/play-button-hover.png')";
+      setTimeout(this.removeTitleScreen(playButton), 500);
+    });
+  }
+
+  removeTitleScreen(playButton) {
+    playButton.style.display = "none";
+    tt.gameStarted = true;
+    tt.handleGameStart();
+    tt.run();
+    this.innerText = "First Wave";
+    document.querySelector("#towers").classList.add("active");
   }
 
   handleGameOver() {
@@ -955,7 +977,7 @@ class Game {
   newGame() {
     const gameOverScreen = document.querySelector(".game-over");
     const newCanvas = document.createElement("canvas");
-    const waveButton = document.querySelector("#wave-button");
+    const playButton = document.querySelector("#play-button");
     const towers = document.querySelector("#towers");
     newCanvas.id = "game-canvas";
     newCanvas.width = 800;
@@ -966,8 +988,8 @@ class Game {
     while (towers.firstChild) {
       towers.removeChild(towers.lastChild);
     }
-    waveButton.removeEventListener("click", tt.newGame, false);
     tt = new Game();
+    playButton.style.display = ''
   }
 
   run() {
