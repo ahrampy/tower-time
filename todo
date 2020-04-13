@@ -6,4 +6,4 @@ ui:
   change wave button active times,
   info window pop-out(s) for tutorial / towertypes and hotkeys
   
-game: update send wave logic to reflect single creep limit
+game: update creep limit
