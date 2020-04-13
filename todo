@@ -1,9 +1,8 @@
 new music: howler.js
-mobile: css layout / cordova ?
+mobile: css layout
 
 ui:
-  add new start button,
-  hide top and bottom layout on intial screen,
+  fade in top and bottom layout on start,
   change wave button active times,
   info window pop-out(s) for tutorial / towertypes and hotkeys
   
