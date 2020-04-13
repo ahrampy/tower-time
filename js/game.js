@@ -934,6 +934,7 @@ class Game {
     tt.gameStarted = true;
     tt.handleGameStart();
     tt.run();
+    document.querySelector("canvas").style.backgroundColor = "rgba(187, 186, 186, 0.8)";
     document.querySelector("#towers").classList.add("active");
     document.querySelector("#game-controls").style.opacity = 100;
     document.querySelector("#content-box").style.opacity = 100;
@@ -1014,13 +1015,13 @@ class Game {
   run() {
     this.updateInfo();
 
-    // if (this.cr !== this.lives + this.score + this.bits + this.c) {
-    //   console.log("oh so you think you're clever");
-    //   this.score = 0;
-    //   this.bits = 0;
-    //   this.lives = 1;
-    //   this.cr = this.lives + this.score + this.bits + this.c;
-    // }
+    if (this.cr !== this.lives + this.score + this.bits + this.c) {
+      console.log("oh so you think you're clever");
+      this.score = 0;
+      this.bits = 0;
+      this.lives = 1;
+      this.cr = this.lives + this.score + this.bits + this.c;
+    }
 
     if (!this.gameOver && this.gameStarted) {
       this.render();
