@@ -28,7 +28,7 @@ class Game {
     // creep management
     this.creeps = [];
     this.stages = {};
- 
+
     // game stats
     this.lives = 500;
     this.bits = 200;
@@ -793,18 +793,22 @@ class Game {
       const creep = new Creep(location, this.multiplier);
       creeps.push(creep);
     }
-    this.stages[this.wave] = [creeps, new Date()];
+    this.stages[this.wave] = [creeps, new Date() - 1500];
   }
 
   sendCreeps() {
-    const curr = new Date();
     for (const wave in this.stages) {
-      const creeps = this.stages[wave][0]
-      const lastSent = this.stages[wave][1]
-        if (creeps.length && curr - lastSent > 1500) {
+      const creeps = this.stages[wave][0];
+      if (creeps.length) {
+        const curr = new Date();
+        const lastSent = this.stages[wave][1];
+        if (curr - lastSent > 1500) {
           tt.creeps.push(creeps.shift());
           this.stages[wave][1] = curr;
         }
+      } else {
+        delete this.stages[wave];
+      }
     }
   }
 
