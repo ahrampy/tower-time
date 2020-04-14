@@ -149,6 +149,7 @@ body:hover {
   background: rgba(68, 74, 110, 0.8);
   border-radius: 5px 5px 0 0;
   opacity: 0;
+  transition: 2s;
 }
 
 #play-button {
@@ -197,6 +198,7 @@ canvas {
   display: flex;
   width: 800px;
   opacity: 0;
+  transition: 2s;
 }
 
 #info {

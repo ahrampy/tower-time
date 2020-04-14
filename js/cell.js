@@ -22,6 +22,7 @@ class Cell {
     this.cancelled = false;
 
     // check state
+    this.rock = false;
     this.occupied = false;
     this.attacked = false;
     this.attackDamage = null;
@@ -87,6 +88,20 @@ class Cell {
   }
 
   render() {
+    if (this.rock) {
+      const context = tt.context;
+      context.save();
+      context.translate(
+        this.location.x + this.game.cellSize / 2,
+        this.location.y + this.game.cellSize / 2
+      );
+      context.rotate(1);
+      context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
+      context.restore();
+
+      return;
+    }
+
     if (this === tt.goal) {
       this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
     } else if (this === tt.start) {

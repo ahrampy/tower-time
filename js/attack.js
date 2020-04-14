@@ -48,7 +48,6 @@ class Attack {
     //     context.fillStyle = "rgba(237, 191, 71, 0.5)"
     // }
     // context.fill();
-
     context.translate(this.location.x, this.location.y);
     context.rotate(this.angle);
     context.drawImage(

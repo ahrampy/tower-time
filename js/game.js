@@ -715,9 +715,14 @@ class Game {
     }
 
     for (let i = 0; i < this.numBlocks; i++) {
-      this.grid[Math.floor(Math.random() * 20)][
-        Math.floor(Math.random() * 13)
-      ].occupied = true;
+      const randRow = Math.floor(Math.random() * 20);
+      const randCol = Math.floor(Math.random() * 13);
+      const cell = this.grid[randRow][randCol];
+      const rock = new Image();
+      rock.src = `/images/rocks/rock-${Math.ceil(Math.random() * 4)}.png`
+      cell.occupied = true;
+      cell.rock = true;
+      cell.img = rock;
     }
 
     this.goal = this.grid[Math.floor(Math.random() * 5) + 15][
@@ -858,6 +863,16 @@ class Game {
     }
   }
 
+  checkStats() {
+    if (this.cr !== this.lives + this.score + this.bits + this.c) {
+      console.log("oh so you think you're clever");
+      this.score = 0;
+      this.bits = 0;
+      this.lives = 1;
+      this.cr = this.lives + this.score + this.bits + this.c;
+    }
+  }
+
   handleGameStart() {
     const towerEditButtons = document.querySelectorAll(
       "#edit-tower-buttons > .edit-button"
@@ -934,7 +949,8 @@ class Game {
     tt.gameStarted = true;
     tt.handleGameStart();
     tt.run();
-    document.querySelector("canvas").style.backgroundColor = "rgba(187, 186, 186, 0.8)";
+    document.querySelector("canvas").style.backgroundColor =
+      "rgba(187, 186, 186, 0.8)";
     document.querySelector("#towers").classList.add("active");
     document.querySelector("#game-controls").style.opacity = 100;
     document.querySelector("#content-box").style.opacity = 100;
@@ -1014,14 +1030,7 @@ class Game {
 
   run() {
     this.updateInfo();
-
-    if (this.cr !== this.lives + this.score + this.bits + this.c) {
-      console.log("oh so you think you're clever");
-      this.score = 0;
-      this.bits = 0;
-      this.lives = 1;
-      this.cr = this.lives + this.score + this.bits + this.c;
-    }
+    this.checkStats();
 
     if (!this.gameOver && this.gameStarted) {
       this.render();
