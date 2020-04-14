@@ -723,6 +723,7 @@ class Game {
       cell.occupied = true;
       cell.rock = true;
       cell.img = rock;
+      cell.angle = Math.random();
     }
 
     this.goal = this.grid[Math.floor(Math.random() * 5) + 15][

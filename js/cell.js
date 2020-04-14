@@ -1,7 +1,7 @@
 "use strict";
 
 class Cell {
-  constructor(game, id, col, row) {
+  constructor(game, id, col, row, img, angle) {
     this.id = id;
     this.location = new Vector(col * game.cellSize, row * game.cellSize);
     this.center = new Vector(
@@ -13,6 +13,8 @@ class Cell {
     this.size = game.cellSize;
     this.col = col;
     this.row = row;
+    this.img = img;
+    this.angle = angle;
 
     // path finding
     this.adjacent = [];
@@ -95,7 +97,7 @@ class Cell {
         this.location.x + this.game.cellSize / 2,
         this.location.y + this.game.cellSize / 2
       );
-      context.rotate(1);
+      context.rotate(Math.PI / this.angle);
       context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
       context.restore();
 
