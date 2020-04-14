@@ -90,20 +90,6 @@ class Cell {
   }
 
   render() {
-    if (this.rock) {
-      const context = tt.context;
-      context.save();
-      context.translate(
-        this.location.x + this.game.cellSize / 2,
-        this.location.y + this.game.cellSize / 2
-      );
-      context.rotate(Math.PI / this.angle);
-      context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
-      context.restore();
-
-      return;
-    }
-
     if (this === tt.goal) {
       this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
     } else if (this === tt.start) {
@@ -122,6 +108,17 @@ class Cell {
       this.size,
       this.size
     );
+    if (this.rock) {
+      const context = tt.context;
+      context.save();
+      context.translate(
+        this.location.x + this.game.cellSize / 2,
+        this.location.y + this.game.cellSize / 2
+      );
+      context.rotate(Math.PI / this.angle);
+      context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
+      context.restore();
+    }
     // this.context.strokeStyle = "#333333"
     // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
     // this.context.font = "15px Aerial"

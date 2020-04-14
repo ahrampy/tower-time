@@ -711,6 +711,7 @@ class Game {
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++) {
         this.grid[c][r].occupied = false;
+        this.grid[c][r].rock = false;
       }
     }
 
@@ -733,7 +734,9 @@ class Game {
       Math.floor(Math.random() * 10) + 1
     ];
     this.start.occupied = false;
+    this.start.rock = false;
     this.goal.occupied = false;
+    this.goal.rock = false;
     this.goal.value = 0;
   }
 
