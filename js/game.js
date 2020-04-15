@@ -700,7 +700,9 @@ class Game {
     for (let c = 0; c < this.numCols; c++) {
       this.grid.push([]);
       for (let r = 0; r < this.numRows; r++) {
-        this.grid[c].push(new Cell(this.grid, this.cellSize, this.context, id++, c, r));
+        this.grid[c].push(
+          new Cell(this.grid, this.cellSize, this.context, id++, c, r)
+        );
       }
     }
 
@@ -827,21 +829,18 @@ class Game {
     }
   }
 
-  gridAttacks() {
-    for (let i = 0; i < this.attacks.length; i++) {
-      const attack = this.attacks[i];
-      const gridCol = Math.floor(attack.location.x / tt.cellSize);
-      const gridRow = Math.floor(attack.location.y / tt.cellSize);
-      if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
-        const cell = tt.grid[gridCol][gridRow];
+  checkHit(attack) {
+    const gridCol = Math.floor(attack.location.x / tt.cellSize);
+    const gridRow = Math.floor(attack.location.y / tt.cellSize);
+    if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
+      const cell = tt.grid[gridCol][gridRow];
 
-        cell.attack(attack.damage, attack.type === "Water");
+      cell.attack(attack.damage, attack.type === "Water");
 
-        for (let j = 0; j < this.creeps.length; j++) {
-          if (cell === this.creeps[j].currentCell) {
-            if (attack.type != "Air") {
-              attack.hit = true;
-            }
+      for (let j = 0; j < this.creeps.length; j++) {
+        if (cell === this.creeps[j].currentCell) {
+          if (attack.type != "Air") {
+            attack.hit = true;
           }
         }
       }
@@ -1041,7 +1040,6 @@ class Game {
     if (!this.gameOver && this.gameStarted) {
       this.render();
       this.showTowerInfo();
-      this.gridAttacks();
       this.checkWave();
       this.sendCreeps();
       for (let c = 0; c < this.numCols; c++) {
@@ -1065,6 +1063,7 @@ class Game {
       }
       for (let i = 0; i < this.attacks.length; i++) {
         let attack = this.attacks[i];
+        this.checkHit(attack);
         if (!attack.hit) {
           attack.run();
         } else {

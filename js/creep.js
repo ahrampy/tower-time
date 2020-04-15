@@ -19,8 +19,11 @@ class Creep {
     this.maxHealth = tt.wave * 400 * this.multiplier;
     this.health = this.maxHealth;
     this.alive = true;
-    this.slowed = false;
     this.w = this.maxHealth;
+
+    // manage slow
+    this.slowed = false;
+    this.slowTimeout = 0;
   }
 
   checkEdges() {
@@ -33,8 +36,8 @@ class Creep {
   }
 
   checkWalls() {
-    let col = Math.floor(this.location.x / tt.cellSize);
-    let row = Math.floor(this.location.y / tt.cellSize);
+    const col = Math.floor(this.location.x / tt.cellSize);
+    const row = Math.floor(this.location.y / tt.cellSize);
     if (tt.grid && tt.grid[col] && tt.grid[col][row].occupied) {
       this.velocity.x = -this.velocity.x;
       this.velocity.y = -this.velocity.y;
@@ -45,8 +48,7 @@ class Creep {
     if (this.currentCell && this.currentCell.attacked) {
       this.health -= this.currentCell.attackDamage;
       if (this.currentCell.attackSlow) {
-        this.slowed = true;
-        setTimeout(() => (this.slowed = false), 2000);
+        this.slow();
       }
     }
   }
@@ -60,32 +62,44 @@ class Creep {
     }
   }
 
-  move() {
-    let col = Math.floor(this.location.x / tt.cellSize);
-    let row = Math.floor(this.location.y / tt.cellSize);
+  takeLife() {
+    this.alive = false;
+    tt.lives -= 1;
+    tt.cr -= 1;
+    const lives = document.querySelector("#info-lives");
+    if (!lives.classList.contains("flashing")) {
+      lives.classList.add("flashing");
+      setTimeout(() => {
+        lives.classList.remove("flashing");
+      }, 1000);
+    }
+    // if (!tt.muted) {
+    //     const lose = new Audio;
+    //     lose.setAttribute('src', 'sounds/lose_life.mp3');
+    //     lose.load();
+    //     lose.play();
+    // }
+  }
 
-    if (tt.grid[col][row] === tt.goal) {
-      this.alive = false;
-      tt.lives -= 1;
-      tt.cr -= 1;
-      const lives = document.querySelector("#info-lives");
-      if (!lives.classList.contains("flashing")) {
-        lives.classList.add("flashing");
-        setTimeout(() => {
-          lives.classList.remove("flashing");
-        }, 1000);
-      }
-      // if (!tt.muted) {
-      //     const lose = new Audio;
-      //     lose.setAttribute('src', 'sounds/lose_life.mp3');
-      //     lose.load();
-      //     lose.play();
-      // }
+  slow() {
+    this.slowed = true;
+    this.slowTimeout = 30;
+  }
+
+  move() {
+    const col = Math.floor(this.location.x / tt.cellSize);
+    const row = Math.floor(this.location.y / tt.cellSize);
+
+    const cellCheck = tt.grid[col][row];
+
+    if (cellCheck === tt.goal) {
+      this.takeLife();
       return;
     }
-    if (tt.grid[col][row] && !tt.grid[col][row].occupied) {
-      this.currentCell = tt.grid[col][row];
-      let nextCell = this.currentCell.smallestAdjacent;
+
+    if (cellCheck && !cellCheck.occupied) {
+      this.currentCell = cellCheck;
+      const nextCell = this.currentCell.smallestAdjacent;
       this.acceleration = this.acceleration.subGetNew(
         nextCell.center,
         this.currentCell.center
@@ -97,6 +111,10 @@ class Creep {
     this.velocity.normalize();
     if (this.slowed) {
       this.velocity.slow();
+      this.slowTimeout--;
+      if (this.slowTimeout <= 0) {
+        this.slowed = false;
+      }
     }
     this.location.add(this.velocity);
   }

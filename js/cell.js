@@ -3,8 +3,8 @@
 class Cell {
   constructor(grid, size, context, id, col, row, img, angle) {
     this.id = id;
-    this.grid = grid
-    this.size = size
+    this.grid = grid;
+    this.size = size;
     this.location = new Vector(col * size, row * size);
     this.center = new Vector(
       this.location.x + size / 2,
@@ -39,7 +39,6 @@ class Cell {
   }
 
   loadAdjacentCells() {
-
     //up
     if (
       this.row > 0 &&
@@ -98,8 +97,18 @@ class Cell {
   }
 
   run() {
+    this.checkAttack();
+    this.renderImages();
     this.render();
-    // setTimeout(() => (this.attacked = false), 500);
+  }
+
+  checkAttack() {
+    if (this.attacked) {
+      this.attackTimeout--;
+      if (this.attackTimeout <= 0) {
+        this.attacked = false;
+      }
+    }
   }
 
   renderImages() {
@@ -117,11 +126,6 @@ class Cell {
   }
 
   render() {
-    this.renderImages();
-    if (this.attacked) {
-      this.attackTimeout--;
-      if (this.attackTimeout <= 0) this.attacked = false;
-    }
     if (this === tt.goal) {
       this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
     } else if (this === tt.start) {
