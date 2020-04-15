@@ -711,7 +711,7 @@ class Game {
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++) {
         this.grid[c][r].occupied = false;
-        this.grid[c][r].rock = false;
+        this.grid[c][r].static = false;
       }
     }
 
@@ -722,7 +722,7 @@ class Game {
       const rock = new Image();
       rock.src = `/images/rocks/rock-${Math.ceil(Math.random() * 4)}.png`
       cell.occupied = true;
-      cell.rock = true;
+      cell.static = true;
       cell.img = rock;
       cell.angle = Math.random();
     }
@@ -734,9 +734,9 @@ class Game {
       Math.floor(Math.random() * 10) + 1
     ];
     this.start.occupied = false;
-    this.start.rock = false;
+    // this.start.img = null;
     this.goal.occupied = false;
-    this.goal.rock = false;
+    // this.goal.img = null;
     this.goal.value = 0;
   }
 
@@ -828,12 +828,8 @@ class Game {
       const gridRow = Math.floor(attack.location.y / tt.cellSize);
       if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
         const cell = tt.grid[gridCol][gridRow];
-        cell.attacked = true;
-        cell.attackDamage = attack.damage;
-        if (attack.type === "Water") {
-          cell.attackSlow = true;
-          setTimeout(() => (cell.attackSlow = false), 1000);
-        }
+        
+        cell.attack(attack.damage, attack.type === "Water");
 
         for (let j = 0; j < this.creeps.length; j++) {
           if (cell === this.creeps[j].currentCell) {

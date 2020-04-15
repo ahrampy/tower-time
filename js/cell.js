@@ -13,7 +13,9 @@ class Cell {
     this.size = game.cellSize;
     this.col = col;
     this.row = row;
-    this.img = img;
+    this.occupiedImg = new Image();
+    this.occupiedImg.src = "/images/tower-wall.png";
+    this.img = img ? img : this.occupiedImg;
     this.angle = angle;
 
     // path finding
@@ -21,14 +23,16 @@ class Cell {
     this.value = -1;
     this.smallestAdjacent = null;
     this.smallestAdjacentIndex = 0;
-    this.cancelled = false;
 
     // check state
-    this.rock = false;
+    this.static = false;
     this.occupied = false;
     this.attacked = false;
     this.attackDamage = null;
     this.attackSlow = false;
+    this.attackTimeout = 0;
+    this.cancelled = false;
+    this.cancTimeout = 0;
   }
 
   loadAdjacentCells() {
@@ -79,36 +83,25 @@ class Cell {
     this.smallestAdjacent = this.adjacent[this.smallestAdjacentIndex];
   }
 
+  attack(damage, slow) {
+    this.attacked = true;
+    this.attackDamage = damage;
+    this.attackSlow = slow;
+    this.attackTimeout = 3;
+  }
+
   cancel() {
     this.cancelled = true;
-    setTimeout(() => (this.cancelled = false), 100);
+    this.cancTimeout = 3;
   }
 
   run() {
     this.render();
-    setTimeout(() => (this.attacked = false), 500);
+    // setTimeout(() => (this.attacked = false), 500);
   }
 
-  render() {
-    if (this === tt.goal) {
-      this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
-    } else if (this === tt.start) {
-      this.context.fillStyle = "rgba(87, 95, 139, 0.8)";
-    } else if (this.occupied) {
-      this.context.fillStyle = "rgba(224, 224, 224, 0.6)";
-    } else if (this.cancelled) {
-      this.context.fillStyle = "rgba(255, 255, 255, 0.8)";
-    } else {
-      this.context.fillStyle = "rgba(150, 151, 129, 0.06)";
-    }
-
-    this.context.fillRect(
-      this.location.x,
-      this.location.y,
-      this.size,
-      this.size
-    );
-    if (this.rock) {
+  renderImages() {
+    if (this.static || this.occupied) {
       const context = tt.context;
       context.save();
       context.translate(
@@ -119,6 +112,36 @@ class Cell {
       context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
       context.restore();
     }
+  }
+
+  render() {
+    this.renderImages();
+    if (this.attacked) {
+      this.attackTimeout--;
+      if (this.attackTimeout <= 0) this.attacked = false;
+    }
+    if (this === tt.goal) {
+      this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
+    } else if (this === tt.start) {
+      this.context.fillStyle = "rgba(87, 95, 139, 0.8)";
+    } else if (this.cancelled) {
+      this.context.fillStyle = "rgba(255, 255, 255, 0.8)";
+      console.log(this.cancTimeout);
+
+      this.cancTimeout--;
+      if (this.cancTimeout <= 0) {
+        this.cancelled = false;
+      }
+    } else {
+      this.context.fillStyle = "rgba(150, 151, 129, 0.06)";
+    }
+
+    this.context.fillRect(
+      this.location.x,
+      this.location.y,
+      this.size,
+      this.size
+    );
     // this.context.strokeStyle = "#333333"
     // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
     // this.context.font = "15px Aerial"
