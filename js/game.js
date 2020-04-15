@@ -708,10 +708,16 @@ class Game {
   }
 
   initBlocks() {
+    const wallImg = new Image();
+    wallImg.src = "/images/tower-wall.png";
+
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++) {
-        this.grid[c][r].occupied = false;
-        this.grid[c][r].static = false;
+        const cell = this.grid[c][r];
+        cell.occupied = false;
+        cell.static = false;
+        cell.img = wallImg;
+        cell.angle = 0;
       }
     }
 
@@ -720,7 +726,7 @@ class Game {
       const randCol = Math.floor(Math.random() * 13);
       const cell = this.grid[randRow][randCol];
       const rock = new Image();
-      rock.src = `/images/rocks/rock-${Math.ceil(Math.random() * 4)}.png`
+      rock.src = `/images/rocks/rock-${Math.ceil(Math.random() * 3)}.png`;
       cell.occupied = true;
       cell.static = true;
       cell.img = rock;
@@ -828,7 +834,7 @@ class Game {
       const gridRow = Math.floor(attack.location.y / tt.cellSize);
       if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
         const cell = tt.grid[gridCol][gridRow];
-        
+
         cell.attack(attack.damage, attack.type === "Water");
 
         for (let j = 0; j < this.creeps.length; j++) {

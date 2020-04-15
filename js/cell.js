@@ -13,9 +13,7 @@ class Cell {
     this.size = game.cellSize;
     this.col = col;
     this.row = row;
-    this.occupiedImg = new Image();
-    this.occupiedImg.src = "/images/tower-wall.png";
-    this.img = img ? img : this.occupiedImg;
+    this.img = img;
     this.angle = angle;
 
     // path finding
@@ -24,13 +22,17 @@ class Cell {
     this.smallestAdjacent = null;
     this.smallestAdjacentIndex = 0;
 
-    // check state
+    // manage state
     this.static = false;
     this.occupied = false;
     this.attacked = false;
+
+    // manage attack state
     this.attackDamage = null;
     this.attackSlow = false;
     this.attackTimeout = 0;
+
+    // show invalid placement
     this.cancelled = false;
     this.cancTimeout = 0;
   }
@@ -87,7 +89,7 @@ class Cell {
     this.attacked = true;
     this.attackDamage = damage;
     this.attackSlow = slow;
-    this.attackTimeout = 3;
+    this.attackTimeout = 2 + slow;
   }
 
   cancel() {
@@ -126,8 +128,6 @@ class Cell {
       this.context.fillStyle = "rgba(87, 95, 139, 0.8)";
     } else if (this.cancelled) {
       this.context.fillStyle = "rgba(255, 255, 255, 0.8)";
-      console.log(this.cancTimeout);
-
       this.cancTimeout--;
       if (this.cancTimeout <= 0) {
         this.cancelled = false;
