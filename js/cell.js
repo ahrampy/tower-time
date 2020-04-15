@@ -92,6 +92,7 @@ class Cell {
   }
 
   cancel() {
+    this.occupied = false
     this.cancelled = true;
     this.cancTimeout = 3;
   }

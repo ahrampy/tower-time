@@ -307,7 +307,7 @@ class Game {
     }
   }
 
-  handleCanvasMouseClicked() {
+  handleCanvasMouseClicked(event) {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
@@ -317,48 +317,7 @@ class Game {
     const cell = tt.grid[gridCol][gridRow];
 
     if (tt.placingTower) {
-      if (!cell.occupied && cell !== tt.goal && cell !== tt.start) {
-        cell.occupied = true;
-        tt.loadPaths();
-
-        let checkPaths = tt.creeps.every((creep) => {
-          let checkBlock = false;
-          let route = [creep.currentCell];
-          while (route.length) {
-            let currCell = route.pop();
-            if (currCell) {
-              if (currCell.value === -1) continue;
-              if (currCell === tt.goal) {
-                checkBlock = true;
-                break;
-              }
-              route.push(currCell.smallestAdjacent);
-            }
-          }
-          return checkBlock;
-        });
-
-        let route = [tt.start];
-        let path = false;
-
-        while (route.length) {
-          let cell = route.pop();
-          if (cell.value === -1) continue;
-          if (cell === tt.goal) {
-            path = true;
-            break;
-          }
-          route.push(cell.smallestAdjacent);
-        }
-
-        if (!checkPaths || !path) {
-          cell.cancel();
-          cell.occupied = false;
-          tt.loadPaths();
-        } else {
-          tt.placeTower(cell.center);
-        }
-      }
+      tt.checkTowerPlacement(cell);
     } else {
       for (let i = 0; i < tt.towers.length; i++) {
         let tower = tt.towers[i];
@@ -378,7 +337,56 @@ class Game {
     }
   }
 
-  handleCanvasMouseDoubleClicked() {
+  checkTowerPlacement(cell) {
+    if (!cell.occupied && cell !== tt.goal && cell !== tt.start) {
+      cell.occupied = true;
+      tt.loadPaths();
+
+      if (this.checkPaths() && this.checkRoute()) {
+        tt.placeTower(cell.center);
+      } else {
+        cell.cancel();
+        tt.loadPaths();
+      }
+    }
+  }
+
+  checkPaths() {
+    return tt.creeps.every((creep) => {
+      const route = [creep.currentCell];
+      while (route.length) {
+        const currCell = route.pop();
+        if (currCell) {
+          if (currCell.value === -1) {
+            continue;
+          } else if (currCell === tt.goal) {
+            return true
+            break;
+          }
+          route.push(currCell.smallestAdjacent);
+        }
+      }
+      return false;
+    });
+  }
+
+  checkRoute() {
+    const route = [tt.start];
+
+    while (route.length) {
+      const cell = route.pop();
+      if (cell.value === -1) {
+        continue;
+      } else if (cell === tt.goal) {
+        return true;
+      }
+      route.push(cell.smallestAdjacent);
+    }
+
+    return false;
+  }
+
+  handleCanvasMouseDoubleClicked(event) {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
