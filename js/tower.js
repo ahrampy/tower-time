@@ -97,12 +97,12 @@ class Tower {
     if (this.type === "Earth") {
       if (this.upgradeLevel === 2) {
         this.img = new Image();
-        this.img.src = "images/earth/green-tower-2.png";
+        this.img.src = "images/earth/earth-tower-2.png";
         this.atkImg = new Image();
         this.atkImg.src = "images/earth/green-tower-atk-2.png";
       } else {
         this.img = new Image();
-        this.img.src = "images/earth/green-tower-3.png";
+        this.img.src = "images/earth/earth-tower-3.png";
         this.atkImg = new Image();
         this.atkImg.src = "images/earth/green-tower-atk-3.png";
       }

@@ -2,10 +2,11 @@ new music: howler.js
 mobile: css layout
 
 ui:
-  add delay to wave button active times,
-  disable new game click before score screen load,
-  highlight current sqaure while placing tower,
+  add delay to wave button active times
+  disable new game click before score screen load
+  highlight current sqaure while placing tower
   info window pop-outs for tutorial / towertypes & hotkeys
   
 game:
   creep types & anims
+  add setup js file

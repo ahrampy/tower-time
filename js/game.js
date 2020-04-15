@@ -435,8 +435,8 @@ class Game {
       let speed;
 
       if (i === 0) {
-        tileImgPath = "images/earth/green-tower-1.png";
-        boardImgPath = "images/earth/green-tower-1.png";
+        tileImgPath = "images/earth/earth-tower-1.png";
+        boardImgPath = "images/earth/earth-tower-1.png";
         attackImgPath = "images/earth/green-tower-atk-1.png";
         cost = 15;
         upgrade = 30;
@@ -750,7 +750,7 @@ class Game {
 
   setBlocks() {
     const wallImg = new Image();
-    wallImg.src = "/images/tower-wall.png";
+    wallImg.src = "/images/tower-wall-filled.png";
 
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++) {
@@ -1045,6 +1045,11 @@ class Game {
     playButton.style.display = "";
     tt = new Game();
   }
+
+  
+  // stepTimeout() { 
+    // TODO maybe
+  // }
 
   run() {
     this.updateInfo();
