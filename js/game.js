@@ -360,7 +360,7 @@ class Game {
           if (currCell.value === -1) {
             continue;
           } else if (currCell === tt.goal) {
-            return true
+            return true;
             break;
           }
           route.push(currCell.smallestAdjacent);
@@ -421,64 +421,12 @@ class Game {
   createTiles() {
     const tileDivs = [];
     for (let i = 0; i < 4; i++) {
-      const tileDiv = document.createElement("div");
+      let tileDiv = this.towerStats(i);
+      let tileImgPath, boardImgPath, attackImgPath;
 
-      let tileImgPath;
-      let boardImgPath;
-      let attackImgPath;
-      let cost;
-      let upgrade;
-      let type;
-      let range;
-      let cooldown;
-      let damage;
-      let speed;
-
-      if (i === 0) {
-        tileImgPath = "images/earth/earth-tower-1.png";
-        boardImgPath = "images/earth/earth-tower-1.png";
-        attackImgPath = "images/earth/green-tower-atk-1.png";
-        cost = 15;
-        upgrade = 30;
-        type = "earth";
-        range = 100;
-        cooldown = 1000;
-        damage = 30;
-        speed = 8;
-      } else if (i === 1) {
-        tileImgPath = "images/water/blue-tower-1.png";
-        boardImgPath = "images/water/blue-tower-1.png";
-        attackImgPath = "images/water/blue-tower-atk-1.png";
-        cost = 30;
-        upgrade = 60;
-        type = "water";
-        range = 120;
-        cooldown = 300;
-        damage = 10;
-        speed = 1;
-      } else if (i === 2) {
-        tileImgPath = "images/fire/red-tower-1.png";
-        boardImgPath = "images/fire/red-tower-1.png";
-        attackImgPath = "images/fire/red-tower-atk-1.png";
-        cost = 50;
-        upgrade = 100;
-        type = "fire";
-        range = 100;
-        cooldown = 200;
-        damage = 20;
-        speed = 10;
-      } else if (i === 3) {
-        tileImgPath = "images/air/yellow-tower-1.png";
-        boardImgPath = "images/air/yellow-tower-1.png";
-        attackImgPath = "images/air/yellow-tower-atk-1.png";
-        cost = 100;
-        upgrade = 200;
-        type = "air";
-        range = 150;
-        cooldown = 2000;
-        damage = 120;
-        speed = 16;
-      }
+      tileImgPath = this.makeUrl(tileDiv.type);
+      boardImgPath = this.makeUrl(tileDiv.type);
+      attackImgPath = this.makeUrl(tileDiv.type, true);
 
       tileDiv.tileDivImg = new Image();
       tileDiv.tileDivImg.src = boardImgPath;
@@ -487,15 +435,6 @@ class Game {
       tileDiv.tileDivAttackImg.src = attackImgPath;
 
       document.querySelector("#towers").appendChild(tileDiv);
-
-      tileDiv.cost = cost;
-      tileDiv.upgrade = upgrade;
-      tileDiv.id = i;
-      tileDiv.type = type;
-      tileDiv.range = range;
-      tileDiv.cooldown = cooldown;
-      tileDiv.damage = damage;
-      tileDiv.speed = speed;
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
@@ -503,20 +442,52 @@ class Game {
       tileDiv.appendChild(tileImg);
 
       const towerName = document.createElement("p");
-
-      if (i === 0) {
-        towerName.innerText = "15 ¥";
-      } else if (i === 1) {
-        towerName.innerText = "30 ¥";
-      } else if (i === 2) {
-        towerName.innerText = "50 ¥";
-      } else if (i === 3) {
-        towerName.innerText = "100 ¥";
-      }
-
+      towerName.innerText = `${tileDiv.cost} ¥`;
       tileDiv.appendChild(towerName);
     }
     return tileDivs;
+  }
+
+  makeUrl(name, atk) {
+    return `images/${name}/${name}-tower-${atk ? "atk-" : ""}1.png`;
+  }
+
+  towerStats(i) {
+    const div = document.createElement("div");
+    if (i === 0) {
+      div.type = "earth";
+      div.cost = 15;
+      div.upgrade = 30;
+      div.range = 100;
+      div.cooldown = 1000;
+      div.damage = 30;
+      div.speed = 8;
+    } else if (i === 1) {
+      div.type = "water";
+      div.cost = 30;
+      div.upgrade = 60;
+      div.range = 120;
+      div.cooldown = 300;
+      div.damage = 10;
+      div.speed = 1;
+    } else if (i === 2) {
+      div.type = "fire";
+      div.cost = 50;
+      div.upgrade = 100;
+      div.range = 100;
+      div.cooldown = 200;
+      div.damage = 20;
+      div.speed = 10;
+    } else {
+      div.type = "air";
+      div.cost = 100;
+      div.upgrade = 200;
+      div.range = 150;
+      div.cooldown = 2000;
+      div.damage = 120;
+      div.speed = 16;
+    }
+    return div;
   }
 
   handleTileCallbacks(tiles) {
@@ -545,7 +516,7 @@ class Game {
 
       if (info.innerHTML.includes("Type")) {
         info.innerHTML = "<h5>Type</h5>";
-        value.innerHTML = this.type;
+        value.innerHTML = this.type.toUpperCase();
       } else if (info.innerHTML.includes("Range")) {
         info.innerHTML = "<h5>Range</h5>";
         value.innerHTML = this.range;
@@ -1046,9 +1017,8 @@ class Game {
     tt = new Game();
   }
 
-  
-  // stepTimeout() { 
-    // TODO maybe
+  // stepTimeout() {
+  // TODO maybe
   // }
 
   run() {
