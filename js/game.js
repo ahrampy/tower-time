@@ -705,11 +705,42 @@ class Game {
         );
       }
     }
-
+    this.initPosts();
     this.initBlocks();
   }
 
+  initPosts() {
+    this.start = this.grid[Math.floor(Math.random() * 1) + 1][
+      Math.floor(Math.random() * 10) + 1
+    ];
+    this.goal = this.grid[Math.floor(Math.random() * 5) + 15][
+      Math.floor(Math.random() * 12) + 1
+    ];
+    this.start.static = true;
+    this.goal.static = true;
+    this.goal.value = 0;
+  }
+
   initBlocks() {
+    this.setBlocks();
+    for (let i = 0; i < this.numBlocks; i++) {
+      const randRow = Math.floor(Math.random() * 20);
+      const randCol = Math.floor(Math.random() * 13);
+      const cell = this.grid[randRow][randCol];
+      if (cell !== this.start && cell !== this.goal) {
+        const rock = new Image();
+        rock.src = `/images/rocks/rock-${Math.ceil(Math.random() * 3)}.png`;
+        cell.occupied = true;
+        cell.static = true;
+        cell.img = rock;
+        cell.angle = Math.random();
+      } else {
+        i--;
+      }
+    }
+  }
+
+  setBlocks() {
     const wallImg = new Image();
     wallImg.src = "/images/tower-wall.png";
 
@@ -722,30 +753,6 @@ class Game {
         cell.angle = 0;
       }
     }
-
-    for (let i = 0; i < this.numBlocks; i++) {
-      const randRow = Math.floor(Math.random() * 20);
-      const randCol = Math.floor(Math.random() * 13);
-      const cell = this.grid[randRow][randCol];
-      const rock = new Image();
-      rock.src = `/images/rocks/rock-${Math.ceil(Math.random() * 3)}.png`;
-      cell.occupied = true;
-      cell.static = true;
-      cell.img = rock;
-      cell.angle = Math.random();
-    }
-
-    this.goal = this.grid[Math.floor(Math.random() * 5) + 15][
-      Math.floor(Math.random() * 12) + 1
-    ];
-    this.start = this.grid[Math.floor(Math.random() * 1) + 1][
-      Math.floor(Math.random() * 10) + 1
-    ];
-    this.start.occupied = false;
-    // this.start.img = null;
-    this.goal.occupied = false;
-    // this.goal.img = null;
-    this.goal.value = 0;
   }
 
   loadPaths() {
@@ -834,12 +841,10 @@ class Game {
     const gridRow = Math.floor(attack.location.y / tt.cellSize);
     if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
       const cell = tt.grid[gridCol][gridRow];
-
       cell.attack(attack.damage, attack.type === "Water");
-
       for (let j = 0; j < this.creeps.length; j++) {
         if (cell === this.creeps[j].currentCell) {
-          if (attack.type != "Air") {
+          if (attack.type !== "Air") {
             attack.hit = true;
           }
         }
@@ -945,7 +950,7 @@ class Game {
       e.preventDefault();
       playButton.style.backgroundImage =
         "url('../images/splash/play-button-hover.png')";
-      setTimeout(this.handleStart(playButton), 400);
+      setTimeout(() => this.handleStart(playButton), 300);
     });
   }
 

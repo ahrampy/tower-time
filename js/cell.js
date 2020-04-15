@@ -1,7 +1,7 @@
 "use strict";
 
 class Cell {
-  constructor(grid, size, context, id, col, row, img, angle) {
+  constructor(grid, size, context, id, col, row) {
     this.id = id;
     this.grid = grid;
     this.size = size;
@@ -14,8 +14,8 @@ class Cell {
     this.size = size;
     this.col = col;
     this.row = row;
-    this.img = img;
-    this.angle = angle;
+    this.img;
+    this.angle;
 
     // path finding
     this.adjacent = [];
@@ -113,15 +113,19 @@ class Cell {
 
   renderImages() {
     if (this.static || this.occupied) {
-      const context = tt.context;
-      context.save();
-      context.translate(
-        this.location.x + this.size / 2,
-        this.location.y + this.size / 2
-      );
-      context.rotate(Math.PI / this.angle);
-      context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
-      context.restore();
+      try {
+        const context = tt.context;
+        context.save();
+        context.translate(
+          this.location.x + this.size / 2,
+          this.location.y + this.size / 2
+        );
+        context.rotate(Math.PI / this.angle);
+        context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
+        context.restore();
+      } catch (error) {
+        console.log(this);
+      }
     }
   }
 
