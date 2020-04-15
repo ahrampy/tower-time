@@ -440,7 +440,7 @@ class Game {
         attackImgPath = "images/earth/green-tower-atk-1.png";
         cost = 15;
         upgrade = 30;
-        type = "Earth";
+        type = "earth";
         range = 100;
         cooldown = 1000;
         damage = 30;
@@ -451,7 +451,7 @@ class Game {
         attackImgPath = "images/water/blue-tower-atk-1.png";
         cost = 30;
         upgrade = 60;
-        type = "Water";
+        type = "water";
         range = 120;
         cooldown = 300;
         damage = 10;
@@ -462,7 +462,7 @@ class Game {
         attackImgPath = "images/fire/red-tower-atk-1.png";
         cost = 50;
         upgrade = 100;
-        type = "Fire";
+        type = "fire";
         range = 100;
         cooldown = 200;
         damage = 20;
@@ -473,7 +473,7 @@ class Game {
         attackImgPath = "images/air/yellow-tower-atk-1.png";
         cost = 100;
         upgrade = 200;
-        type = "Air";
+        type = "air";
         range = 150;
         cooldown = 2000;
         damage = 120;
@@ -849,7 +849,7 @@ class Game {
     const gridRow = Math.floor(attack.location.y / tt.cellSize);
     if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
       const cell = tt.grid[gridCol][gridRow];
-      cell.attack(attack.damage, attack.type === "Water");
+      cell.attack(attack.damage, attack.type === "water");
       for (let j = 0; j < this.creeps.length; j++) {
         if (cell === this.creeps[j].currentCell) {
           if (attack.type !== "Air") {

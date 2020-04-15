@@ -94,60 +94,19 @@ class Tower {
     this.range += 25;
     this.speed += 2;
 
-    if (this.type === "Earth") {
-      if (this.upgradeLevel === 2) {
-        this.img = new Image();
-        this.img.src = "images/earth/earth-tower-2.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/earth/green-tower-atk-2.png";
-      } else {
-        this.img = new Image();
-        this.img.src = "images/earth/earth-tower-3.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/earth/green-tower-atk-3.png";
-      }
-    } else if (this.type === "Water") {
-      if (this.upgradeLevel === 2) {
-        this.img = new Image();
-        this.img.src = "images/water/blue-tower-2.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/water/blue-tower-atk-2.png";
-      } else {
-        this.img = new Image();
-        this.img.src = "images/water/blue-tower-3.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/water/blue-tower-atk-3.png";
-      }
-    } else if (this.type === "Fire") {
-      if (this.upgradeLevel === 2) {
-        this.img = new Image();
-        this.img.src = "images/fire/red-tower-2.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/fire/red-tower-atk-2.png";
-      } else {
-        this.img = new Image();
-        this.img.src = "images/fire/red-tower-3.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/fire/red-tower-atk-3.png";
-      }
-    } else if (this.type === "Air") {
-      // this.cooldown += 200;
-      if (this.upgradeLevel === 2) {
-        this.img = new Image();
-        this.img.src = "images/air/yellow-tower-2.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/air/yellow-tower-atk-2.png";
-      } else {
-        this.img = new Image();
-        this.img.src = "images/air/yellow-tower-3.png";
-        this.atkImg = new Image();
-        this.atkImg.src = "images/air/yellow-tower-atk-3.png";
-      }
-    }
+    this.img = new Image();
+    this.img.src = this.makeUrl("tower")
 
+    this.atkImg = new Image();
+    this.atkImg.src = this.makeUrl("attack");
+    
     if (this.upgradeLevel === 3) {
       this.canUpgrade = false;
     }
+  }
+
+  makeUrl(img) {
+    return `images/${this.type}/${this.type}-${img}-${this.upgradeLevel}.png`;
   }
 
   run() {
