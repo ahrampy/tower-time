@@ -1,16 +1,17 @@
 "use strict";
 
 class Cell {
-  constructor(game, id, col, row, img, angle) {
+  constructor(grid, size, context, id, col, row, img, angle) {
     this.id = id;
-    this.location = new Vector(col * game.cellSize, row * game.cellSize);
+    this.grid = grid
+    this.size = size
+    this.location = new Vector(col * size, row * size);
     this.center = new Vector(
-      this.location.x + game.cellSize / 2,
-      this.location.y + game.cellSize / 2
+      this.location.x + size / 2,
+      this.location.y + size / 2
     );
-    this.game = game;
-    this.context = game.context;
-    this.size = game.cellSize;
+    this.context = context;
+    this.size = size;
     this.col = col;
     this.row = row;
     this.img = img;
@@ -38,39 +39,38 @@ class Cell {
   }
 
   loadAdjacentCells() {
-    const grid = this.game.grid;
 
     //up
     if (
       this.row > 0 &&
       !this.occupied &&
-      !grid[this.col][this.row - 1].occupied
+      !this.grid[this.col][this.row - 1].occupied
     ) {
-      this.adjacent.push(grid[this.col][this.row - 1]);
+      this.adjacent.push(this.grid[this.col][this.row - 1]);
     }
     //right
     if (
-      this.col < grid.length - 1 &&
+      this.col < this.grid.length - 1 &&
       !this.occupied &&
-      !grid[this.col + 1][this.row].occupied
+      !this.grid[this.col + 1][this.row].occupied
     ) {
-      this.adjacent.push(grid[this.col + 1][this.row]);
+      this.adjacent.push(this.grid[this.col + 1][this.row]);
     }
     //down
     if (
-      this.row < grid[this.col].length - 1 &&
+      this.row < this.grid[this.col].length - 1 &&
       !this.occupied &&
-      !grid[this.col][this.row + 1].occupied
+      !this.grid[this.col][this.row + 1].occupied
     ) {
-      this.adjacent.push(grid[this.col][this.row + 1]);
+      this.adjacent.push(this.grid[this.col][this.row + 1]);
     }
     //left
     if (
       this.col > 0 &&
       !this.occupied &&
-      !grid[this.col - 1][this.row].occupied
+      !this.grid[this.col - 1][this.row].occupied
     ) {
-      this.adjacent.push(grid[this.col - 1][this.row]);
+      this.adjacent.push(this.grid[this.col - 1][this.row]);
     }
   }
 
@@ -107,8 +107,8 @@ class Cell {
       const context = tt.context;
       context.save();
       context.translate(
-        this.location.x + this.game.cellSize / 2,
-        this.location.y + this.game.cellSize / 2
+        this.location.x + this.size / 2,
+        this.location.y + this.size / 2
       );
       context.rotate(Math.PI / this.angle);
       context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);

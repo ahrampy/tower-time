@@ -695,12 +695,12 @@ class Game {
   }
 
   loadGrid() {
-    let id = 1;
+    let id = 0;
 
     for (let c = 0; c < this.numCols; c++) {
       this.grid.push([]);
       for (let r = 0; r < this.numRows; r++) {
-        this.grid[c].push(new Cell(this, id++, c, r));
+        this.grid[c].push(new Cell(this.grid, this.cellSize, this.context, id++, c, r));
       }
     }
 
