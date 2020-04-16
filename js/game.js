@@ -49,10 +49,12 @@ class Game {
     this.goal = null;
 
     // * track towers
-    this.placingTower = false;
-    this.selectedTower = null;
-    this.towersArr = [];
     this.showTowerStats = false;
+    this.placingTower = false;
+    this.towersArr = [];
+
+    // * track cells
+    this.cellsArr = [];
 
     // * increase difficulty
     this.multiplier = 1;
@@ -131,9 +133,8 @@ class Game {
     document.addEventListener("keydown", (event) => {
       if (event.keyCode === 27) {
         tt.placingTower = false;
-        if (tt.selectedTower) {
-          tt.selectedTower.selected = false;
-          tt.selectedTower = null;
+        if (tt.towersArr.length) {
+          tt.resetSelects();
         }
         if (tt.towers.length && !tt.towers[tt.towers.length - 1].placed) {
           tt.towers.splice(tt.towers.length - 1, 1);
@@ -208,39 +209,25 @@ class Game {
   }
 
   upgradeClick() {
-    if (tt.towersArr.length) {
-      tt.towersArr.forEach((tower) => {
-        if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
-          tt.bits -= tower.upgrade;
-          tt.cr -= tower.upgrade;
-          tower.handleUpgrade();
-        }
-      });
-    } else if (tt.selectedTower) {
-      const tower = tt.selectedTower;
+
+    tt.towersArr.forEach((tower, i) => {
       if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
         tt.bits -= tower.upgrade;
         tt.cr -= tower.upgrade;
         tower.handleUpgrade();
       }
-    }
+    });
   }
 
   sellClick() {
     if (tt.towersArr.length) {
       tt.towersArr.forEach((tower) => {
-        const gridCol = Math.floor(tower.location.x / tt.cellSize);
-        const gridRow = Math.floor(tower.location.y / tt.cellSize);
-
-        const cell = tt.grid[gridCol][gridRow];
-        cell.occupied = false;
-        tower.removed = true;
+        tower.deselect(false);
         tt.bits += tower.upgrade / 2;
         tt.cr += tower.upgrade / 2;
       });
 
-      tt.selectedTower = null;
-      tt.towersArr = [];
+      tt.resetSelects();
 
       tt.loadPaths();
       for (let c = 0; c < tt.numCols; c++) {
@@ -248,26 +235,6 @@ class Game {
           tt.grid[c][r].loadAdjacentCells();
         }
       }
-    } else if (tt.selectedTower) {
-      const tower = tt.selectedTower;
-
-      const gridCol = Math.floor(tower.location.x / tt.cellSize);
-      const gridRow = Math.floor(tower.location.y / tt.cellSize);
-
-      const cell = tt.grid[gridCol][gridRow];
-      cell.occupied = false;
-
-      tt.loadPaths();
-      for (let c = 0; c < tt.numCols; c++) {
-        for (let r = 0; r < tt.numRows; r++) {
-          tt.grid[c][r].loadAdjacentCells();
-        }
-      }
-
-      tower.removed = true;
-      tt.selectedTower = null;
-      tt.bits += tower.upgrade / 2;
-      tt.cr += tower.upgrade / 2;
     }
   }
 
@@ -304,6 +271,8 @@ class Game {
 
     const cell = tt.grid[gridCol][gridRow];
 
+    tt.resetSelects();
+
     if (tt.placingTower) {
       tt.checkTowerPlacement(cell);
     } else {
@@ -313,15 +282,15 @@ class Game {
           tower.location.x === cell.center.x &&
           tower.location.y === cell.center.y
         ) {
-          tower.selected = !tower.selected;
           if (tower.selected) {
-            tt.selectedTower = tower;
+            tower.deselect(true);
+          } else {
+            tower.select();
           }
         } else {
           tower.selected = false;
         }
       }
-      tt.towersArr = [];
     }
   }
 
@@ -331,7 +300,7 @@ class Game {
       tt.loadPaths();
 
       if (this.checkPaths() && this.checkRoute()) {
-        tt.placeTower(cell.center);
+        tt.placeTower(cell);
       } else {
         cell.cancel();
         tt.loadPaths();
@@ -394,13 +363,22 @@ class Game {
     }
   }
 
+  resetSelects() {
+    this.towersArr.forEach((tower) => {
+      tower.deselect(true);
+    });
+    this.towersArr = [];
+    this.cellsArr = [];
+  }
+
   selectAllTowers(type, level) {
-    tt.towersArr = [];
+    tt.resetSelects();
     for (let i = 0; i < tt.towers.length; i++) {
       let tower = tt.towers[i];
       if (tower.type === type && tower.level === level) {
-        tt.towersArr.push(tower);
-        tower.selected = true;
+        tower.select();
+      } else {
+        tower.deselect(true);
       }
     }
   }
@@ -486,11 +464,6 @@ class Game {
   }
 
   tileRollOver() {
-    if (tt.selectedTower) {
-      tt.selectedTower.selected = false;
-      tt.selectedTower = null;
-    }
-
     this.showTowerStats = true;
     let towerInfoTiles = document.querySelectorAll(
       "#tower-details > .detail-tile"
@@ -535,9 +508,8 @@ class Game {
       tt.createTower(this);
       tt.currentTileDiv = this;
       tt.placingTower = true;
-      if (tt.selectedTower) {
-        tt.selectedTower.selected = false;
-        tt.selectedTower = null;
+      if (tt.towersArr) {
+        tt.resetSelects();
       }
     } else {
       const bank = document.querySelector("#info-bits");
@@ -566,9 +538,10 @@ class Game {
     this.towers.push(tower);
   }
 
-  placeTower(location) {
+  placeTower(cell) {
     const tower = tt.towers[tt.towers.length - 1];
-    tower.location = new Vector(location.x, location.y);
+    tower.cell = cell;
+    tower.location = cell.center.copy();
     this.bits -= tower.cost;
     this.cr -= tower.cost;
     tower.placed = true;
@@ -610,7 +583,8 @@ class Game {
     let towerEditButtons = document
       .querySelector("#edit-tower-buttons")
       .getElementsByClassName("edit-button");
-    if (tt.selectedTower) {
+    if (tt.towersArr.length) {
+      const tower = tt.towersArr[tt.towersArr.length - 1];
       towerEditButtons[0].style.opacity = 100;
       towerEditButtons[1].style.opacity = 100;
       for (let i = 0; i < towerInfoTiles.length; i++) {
@@ -620,38 +594,38 @@ class Game {
           info.innerHTML = "<h5>Type</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = tt.selectedTower.type.toUpperCase();
+          value.innerHTML = tower.type.toUpperCase();
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Range") != -1) {
           info.innerHTML = "<h5>Range</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = tt.selectedTower.range;
+          value.innerHTML = tower.range;
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Damage") != -1) {
           info.innerHTML = "<h5>Damage</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = tt.selectedTower.damage;
+          value.innerHTML = tower.damage;
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Cooldown") != -1) {
           info.innerHTML = "<h5>Cooldown</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = tt.selectedTower.cooldown;
+          value.innerHTML = tower.cooldown;
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Next") != -1) {
           info.innerHTML = "<h5>Next</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          if (tt.selectedTower.canUpgrade) {
-            value.innerHTML = tt.selectedTower.upgrade + " ¥";
+          if (tower.canUpgrade) {
+            value.innerHTML = tower.upgrade + " ¥";
           } else {
             value.innerHTML = "Max";
           }
           info.appendChild(value);
         }
-        if (!tt.selectedTower.canUpgrade) {
+        if (!tower.canUpgrade) {
           towerEditButtons[0].style.opacity = 0;
         }
       }
@@ -663,14 +637,25 @@ class Game {
 
   loadGrid() {
     let id = 0;
-    
+
     for (let c = 0; c < this.numCols; c++) {
       this.grid.push([]);
       for (let r = 0; r < this.numRows; r++) {
-        const img = new Image();
-        img.src = "/images/wall.png";
+        const wallImg = new Image();
+        wallImg.src = "/images/wall.png";
+        const selectImg = new Image();
+        selectImg.src = "/images/wall-selected.png";
         this.grid[c].push(
-          new Cell(id++, this.grid, this.cellSize, this.context, img, c, r)
+          new Cell(
+            id++,
+            this.grid,
+            this.cellSize,
+            this.context,
+            wallImg,
+            selectImg,
+            c,
+            r
+          )
         );
       }
     }
@@ -682,9 +667,9 @@ class Game {
     this.start = this.grid[Math.floor(Math.random() * 1) + 1][
       Math.floor(Math.random() * 10) + 1
     ];
-    const startImg = new Image()
-    startImg.src = "/images/start.png"
-    this.start.img = startImg
+    const startImg = new Image();
+    startImg.src = "/images/start.png";
+    this.start.img = startImg;
     this.start.static = true;
     this.goal = this.grid[Math.floor(Math.random() * 5) + 15][
       Math.floor(Math.random() * 12) + 1
@@ -692,7 +677,7 @@ class Game {
     this.goal.value = 0;
     const goalImg = new Image();
     goalImg.src = "/images/goal.png";
-    this.goal.img = goalImg
+    this.goal.img = goalImg;
     this.goal.static = true;
   }
 
@@ -1002,10 +987,6 @@ class Game {
     tt = new Game();
   }
 
-  // stepTimeout() {
-  // TODO maybe
-  // }
-
   run() {
     this.updateInfo();
     this.checkStats();
@@ -1018,6 +999,9 @@ class Game {
       for (let c = 0; c < this.numCols; c++) {
         for (let r = 0; r < this.numRows; r++) this.grid[c][r].run();
       }
+      for (let i = 0; i < this.cellsArr.length; i++) {
+        this.cellsArr[i].run();
+      }
       for (let i = 0; i < this.towers.length; i++) {
         let tower = this.towers[i];
         if (!tower.removed) {
@@ -1025,6 +1009,9 @@ class Game {
         } else {
           this.towers.splice(i, 1);
         }
+      }
+      for (let i = 0; i < this.towersArr.length; i++) {
+        this.towersArr[i].run();
       }
       for (let i = 0; i < this.creeps.length; i++) {
         let creep = this.creeps[i];

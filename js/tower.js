@@ -27,6 +27,7 @@ class Tower {
     this.speed = speed;
 
     // location
+    this.cell = null;
     this.location = new Vector(0, 0);
 
     // attack time
@@ -108,6 +109,23 @@ class Tower {
     }
   }
 
+  select() {
+    this.selected = true;
+    tt.towersArr.push(this);
+    this.cell.selected = true;
+    tt.cellsArr.push(this.cell);
+  }
+
+  deselect(present) {
+    this.selected = false;
+    this.cell.selected = false;
+
+    if (!present) {
+      this.removed = true;
+      this.cell.occupied = false;
+    }
+  }
+
   run() {
     this.update();
     this.render();
@@ -139,7 +157,11 @@ class Tower {
       }
       this.context.translate(this.location.x, this.location.y);
       this.context.rotate(this.angle);
-      this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
+      this.context.drawImage(
+        this.img,
+        -this.img.width / 2,
+        -this.img.height / 2
+      );
     }
 
     this.context.restore();

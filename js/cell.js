@@ -1,7 +1,7 @@
 "use strict";
 
 class Cell {
-  constructor(id, grid, size, context, img, col, row) {
+  constructor(id, grid, size, context, wallImg, selectImg, col, row) {
     this.id = id;
     this.grid = grid;
     this.size = size;
@@ -11,9 +11,13 @@ class Cell {
       this.location.y + this.size / 2
     );
     this.context = context;
-    this.img = img;
     this.col = col;
     this.row = row;
+
+    // images
+    this.wallImg = wallImg;
+    this.selectImg = selectImg;
+    this.img = this.wallImg;
 
     // path finding
     this.adjacent = [];
@@ -25,6 +29,7 @@ class Cell {
     this.static = false;
     this.occupied = false;
     this.attacked = false;
+    this.selected = false;
 
     // manage attack state
     this.attackDamage = null;
@@ -135,7 +140,7 @@ class Cell {
     );
     // this.context.strokeStyle = "#333333"
     // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
-    
+
     // this.context.fillStyle = "#333333"
     // this.context.fillText(
     //   this.value,
@@ -145,6 +150,7 @@ class Cell {
   }
 
   renderImage() {
+    if (!this.static) this.img = this.selected ? this.selectImg : this.wallImg; 
     this.context.save();
     this.context.translate(this.center.x, this.center.y);
     this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
