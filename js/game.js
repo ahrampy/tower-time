@@ -49,7 +49,7 @@ class Game {
     this.goal = null;
 
     // * track towers
-    this.showTowerStats = false;
+    this.showTowerDivInfo = null;
     this.placingTower = false;
     this.towersArr = [];
 
@@ -209,7 +209,6 @@ class Game {
   }
 
   upgradeClick() {
-
     tt.towersArr.forEach((tower, i) => {
       if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
         tt.bits -= tower.upgrade;
@@ -464,38 +463,11 @@ class Game {
   }
 
   tileRollOver() {
-    this.showTowerStats = true;
-    let towerInfoTiles = document.querySelectorAll(
-      "#tower-details > .detail-tile"
-    );
-    for (let i = 0; i < towerInfoTiles.length; i++) {
-      const info = towerInfoTiles[i];
-      const value = document.createElement("p");
-      value.style.fontSize = "10pt";
-
-      if (info.innerHTML.includes("Type")) {
-        info.innerHTML = "<h5>Type</h5>";
-        value.innerHTML = this.type.toUpperCase();
-      } else if (info.innerHTML.includes("Range")) {
-        info.innerHTML = "<h5>Range</h5>";
-        value.innerHTML = this.range;
-      } else if (info.innerHTML.includes("Damage")) {
-        info.innerHTML = "<h5>Damage</h5>";
-        value.innerHTML = this.damage;
-      } else if (info.innerHTML.includes("Cooldown")) {
-        info.innerHTML = "<h5>Cooldown</h5>";
-        value.innerHTML = this.cooldown;
-      } else if (info.innerHTML.includes("Next")) {
-        info.innerHTML = "<h5>Next</h5>";
-        value.innerHTML = this.upgrade + " ¥";
-      }
-
-      info.appendChild(value);
-    }
+    tt.showTowerDivInfo = this;
   }
 
   tileRollOut() {
-    this.showTowerStats = false;
+    tt.showTowerDivInfo = null;
   }
 
   tileClicked() {
@@ -552,7 +524,6 @@ class Game {
     let infoTiles = document.querySelectorAll("#info > .info-tile");
     for (let i = 0; i < infoTiles.length; i++) {
       let info = infoTiles[i];
-      const text = info.innerHTML;
       const value = document.createElement("p");
       value.style.fontSize = "10pt";
 
@@ -577,61 +548,72 @@ class Game {
   }
 
   showTowerInfo() {
-    let towerInfoTiles = document.querySelectorAll(
-      "#tower-details > .detail-tile"
-    );
-    let towerEditButtons = document
-      .querySelector("#edit-tower-buttons")
-      .getElementsByClassName("edit-button");
-    if (tt.towersArr.length) {
-      const tower = tt.towersArr[tt.towersArr.length - 1];
-      towerEditButtons[0].style.opacity = 100;
-      towerEditButtons[1].style.opacity = 100;
-      for (let i = 0; i < towerInfoTiles.length; i++) {
-        let info = towerInfoTiles[i];
+    let tower, div, obj;
 
-        if (info.innerHTML.indexOf("Type") != -1) {
-          info.innerHTML = "<h5>Type</h5>";
-          const value = document.createElement("p");
-          value.style.fontSize = "10pt";
-          value.innerHTML = tower.type.toUpperCase();
-          info.appendChild(value);
-        } else if (info.innerHTML.indexOf("Range") != -1) {
-          info.innerHTML = "<h5>Range</h5>";
-          const value = document.createElement("p");
-          value.style.fontSize = "10pt";
-          value.innerHTML = tower.range;
-          info.appendChild(value);
-        } else if (info.innerHTML.indexOf("Damage") != -1) {
-          info.innerHTML = "<h5>Damage</h5>";
-          const value = document.createElement("p");
-          value.style.fontSize = "10pt";
-          value.innerHTML = tower.damage;
-          info.appendChild(value);
-        } else if (info.innerHTML.indexOf("Cooldown") != -1) {
-          info.innerHTML = "<h5>Cooldown</h5>";
-          const value = document.createElement("p");
-          value.style.fontSize = "10pt";
-          value.innerHTML = tower.cooldown;
-          info.appendChild(value);
-        } else if (info.innerHTML.indexOf("Next") != -1) {
-          info.innerHTML = "<h5>Next</h5>";
-          const value = document.createElement("p");
-          value.style.fontSize = "10pt";
-          if (tower.canUpgrade) {
-            value.innerHTML = tower.upgrade + " ¥";
-          } else {
-            value.innerHTML = "Max";
-          }
-          info.appendChild(value);
-        }
-        if (!tower.canUpgrade) {
-          towerEditButtons[0].style.opacity = 0;
-        }
-      }
+    if (tt.showTowerDivInfo) {
+      tower = tt.showTowerDivInfo;
+      div = true;
+    } else if (tt.towersArr.length) {
+      tower = tt.towersArr[tt.towersArr.length - 1];
+      obj = true;
+    }
+
+    let towerEditButtons = document.querySelectorAll(
+      "#edit-tower-buttons > .edit-button"
+    );
+
+    if (obj) {
+      towerEditButtons[0].style.opacity = tower.canUpgrade ? 100 : 0;
+      towerEditButtons[1].style.opacity = 100;
     } else {
       towerEditButtons[0].style.opacity = 0;
       towerEditButtons[1].style.opacity = 0;
+    }
+
+    if (!tower) return;
+
+    let towerInfoTiles = document.querySelectorAll(
+      "#tower-details > .detail-tile"
+    );
+
+    for (let i = 0; i < towerInfoTiles.length; i++) {
+      let info = towerInfoTiles[i];
+
+      if (info.innerHTML.indexOf("Type") != -1) {
+        info.innerHTML = "<h5>Type</h5>";
+        const value = document.createElement("p");
+        value.style.fontSize = "10pt";
+        value.innerHTML = tower.type.toUpperCase();
+        info.appendChild(value);
+      } else if (info.innerHTML.indexOf("Range") != -1) {
+        info.innerHTML = "<h5>Range</h5>";
+        const value = document.createElement("p");
+        value.style.fontSize = "10pt";
+        value.innerHTML = tower.range;
+        info.appendChild(value);
+      } else if (info.innerHTML.indexOf("Damage") != -1) {
+        info.innerHTML = "<h5>Damage</h5>";
+        const value = document.createElement("p");
+        value.style.fontSize = "10pt";
+        value.innerHTML = tower.damage;
+        info.appendChild(value);
+      } else if (info.innerHTML.indexOf("Cooldown") != -1) {
+        info.innerHTML = "<h5>Cooldown</h5>";
+        const value = document.createElement("p");
+        value.style.fontSize = "10pt";
+        value.innerHTML = tower.cooldown;
+        info.appendChild(value);
+      } else if (info.innerHTML.indexOf("Next") != -1) {
+        info.innerHTML = "<h5>Next</h5>";
+        const value = document.createElement("p");
+        value.style.fontSize = "10pt";
+        if (tower.canUpgrade || tt.showTowerDivInfo) {
+          value.innerHTML = tower.upgrade + " ¥";
+        } else {
+          value.innerHTML = "Max";
+        }
+        info.appendChild(value);
+      }
     }
   }
 
