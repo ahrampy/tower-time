@@ -20,61 +20,27 @@ function animate() {
 
 class Game {
   constructor() {
-    // game objects
+    // * add canvas
+    this.canvas = document.querySelector("#game-canvas");
+    this.context = this.canvas.getContext("2d");
+
+    // * game objects
     this.grid = [];
     this.towers = [];
     this.attacks = [];
 
-    // creep management
+    // * creep management
     this.creeps = [];
     this.stages = {};
 
-    // game stats
+    // * game stats
     this.lives = 20;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
     this.gameOver = false;
 
-    // increase difficulty
-    this.multiplier = 1;
-    this.creepHealth = this.wave * 400 * this.multiplier;
-
-    // canvas handlers
-    this.canvas = document.querySelector("#game-canvas");
-    this.canvas.addEventListener(
-      "mousemove",
-      this.handleCanvasMouseMoved,
-      false
-    );
-    this.canvas.addEventListener(
-      "mouseover",
-      this.handleCanvasMouseOver,
-      false
-    );
-    this.canvas.addEventListener("mouseout", this.handleCanvasMouseOut, false);
-    this.canvas.addEventListener("click", this.handleCanvasMouseClicked, false);
-    this.canvas.addEventListener(
-      "dblclick",
-      this.handleCanvasMouseDoubleClicked,
-      false
-    );
-    this.context = this.canvas.getContext("2d");
-
-    // init
-    this.handleGameStart();
-    this.gameStarted = false;
-
-    // music
-    // this.handleSoundButton();
-    // this.muted = false;
-
-    // auto send waves
-    this.handleAutoWaveButton();
-    this.autoWave = false;
-    this.sendingWave = false;
-
-    // grid specs
+    // * grid specs
     this.numBlocks = 40;
     this.cellSize = this.mobile ? 20 : 40;
     this.numCols = 20;
@@ -82,31 +48,53 @@ class Game {
     this.start = null;
     this.goal = null;
 
-    // load buttons
-    this.waveButton = document.querySelector("#wave-button");
-    this.tileDivs = this.createTiles();
-    this.handleTileCallbacks(this.tileDivs);
-    this.handleStartClick();
-    this.handleEditClicks();
-    this.handleKeyCallbacks();
+    // * track towers
+    this.placingTower = false;
+    this.selectedTower = null;
+    this.towersArr = [];
+    this.showTowerStats = false;
 
-    // Dijkstra's
+    // * increase difficulty
+    this.multiplier = 1;
+    this.creepHealth = this.wave * 400 * this.multiplier;
+
+    // * auto wave
+    this.autoWave = false;
+    this.sendingWave = false;
+
+    // * pathing
     this.validated = false;
     this.loadGrid();
     this.loadPaths();
 
-    // track towers
-    this.placingTower = false;
-    this.selectedTower = null;
-    this.towersArr = [];
+    // * canvas handlers
+    this.canvas.addEventListener("mousemove", this.handleCanvasMove, false);
+    this.canvas.addEventListener("mouseover", this.handleCanvasOver, false);
+    this.canvas.addEventListener("mouseout", this.handleCanvasOut, false);
+    this.canvas.addEventListener("click", this.handleCanvasClick, false);
+    this.canvas.addEventListener("dblclick", this.handleCanvasDblClick, false);
 
-    // show tower tile info
-    this.showTowerStats = false;
+    // * load buttons
+    this.waveButton = document.querySelector("#wave-button");
+    this.tileDivs = this.createTiles();
+    this.handleTileListeners(this.tileDivs);
+    this.handleStartClick();
+    this.handleEditClicks();
+    this.handleAutoWaveButton();
+    this.handleKeyListeners();
 
-    // anti-cheat
+    // * music
+    // this.handleSoundButton();
+    // this.muted = false;
+
+    // * trackers
     this.cr = 220;
     this.c = 0;
     this.f;
+
+    // * init
+    this.handleGameStart();
+    this.gameStarted = false;
   }
 
   handleStartClick() {
@@ -139,7 +127,7 @@ class Game {
     tt.loadCreeps(20);
   }
 
-  handleKeyCallbacks() {
+  handleKeyListeners() {
     document.addEventListener("keydown", (event) => {
       if (event.keyCode === 27) {
         tt.placingTower = false;
@@ -283,7 +271,7 @@ class Game {
     }
   }
 
-  handleCanvasMouseMoved(event) {
+  handleCanvasMove(event) {
     this.mouseX = event.offsetX;
     this.mouseY = event.offsetY;
     const towers = tt.towers;
@@ -295,19 +283,19 @@ class Game {
     }
   }
 
-  handleCanvasMouseOver() {
+  handleCanvasOver() {
     if (tt.towers.length < 1) return;
     tt.towers[tt.towers.length - 1].visible = true;
   }
 
-  handleCanvasMouseOut() {
+  handleCanvasOut() {
     if (tt.placingTower) {
       tt.placingTower = false;
       tt.towers.splice(tt.towers.length - 1, 1);
     }
   }
 
-  handleCanvasMouseClicked(event) {
+  handleCanvasClick(event) {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
@@ -385,7 +373,7 @@ class Game {
     return false;
   }
 
-  handleCanvasMouseDoubleClicked(event) {
+  handleCanvasDblClick(event) {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
@@ -400,7 +388,7 @@ class Game {
         tower.location.x === cell.center.x &&
         tower.location.y === cell.center.y
       ) {
-        tt.selectAllTowers(tower.type, tower.upgradeLevel);
+        tt.selectAllTowers(tower.type, tower.level);
         return;
       }
     }
@@ -410,7 +398,7 @@ class Game {
     tt.towersArr = [];
     for (let i = 0; i < tt.towers.length; i++) {
       let tower = tt.towers[i];
-      if (tower.type === type && tower.upgradeLevel === level) {
+      if (tower.type === type && tower.level === level) {
         tt.towersArr.push(tower);
         tower.selected = true;
       }
@@ -488,7 +476,7 @@ class Game {
     return div;
   }
 
-  handleTileCallbacks(tiles) {
+  handleTileListeners(tiles) {
     for (let i = 0; i < tiles.length; i++) {
       const tileDiv = tiles[i];
       tileDiv.addEventListener("mouseover", this.tileRollOver, false);
@@ -564,6 +552,7 @@ class Game {
 
   createTower(tileDiv) {
     const tower = new Tower(
+      tt.context,
       tileDiv.cost,
       tileDiv.upgrade,
       tileDiv.tileDivImg,
@@ -615,8 +604,9 @@ class Game {
   }
 
   showTowerInfo() {
-    let towerInfoTiles = document
-      .querySelectorAll("#tower-details > .detail-tile")
+    let towerInfoTiles = document.querySelectorAll(
+      "#tower-details > .detail-tile"
+    );
     let towerEditButtons = document
       .querySelector("#edit-tower-buttons")
       .getElementsByClassName("edit-button");
@@ -673,12 +663,14 @@ class Game {
 
   loadGrid() {
     let id = 0;
-
+    
     for (let c = 0; c < this.numCols; c++) {
       this.grid.push([]);
       for (let r = 0; r < this.numRows; r++) {
+        const img = new Image();
+        img.src = "/images/wall.png";
         this.grid[c].push(
-          new Cell(this.grid, this.cellSize, this.context, id++, c, r)
+          new Cell(id++, this.grid, this.cellSize, this.context, img, c, r)
         );
       }
     }
@@ -693,8 +685,6 @@ class Game {
     this.goal = this.grid[Math.floor(Math.random() * 5) + 15][
       Math.floor(Math.random() * 12) + 1
     ];
-    this.start.static = true;
-    this.goal.static = true;
     this.goal.value = 0;
   }
 
@@ -704,13 +694,8 @@ class Game {
       const randRow = Math.floor(Math.random() * 20);
       const randCol = Math.floor(Math.random() * 13);
       const cell = this.grid[randRow][randCol];
-      if (cell !== this.start && cell !== this.goal) {
-        const rock = new Image();
-        rock.src = `/images/rocks/rock-${Math.ceil(Math.random() * 3)}.png`;
+      if (cell !== this.start && cell !== this.goal && !cell.occupied) {
         cell.occupied = true;
-        cell.static = true;
-        cell.img = rock;
-        cell.angle = Math.random();
       } else {
         i--;
       }
@@ -718,16 +703,10 @@ class Game {
   }
 
   setBlocks() {
-    const wallImg = new Image();
-    wallImg.src = "/images/tower-wall-filled.png";
-
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++) {
         const cell = this.grid[c][r];
         cell.occupied = false;
-        cell.static = false;
-        cell.img = wallImg;
-        cell.angle = 0;
       }
     }
   }
@@ -821,9 +800,7 @@ class Game {
       cell.attack(attack.damage, attack.type === "water");
       for (let j = 0; j < this.creeps.length; j++) {
         if (cell === this.creeps[j].currentCell) {
-          if (attack.type !== "Air") {
-            attack.hit = true;
-          }
+          if (attack.type !== "air") attack.hit = true;
         }
       }
     }
@@ -995,8 +972,10 @@ class Game {
     const newCanvas = document.createElement("canvas");
     const playButton = document.querySelector("#play-button");
     const waveButton = document.querySelector("#wave-button");
+    const autoWaveButton = document.querySelector("input[name=auto-wave]");
     const towers = document.querySelector("#towers");
     waveButton.removeEventListener("click", tt.newGame, false);
+    autoWaveButton.checked = false;
     newCanvas.id = "game-canvas";
     newCanvas.width = 800;
     newCanvas.height = 520;

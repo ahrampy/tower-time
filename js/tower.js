@@ -2,6 +2,7 @@
 
 class Tower {
   constructor(
+    context,
     cost,
     upgrade,
     img,
@@ -32,6 +33,7 @@ class Tower {
     this.lastFired = Date.now();
 
     // direction
+    this.context = context;
     this.angle = 0;
     this.target = null;
     this.follow = true;
@@ -42,9 +44,9 @@ class Tower {
     // init
     this.level = 1;
     this.canUpgrade = true;
-    this.removed = false;
     this.visible = false;
     this.placed = false;
+    this.removed = false;
   }
 
   findTarget() {
@@ -77,6 +79,7 @@ class Tower {
       const attackLocation = new Vector(this.location.x, this.location.y);
       const attack = new Attack(
         attackLocation,
+        this.context,
         this.angle,
         this.atkImg,
         this.type,
@@ -99,7 +102,7 @@ class Tower {
 
     this.atkImg = new Image();
     this.atkImg.src = tt.makeUrl(this.type, true, this.level);
-    
+
     if (this.level === 3) {
       this.canUpgrade = false;
     }
@@ -119,26 +122,26 @@ class Tower {
   }
 
   render() {
-    const context = tt.context;
-    context.save();
+    this.context.save();
     if (this.visible) {
-      if (!this.placed || this.selected) {
-        context.beginPath();
-        context.arc(
+      if (this.selected || !this.placed) {
+        this.context.beginPath();
+        this.context.arc(
           this.location.x,
           this.location.y,
           this.range,
           0,
           Math.PI * 2
         );
-        context.fillStyle = "rgba(222, 255, 252, 0.3)";
-        context.fill();
+        this.context.strokeStyle = "rgba(222, 255, 252, 0.4)";
+        this.context.lineWidth = 4;
+        this.context.stroke();
       }
-      context.translate(this.location.x, this.location.y);
-      context.rotate(this.angle);
-      context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
+      this.context.translate(this.location.x, this.location.y);
+      this.context.rotate(this.angle);
+      this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
     }
 
-    context.restore();
+    this.context.restore();
   }
 }

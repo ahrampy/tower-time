@@ -1,21 +1,19 @@
 "use strict";
 
 class Cell {
-  constructor(grid, size, context, id, col, row) {
+  constructor(id,grid, size, context, img, col, row) {
     this.id = id;
     this.grid = grid;
     this.size = size;
-    this.location = new Vector(col * size, row * size);
+    this.location = new Vector(col * this.size, row * this.size);
     this.center = new Vector(
-      this.location.x + size / 2,
-      this.location.y + size / 2
+      this.location.x + this.size / 2,
+      this.location.y + this.size / 2
     );
     this.context = context;
-    this.size = size;
+    this.img = img;
     this.col = col;
     this.row = row;
-    this.img;
-    this.angle;
 
     // path finding
     this.adjacent = [];
@@ -24,7 +22,6 @@ class Cell {
     this.smallestAdjacentIndex = 0;
 
     // manage state
-    this.static = false;
     this.occupied = false;
     this.attacked = false;
 
@@ -92,7 +89,7 @@ class Cell {
   }
 
   cancel() {
-    this.occupied = false
+    this.occupied = false;
     this.cancelled = true;
     this.cancTimeout = 3;
   }
@@ -113,20 +110,15 @@ class Cell {
   }
 
   renderImages() {
-    if (this.static || this.occupied) {
-      try {
-        const context = tt.context;
-        context.save();
-        context.translate(
-          this.location.x + this.size / 2,
-          this.location.y + this.size / 2
-        );
-        context.rotate(Math.PI / this.angle);
-        context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
-        context.restore();
-      } catch (error) {
-        console.log(this);
-      }
+    if (this.occupied) {
+      this.context.save();
+      this.context.translate(this.center.x, this.center.y);
+      this.context.drawImage(
+        this.img,
+        -this.img.width / 2,
+        -this.img.height / 2
+      );
+      this.context.restore();
     }
   }
 

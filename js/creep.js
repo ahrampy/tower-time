@@ -136,7 +136,9 @@ class Creep {
     const context = tt.context;
     context.beginPath();
     context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
-    if (this.slowed) {
+    if (this.health === this.maxHealth) {
+      context.fillStyle = this.color;
+    } else if (this.slowed) {
       context.fillStyle = "#49E2FA";
     } else if (
       this.health < this.maxHealth &&
@@ -155,8 +157,6 @@ class Creep {
       context.fillStyle = "rgba(245, 147, 66)";
     } else if (this.health <= this.maxHealth * 0.25) {
       context.fillStyle = "rgba(245, 75, 66)";
-    } else {
-      context.fillStyle = this.color;
     }
     context.fill();
   }

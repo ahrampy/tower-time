@@ -1,11 +1,12 @@
 "use strict";
 
 class Attack {
-  constructor(location, angle, atkImg, type, damage, speed) {
+  constructor(location, context, angle, img, type, damage, speed) {
     this.location = location.copy();
+    this.context = context;
     this.angle = angle;
     this.radius = 10;
-    this.atkImg = atkImg;
+    this.img = img;
     this.type = type;
     this.speed = 5;
     this.hit = false;
@@ -32,17 +33,12 @@ class Attack {
   }
 
   render() {
-    const context = tt.context;
-    context.save();
+    this.context.save();
 
-    context.translate(this.location.x, this.location.y);
-    context.rotate(this.angle);
-    context.drawImage(
-      this.atkImg,
-      -this.atkImg.width / 2,
-      -this.atkImg.height / 2
-    );
+    this.context.translate(this.location.x, this.location.y);
+    this.context.rotate(this.angle);
+    this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
 
-    context.restore();
+    this.context.restore();
   }
 }
