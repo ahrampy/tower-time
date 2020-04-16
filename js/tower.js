@@ -40,7 +40,7 @@ class Tower {
     this.selected = false;
 
     // init
-    this.upgradeLevel = 1;
+    this.level = 1;
     this.canUpgrade = true;
     this.removed = false;
     this.visible = false;
@@ -88,25 +88,21 @@ class Tower {
   }
 
   handleUpgrade() {
-    this.upgradeLevel += 1;
+    this.level += 1;
     this.upgrade *= 2;
     this.damage = Math.ceil((this.damage * 2.5) / 5) * 5;
     this.range += 25;
     this.speed += 2;
 
     this.img = new Image();
-    this.img.src = this.makeUrl("tower")
+    this.img.src = tt.makeUrl(this.type, false, this.level);
 
     this.atkImg = new Image();
-    this.atkImg.src = this.makeUrl("attack");
+    this.atkImg.src = tt.makeUrl(this.type, true, this.level);
     
-    if (this.upgradeLevel === 3) {
+    if (this.level === 3) {
       this.canUpgrade = false;
     }
-  }
-
-  makeUrl(img) {
-    return `images/${this.type}/${this.type}-${img}-${this.upgradeLevel}.png`;
   }
 
   run() {

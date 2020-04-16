@@ -361,7 +361,6 @@ class Game {
             continue;
           } else if (currCell === tt.goal) {
             return true;
-            break;
           }
           route.push(currCell.smallestAdjacent);
         }
@@ -421,24 +420,23 @@ class Game {
   createTiles() {
     const tileDivs = [];
     for (let i = 0; i < 4; i++) {
-      let tileDiv = this.towerStats(i);
-      let tileImgPath, boardImgPath, attackImgPath;
+      let tileDiv = this.getTowerStats(i);
+      let imgPath, attackImgPath;
 
-      tileImgPath = this.makeUrl(tileDiv.type);
-      boardImgPath = this.makeUrl(tileDiv.type);
-      attackImgPath = this.makeUrl(tileDiv.type, true);
+      imgPath = this.makeUrl(tileDiv.type, false, 1);
+      attackImgPath = this.makeUrl(tileDiv.type, true, 1);
 
       tileDiv.tileDivImg = new Image();
-      tileDiv.tileDivImg.src = boardImgPath;
+      tileDiv.tileDivImg.src = imgPath;
 
-      tileDiv.tileDivAttackImg = new Image();
-      tileDiv.tileDivAttackImg.src = attackImgPath;
+      tileDiv.atkImg = new Image();
+      tileDiv.atkImg.src = attackImgPath;
 
       document.querySelector("#towers").appendChild(tileDiv);
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
-      tileImg.src = tileImgPath;
+      tileImg.src = imgPath;
       tileDiv.appendChild(tileImg);
 
       const towerName = document.createElement("p");
@@ -448,11 +446,11 @@ class Game {
     return tileDivs;
   }
 
-  makeUrl(name, atk) {
-    return `images/${name}/${name}-tower-${atk ? "atk-" : ""}1.png`;
+  makeUrl(name, atk, lvl) {
+    return `images/towers/${name}/${name}-tower-${atk ? "atk-" : ""}${lvl}.png`;
   }
 
-  towerStats(i) {
+  getTowerStats(i) {
     const div = document.createElement("div");
     if (i === 0) {
       div.type = "earth";
@@ -569,7 +567,7 @@ class Game {
       tileDiv.cost,
       tileDiv.upgrade,
       tileDiv.tileDivImg,
-      tileDiv.tileDivAttackImg,
+      tileDiv.atkImg,
       tileDiv.type,
       tileDiv.range,
       tileDiv.damage,
@@ -592,22 +590,23 @@ class Game {
     let infoTiles = document.querySelectorAll("#info > .info-tile");
     for (let i = 0; i < infoTiles.length; i++) {
       let info = infoTiles[i];
+      const text = info.innerHTML;
       const value = document.createElement("p");
       value.style.fontSize = "10pt";
 
-      if (info.innerHTML.indexOf("Bank") != -1) {
+      if (info.innerHTML.includes("Bank")) {
         info.innerHTML = "<h4>Bank</h4> <br/>";
         value.innerHTML = this.bits + "	¥";
-      } else if (info.innerHTML.indexOf("Lives") != -1) {
+      } else if (info.innerHTML.includes("Lives")) {
         info.innerHTML = "<h4>Lives</h4> <br/>";
         value.innerHTML = this.lives;
-      } else if (info.innerHTML.indexOf("Score") != -1) {
+      } else if (info.innerHTML.includes("Score")) {
         info.innerHTML = "<h4>Score</h4> <br/>";
         value.innerHTML = this.score;
-      } else if (info.innerHTML.indexOf("Wave") != -1) {
+      } else if (info.innerHTML.includes("Wave")) {
         info.innerHTML = "<h4>Wave</h4> <br/>";
         value.innerHTML = this.wave;
-      } else if (info.innerHTML.indexOf("Enemy") != -1) {
+      } else if (info.innerHTML.includes("Enemy")) {
         info.innerHTML = "<h4>Enemy</h4> <br/>";
         value.innerHTML = this.creepHealth;
       }
@@ -617,8 +616,7 @@ class Game {
 
   showTowerInfo() {
     let towerInfoTiles = document
-      .querySelector("#tower-details")
-      .getElementsByClassName("detail-tile");
+      .querySelectorAll("#tower-details > .detail-tile")
     let towerEditButtons = document
       .querySelector("#edit-tower-buttons")
       .getElementsByClassName("edit-button");
@@ -632,7 +630,7 @@ class Game {
           info.innerHTML = "<h5>Type</h5>";
           const value = document.createElement("p");
           value.style.fontSize = "10pt";
-          value.innerHTML = tt.selectedTower.type;
+          value.innerHTML = tt.selectedTower.type.toUpperCase();
           info.appendChild(value);
         } else if (info.innerHTML.indexOf("Range") != -1) {
           info.innerHTML = "<h5>Range</h5>";
