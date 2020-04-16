@@ -981,7 +981,7 @@ class Game {
     this.context.textAlign = "center";
     this.context.fillText(`Final Score: ${this.score}`, 400, 280);
     this.context.font = "25px Trebuchet MS";
-    this.lives = 0;
+    // this.lives = 0;
     this.gameOver = true;
     const waveButton = document.querySelector("#wave-button");
     waveButton.innerText = "New Game";
