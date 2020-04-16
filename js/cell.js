@@ -135,13 +135,13 @@ class Cell {
     );
     // this.context.strokeStyle = "#333333"
     // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
-    // this.context.font = "15px Aerial"
-    this.context.fillStyle = "#333333"
-    this.context.fillText(
-      this.value,
-      this.location.x + this.size / 2,
-      this.location.y + this.size / 2
-    );
+    
+    // this.context.fillStyle = "#333333"
+    // this.context.fillText(
+    //   this.value,
+    //   this.location.x + this.size / 2,
+    //   this.location.y + this.size / 2
+    // );
   }
 
   renderImage() {
