@@ -682,14 +682,22 @@ class Game {
     this.start = this.grid[Math.floor(Math.random() * 1) + 1][
       Math.floor(Math.random() * 10) + 1
     ];
+    const startImg = new Image()
+    startImg.src = "/images/start.png"
+    this.start.img = startImg
+    this.start.static = true;
     this.goal = this.grid[Math.floor(Math.random() * 5) + 15][
       Math.floor(Math.random() * 12) + 1
     ];
     this.goal.value = 0;
+    const goalImg = new Image();
+    goalImg.src = "/images/goal.png";
+    this.goal.img = goalImg
+    this.goal.static = true;
   }
 
   initBlocks() {
-    this.setBlocks();
+    this.resetBlocks();
     for (let i = 0; i < this.numBlocks; i++) {
       const randRow = Math.floor(Math.random() * 20);
       const randCol = Math.floor(Math.random() * 13);
@@ -702,7 +710,7 @@ class Game {
     }
   }
 
-  setBlocks() {
+  resetBlocks() {
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++) {
         const cell = this.grid[c][r];

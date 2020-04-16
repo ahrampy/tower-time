@@ -1,7 +1,7 @@
 "use strict";
 
 class Cell {
-  constructor(id,grid, size, context, img, col, row) {
+  constructor(id, grid, size, context, img, col, row) {
     this.id = id;
     this.grid = grid;
     this.size = size;
@@ -22,6 +22,7 @@ class Cell {
     this.smallestAdjacentIndex = 0;
 
     // manage state
+    this.static = false;
     this.occupied = false;
     this.attacked = false;
 
@@ -94,9 +95,15 @@ class Cell {
     this.cancTimeout = 3;
   }
 
+  timeout() {
+    this.cancTimeout--;
+    if (this.cancTimeout <= 0) {
+      this.cancelled = false;
+    }
+  }
+
   run() {
     this.checkAttack();
-    this.renderImages();
     this.render();
   }
 
@@ -109,30 +116,13 @@ class Cell {
     }
   }
 
-  renderImages() {
-    if (this.occupied) {
-      this.context.save();
-      this.context.translate(this.center.x, this.center.y);
-      this.context.drawImage(
-        this.img,
-        -this.img.width / 2,
-        -this.img.height / 2
-      );
-      this.context.restore();
-    }
-  }
-
   render() {
-    if (this === tt.goal) {
-      this.context.fillStyle = "rgba(184, 12, 0, 0.8)";
-    } else if (this === tt.start) {
-      this.context.fillStyle = "rgba(87, 95, 139, 0.8)";
+    if (this.occupied || this.static) {
+      this.renderImage();
+      return;
     } else if (this.cancelled) {
       this.context.fillStyle = "rgba(255, 255, 255, 0.8)";
-      this.cancTimeout--;
-      if (this.cancTimeout <= 0) {
-        this.cancelled = false;
-      }
+      this.timeout();
     } else {
       this.context.fillStyle = "rgba(150, 151, 129, 0.06)";
     }
@@ -146,7 +136,18 @@ class Cell {
     // this.context.strokeStyle = "#333333"
     // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
     // this.context.font = "15px Aerial"
-    // this.context.fillStyle = "#333333"
-    // this.context.fillText(this.value, this.location.x + 5, this.location.y + 10)
+    this.context.fillStyle = "#333333"
+    this.context.fillText(
+      this.value,
+      this.location.x + this.size / 2,
+      this.location.y + this.size / 2
+    );
+  }
+
+  renderImage() {
+    this.context.save();
+    this.context.translate(this.center.x, this.center.y);
+    this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
+    this.context.restore();
   }
 }
