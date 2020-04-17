@@ -2,17 +2,17 @@
 
 class Creep {
   constructor(location, multiplier) {
-    // movement
+    // * movement
     this.location = location;
     this.currentCell = null;
     this.velocity = new Vector(0, 0);
     this.acceleration = new Vector(0, 0);
 
-    // default
+    // * default
     this.radius = 12;
     this.color = "rgb(225, 225, 225)";
 
-    // stats
+    // * stats
     this.multiplier = multiplier;
     this.worth = 5 * this.multiplier;
     this.pointValue = 100 * this.multiplier;
@@ -21,7 +21,7 @@ class Creep {
     this.alive = true;
     this.w = this.maxHealth;
 
-    // manage slow
+    // * manage slow
     this.slowed = false;
     this.slowTimeout = 0;
   }

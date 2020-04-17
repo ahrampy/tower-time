@@ -13,11 +13,11 @@ class Tower {
     cooldown,
     speed
   ) {
-    // images
+    // * images
     this.img = img;
     this.atkImg = atkImg;
 
-    // stats
+    // * stats
     this.cost = cost;
     this.upgrade = upgrade;
     this.type = type;
@@ -26,23 +26,23 @@ class Tower {
     this.damage = damage;
     this.speed = speed;
 
-    // location
+    // * location
     this.cell = null;
     this.location = new Vector(0, 0);
 
-    // attack time
+    // * attack time
     this.lastFired = Date.now();
 
-    // direction
+    // * direction
     this.context = context;
     this.angle = 0;
     this.target = null;
     this.follow = true;
 
-    //display
+    // * display
     this.selected = false;
 
-    // init
+    // * init
     this.level = 1;
     this.canUpgrade = true;
     this.visible = false;

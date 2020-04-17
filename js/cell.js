@@ -14,35 +14,35 @@ class Cell {
     this.col = col;
     this.row = row;
 
-    // images
+    // * images
     this.wallImg = wallImg;
     this.selectImg = selectImg;
     this.img = this.wallImg;
 
-    // path finding
+    // * path finding
     this.adjacent = [];
     this.value = -1;
     this.smallestAdjacent = null;
     this.smallestAdjacentIndex = 0;
 
-    // manage state
+    // * manage state
     this.static = false;
     this.occupied = false;
     this.attacked = false;
     this.selected = false;
 
-    // manage attack state
+    // * manage attack state
     this.attackDamage = null;
     this.attackSlow = false;
     this.attackTimeout = 0;
 
-    // show invalid placement
+    // * show invalid placement
     this.cancelled = false;
     this.cancTimeout = 0;
   }
 
   loadAdjacentCells() {
-    //up
+    // * up
     if (
       this.row > 0 &&
       !this.occupied &&
@@ -50,7 +50,7 @@ class Cell {
     ) {
       this.adjacent.push(this.grid[this.col][this.row - 1]);
     }
-    //right
+    // * right
     if (
       this.col < this.grid.length - 1 &&
       !this.occupied &&
@@ -58,7 +58,7 @@ class Cell {
     ) {
       this.adjacent.push(this.grid[this.col + 1][this.row]);
     }
-    //down
+    // * down
     if (
       this.row < this.grid[this.col].length - 1 &&
       !this.occupied &&
@@ -66,7 +66,7 @@ class Cell {
     ) {
       this.adjacent.push(this.grid[this.col][this.row + 1]);
     }
-    //left
+    // * left
     if (
       this.col > 0 &&
       !this.occupied &&
