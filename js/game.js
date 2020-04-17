@@ -41,7 +41,7 @@ class Game {
     this.gameOver = false;
 
     // * grid specs
-    this.numBlocks = 40;
+    this.numBlocks = 30;
     this.cellSize = this.mobile ? 20 : 40;
     this.numCols = 20;
     this.numRows = 13;
