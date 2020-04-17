@@ -2,26 +2,26 @@
 
 window.addEventListener("load", init, false);
 
-var tt;
+var game;
 var tutorial;
 var scores;
 
 function init() {
-  tt = new Game();
+  game = new Game();
   tutorial = new Tutorial();
   scores = new Scores();
   window.setTimeout(animate, 100);
 }
 
 function animate() {
-  tt.run();
+  game.run();
   window.requestAnimationFrame(animate);
 }
 
 class Game {
   constructor() {
     // * add canvas
-    this.canvas = document.querySelector("#game-canvas");
+    this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
 
     // * game objects
@@ -104,40 +104,40 @@ class Game {
   }
 
   startClick() {
-    tt.wave += 1;
-    if (tt.wave === 1) {
+    game.wave += 1;
+    if (game.wave === 1) {
       this.innerText = "Next Wave";
       document.querySelector("#towers").classList.remove("active");
       tutorial.showInfo("start");
     }
-    tt.nextWave();
+    game.nextWave();
   }
 
   nextWave() {
-    tt.cr -= tt.bits;
-    tt.bits = Math.ceil(tt.bits / 5) * 5;
-    tt.cr += tt.bits;
-    if (tt.wave % 10 === 0) {
-      tt.multiplier += 0.5;
+    game.cr -= game.bits;
+    game.bits = Math.ceil(game.bits / 5) * 5;
+    game.cr += game.bits;
+    if (game.wave % 10 === 0) {
+      game.multiplier += 0.5;
     }
-    if (tt.wave % 30 === 0) {
-      tt.multiplier += 0.5;
+    if (game.wave % 30 === 0) {
+      game.multiplier += 0.5;
     }
-    tt.creepHealth = tt.wave * 400 * tt.multiplier;
-    tt.bits += 5 * tt.wave;
-    tt.cr += 5 * tt.wave;
-    tt.loadCreeps(20);
+    game.creepHealth = game.wave * 400 * game.multiplier;
+    game.bits += 5 * game.wave;
+    game.cr += 5 * game.wave;
+    game.loadCreeps(20);
   }
 
   handleKeyListeners() {
     document.addEventListener("keydown", (event) => {
       if (event.keyCode === 27) {
-        tt.placingTower = false;
-        if (tt.towersArr.length) {
-          tt.resetSelects();
+        game.placingTower = false;
+        if (game.towersArr.length) {
+          game.resetSelects();
         }
-        if (tt.towers.length && !tt.towers[tt.towers.length - 1].placed) {
-          tt.towers.splice(tt.towers.length - 1, 1);
+        if (game.towers.length && !game.towers[game.towers.length - 1].placed) {
+          game.towers.splice(game.towers.length - 1, 1);
         }
       } else if (event.keyCode === 49) {
         this.towerKey(0);
@@ -156,15 +156,18 @@ class Game {
   }
 
   towerKey(towerNum) {
-    tt.placingTower = false;
-    const towers = tt.towers;
+    game.placingTower = false;
+    const towers = game.towers;
     if (towers.length && !towers[towers.length - 1].placed) {
       towers.splice(towers.length - 1, 1);
     }
     this.tileDivs[towerNum].click();
     const currentTower = towers[towers.length - 1];
     if (currentTower.location.x === 0 && currentTower.location.y === 0) {
-      currentTower.location = new Vector(tt.canvas.mouseX, tt.canvas.mouseY);
+      currentTower.location = new Vector(
+        game.canvas.mouseX,
+        game.canvas.mouseY
+      );
     }
     currentTower.visible = true;
   }
@@ -175,15 +178,15 @@ class Game {
   // }
 
   // audioToggle() {
-  //   if (tt.muted) {
+  //   if (game.muted) {
   //     this.classList.add("mute-off");
   //     this.classList.remove("mute-on");
-  //     tt.muted = false;
+  //     game.muted = false;
   //     music.play();
   //   } else {
   //     this.classList.add("mute-on");
   //     this.classList.remove("mute-off");
-  //     tt.muted = true;
+  //     game.muted = true;
   //     music.stop();
   //   }
   // }
@@ -195,9 +198,9 @@ class Game {
 
   autoWaveToggle() {
     if (this.checked) {
-      tt.autoWave = true;
+      game.autoWave = true;
     } else {
-      tt.autoWave = false;
+      game.autoWave = false;
     }
   }
 
@@ -209,29 +212,29 @@ class Game {
   }
 
   upgradeClick() {
-    tt.towersArr.forEach((tower, i) => {
-      if (tower.canUpgrade && tt.bits - tower.upgrade >= 0) {
-        tt.bits -= tower.upgrade;
-        tt.cr -= tower.upgrade;
+    game.towersArr.forEach((tower, i) => {
+      if (tower.canUpgrade && game.bits - tower.upgrade >= 0) {
+        game.bits -= tower.upgrade;
+        game.cr -= tower.upgrade;
         tower.handleUpgrade();
       }
     });
   }
 
   sellClick() {
-    if (tt.towersArr.length) {
-      tt.towersArr.forEach((tower) => {
+    if (game.towersArr.length) {
+      game.towersArr.forEach((tower) => {
         tower.deselect(false);
-        tt.bits += tower.upgrade / 2;
-        tt.cr += tower.upgrade / 2;
+        game.bits += tower.upgrade / 2;
+        game.cr += tower.upgrade / 2;
       });
 
-      tt.resetSelects();
+      game.resetSelects();
 
-      tt.loadPaths();
-      for (let c = 0; c < tt.numCols; c++) {
-        for (let r = 0; r < tt.numRows; r++) {
-          tt.grid[c][r].loadAdjacentCells();
+      game.loadPaths();
+      for (let c = 0; c < game.numCols; c++) {
+        for (let r = 0; r < game.numRows; r++) {
+          game.grid[c][r].loadAdjacentCells();
         }
       }
     }
@@ -240,24 +243,24 @@ class Game {
   handleCanvasMove(event) {
     this.mouseX = event.offsetX;
     this.mouseY = event.offsetY;
-    const towers = tt.towers;
+    const towers = game.towers;
     if (towers.length < 1) return;
     const tower = towers[towers.length - 1];
-    if (!tower.placed && tt.placingTower === true) {
+    if (!tower.placed && game.placingTower === true) {
       tower.location.x = this.mouseX;
       tower.location.y = this.mouseY;
     }
   }
 
   handleCanvasOver() {
-    if (tt.towers.length < 1) return;
-    tt.towers[tt.towers.length - 1].visible = true;
+    if (game.towers.length < 1) return;
+    game.towers[game.towers.length - 1].visible = true;
   }
 
   handleCanvasOut() {
-    if (tt.placingTower) {
-      tt.placingTower = false;
-      tt.towers.splice(tt.towers.length - 1, 1);
+    if (game.placingTower) {
+      game.placingTower = false;
+      game.towers.splice(game.towers.length - 1, 1);
     }
   }
 
@@ -265,18 +268,18 @@ class Game {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
-    const gridCol = Math.floor(mouseX / tt.cellSize);
-    const gridRow = Math.floor(mouseY / tt.cellSize);
+    const gridCol = Math.floor(mouseX / game.cellSize);
+    const gridRow = Math.floor(mouseY / game.cellSize);
 
-    const cell = tt.grid[gridCol][gridRow];
+    const cell = game.grid[gridCol][gridRow];
 
-    tt.resetSelects();
+    game.resetSelects();
 
-    if (tt.placingTower) {
-      tt.checkTowerPlacement(cell);
+    if (game.placingTower) {
+      game.checkTowerPlacement(cell);
     } else {
-      for (let i = 0; i < tt.towers.length; i++) {
-        let tower = tt.towers[i];
+      for (let i = 0; i < game.towers.length; i++) {
+        let tower = game.towers[i];
         if (
           tower.location.x === cell.center.x &&
           tower.location.y === cell.center.y
@@ -294,28 +297,28 @@ class Game {
   }
 
   checkTowerPlacement(cell) {
-    if (!cell.occupied && cell !== tt.goal && cell !== tt.start) {
+    if (!cell.occupied && cell !== game.goal && cell !== game.start) {
       cell.occupied = true;
-      tt.loadPaths();
+      game.loadPaths();
 
       if (this.checkPaths() && this.checkRoute()) {
-        tt.placeTower(cell);
+        game.placeTower(cell);
       } else {
         cell.cancel();
-        tt.loadPaths();
+        game.loadPaths();
       }
     }
   }
 
   checkPaths() {
-    return tt.creeps.every((creep) => {
+    return game.creeps.every((creep) => {
       const route = [creep.currentCell];
       while (route.length) {
         const currCell = route.pop();
         if (currCell) {
           if (currCell.value === -1) {
             continue;
-          } else if (currCell === tt.goal) {
+          } else if (currCell === game.goal) {
             return true;
           }
           route.push(currCell.smallestAdjacent);
@@ -326,13 +329,13 @@ class Game {
   }
 
   checkRoute() {
-    const route = [tt.start];
+    const route = [game.start];
 
     while (route.length) {
       const cell = route.pop();
       if (cell.value === -1) {
         continue;
-      } else if (cell === tt.goal) {
+      } else if (cell === game.goal) {
         return true;
       }
       route.push(cell.smallestAdjacent);
@@ -345,18 +348,18 @@ class Game {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
-    const gridCol = Math.floor(mouseX / tt.cellSize);
-    const gridRow = Math.floor(mouseY / tt.cellSize);
+    const gridCol = Math.floor(mouseX / game.cellSize);
+    const gridRow = Math.floor(mouseY / game.cellSize);
 
-    const cell = tt.grid[gridCol][gridRow];
+    const cell = game.grid[gridCol][gridRow];
 
-    for (let i = 0; i < tt.towers.length; i++) {
-      let tower = tt.towers[i];
+    for (let i = 0; i < game.towers.length; i++) {
+      let tower = game.towers[i];
       if (
         tower.location.x === cell.center.x &&
         tower.location.y === cell.center.y
       ) {
-        tt.selectAllTowers(tower.type, tower.level);
+        game.selectAllTowers(tower.type, tower.level);
         return;
       }
     }
@@ -371,9 +374,9 @@ class Game {
   }
 
   selectAllTowers(type, level) {
-    tt.resetSelects();
-    for (let i = 0; i < tt.towers.length; i++) {
-      let tower = tt.towers[i];
+    game.resetSelects();
+    for (let i = 0; i < game.towers.length; i++) {
+      let tower = game.towers[i];
       if (tower.type === type && tower.level === level) {
         tower.select();
       } else {
@@ -463,25 +466,25 @@ class Game {
   }
 
   tileRollOver() {
-    tt.showTowerDivInfo = this;
+    game.showTowerDivInfo = this;
   }
 
   tileRollOut() {
-    tt.showTowerDivInfo = null;
+    game.showTowerDivInfo = null;
   }
 
   tileClicked() {
-    if (tt.placingTower === true) {
-      if (!tt.towers[tt.towers.length - 1].placed) {
-        tt.towers.splice(tt.towers.length - 1, 1);
+    if (game.placingTower === true) {
+      if (!game.towers[game.towers.length - 1].placed) {
+        game.towers.splice(game.towers.length - 1, 1);
       }
     }
-    if (tt.bits >= this.cost) {
-      tt.createTower(this);
-      tt.currentTileDiv = this;
-      tt.placingTower = true;
-      if (tt.towersArr) {
-        tt.resetSelects();
+    if (game.bits >= this.cost) {
+      game.createTower(this);
+      game.currentTileDiv = this;
+      game.placingTower = true;
+      if (game.towersArr) {
+        game.resetSelects();
       }
     } else {
       const bank = document.querySelector("#info-bits");
@@ -496,7 +499,7 @@ class Game {
 
   createTower(tileDiv) {
     const tower = new Tower(
-      tt.context,
+      game.context,
       tileDiv.cost,
       tileDiv.upgrade,
       tileDiv.tileDivImg,
@@ -511,13 +514,13 @@ class Game {
   }
 
   placeTower(cell) {
-    const tower = tt.towers[tt.towers.length - 1];
+    const tower = game.towers[game.towers.length - 1];
     tower.cell = cell;
     tower.location = cell.center.copy();
     this.bits -= tower.cost;
     this.cr -= tower.cost;
     tower.placed = true;
-    tt.placingTower = false;
+    game.placingTower = false;
   }
 
   updateInfo() {
@@ -550,11 +553,11 @@ class Game {
   showTowerInfo() {
     let tower, div, obj;
 
-    if (tt.showTowerDivInfo) {
-      tower = tt.showTowerDivInfo;
+    if (game.showTowerDivInfo) {
+      tower = game.showTowerDivInfo;
       div = true;
-    } else if (tt.towersArr.length) {
-      tower = tt.towersArr[tt.towersArr.length - 1];
+    } else if (game.towersArr.length) {
+      tower = game.towersArr[game.towersArr.length - 1];
       obj = true;
     }
 
@@ -607,7 +610,7 @@ class Game {
         info.innerHTML = "<h5>Next</h5>";
         const value = document.createElement("p");
         value.style.fontSize = "10pt";
-        if (tower.canUpgrade || tt.showTowerDivInfo) {
+        if (tower.canUpgrade || game.showTowerDivInfo) {
           value.innerHTML = tower.upgrade + " ¥";
         } else {
           value.innerHTML = "Max";
@@ -758,7 +761,7 @@ class Game {
         const curr = new Date();
         const lastSent = this.stages[wave][1];
         if (curr - lastSent > 1500) {
-          tt.creeps.push(creeps.shift());
+          game.creeps.push(creeps.shift());
           this.stages[wave][1] = curr;
         }
       } else {
@@ -768,10 +771,10 @@ class Game {
   }
 
   checkHit(attack) {
-    const gridCol = Math.floor(attack.location.x / tt.cellSize);
-    const gridRow = Math.floor(attack.location.y / tt.cellSize);
-    if (tt.grid[gridCol] && tt.grid[gridCol][gridRow]) {
-      const cell = tt.grid[gridCol][gridRow];
+    const gridCol = Math.floor(attack.location.x / game.cellSize);
+    const gridRow = Math.floor(attack.location.y / game.cellSize);
+    if (game.grid[gridCol] && game.grid[gridCol][gridRow]) {
+      const cell = game.grid[gridCol][gridRow];
       cell.attack(attack.damage, attack.type === "water");
       for (let j = 0; j < this.creeps.length; j++) {
         if (cell === this.creeps[j].currentCell) {
@@ -782,22 +785,22 @@ class Game {
   }
 
   checkWave() {
-    if (tt.autoWave && !tt.sendingWave && !tt.creeps.length) {
-      tt.waveButton.click();
-      tt.sendingWave = true;
+    if (game.autoWave && !game.sendingWave && !game.creeps.length) {
+      game.waveButton.click();
+      game.sendingWave = true;
       setTimeout(() => {
-        tt.sendingWave = false;
+        game.sendingWave = false;
       }, 1000);
     }
-    if (!tt.creeps.length && !tt.sendingWave && tt.wave > 0) {
-      tt.waveButton.classList.add("active");
+    if (!game.creeps.length && !game.sendingWave && game.wave > 0) {
+      game.waveButton.classList.add("active");
     } else {
-      tt.waveButton.classList.remove("active");
+      game.waveButton.classList.remove("active");
     }
-    if (tt.wave === 0 && tt.bits < 50) {
+    if (game.wave === 0 && game.bits < 50) {
       document.querySelector("#towers").classList.remove("active");
       document.querySelector("#info-bits").classList.remove("active");
-      tt.waveButton.classList.add("active");
+      game.waveButton.classList.add("active");
       tutorial.showInfo("canvas");
     }
   }
@@ -885,9 +888,9 @@ class Game {
 
   handleStart(playButton) {
     playButton.style.display = "none";
-    tt.gameStarted = true;
-    tt.handleGameStart();
-    tt.run();
+    game.gameStarted = true;
+    game.handleGameStart();
+    game.run();
     document.querySelector("canvas").style.backgroundColor =
       "rgba(187, 186, 186, 0.8)";
     document.querySelector("#towers").classList.add("active");
@@ -906,7 +909,7 @@ class Game {
     setTimeout(() => {
       this.canvas.classList.add("over");
     }, 3000);
-    tt.f = tt.score;
+    game.f = game.score;
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
       gameOverScreen.classList.add("game-over");
@@ -949,9 +952,8 @@ class Game {
     const waveButton = document.querySelector("#wave-button");
     const autoWaveButton = document.querySelector("input[name=auto-wave]");
     const towers = document.querySelector("#towers");
-    waveButton.removeEventListener("click", tt.newGame, false);
+    waveButton.removeEventListener("click", game.newGame, false);
     autoWaveButton.checked = false;
-    newCanvas.id = "game-canvas";
     newCanvas.width = 800;
     newCanvas.height = 520;
     document
@@ -966,7 +968,7 @@ class Game {
     document.querySelector("#content-box").style.opacity = 0;
     document.querySelector("#tutorial-window").style.opacity = 0;
     playButton.style.display = "";
-    tt = new Game();
+    game = new Game();
   }
 
   run() {

@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0px;
   padding: 0px;
   vertical-align: baseline;
@@ -26,7 +27,7 @@ body {
   height: 520px;
   padding: 0px;
   border-radius: 0px;
-  display: none
+  display: none;
 }
 
 #auto-container {
@@ -62,8 +63,7 @@ body {
   flex-direction: column;
 }
 
-#game-canvas {
-
+canvas {
 }
 
 #content-box {

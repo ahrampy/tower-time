@@ -14,20 +14,17 @@ class Scores {
       storageBucket: "tower-time.appspot.com",
       messagingSenderId: "114254327718",
       appId: "1:114254327718:web:7d6db95c7f120f99452967",
-      measurementId: "G-0BEHEHSDDL"
+      measurementId: "G-0BEHEHSDDL",
     };
     firebase.initializeApp(firebaseConfig);
   }
 
   update(name, score) {
     firebase.auth().signInAnonymously();
-    firebase
-      .database()
-      .ref("scores")
-      .push({
-        name: name,
-        score: score
-      });
+    firebase.database().ref("scores").push({
+      name: name,
+      score: score,
+    });
   }
 
   handleScores(screen, highscores) {
@@ -37,7 +34,7 @@ class Scores {
     const scoreList = document.createElement("ol");
     const nameList = document.createElement("ol");
     let lowestShowing;
-    highscores.on("value", snap => {
+    highscores.on("value", (snap) => {
       const data = snap.val();
       const idArr = Object.keys(data);
       const scores = [];
@@ -46,7 +43,7 @@ class Scores {
       }
       this.sortScores(scores);
       let rankCount = 1;
-      scores.forEach(score => {
+      scores.forEach((score) => {
         const rankLi = document.createElement("li");
         const scoreLi = document.createElement("li");
         const nameLi = document.createElement("li");
@@ -92,7 +89,7 @@ class Scores {
     input.maxLength = 3;
     form.appendChild(input);
     screen.appendChild(form);
-    form.addEventListener("submit", event =>
+    form.addEventListener("submit", (event) =>
       this.addScore(event, lowestShowing)
     );
   }
@@ -101,14 +98,14 @@ class Scores {
     event.preventDefault();
     const name = document.querySelector(".nameInput");
     const scoreList = document.querySelectorAll(".score-div");
-    if (tt.score >= lowestShowing) {
-      scoreList.forEach(div => {
+    if (game.score >= lowestShowing) {
+      scoreList.forEach((div) => {
         div.querySelector("ol").innerHTML = "";
       });
     }
     name.style.visibility = "hidden";
-    if (tt.f === tt.score) {
-      this.update(name.value.toUpperCase(), tt.f);
+    if (game.f === game.score) {
+      this.update(name.value.toUpperCase(), game.f);
     } else {
       window.location.reload(false);
     }

@@ -54,7 +54,7 @@ class Tutorial {
     this.edit = document.querySelector("#edit-tower-buttons");
     this.addListeners(this.edit, "edit");
 
-    this.canvas = document.querySelector("#game-canvas");
+    this.canvas = document.querySelector("canvas");
     this.addListeners(this.canvas, "canvas");
   }
 
@@ -76,8 +76,8 @@ class Tutorial {
 
   showInfo(ele) {
     const text = tutorial.textPar;
-    if (tt.wave === 0 && tt.gameStarted && ele === "canvas") {
-      if (tt.bits >= 50) {
+    if (game.wave === 0 && game.gameStarted && ele === "canvas") {
+      if (game.bits >= 50) {
         text.innerHTML =
           "to get started, use your bank to place towers on the board from the blinking menu on the bottom left";
       } else {
@@ -122,7 +122,7 @@ class Tutorial {
       text.innerText =
         "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for its most recent cost";
     } else if (ele === "canvas") {
-      if (tt.gameStarted) {
+      if (game.gameStarted) {
         text.innerText =
           "the board - the dark gray sqaure will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are walls - place towers to make more walls!";
       }

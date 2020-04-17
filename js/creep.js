@@ -16,7 +16,7 @@ class Creep {
     this.multiplier = multiplier;
     this.worth = 5 * this.multiplier;
     this.pointValue = 100 * this.multiplier;
-    this.maxHealth = tt.wave * 400 * this.multiplier;
+    this.maxHealth = game.wave * 400 * this.multiplier;
     this.health = this.maxHealth;
     this.alive = true;
     this.w = this.maxHealth;
@@ -36,9 +36,9 @@ class Creep {
   }
 
   checkWalls() {
-    const col = Math.floor(this.location.x / tt.cellSize);
-    const row = Math.floor(this.location.y / tt.cellSize);
-    if (tt.grid && tt.grid[col] && tt.grid[col][row].occupied) {
+    const col = Math.floor(this.location.x / game.cellSize);
+    const row = Math.floor(this.location.y / game.cellSize);
+    if (game.grid && game.grid[col] && game.grid[col][row].occupied) {
       this.velocity.x = -this.velocity.x;
       this.velocity.y = -this.velocity.y;
     }
@@ -55,17 +55,17 @@ class Creep {
 
   checkAlive() {
     if (this.health <= 0) {
-      tt.bits += this.worth;
-      tt.score += this.pointValue;
-      tt.cr += this.worth + this.pointValue;
+      game.bits += this.worth;
+      game.score += this.pointValue;
+      game.cr += this.worth + this.pointValue;
       this.alive = false;
     }
   }
 
   takeLife() {
     this.alive = false;
-    tt.lives -= 1;
-    tt.cr -= 1;
+    game.lives -= 1;
+    game.cr -= 1;
     const lives = document.querySelector("#info-lives");
     if (!lives.classList.contains("flashing")) {
       lives.classList.add("flashing");
@@ -73,7 +73,7 @@ class Creep {
         lives.classList.remove("flashing");
       }, 1000);
     }
-    // if (!tt.muted) {
+    // if (!game.muted) {
     //     const lose = new Audio;
     //     lose.setAttribute('src', 'sounds/lose_life.mp3');
     //     lose.load();
@@ -87,12 +87,12 @@ class Creep {
   }
 
   move() {
-    const col = Math.floor(this.location.x / tt.cellSize);
-    const row = Math.floor(this.location.y / tt.cellSize);
+    const col = Math.floor(this.location.x / game.cellSize);
+    const row = Math.floor(this.location.y / game.cellSize);
 
-    const cellCheck = tt.grid[col][row];
+    const cellCheck = game.grid[col][row];
 
-    if (cellCheck === tt.goal) {
+    if (cellCheck === game.goal) {
       this.takeLife();
       return;
     }
@@ -133,7 +133,7 @@ class Creep {
   }
 
   render() {
-    const context = tt.context;
+    const context = game.context;
     context.beginPath();
     context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
     if (this.health === this.maxHealth) {

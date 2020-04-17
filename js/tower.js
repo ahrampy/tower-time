@@ -51,16 +51,16 @@ class Tower {
   }
 
   findTarget() {
-    for (let i = 0; i < tt.creeps.length; i++) {
+    for (let i = 0; i < game.creeps.length; i++) {
       if (
-        tt.creeps[i].location.dist(this.location) < this.range &&
-        tt.creeps[i].alive
+        game.creeps[i].location.dist(this.location) < this.range &&
+        game.creeps[i].alive
       ) {
         this.follow = false;
-        return tt.creeps[i].location;
+        return game.creeps[i].location;
       }
     }
-    this.target = new Vector(tt.canvas.mouseX, tt.canvas.mouseY);
+    this.target = new Vector(game.canvas.mouseX, game.canvas.mouseY);
     this.follow = true;
     return this.target;
   }
@@ -73,7 +73,7 @@ class Tower {
       dist < this.range &&
       this.placed &&
       mils - this.lastFired > this.cooldown &&
-      tt.creeps.length !== 0 &&
+      game.creeps.length !== 0 &&
       !this.follow
     ) {
       this.lastFired = mils;
@@ -87,7 +87,7 @@ class Tower {
         this.damage,
         this.speed
       );
-      tt.attacks.push(attack);
+      game.attacks.push(attack);
     }
   }
 
@@ -99,10 +99,10 @@ class Tower {
     this.speed += 2;
 
     this.img = new Image();
-    this.img.src = tt.makeUrl(this.type, false, this.level);
+    this.img.src = game.makeUrl(this.type, false, this.level);
 
     this.atkImg = new Image();
-    this.atkImg.src = tt.makeUrl(this.type, true, this.level);
+    this.atkImg.src = game.makeUrl(this.type, true, this.level);
 
     if (this.level === 3) {
       this.canUpgrade = false;
@@ -111,9 +111,9 @@ class Tower {
 
   select() {
     this.selected = true;
-    tt.towersArr.push(this);
+    game.towersArr.push(this);
     this.cell.selected = true;
-    tt.cellsArr.push(this.cell);
+    game.cellsArr.push(this.cell);
   }
 
   deselect(present) {
