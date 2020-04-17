@@ -41,7 +41,7 @@ class Game {
     this.gameOver = false;
 
     // * grid specs
-    this.numBlocks = 30;
+    this.numBlocks = 35;
     this.cellSize = this.mobile ? 20 : 40;
     this.numCols = 20;
     this.numRows = 13;
@@ -522,7 +522,6 @@ class Game {
     for (let i = 0; i < infoTiles.length; i++) {
       let title = infoTiles[i];
       const value = document.createElement("p");
-      value.style.fontSize = "10pt";
 
       if (title.innerHTML.includes("Bank")) {
         title.innerHTML = "<h4>Bank</h4> <br/>";
@@ -574,7 +573,6 @@ class Game {
     );
 
     for (let i = 0; i < towerInfoTiles.length; i++) {
-
       const title = towerInfoTiles[i];
       const value = document.createElement("p");
 
@@ -598,7 +596,7 @@ class Game {
           value.innerHTML = "Max";
         }
       }
-      
+
       title.appendChild(value);
     }
   }
@@ -632,15 +630,15 @@ class Game {
   }
 
   initPosts() {
-    this.start = this.grid[Math.floor(Math.random() * 1) + 1][
-      Math.floor(Math.random() * 10) + 1
+    this.start = this.grid[Math.ceil(Math.random() * 2)][
+      Math.ceil(Math.random() * 10)
     ];
     const startImg = new Image();
     startImg.src = "/images/start.png";
     this.start.img = startImg;
     this.start.static = true;
-    this.goal = this.grid[Math.floor(Math.random() * 5) + 15][
-      Math.floor(Math.random() * 12) + 1
+    this.goal = this.grid[Math.ceil(Math.random() * 3) + 15][
+      Math.ceil(Math.random() * 10) + 1
     ];
     this.goal.value = 0;
     const goalImg = new Image();
@@ -652,8 +650,8 @@ class Game {
   initBlocks() {
     this.resetBlocks();
     for (let i = 0; i < this.numBlocks; i++) {
-      const randRow = Math.floor(Math.random() * 20);
-      const randCol = Math.floor(Math.random() * 13);
+      const randRow = Math.floor(Math.random() * 18) + 1;
+      const randCol = Math.floor(Math.random() * 11) + 1;
       const cell = this.grid[randRow][randCol];
       if (cell !== this.start && cell !== this.goal && !cell.occupied) {
         cell.occupied = true;
