@@ -2,81 +2,102 @@
 
 class Tutorial {
   constructor() {
-    this.tutorialWindow = document.querySelector("#tutorial-window");
-    this.tutorialWindow.addEventListener("click", this.toggleInfo, false);
+    this.frame = document.querySelector("#tutorial-window");
+    this.frame.addEventListener("click", this.toggleInfo, false);
 
+    this.text = document.querySelector("#tutorial-text");
     this.textPar = document.querySelector("#text-p");
     this.default =
-      "move your mouse anywhere to learn more or click here to dismiss tooltips";
+      "move your mouse anywhere to learn more or click here to hide tooltips";
 
-    this.score = document.querySelector("#info-score");
-    this.addListeners(this.score, "score");
-
-    this.wave = document.querySelector("#info-wave");
-    this.addListeners(this.wave, "wave");
-
-    this.creep = document.querySelector("#info-creep");
-    this.addListeners(this.creep, "creep");
-
-    this.lives = document.querySelector("#info-lives");
-    this.addListeners(this.lives, "lives");
-
-    this.bits = document.querySelector("#info-bits");
-    this.addListeners(this.bits, "bits");
-
-    this.type = document.querySelector("#tower-type");
-    this.addListeners(this.type, "type");
-
-    this.damage = document.querySelector("#tower-damage");
-    this.addListeners(this.damage, "damage");
-
-    this.range = document.querySelector("#tower-range");
-    this.addListeners(this.range, "range");
-
-    this.cooldown = document.querySelector("#tower-cooldown");
-    this.addListeners(this.cooldown, "cooldown");
-
-    this.next = document.querySelector("#tower-next");
-    this.addListeners(this.next, "next");
-
-    // this.mute = document.querySelector('#mute-button');
-    // this.addListeners(this.mute, "mute");
-
-    this.auto = document.querySelector("#auto-container");
-    this.addListeners(this.auto, "auto");
-
-    this.start = document.querySelector("#wave-button");
-    this.addListeners(this.start, "start");
-
-    this.towers = document.querySelector("#towers");
-    this.addListeners(this.towers, "towers");
-
-    this.edit = document.querySelector("#edit-tower-buttons");
-    this.addListeners(this.edit, "edit");
-
-    this.canvas = document.querySelector("canvas");
-    this.addListeners(this.canvas, "canvas");
+    this.addListeners();
   }
 
-  addListeners(ele, name) {
-    ele.addEventListener("mouseover", () => this.showInfo(name), false);
-    ele.addEventListener("mouseout", this.hideInfo, false);
+  addListeners() {
+    const elements = [
+      [
+        "score",
+        "#info-score",
+        "your current score: increases for every enemy stopped before reaching the red square",
+      ],
+      [
+        "wave",
+        "#info-wave",
+        "the amount of waves you have survived so far: including the current one",
+      ],
+      [
+        "creep",
+        "#info-creep",
+        "the amount damage needed to stop the most recently sent enemies: increases every wave",
+      ],
+      [
+        "lives",
+        "#info-lives",
+        "if an enemy makes it to the red square, you lose a life: reach zero lives and the game is over",
+      ],
+      [
+        "bits",
+        "#info-bits",
+        "spend your bank on towers and upgrades: increase it by stopping enemies and sending waves",
+      ],
+      ["type", "#tower-type", "the name of the selected tower"],
+      [
+        "damage",
+        "#tower-damage",
+        "amount of damage the selected tower deals every time it fires",
+      ],
+      ["range", "#tower-range", "distance the selected tower attack enemies"],
+      [
+        "cooldown",
+        "#tower-cooldown",
+        "time in miliseconds the selected tower takes before each attack",
+      ],
+      [
+        "next",
+        "#tower-next",
+        "cost to your bank of the selected tower's next upgrade",
+      ],
+      [
+        "auto",
+        "#auto-container",
+        "select to send the next wave automatically once there are no more enemies",
+      ],
+      ["send", "#wave-button", "sends the next wave of enemies"],
+      [
+        "towers",
+        "#towers",
+        "hovering over a tower will show the stats, clicking one will select it, and clicking again over the board will place a new tower of that type, while deducting the cost from your bank",
+      ],
+      [
+        "edit",
+        "#edit-tower-buttons",
+        "when a placed tower is selected, you can upgrade it tower for its 'next' cost or sell it for its most recent cost",
+      ],
+      [
+        "canvas",
+        "canvas",
+        "enemies will start at the dark blue square, and try to get to the red one, but cannot move through walls: place towers to attack them, which will also create more walls",
+      ],
+    ];
+
+    elements.forEach((ele) => {
+      const div = document.querySelector(ele[1]);
+      div.addEventListener(
+        "mouseover",
+        () => this.showInfo(ele[0], ele[2]),
+        false
+      );
+      div.addEventListener("mouseout", this.hideInfo, false);
+    });
   }
 
   toggleInfo() {
-    const text = document.querySelector("#tutorial-text");
-    if (text.classList.contains("hidden")) {
-      text.classList.remove("hidden");
-      text.classList.add("show");
-    } else {
-      text.classList.remove("show");
-      text.classList.add("hidden");
-    }
+    tutorial.text.toggleAttribute("hidden");
   }
 
-  showInfo(ele) {
+  showInfo(name, tip) {
     const text = tutorial.textPar;
-    if (game.wave === 0 && game.gameStarted && ele === "canvas") {
+    if (game.wave === 0 && game.gameStarted && name === "canvas") {
       if (game.bits >= 50) {
         text.innerHTML =
           "to get started, use your bank to place towers on the board from the blinking menu on the bottom left";
@@ -84,50 +105,8 @@ class Tutorial {
         text.innerHTML =
           "now that you have some towers, its time to send the first wave - good luck!";
       }
-    } else if (ele === "score") {
-      text.innerText = "your current score - increases for every enemy stopped";
-    } else if (ele === "wave") {
-      text.innerText = "the amount of waves you have survived so far";
-    } else if (ele === "creep") {
-      text.innerText =
-        "the amount damage needed to stop the most recent enemies - increases every wave";
-    } else if (ele === "lives") {
-      text.innerText =
-        "your precious lives - if an enemy makes it to the red square, you lose a life - reach zero lives and the game is over";
-    } else if (ele === "bits") {
-      text.innerText =
-        "spend your bank on towers and tower upgrades - increase it by stopping enemies and sending waves";
-    } else if (ele === "type") {
-      text.innerText = "the name of the current tower";
-    } else if (ele === "damage") {
-      text.innerText =
-        "amount of damage the current tower will deal every time it fires";
-    } else if (ele === "range") {
-      text.innerText =
-        "distance the current tower can watch for enemies to attack";
-    } else if (ele === "cooldown") {
-      text.innerText =
-        "number of miliseconds the current tower needs before firing again";
-    } else if (ele === "next") {
-      text.innerText = "cost of the current tower's next upgrade in bits";
-    } else if (ele === "auto") {
-      text.innerText =
-        "select to send the next wave automatically if there are no more enemies";
-    } else if (ele === "start") {
-      text.innerText = "starts game and will send the next wave";
-    } else if (ele === "towers") {
-      text.innerText =
-        "hover over a tower to see its stats - click one to select it, move your mouse over the board, and click again to place the tower - the cost will be deducted from your bank";
-    } else if (ele === "edit") {
-      text.innerText =
-        "when a placed tower is selected, upgrade and sell give you the options to upgrade your tower for 'next' cost or sell it back for its most recent cost";
-    } else if (ele === "canvas") {
-      if (game.gameStarted) {
-        text.innerText =
-          "the board - the dark gray sqaure will spawn enemies every wave - enemies will try to get to the red sqaure - light gray spaces are walls - place towers to make more walls!";
-      }
-    } else if (ele === "game-over") {
-      text.innerHTML = "nice! see if you can beat this score next time";
+    } else {
+      text.innerHTML = tip;
     }
   }
 

@@ -122,16 +122,13 @@ body:hover {
 #tutorial-text p {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    width: 200px;
   line-height: 1.3em;
   margin-top: 5px;
 }
 
 .hidden {
   display: none;
-}
-
-.show {
-  width: 200px;
 }
 
 .info-icon img {
