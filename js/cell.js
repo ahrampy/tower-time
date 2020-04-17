@@ -128,16 +128,14 @@ class Cell {
     } else if (this.cancelled) {
       this.context.fillStyle = "rgba(255, 255, 255, 0.8)";
       this.timeout();
-    } else {
-      this.context.fillStyle = "rgba(150, 151, 129, 0.06)";
+      this.context.fillRect(
+        this.location.x,
+        this.location.y,
+        this.size,
+        this.size
+      );
     }
 
-    this.context.fillRect(
-      this.location.x,
-      this.location.y,
-      this.size,
-      this.size
-    );
     // this.context.strokeStyle = "#333333"
     // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
 
@@ -150,7 +148,7 @@ class Cell {
   }
 
   renderImage() {
-    if (!this.static) this.img = this.selected ? this.selectImg : this.wallImg; 
+    if (!this.static) this.img = this.selected ? this.selectImg : this.wallImg;
     this.context.save();
     this.context.translate(this.center.x, this.center.y);
     this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
