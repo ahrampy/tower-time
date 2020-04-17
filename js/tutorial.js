@@ -13,6 +13,45 @@ class Tutorial {
     this.addListeners(this.tips);
   }
 
+  addListeners(tips) {
+    tips.forEach((tip) => {
+      const div = document.querySelector(tip[0]);
+      div.addEventListener(
+        "mouseover",
+        () => this.showInfo(tip[0], tip[1]),
+        false
+      );
+      div.addEventListener("mouseout", this.clearTip, false);
+    });
+  }
+
+  toggleInfo() {
+    tutorial.text.toggleAttribute("hidden");
+  }
+
+  showInfo(name, tip) {
+    const text = tutorial.textPar;
+    if (game.wave === 0 && game.gameStarted && name === "canvas") {
+      this.startTips(text);
+    } else {
+      text.innerHTML = tip;
+    }
+  }
+
+  clearTip() {
+    tutorial.textPar.innerHTML = tutorial.default;
+  }
+
+  startTips(text) {
+    if (game.bits >= 50) {
+      text.innerHTML =
+        "to get started, use your bank to place towers on the board from the menu on the bottom left";
+    } else {
+      text.innerHTML =
+        "now that you have some towers, its time to send the first wave, good luck!";
+    }
+  }
+
   makeTips() {
     return [
       [
@@ -64,40 +103,5 @@ class Tutorial {
         "enemies will start at the dark blue square, and try to get to the red one, but cannot move through walls: place towers to attack them, which will also create more walls",
       ],
     ];
-  }
-
-  addListeners(tips) {
-    tips.forEach((tip) => {
-      const div = document.querySelector(tip[0]);
-      div.addEventListener(
-        "mouseover",
-        () => this.showInfo(tip[0], tip[1]),
-        false
-      );
-      div.addEventListener("mouseout", this.clearTip, false);
-    });
-  }
-
-  toggleInfo() {
-    tutorial.text.toggleAttribute("hidden");
-  }
-
-  showInfo(name, tip) {
-    const text = tutorial.textPar;
-    if (game.wave === 0 && game.gameStarted && name === "canvas") {
-      if (game.bits >= 50) {
-        text.innerHTML =
-          "to get started, use your bank to place towers on the board from the menu on the bottom left";
-      } else {
-        text.innerHTML =
-          "now that you have some towers, its time to send the first wave, good luck!";
-      }
-    } else {
-      text.innerHTML = tip;
-    }
-  }
-
-  clearTip() {
-    tutorial.textPar.innerHTML = tutorial.default;
   }
 }
