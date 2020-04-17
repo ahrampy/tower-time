@@ -48,6 +48,11 @@ class Game {
     this.start = null;
     this.goal = null;
 
+    // * pathing
+    this.validated = false;
+    this.loadGrid();
+    this.loadPaths();
+
     // * track towers
     this.showTowerDivInfo = null;
     this.placingTower = false;
@@ -64,11 +69,6 @@ class Game {
     this.autoWave = false;
     this.sendingWave = false;
 
-    // * pathing
-    this.validated = false;
-    this.loadGrid();
-    this.loadPaths();
-
     // * canvas handlers
     this.canvas.addEventListener("mousemove", this.handleCanvasMove, false);
     this.canvas.addEventListener("mouseover", this.handleCanvasOver, false);
@@ -80,9 +80,7 @@ class Game {
     this.waveButton = document.querySelector("#wave-button");
     this.tileDivs = this.createTiles();
     this.handleTileListeners(this.tileDivs);
-    this.handleStartClick();
-    this.handleEditClicks();
-    this.handleAutoWaveButton();
+    this.handleButtonClicks();
     this.handleKeyListeners();
 
     // * music
@@ -99,11 +97,17 @@ class Game {
     this.gameStarted = false;
   }
 
-  handleStartClick() {
-    this.waveButton.addEventListener("click", this.startClick, false);
+  handleButtonClicks() {
+    const upgradeButton = document.querySelector("#upgrade-button");
+    const sellButton = document.querySelector("#sell-button");
+    const autoWave = document.querySelector("input[name=auto-wave]");
+    this.waveButton.addEventListener("click", this.waveClick, false);
+    upgradeButton.addEventListener("click", this.upgradeClick, false);
+    sellButton.addEventListener("click", this.sellClick, false);
+    autoWave.addEventListener("change", this.autoWaveToggle, false);
   }
 
-  startClick() {
+  waveClick() {
     game.wave += 1;
     if (game.wave === 1) {
       this.innerText = "Next Wave";
@@ -127,6 +131,43 @@ class Game {
     game.bits += 5 * game.wave;
     game.cr += 5 * game.wave;
     game.loadCreeps(20);
+  }
+
+  upgradeClick() {
+    game.towersArr.forEach((tower, i) => {
+      if (tower.canUpgrade && game.bits - tower.upgrade >= 0) {
+        game.bits -= tower.upgrade;
+        game.cr -= tower.upgrade;
+        tower.handleUpgrade();
+      }
+    });
+  }
+
+  sellClick() {
+    if (game.towersArr.length) {
+      game.towersArr.forEach((tower) => {
+        tower.deselect(false);
+        game.bits += tower.upgrade / 2;
+        game.cr += tower.upgrade / 2;
+      });
+
+      game.resetSelects();
+
+      game.loadPaths();
+      for (let c = 0; c < game.numCols; c++) {
+        for (let r = 0; r < game.numRows; r++) {
+          game.grid[c][r].loadAdjacentCells();
+        }
+      }
+    }
+  }
+
+  autoWaveToggle() {
+    if (this.checked) {
+      game.autoWave = true;
+    } else {
+      game.autoWave = false;
+    }
   }
 
   handleKeyListeners() {
@@ -193,55 +234,6 @@ class Game {
   //   }
   // }
 
-  handleAutoWaveButton() {
-    const autoWave = document.querySelector("input[name=auto-wave]");
-    autoWave.addEventListener("change", this.autoWaveToggle, false);
-  }
-
-  autoWaveToggle() {
-    if (this.checked) {
-      game.autoWave = true;
-    } else {
-      game.autoWave = false;
-    }
-  }
-
-  handleEditClicks() {
-    const upgradeButton = document.querySelector("#upgrade-button");
-    const sellButton = document.querySelector("#sell-button");
-    upgradeButton.addEventListener("click", this.upgradeClick, false);
-    sellButton.addEventListener("click", this.sellClick, false);
-  }
-
-  upgradeClick() {
-    game.towersArr.forEach((tower, i) => {
-      if (tower.canUpgrade && game.bits - tower.upgrade >= 0) {
-        game.bits -= tower.upgrade;
-        game.cr -= tower.upgrade;
-        tower.handleUpgrade();
-      }
-    });
-  }
-
-  sellClick() {
-    if (game.towersArr.length) {
-      game.towersArr.forEach((tower) => {
-        tower.deselect(false);
-        game.bits += tower.upgrade / 2;
-        game.cr += tower.upgrade / 2;
-      });
-
-      game.resetSelects();
-
-      game.loadPaths();
-      for (let c = 0; c < game.numCols; c++) {
-        for (let r = 0; r < game.numRows; r++) {
-          game.grid[c][r].loadAdjacentCells();
-        }
-      }
-    }
-  }
-
   handleCanvasMove(event) {
     this.mouseX = event.offsetX;
     this.mouseY = event.offsetY;
@@ -298,6 +290,68 @@ class Game {
     }
   }
 
+  handleCanvasDblClick(event) {
+    const mouseX = event.offsetX;
+    const mouseY = event.offsetY;
+
+    const gridCol = Math.floor(mouseX / game.cellSize);
+    const gridRow = Math.floor(mouseY / game.cellSize);
+
+    const cell = game.grid[gridCol][gridRow];
+
+    for (let i = 0; i < game.towers.length; i++) {
+      let tower = game.towers[i];
+      if (
+        tower.location.x === cell.center.x &&
+        tower.location.y === cell.center.y
+      ) {
+        game.selectAllTowers(tower.type, tower.level);
+        return;
+      }
+    }
+  }
+
+  handleTileListeners(tiles) {
+    for (let i = 0; i < tiles.length; i++) {
+      const tileDiv = tiles[i];
+      tileDiv.addEventListener("mouseover", this.tileRollOver, false);
+      tileDiv.addEventListener("mouseout", this.tileRollOut, false);
+      tileDiv.addEventListener("click", this.tileClicked, false);
+    }
+  }
+
+  tileRollOver() {
+    game.showTowerDivInfo = this;
+  }
+
+  tileRollOut() {
+    game.showTowerDivInfo = null;
+  }
+
+  tileClicked() {
+    if (game.placingTower === true) {
+      if (!game.towers[game.towers.length - 1].placed) {
+        game.towers.splice(game.towers.length - 1, 1);
+      }
+    }
+    if (game.bits >= this.cost) {
+      game.createTower(this);
+      game.currentTileDiv = this;
+      game.placingTower = true;
+      if (game.towersArr) {
+        game.resetSelects();
+      }
+    } else {
+      const bank = document.querySelector("#info-bits");
+      if (!bank.classList.contains("flashing")) {
+        bank.classList.add("flashing");
+        setTimeout(() => {
+          bank.classList.remove("flashing");
+        }, 1000);
+      }
+    }
+  }
+
   checkTowerPlacement(cell) {
     if (!cell.occupied && cell !== game.goal && cell !== game.start) {
       cell.occupied = true;
@@ -344,27 +398,6 @@ class Game {
     }
 
     return false;
-  }
-
-  handleCanvasDblClick(event) {
-    const mouseX = event.offsetX;
-    const mouseY = event.offsetY;
-
-    const gridCol = Math.floor(mouseX / game.cellSize);
-    const gridRow = Math.floor(mouseY / game.cellSize);
-
-    const cell = game.grid[gridCol][gridRow];
-
-    for (let i = 0; i < game.towers.length; i++) {
-      let tower = game.towers[i];
-      if (
-        tower.location.x === cell.center.x &&
-        tower.location.y === cell.center.y
-      ) {
-        game.selectAllTowers(tower.type, tower.level);
-        return;
-      }
-    }
   }
 
   resetSelects() {
@@ -458,47 +491,6 @@ class Game {
     return div;
   }
 
-  handleTileListeners(tiles) {
-    for (let i = 0; i < tiles.length; i++) {
-      const tileDiv = tiles[i];
-      tileDiv.addEventListener("mouseover", this.tileRollOver, false);
-      tileDiv.addEventListener("mouseout", this.tileRollOut, false);
-      tileDiv.addEventListener("click", this.tileClicked, false);
-    }
-  }
-
-  tileRollOver() {
-    game.showTowerDivInfo = this;
-  }
-
-  tileRollOut() {
-    game.showTowerDivInfo = null;
-  }
-
-  tileClicked() {
-    if (game.placingTower === true) {
-      if (!game.towers[game.towers.length - 1].placed) {
-        game.towers.splice(game.towers.length - 1, 1);
-      }
-    }
-    if (game.bits >= this.cost) {
-      game.createTower(this);
-      game.currentTileDiv = this;
-      game.placingTower = true;
-      if (game.towersArr) {
-        game.resetSelects();
-      }
-    } else {
-      const bank = document.querySelector("#info-bits");
-      if (!bank.classList.contains("flashing")) {
-        bank.classList.add("flashing");
-        setTimeout(() => {
-          bank.classList.remove("flashing");
-        }, 1000);
-      }
-    }
-  }
-
   createTower(tileDiv) {
     const tower = new Tower(
       game.context,
@@ -528,27 +520,27 @@ class Game {
   updateInfo() {
     let infoTiles = document.querySelectorAll("#info > .info-tile");
     for (let i = 0; i < infoTiles.length; i++) {
-      let info = infoTiles[i];
+      let title = infoTiles[i];
       const value = document.createElement("p");
       value.style.fontSize = "10pt";
 
-      if (info.innerHTML.includes("Bank")) {
-        info.innerHTML = "<h4>Bank</h4> <br/>";
+      if (title.innerHTML.includes("Bank")) {
+        title.innerHTML = "<h4>Bank</h4> <br/>";
         value.innerHTML = this.bits + "	¥";
-      } else if (info.innerHTML.includes("Lives")) {
-        info.innerHTML = "<h4>Lives</h4> <br/>";
+      } else if (title.innerHTML.includes("Lives")) {
+        title.innerHTML = "<h4>Lives</h4> <br/>";
         value.innerHTML = this.lives;
-      } else if (info.innerHTML.includes("Score")) {
-        info.innerHTML = "<h4>Score</h4> <br/>";
+      } else if (title.innerHTML.includes("Score")) {
+        title.innerHTML = "<h4>Score</h4> <br/>";
         value.innerHTML = this.score;
-      } else if (info.innerHTML.includes("Wave")) {
-        info.innerHTML = "<h4>Wave</h4> <br/>";
+      } else if (title.innerHTML.includes("Wave")) {
+        title.innerHTML = "<h4>Wave</h4> <br/>";
         value.innerHTML = this.wave;
-      } else if (info.innerHTML.includes("Enemy")) {
-        info.innerHTML = "<h4>Enemy</h4> <br/>";
+      } else if (title.innerHTML.includes("Enemy")) {
+        title.innerHTML = "<h4>Enemy</h4> <br/>";
         value.innerHTML = this.creepHealth;
       }
-      info.appendChild(value);
+      title.appendChild(value);
     }
   }
 
@@ -582,43 +574,32 @@ class Game {
     );
 
     for (let i = 0; i < towerInfoTiles.length; i++) {
-      let info = towerInfoTiles[i];
 
-      if (info.innerHTML.indexOf("Type") != -1) {
-        info.innerHTML = "<h5>Type</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
+      const title = towerInfoTiles[i];
+      const value = document.createElement("p");
+
+      if (i === 0) {
+        title.innerHTML = "<h5>Type</h5>";
         value.innerHTML = tower.type.toUpperCase();
-        info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Range") != -1) {
-        info.innerHTML = "<h5>Range</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
-        value.innerHTML = tower.range;
-        info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Damage") != -1) {
-        info.innerHTML = "<h5>Damage</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
+      } else if (i === 1) {
+        title.innerHTML = "<h5>Damage</h5>";
         value.innerHTML = tower.damage;
-        info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Cooldown") != -1) {
-        info.innerHTML = "<h5>Cooldown</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
+      } else if (i === 2) {
+        title.innerHTML = "<h5>Range</h5>";
+        value.innerHTML = tower.range;
+      } else if (i === 3) {
+        title.innerHTML = "<h5>Cooldown</h5>";
         value.innerHTML = tower.cooldown;
-        info.appendChild(value);
-      } else if (info.innerHTML.indexOf("Next") != -1) {
-        info.innerHTML = "<h5>Next</h5>";
-        const value = document.createElement("p");
-        value.style.fontSize = "10pt";
+      } else if (i === 4) {
+        title.innerHTML = "<h5>Next</h5>";
         if (tower.canUpgrade || game.showTowerDivInfo) {
           value.innerHTML = tower.upgrade + " ¥";
         } else {
           value.innerHTML = "Max";
         }
-        info.appendChild(value);
       }
+      
+      title.appendChild(value);
     }
   }
 
@@ -902,7 +883,7 @@ class Game {
   }
 
   handleGameOver() {
-    document.querySelector("#wave-button").style.opacity = 0;
+    game.waveButton.style.opacity = 0;
     const highscores = firebase
       .database()
       .ref("scores")
@@ -921,7 +902,7 @@ class Game {
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
         setTimeout(() => {
-          document.querySelector("#wave-button").style.opacity = 100;
+          game.waveButton.style.opacity = 100;
           scores.handleScores(gameOverScreen, highscores);
         }, 500);
       }, 500);
@@ -940,10 +921,9 @@ class Game {
     this.context.font = "25px Trebuchet MS";
     // this.lives = 0;
     this.gameOver = true;
-    const waveButton = document.querySelector("#wave-button");
-    waveButton.innerText = "New Game";
-    waveButton.addEventListener("click", this.newGame, false);
-    waveButton.classList.add("active");
+    this.waveButton.innerText = "New Game";
+    this.waveButton.addEventListener("click", this.newGame, false);
+    this.waveButton.classList.add("active");
     tutorial.showInfo("game-over");
   }
 

@@ -340,7 +340,7 @@ canvas {
 }
 
 .detail-tile p {
-  size: 10px;
+  font-size: 13px;
   margin: 0px;
   padding: 0px;
 }
