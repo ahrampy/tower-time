@@ -151,6 +151,8 @@ class Game {
         this.sellClick();
       } else if (event.keyCode === 81) {
         this.upgradeClick();
+      } else if (event.keyCode === 73) {
+        tutorial.toggleInfo();
       }
     });
   }
@@ -851,7 +853,7 @@ class Game {
     this.context.font = "15px Trebuchet MS";
     this.context.fillStyle = "rgba(68, 74, 110, 1)";
     this.context.fillText(
-      "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc",
+      "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc    Toggle Info: I",
       400,
       455
     );
