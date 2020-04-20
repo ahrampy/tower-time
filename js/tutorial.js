@@ -21,6 +21,7 @@ class Tutorial {
         () => this.showInfo(tip[0], tip[1]),
         false
       );
+      div.addEventListener("click", () => this.showInfo(tip[0], tip[1]), false);
       div.addEventListener("mouseout", this.clearTip, false);
     });
   }

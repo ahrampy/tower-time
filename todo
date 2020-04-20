@@ -10,4 +10,6 @@ ui:
 game:
   add dom handler js file
   add start / end js file
+  fix undefined wave-button tip on first wave click
+  fix creep catch on tower placement
   creep types & anims
