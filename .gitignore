@@ -1,5 +1,4 @@
 .DS_Store
 /audio
 /node_modules
-/images/alt
-/keys.js
+/images/legacy

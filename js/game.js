@@ -608,9 +608,9 @@ class Game {
       this.grid.push([]);
       for (let r = 0; r < this.numRows; r++) {
         const wallImg = new Image();
-        wallImg.src = "/images/wall.png";
+        wallImg.src = "/images/board/wall.png";
         const selectImg = new Image();
-        selectImg.src = "/images/wall-selected.png";
+        selectImg.src = "/images/board/wall-selected.png";
         this.grid[c].push(
           new Cell(
             id++,
@@ -634,7 +634,7 @@ class Game {
       Math.ceil(Math.random() * 10)
     ];
     const startImg = new Image();
-    startImg.src = "/images/start.png";
+    startImg.src = "/images/board/start.png";
     this.start.img = startImg;
     this.start.static = true;
     this.goal = this.grid[Math.ceil(Math.random() * 3) + 15][
@@ -642,7 +642,7 @@ class Game {
     ];
     this.goal.value = 0;
     const goalImg = new Image();
-    goalImg.src = "/images/goal.png";
+    goalImg.src = "/images/board/goal.png";
     this.goal.img = goalImg;
     this.goal.static = true;
   }
