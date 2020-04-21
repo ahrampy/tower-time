@@ -101,7 +101,7 @@ class Tutorial {
       ],
       [
         "canvas",
-        "enemies will start at the dark blue square, and try to get to the red one, but cannot move through walls: place towers to attack them, which will also create more walls",
+        "enemies will start at the dark blue square, and try to get to the red one, but cannot move through walls. place towers to attack enemies: towers also act as walls",
       ],
     ];
   }
