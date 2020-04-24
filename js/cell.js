@@ -21,9 +21,8 @@ class Cell {
 
     // * path finding
     this.adjacent = [];
-    this.value = -1;
     this.smallestAdjacent = null;
-    this.smallestAdjacentIndex = 0;
+    this.value = -1;
 
     // * manage state
     this.static = false;
@@ -77,14 +76,14 @@ class Cell {
   }
 
   getShortestRoute() {
-    let smallest = 10000;
+    let smallest, idx;
     for (let i = 0; i < this.adjacent.length; i++) {
-      if (this.adjacent[i].value < smallest) {
+      if (this.adjacent[i].value < smallest || smallest === undefined) {
         smallest = this.adjacent[i].value;
-        this.smallestAdjacentIndex = i;
+        idx = i;
       }
     }
-    this.smallestAdjacent = this.adjacent[this.smallestAdjacentIndex];
+    this.smallestAdjacent = this.adjacent[idx];
   }
 
   attack(damage, slow) {

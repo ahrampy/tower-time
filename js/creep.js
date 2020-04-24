@@ -9,8 +9,25 @@ class Creep {
     this.acceleration = new Vector(0, 0);
 
     // * default
+    this.context = game.context;
     this.radius = 12;
     this.color = "rgb(225, 225, 225)";
+
+    // * img
+    this.img = new Image();
+    this.img.src = "./test.png";
+    this.width = 16;
+    this.height = 18;
+    this.dir = 0;
+    this.angle = 0;
+    this.frame = 0;
+    this.frames = {
+      0: { x: 0, y: 0 },
+      1: { x: 1, y: 0 },
+      2: { x: 0, y: 0 },
+      3: { x: 2, y: 0 },
+    };
+    this.step = 0;
 
     // * stats
     this.multiplier = multiplier;
@@ -21,7 +38,7 @@ class Creep {
     this.alive = true;
     this.w = this.maxHealth;
 
-    // * manage slow
+    // * slow
     this.slowed = false;
     this.slowTimeout = 0;
   }
@@ -105,6 +122,7 @@ class Creep {
         this.currentCell.center
       );
       this.acceleration.setMag(0.05);
+      this.setDir(nextCell.location);
     }
 
     this.velocity.add(this.acceleration);
@@ -117,6 +135,52 @@ class Creep {
       }
     }
     this.location.add(this.velocity);
+  }
+
+  setDir(dest) {
+    // console.log(dest);
+    // console.log(this.currentCell.location);
+    const loc = this.currentCell.location;
+    if (dest.x > loc.x) {
+      // right
+      this.dir = 0 
+    } else if (dest.x < loc.x) {
+      // left
+      this.dir = 2;
+    } else if (dest.y < loc.y) {
+      // up
+      this.dir = 3;
+    } else {
+      // down
+      this.dir = 1;
+    }
+  }
+
+  stepAnimation() {
+    this.step++;
+    if (this.step >= 15) {
+      this.step = 0;
+      this.frame = (this.frame + 1) % 4;
+    }
+    this.drawFrame();
+  }
+
+  drawFrame() {
+    this.context.save();
+    this.context.translate(this.location.x, this.location.y);
+    this.context.rotate(this.angle);
+    this.context.drawImage(
+      this.img,
+      this.frames[this.frame].x * this.width,
+      this.frames[this.frame].y * this.height,
+      this.width,
+      this.height,
+      0,
+      0,
+      this.width,
+      this.height
+    );
+    this.context.restore();
   }
 
   run() {
@@ -133,31 +197,37 @@ class Creep {
   }
 
   render() {
-    const context = game.context;
-    context.beginPath();
-    context.arc(this.location.x, this.location.y, this.radius, 0, Math.PI * 2);
-    if (this.health === this.maxHealth) {
-      context.fillStyle = this.color;
-    } else if (this.slowed) {
-      context.fillStyle = "#49E2FA";
-    } else if (
-      this.health < this.maxHealth &&
-      this.health > this.maxHealth * 0.75
-    ) {
-      context.fillStyle = "rgba(245, 242, 66)";
-    } else if (
-      this.health <= this.maxHealth * 0.75 &&
-      this.health >= this.maxHealth * 0.5
-    ) {
-      context.fillStyle = "rgba(245, 182, 66)";
-    } else if (
-      this.health <= this.maxHealth * 0.5 &&
-      this.health >= this.maxHealth * 0.25
-    ) {
-      context.fillStyle = "rgba(245, 147, 66)";
-    } else if (this.health <= this.maxHealth * 0.25) {
-      context.fillStyle = "rgba(245, 75, 66)";
-    }
-    context.fill();
+    this.stepAnimation();
+    // this.context.beginPath();
+    // this.context.arc(
+    //   this.location.x,
+    //   this.location.y,
+    //   this.radius,
+    //   0,
+    //   Math.PI * 2
+    // );
+    // if (this.health === this.maxHealth) {
+    //   this.context.fillStyle = this.color;
+    // } else if (this.slowed) {
+    //   this.context.fillStyle = "#49E2FA";
+    // } else if (
+    //   this.health < this.maxHealth &&
+    //   this.health > this.maxHealth * 0.75
+    // ) {
+    //   this.context.fillStyle = "rgba(245, 242, 66)";
+    // } else if (
+    //   this.health <= this.maxHealth * 0.75 &&
+    //   this.health >= this.maxHealth * 0.5
+    // ) {
+    //   this.context.fillStyle = "rgba(245, 182, 66)";
+    // } else if (
+    //   this.health <= this.maxHealth * 0.5 &&
+    //   this.health >= this.maxHealth * 0.25
+    // ) {
+    //   this.context.fillStyle = "rgba(245, 147, 66)";
+    // } else if (this.health <= this.maxHealth * 0.25) {
+    //   this.context.fillStyle = "rgba(245, 75, 66)";
+    // }
+    // this.context.fill();
   }
 }

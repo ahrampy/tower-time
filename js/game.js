@@ -130,7 +130,7 @@ class Game {
     game.creepHealth = game.wave * 400 * game.multiplier;
     game.bits += 5 * game.wave;
     game.cr += 5 * game.wave;
-    game.loadCreeps(20);
+    game.loadCreeps(1); // ! CHANGE BACK 
   }
 
   upgradeClick() {
