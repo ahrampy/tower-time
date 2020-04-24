@@ -22,10 +22,10 @@ class Creep {
     this.angle = 0;
     this.frame = 0;
     this.frames = {
-      0: { x: 0, y: 0 },
-      1: { x: 1, y: 0 },
-      2: { x: 0, y: 0 },
-      3: { x: 2, y: 0 },
+      0: 0,
+      1: 1,
+      2: 0,
+      3: 2,
     };
     this.step = 0;
 
@@ -143,16 +143,16 @@ class Creep {
     const loc = this.currentCell.location;
     if (dest.x > loc.x) {
       // right
-      this.dir = 0 
+      this.dir = 3;
     } else if (dest.x < loc.x) {
       // left
       this.dir = 2;
     } else if (dest.y < loc.y) {
       // up
-      this.dir = 3;
+      this.dir = 1;
     } else {
       // down
-      this.dir = 1;
+      this.dir = 0;
     }
   }
 
@@ -171,16 +171,50 @@ class Creep {
     this.context.rotate(this.angle);
     this.context.drawImage(
       this.img,
-      this.frames[this.frame].x * this.width,
-      this.frames[this.frame].y * this.height,
+      this.frames[this.frame] * this.width,
+      this.dir * this.height,
       this.width,
       this.height,
-      0,
-      0,
-      this.width,
-      this.height
+      -12,
+      -15,
+      this.width * 1.5,
+      this.height * 1.5
     );
     this.context.restore();
+  }
+
+  drawCircle() {
+    this.context.beginPath();
+    this.context.arc(
+      this.location.x,
+      this.location.y,
+      this.radius,
+      0,
+      Math.PI * 2
+    );
+    if (this.health === this.maxHealth) {
+      this.context.fillStyle = this.color;
+    } else if (this.slowed) {
+      this.context.fillStyle = "#49E2FA";
+    } else if (
+      this.health < this.maxHealth &&
+      this.health > this.maxHealth * 0.75
+    ) {
+      this.context.fillStyle = "rgba(245, 242, 66)";
+    } else if (
+      this.health <= this.maxHealth * 0.75 &&
+      this.health >= this.maxHealth * 0.5
+    ) {
+      this.context.fillStyle = "rgba(245, 182, 66)";
+    } else if (
+      this.health <= this.maxHealth * 0.5 &&
+      this.health >= this.maxHealth * 0.25
+    ) {
+      this.context.fillStyle = "rgba(245, 147, 66)";
+    } else if (this.health <= this.maxHealth * 0.25) {
+      this.context.fillStyle = "rgba(245, 75, 66)";
+    }
+    this.context.fill();
   }
 
   run() {
@@ -197,37 +231,7 @@ class Creep {
   }
 
   render() {
+    // this.drawCircle();
     this.stepAnimation();
-    // this.context.beginPath();
-    // this.context.arc(
-    //   this.location.x,
-    //   this.location.y,
-    //   this.radius,
-    //   0,
-    //   Math.PI * 2
-    // );
-    // if (this.health === this.maxHealth) {
-    //   this.context.fillStyle = this.color;
-    // } else if (this.slowed) {
-    //   this.context.fillStyle = "#49E2FA";
-    // } else if (
-    //   this.health < this.maxHealth &&
-    //   this.health > this.maxHealth * 0.75
-    // ) {
-    //   this.context.fillStyle = "rgba(245, 242, 66)";
-    // } else if (
-    //   this.health <= this.maxHealth * 0.75 &&
-    //   this.health >= this.maxHealth * 0.5
-    // ) {
-    //   this.context.fillStyle = "rgba(245, 182, 66)";
-    // } else if (
-    //   this.health <= this.maxHealth * 0.5 &&
-    //   this.health >= this.maxHealth * 0.25
-    // ) {
-    //   this.context.fillStyle = "rgba(245, 147, 66)";
-    // } else if (this.health <= this.maxHealth * 0.25) {
-    //   this.context.fillStyle = "rgba(245, 75, 66)";
-    // }
-    // this.context.fill();
   }
 }

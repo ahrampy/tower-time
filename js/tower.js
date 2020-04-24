@@ -160,7 +160,7 @@ class Tower {
       this.context.drawImage(
         this.img,
         -this.img.width / 2,
-        -this.img.height / 2
+        -this.img.height / 2,
       );
     }
 
