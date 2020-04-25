@@ -423,23 +423,12 @@ class Game {
   createTiles() {
     const tileDivs = [];
     for (let i = 0; i < 4; i++) {
-      let tileDiv = this.getTowerStats(i);
-      let imgPath, attackImgPath;
-
-      imgPath = this.makeUrl(tileDiv.type, false, 1);
-      attackImgPath = this.makeUrl(tileDiv.type, true, 1);
-
-      tileDiv.tileDivImg = new Image();
-      tileDiv.tileDivImg.src = imgPath;
-
-      tileDiv.atkImg = new Image();
-      tileDiv.atkImg.src = attackImgPath;
-
+      let tileDiv = this.addTowerStats(i);
       document.querySelector("#towers").appendChild(tileDiv);
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
-      tileImg.src = imgPath;
+      tileImg.src = `/images/towers/${tileDiv.type}-tower-1.png`;
       tileDiv.appendChild(tileImg);
 
       const towerName = document.createElement("p");
@@ -449,12 +438,9 @@ class Game {
     return tileDivs;
   }
 
-  makeUrl(name, atk, lvl) {
-    return `images/towers/${name}/${name}-tower-${atk ? "atk-" : ""}${lvl}.png`;
-  }
-
-  getTowerStats(i) {
+  addTowerStats(i) {
     const div = document.createElement("div");
+    div.idx = i;
     if (i === 0) {
       div.type = "earth";
       div.cost = 15;
@@ -494,10 +480,9 @@ class Game {
   createTower(tileDiv) {
     const tower = new Tower(
       game.context,
+      tileDiv.idx,
       tileDiv.cost,
       tileDiv.upgrade,
-      tileDiv.tileDivImg,
-      tileDiv.atkImg,
       tileDiv.type,
       tileDiv.range,
       tileDiv.damage,
@@ -804,7 +789,7 @@ class Game {
     towerEditButtons[1].style.opacity = 0;
     this.context.textAlign = "center";
     const title = new Image();
-    title.src = "images/splash/tower-time-title.png";
+    title.src = "/images/splash/tower-time-title.png";
     title.onload = () =>
       this.context.drawImage(
         title,

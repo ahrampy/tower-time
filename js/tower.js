@@ -3,10 +3,9 @@
 class Tower {
   constructor(
     context,
+    idx,
     cost,
     upgrade,
-    img,
-    atkImg,
     type,
     range,
     damage,
@@ -14,10 +13,10 @@ class Tower {
     speed
   ) {
     // * images
-    this.img = img;
-    this.atkImg = atkImg;
-
-    // * stats
+    (this.width = 30),
+      (this.height = 30),
+      // * stats
+      (this.idx = idx);
     this.cost = cost;
     this.upgrade = upgrade;
     this.type = type;
@@ -43,7 +42,7 @@ class Tower {
     this.selected = false;
 
     // * init
-    this.level = 1;
+    this.level = 0;
     this.canUpgrade = true;
     this.visible = false;
     this.placed = false;
@@ -97,14 +96,7 @@ class Tower {
     this.damage = Math.ceil((this.damage * 2.5) / 5) * 5;
     this.range += 25;
     this.speed += 2;
-
-    this.img = new Image();
-    this.img.src = game.makeUrl(this.type, false, this.level);
-
-    this.atkImg = new Image();
-    this.atkImg.src = game.makeUrl(this.type, true, this.level);
-
-    if (this.level === 3) {
+    if (this.level === 2) {
       this.canUpgrade = false;
     }
   }
@@ -158,9 +150,15 @@ class Tower {
       this.context.translate(this.location.x, this.location.y);
       this.context.rotate(this.angle);
       this.context.drawImage(
-        this.img,
-        -this.img.width / 2,
-        -this.img.height / 2,
+        towerSprites,
+        this.level * this.width,
+        this.idx * this.height,
+        this.width,
+        this.height,
+        -this.width / 2,
+        -this.height / 2,
+        this.width,
+        this.height
       );
     }
 
