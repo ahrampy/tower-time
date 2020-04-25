@@ -125,7 +125,7 @@ class Cell {
       this.renderImage();
       return;
     } else if (this.cancelled) {
-      this.context.fillStyle = "rgba(255, 255, 255, 0.8)";
+      this.context.fillStyle = "rgba(255, 255, 255, 0.6)";
       this.timeout();
       this.context.fillRect(
         this.location.x,
