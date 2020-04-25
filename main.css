@@ -1,10 +1,8 @@
 body {
   background: #333;
-  background-image: url(/images/air_towers.jpg);
+  background-image: url(/images/space.png);
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position-x: -70px;
-  background-position-y: -25px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
