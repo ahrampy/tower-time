@@ -164,7 +164,7 @@ class Creep {
 
   stepAnimation() {
     this.step++;
-    if ((!this.slowed && this.step >= 10) || this.step >= 25) {
+    if ((!this.slowed && this.step >= 10) || this.step >= 20) {
       this.step = 0;
       this.frame = (this.frame + 1) % 4;
     }

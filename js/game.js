@@ -858,7 +858,7 @@ class Game {
     game.handleGameStart();
     game.run();
     document.querySelector("canvas").style.backgroundColor =
-      "rgba(187, 186, 186, 0.8)";
+      "rgba(187, 186, 186, 0.9)";
     document.querySelector("#towers").classList.add("active");
     document.querySelector("#game-controls").style.opacity = 100;
     document.querySelector("#content-box").style.opacity = 100;

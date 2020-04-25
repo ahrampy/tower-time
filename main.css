@@ -1,8 +1,8 @@
 body {
   background: #333;
   background-image: url(/images/space.png);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
