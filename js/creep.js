@@ -14,19 +14,10 @@ class Creep {
     this.color = "rgb(225, 225, 225)";
 
     // * img
-    this.img = new Image();
-    this.img.src = "./test.png";
     this.width = 16;
-    this.height = 18;
+    this.height = 16;
     this.dir = 0;
-    this.angle = 0;
     this.frame = 0;
-    this.frames = {
-      0: 0,
-      1: 1,
-      2: 0,
-      3: 2,
-    };
     this.step = 0;
 
     // * stats
@@ -143,13 +134,13 @@ class Creep {
     const loc = this.currentCell.location;
     if (dest.x > loc.x) {
       // right
-      this.dir = 3;
+      this.dir = 2;
     } else if (dest.x < loc.x) {
       // left
-      this.dir = 2;
+      this.dir = 1;
     } else if (dest.y < loc.y) {
       // up
-      this.dir = 1;
+      this.dir = 3;
     } else {
       // down
       this.dir = 0;
@@ -158,7 +149,7 @@ class Creep {
 
   stepAnimation() {
     this.step++;
-    if (this.step >= 15) {
+    if ((!this.slowed && this.step >= 15) || this.step >= 25) {
       this.step = 0;
       this.frame = (this.frame + 1) % 4;
     }
@@ -168,17 +159,16 @@ class Creep {
   drawFrame() {
     this.context.save();
     this.context.translate(this.location.x, this.location.y);
-    this.context.rotate(this.angle);
     this.context.drawImage(
       this.img,
-      this.frames[this.frame] * this.width,
+      this.frame * this.width,
       this.dir * this.height,
       this.width,
       this.height,
       -12,
       -15,
-      this.width * 1.5,
-      this.height * 1.5
+      this.width * 2,
+      this.height * 2
     );
     this.context.restore();
   }
