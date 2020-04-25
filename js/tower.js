@@ -81,7 +81,8 @@ class Tower {
         attackLocation,
         this.context,
         this.angle,
-        this.atkImg,
+        this.idx,
+        this.level,
         this.type,
         this.damage,
         this.speed
