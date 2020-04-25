@@ -1,8 +1,8 @@
 "use strict";
 
-const sprite = {}
+const spritesheets = {}
 
 for(let i = 0; i < 5; i++) {
-  sprite[i] = new Image;
-  sprite[i].src = `./images/creeps/creep-${i}`;
+  spritesheets[i] = new Image;
+  spritesheets[i].src = `./images/creeps/creep-${i}.png`;
 }
