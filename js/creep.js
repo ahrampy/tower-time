@@ -164,7 +164,7 @@ class Creep {
 
   stepAnimation() {
     this.step++;
-    if ((!this.slowed && this.step >= 15) || this.step >= 25) {
+    if ((!this.slowed && this.step >= 10) || this.step >= 25) {
       this.step = 0;
       this.frame = (this.frame + 1) % 4;
     }
@@ -188,39 +188,39 @@ class Creep {
     this.context.restore();
   }
 
-  drawCircle() {
-    this.context.beginPath();
-    this.context.arc(
-      this.location.x,
-      this.location.y,
-      this.radius,
-      0,
-      Math.PI * 2
-    );
-    if (this.health === this.maxHealth) {
-      this.context.fillStyle = this.color;
-    } else if (this.slowed) {
-      this.context.fillStyle = "#49E2FA";
-    } else if (
-      this.health < this.maxHealth &&
-      this.health > this.maxHealth * 0.75
-    ) {
-      this.context.fillStyle = "rgba(245, 242, 66)";
-    } else if (
-      this.health <= this.maxHealth * 0.75 &&
-      this.health >= this.maxHealth * 0.5
-    ) {
-      this.context.fillStyle = "rgba(245, 182, 66)";
-    } else if (
-      this.health <= this.maxHealth * 0.5 &&
-      this.health >= this.maxHealth * 0.25
-    ) {
-      this.context.fillStyle = "rgba(245, 147, 66)";
-    } else if (this.health <= this.maxHealth * 0.25) {
-      this.context.fillStyle = "rgba(245, 75, 66)";
-    }
-    this.context.fill();
-  }
+  // drawCircle() {
+  //   this.context.beginPath();
+  //   this.context.arc(
+  //     this.location.x,
+  //     this.location.y,
+  //     this.radius,
+  //     0,
+  //     Math.PI * 2
+  //   );
+  //   if (this.health === this.maxHealth) {
+  //     this.context.fillStyle = this.color;
+  //   } else if (this.slowed) {
+  //     this.context.fillStyle = "#49E2FA";
+  //   } else if (
+  //     this.health < this.maxHealth &&
+  //     this.health > this.maxHealth * 0.75
+  //   ) {
+  //     this.context.fillStyle = "rgba(245, 242, 66)";
+  //   } else if (
+  //     this.health <= this.maxHealth * 0.75 &&
+  //     this.health >= this.maxHealth * 0.5
+  //   ) {
+  //     this.context.fillStyle = "rgba(245, 182, 66)";
+  //   } else if (
+  //     this.health <= this.maxHealth * 0.5 &&
+  //     this.health >= this.maxHealth * 0.25
+  //   ) {
+  //     this.context.fillStyle = "rgba(245, 147, 66)";
+  //   } else if (this.health <= this.maxHealth * 0.25) {
+  //     this.context.fillStyle = "rgba(245, 75, 66)";
+  //   }
+  //   this.context.fill();
+  // }
 
   run() {
     this.update();
@@ -237,7 +237,7 @@ class Creep {
 
   render() {
     this.checkSheet();
-    this.drawCircle()
+    // this.drawCircle()
     this.stepAnimation();
     
   }
