@@ -13,4 +13,5 @@ game:
   fix undefined wave-button tip on first wave click
   fix creep catch on tower placement
   fix -lives on game end when many creeps are near goal
+  fix game slow when tower selected?
   creep types & anims

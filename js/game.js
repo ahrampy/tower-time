@@ -798,24 +798,20 @@ class Game {
       );
     this.addPlayButton();
     this.context.font = "27px Trebuchet MS";
-    this.context.fillStyle = "#333";
-    this.context.font = "18px Trebuchet MS";
-    this.context.fillStyle = "rgba(68, 74, 110, 1)";
-    this.context.font = "25px Trebuchet MS";
-    this.context.fillStyle = "#333";
+    this.context.fillStyle = "rgb(186, 186, 186)";
     this.context.fillText("Tower Abilities", 400, 340);
     this.context.font = "15px Trebuchet MS";
-    this.context.fillStyle = "rgba(68, 74, 110, 1)";
+    this.context.fillStyle = "#fff";
     this.context.fillText(
       "Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack",
       400,
       370
     );
     this.context.font = "25px Trebuchet MS";
-    this.context.fillStyle = "#333";
+    this.context.fillStyle = "rgb(186, 186, 186)";
     this.context.fillText("Optional Hotkeys", 400, 425);
     this.context.font = "15px Trebuchet MS";
-    this.context.fillStyle = "rgba(68, 74, 110, 1)";
+    this.context.fillStyle = "#fff";
     this.context.fillText(
       "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc    Toggle Info: I",
       400,
@@ -858,7 +854,7 @@ class Game {
     game.handleGameStart();
     game.run();
     document.querySelector("canvas").style.backgroundColor =
-      "rgba(187, 186, 186, 0.9)";
+      "rgba(186, 186, 186, 0.9)";
     document.querySelector("#towers").classList.add("active");
     document.querySelector("#game-controls").style.opacity = 100;
     document.querySelector("#content-box").style.opacity = 100;

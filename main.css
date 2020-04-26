@@ -377,7 +377,7 @@ canvas {
 
 #edit-tower-buttons h5:hover {
   cursor: pointer;
-  background: rgba(68, 74, 110, 0.33);
+  background: rgb(120, 128, 171);
 }
 
 #auto-container {
