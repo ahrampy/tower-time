@@ -10,8 +10,8 @@ ui:
 game:
   add dom handler js file
   add start / end js file
-  fix undefined wave-button tip on first wave click
-  fix creep catch on tower placement
+  fix undefined wave-button tip on first wave click and game over due to no canvas
+  fix creep catch on tower placement and direction switch
   fix -lives on game end when many creeps are near goal
   fix game slow when tower selected?
-  creep types & anims
+  creep types
