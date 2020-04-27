@@ -150,8 +150,9 @@ body:hover {
 #play-button {
   position: absolute;
   top: 32%;
-  left: 50%;
-  margin-left: -117.5px;
+  left: 0;
+  right: 0;
+  margin: auto;
   width: 235px;
   height: 125px;
   background-color: inherit;
@@ -161,6 +162,54 @@ body:hover {
   border: none;
 }
 
+#game-info {
+  position: absolute;
+  top: 55%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  background-color: inherit;
+  background-repeat: no-repeat;
+  z-index: 2;
+  outline: none;
+  border: none;
+}
+
+#game-info > ul {
+  display: flex;
+}
+
+#game-info > ul > li {
+  list-style: none;
+  font-size: 11px;
+  margin-right: 15px;
+}
+
+#game-info > h3 {
+  margin-top: 45px;
+}
+
+#game-over {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 2;
+  transition: 1s;
+}
+
+#game-over > h1 {
+  color: #333;
+  font-size: 70px;
+}
+ 
 #wave-button {
   display: flex;
   justify-content: center;

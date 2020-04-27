@@ -9,6 +9,11 @@ const sprites = {
   slime: {},
   gork: {},
   uwo: {},
+  play: {
+    plain: "url('../images/splash/play-button.png')",
+    hover: "url('../images/splash/play-button-hover.png')",
+    pressed: "url('../images/splash/play-button-pressed.png')",
+  },
 };
 
 sprites.border.src = "/images/board/border.png";

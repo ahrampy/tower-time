@@ -4,12 +4,11 @@ game:
   fix creep catch on tower placement near goal
 
 ui:
-  add info back to game start
   add small delay to wave button active times
-  disable new game click before score screen load
+  disable first wave click before play click
   disable update and sell hover when hidden
   info window pop-outs for tutorial / towertypes & hotkeys
-  fade displays on game over
+  fade bars on game over
   add new game over screen w/ new game button and local storage score
 
 schemes:

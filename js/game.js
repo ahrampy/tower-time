@@ -95,7 +95,7 @@ class Game {
     this.f;
 
     // * init
-    this.handleGameStart();
+    this.handleTitleScreen();
     this.gameStarted = false;
   }
 
@@ -796,7 +796,7 @@ class Game {
     // }
   }
 
-  handleGameStart() {
+  handleTitleScreen() {
     dom.upgrade.style.opacity = 0;
     dom.sell.style.opacity = 0;
     // this.context.textAlign = "center";
@@ -806,64 +806,36 @@ class Game {
       this.context.drawImage(
         title,
         this.canvas.width / 2 - title.width / 2,
-        30
+        40
       );
     this.addPlayButton();
-    // this.context.font = "Press Start 2P";
-    // this.context.fillStyle = "rgb(186, 186, 186)";
-    // this.context.fillText("Tower Abilities", 420, 340);
-    // this.context.font = "15px Trebuchet MS";
-    // this.context.fillStyle = "#fff";
-    // this.context.fillText(
-    //   "Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack",
-    //   420,
-    //   370
-    // );
-    // this.context.font = "25px Trebuchet MS";
-    // this.context.fillStyle = "rgb(186, 186, 186)";
-    // this.context.fillText("Optional Hotkeys", 420, 425);
-    // this.context.font = "15px Trebuchet MS";
-    // this.context.fillStyle = "#fff";
-    // this.context.fillText(
-    //   "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc    Toggle Info: I",
-    //   420,
-    //   455
-    // );
-    // this.context.fillText("hover over anything to get tooltips", 420, 500);
   }
 
   addPlayButton() {
-    const playButton = dom.play;
-    playButton.style.backgroundImage =
-      "url('../images/splash/play-button.png')";
-    playButton.addEventListener("mouseover", () => {
-      playButton.style.backgroundImage =
-        "url('../images/splash/play-button-hover.png')";
+    dom.play.style.backgroundImage = sprites.play.plain;
+    dom.play.addEventListener("mouseover", (e) => {
+      e.target.style.backgroundImage = sprites.play.hover;
     });
-    playButton.addEventListener("mouseout", () => {
-      playButton.style.backgroundImage =
-        "url('../images/splash/play-button.png')";
+    dom.play.addEventListener("mouseout", (e) => {
+      e.target.style.backgroundImage = sprites.play.plain;
     });
-    playButton.addEventListener("mousedown", () => {
-      playButton.style.backgroundImage =
-        "url('../images/splash/play-button-pressed.png')";
+    dom.play.addEventListener("mousedown", (e) => {
+      e.target.style.backgroundImage = sprites.play.pressed;
     });
-    playButton.addEventListener("mouseup", () => {
-      playButton.style.backgroundImage =
-        "url('../images/splash/play-button-hover.png')";
+    dom.play.addEventListener("mouseup", (e) => {
+      e.target.style.backgroundImage = sprites.play.hover;
     });
-    playButton.addEventListener("click", (e) => {
+    dom.play.addEventListener("click", (e) => {
       e.preventDefault();
-      playButton.style.backgroundImage =
-        "url('../images/splash/play-button-hover.png')";
+      e.target.style.backgroundImage = sprites.play.hover;
       setTimeout(this.handleStart, 300);
     });
   }
 
   handleStart() {
     dom.play.style.display = "none";
+    dom.startText.style.display = "none";
     game.gameStarted = true;
-    game.handleGameStart();
     game.run();
     dom.canvas.style.backgroundColor = "rgba(186, 186, 186, 0.9)";
     dom.towerMenu.classList.add("active");
@@ -882,7 +854,7 @@ class Game {
         this.blinkCell(cell1, i);
         this.blinkCell(cell2, i);
       }
-      game.border = null;
+      game.border = [];
     }
   }
 
@@ -892,7 +864,7 @@ class Game {
         const cell = game.blocks[i];
         this.blinkCell(cell, i + 20);
       }
-      game.blocks = null;
+      game.blocks = [];
     }
   }
 
@@ -906,7 +878,12 @@ class Game {
   }
 
   handleGameOver() {
+    this.gameOver = true;
+    this.context.fillStyle = "rgba(125, 125, 125, 0.6)";
+    this.context.fillRect(0, 0, 840, 560);
+    dom.gameOver.style.display = "flex";
     dom.wave.style.opacity = 0;
+    dom.wave.removeEventListener("click", this.waveClick, false);
     dom.tutorial.style.opacity = 0;
     const highscores = firebase
       .database()
@@ -921,32 +898,20 @@ class Game {
       const gameOverScreen = document.createElement("div");
       gameOverScreen.classList.add("game-over");
       dom.wrapper.replaceChild(gameOverScreen, this.canvas);
+      dom.gameOver.style.opacity = 0;
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
+        dom.gameOver.style.display = "none";
         setTimeout(() => {
+          dom.wave.innerText = "New Game";
+          dom.wave.addEventListener("click", this.newGame, false);
+          dom.wave.classList.add("active");
           dom.wave.style.opacity = 100;
+          dom.gameOver.style.opacity = 100;
           scores.handleScores(gameOverScreen, highscores);
         }, 500);
       }, 500);
     }, 5000);
-
-    this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
-    this.context.fillRect(0, 0, 840, 560);
-    this.context.font = "100px Trebuchet MS";
-    this.context.fillStyle = "#333";
-    this.context.textAlign = "center";
-    this.context.fillText("Game Over", 420, 210);
-    this.context.font = "40px Trebuchet MS";
-    this.context.fillStyle = "#333";
-    this.context.textAlign = "center";
-    this.context.fillText(`Final Score: ${this.score}`, 420, 280);
-    this.context.font = "25px Trebuchet MS";
-    // this.lives = 0;
-    this.gameOver = true;
-    dom.wave.innerText = "New Game";
-    dom.wave.addEventListener("click", this.newGame, false);
-    dom.wave.classList.add("active");
-    tutorial.showInfo("game-over");
   }
 
   newGame() {
@@ -965,6 +930,7 @@ class Game {
     dom.topBar.style.opacity = 0;
     dom.bottomBar.style.opacity = 0;
     dom.play.style.display = "";
+    dom.startText.style.display = "flex";
     game = new Game();
     tutorial = new Tutorial();
   }

@@ -250,8 +250,8 @@ class Creep {
 
   render() {
     this.checkSheet();
-    // this.drawCircle()
     this.stepAnimation();
+    // this.drawCircle()
   }
 }
 

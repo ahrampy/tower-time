@@ -4,11 +4,13 @@ class DOMHandler {
   constructor() {
     // * main
     this.play = document.querySelector("#play-button");
+    this.startText = document.querySelector("#game-info");
     this.tutorial = document.querySelector("#tutorial-window");
     this.tutorialBox = document.querySelector("#tutorial-text");
     this.tutorialText = document.querySelector("#text-p");
     this.wrapper = document.querySelector("#canvas-wrapper");
     this.canvas = document.querySelector("canvas");
+    this.gameOver = document.querySelector("#game-over");
 
     // * top nav
     this.topBar = document.querySelector("#game-controls");
