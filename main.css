@@ -24,6 +24,7 @@ body:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 1%;
 }
 
 #holder h1 {
@@ -55,8 +56,8 @@ body:hover {
 }
 
 .game-over {
-  height: 520;
-  width: 800;
+  height: 560;
+  width: 840;
   opacity: 0.4;
   z-index: 2;
 }
@@ -138,9 +139,8 @@ body:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 30px;
   height: 55px;
-  width: 800px;
+  width: 840px;
   background: rgba(68, 74, 110, 0.8);
   border-radius: 5px 5px 0 0;
   opacity: 0;
@@ -170,11 +170,13 @@ body:hover {
   background: rgba(68, 74, 110, 0.815);
   border-radius: 0px 5px 0 0;
   color: rgb(187, 186, 186);
+  transition: 0.5s;
 }
 
 #wave-button:hover {
   cursor: pointer;
-  background: rgba(68, 74, 110, 0.33);
+  background: rgb(120, 128, 171);
+
 }
 
 #wave-button > h3 {
@@ -190,7 +192,7 @@ canvas {
 
 #content-box {
   display: flex;
-  width: 800px;
+  width: 840px;
   opacity: 0;
   transition: 2s;
 }
@@ -223,10 +225,6 @@ canvas {
   margin-left: 10px;
 }
 
-#info-bits {
-  translate: ;
-}
-
 .flashing {
   animation-name: flash;
   animation-duration: 1s;
@@ -234,7 +232,7 @@ canvas {
 }
 
 #spacer-div-1 {
-  width: 160px;
+  width: 190px;
 }
 
 /* #spacer-div-2 {
@@ -274,7 +272,7 @@ canvas {
 #towers {
   color: rgb(187, 186, 186);
   display: flex;
-  width: 340px;
+  width: 380px;
   height: 50px;
   padding: 20px;
   padding-bottom: 40px;
@@ -286,7 +284,7 @@ canvas {
   text-align: center;
   width: 50px;
   height: 50px;
-  margin: 0px 15px;
+  margin: 0px 20px;
   border-radius: 10%;
 }
 
@@ -357,12 +355,11 @@ canvas {
 }
 
 #upgrade-button {
-  border-bottom: 1px solid rgba(68, 74, 110, 0.8);
-  border-radius: 0 0 0 5px;
+  /* border-bottom: 1px solid rgba(68, 74, 110, 0.8); */
 }
 
 #sell-button {
-  border-radius: 5px 0 5px 0;
+  border-radius: 0 0 5px 0;
 }
 
 #edit-tower-buttons h5 {
@@ -442,25 +439,27 @@ canvas {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 10px;
-  color: rgba(68, 74, 110, 0.816);
+  margin-bottom: -5px;
+  color: rgb(186, 186, 186);
 }
 
 #footer a {
   text-decoration: none;
-  color: #333;
+  color: rgb(186, 186, 186);
 }
 
 #footer a:hover {
+  text-decoration: underline;
   color: #fff;
 }
 
 .git {
   padding-left: 10px;
+  margin-top: -2px;
 }
 
 .git img {
-  filter: invert(20%);
+  filter: invert(70%);
 }
 
 .git img:hover {

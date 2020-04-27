@@ -882,6 +882,7 @@ class Game {
     document.querySelector("#game-controls").style.opacity = 100;
     document.querySelector("#content-box").style.opacity = 100;
     document.querySelector("#tutorial-window").style.opacity = 100;
+
   }
 
   handleGameOver() {
@@ -911,7 +912,7 @@ class Game {
     }, 5000);
 
     this.context.fillStyle = "rgba(125, 125, 125, 0.7)";
-    this.context.fillRect(0, 0, 800, 520);
+    this.context.fillRect(0, 0, 840, 560);
     this.context.font = "100px Trebuchet MS";
     this.context.fillStyle = "#333";
     this.context.textAlign = "center";
