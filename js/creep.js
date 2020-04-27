@@ -83,14 +83,16 @@ class Creep {
 
   takeLife() {
     this.alive = false;
-    game.lives -= 1;
-    game.cr -= 1;
-    const lives = document.querySelector("#info-lives");
-    if (!lives.classList.contains("flashing")) {
-      lives.classList.add("flashing");
-      setTimeout(() => {
-        lives.classList.remove("flashing");
-      }, 1000);
+    if (!game.gameOver) {
+      game.lives -= 1;
+      game.cr -= 1;
+      const lives = document.querySelector("#info-lives");
+      if (!lives.classList.contains("flashing")) {
+        lives.classList.add("flashing");
+        setTimeout(() => {
+          lives.classList.remove("flashing");
+        }, 1000);
+      }
     }
     // if (!game.muted) {
     //     const lose = new Audio;

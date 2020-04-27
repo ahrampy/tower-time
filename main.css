@@ -1,4 +1,7 @@
 body {
+  font-family: "Press Start 2P", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;;
+  font-size: 12px;
   background: #333;
   background-image: url(/images/space.png);
   background-size: cover;
@@ -16,8 +19,6 @@ body:hover {
 }
 
 #holder {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
   color: #333;
   position: relative;
   display: flex;
@@ -119,8 +120,6 @@ body:hover {
 }
 
 #tutorial-text p {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   width: 200px;
   line-height: 1.3em;
   margin-top: 5px;
@@ -166,7 +165,7 @@ body:hover {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 120px;
+  width: 140px;
   background: rgba(68, 74, 110, 0.815);
   border-radius: 0px 5px 0 0;
   color: rgb(187, 186, 186);
@@ -176,7 +175,6 @@ body:hover {
 #wave-button:hover {
   cursor: pointer;
   background: rgb(120, 128, 171);
-
 }
 
 #wave-button > h3 {
@@ -210,8 +208,12 @@ canvas {
   padding: 0px;
   margin: 0px;
   color: rgb(187, 186, 186);
-  width: 100px;
+  width: 130px;
   height: 55px;
+}
+
+#info-bits {
+  width: 160px;
 }
 
 .info-tile h4 {
@@ -221,7 +223,6 @@ canvas {
 }
 
 .info-tile p {
-  font-size: 13px;
   margin-left: 10px;
 }
 
@@ -232,7 +233,7 @@ canvas {
 }
 
 #spacer-div-1 {
-  width: 190px;
+  width: 15px;
 }
 
 /* #spacer-div-2 {
@@ -272,9 +273,9 @@ canvas {
 #towers {
   color: rgb(187, 186, 186);
   display: flex;
-  width: 380px;
+  width: 340px;
   height: 50px;
-  padding: 20px;
+  padding: 15px;
   padding-bottom: 40px;
   background: rgba(68, 74, 110, 0.8);
   border-radius: 0 0 0 5px;
@@ -284,7 +285,7 @@ canvas {
   text-align: center;
   width: 50px;
   height: 50px;
-  margin: 0px 20px;
+  margin: 0px 15px;
   border-radius: 10%;
 }
 
@@ -307,7 +308,7 @@ canvas {
 }
 
 #towers p {
-  margin: 5px 0px;
+  margin: 10px 0px;
   text-align: center;
 }
 
@@ -326,18 +327,14 @@ canvas {
   padding: 0px;
   margin: 0px;
   color: rgb(187, 186, 186);
-  width: 60px;
+  width: 70px;
 }
 
-.detail-tile h4 {
-  margin: 0px;
-  padding: 0px;
-  size: 12px;
-  font-weight: lighter;
+.detail-tile h5 {
+  margin: 25px
 }
 
 .detail-tile p {
-  font-size: 13px;
   margin: 0px;
   padding: 0px;
 }
@@ -347,16 +344,16 @@ canvas {
   flex-direction: column;
   width: 120px;
   height: 100%;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .edit-button {
   transition: 0.5s;
 }
 
-#upgrade-button {
-  /* border-bottom: 1px solid rgba(68, 74, 110, 0.8); */
-}
+/* #upgrade-button {
+  border-bottom: 1px solid rgba(68, 74, 110, 0.8);
+} */
 
 #sell-button {
   border-radius: 0 0 5px 0;
@@ -383,7 +380,6 @@ canvas {
   position: relative;
   cursor: pointer;
   color: rgb(187, 186, 186);
-  font-size: 16px;
   font-weight: 600;
   width: 80px;
   -webkit-user-select: none;
@@ -403,7 +399,7 @@ canvas {
 .checkmark {
   position: absolute;
   top: 15;
-  right: 10;
+  right: 0;
   height: 25px;
   width: 25px;
   background-color: rgba(68, 74, 110, 0.815);
@@ -436,10 +432,12 @@ canvas {
 }
 
 #footer {
+  position: fixed;
+  right: 5;
+  bottom: 5;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: -5px;
   color: rgb(186, 186, 186);
 }
 

@@ -430,7 +430,7 @@ class Game {
       tileDiv.appendChild(tileImg);
 
       const towerName = document.createElement("p");
-      towerName.innerText = `${tileDiv.cost} ¥`;
+      towerName.innerText = `${tileDiv.cost}¥`;
       tileDiv.appendChild(towerName);
     }
     return tileDivs;
@@ -508,7 +508,7 @@ class Game {
 
       if (title.innerHTML.includes("Bank")) {
         title.innerHTML = "<h4>Bank</h4> <br/>";
-        value.innerHTML = this.bits + "	¥";
+        value.innerHTML = this.bits + "¥";
       } else if (title.innerHTML.includes("Lives")) {
         title.innerHTML = "<h4>Lives</h4> <br/>";
         value.innerHTML = this.lives;
@@ -569,12 +569,12 @@ class Game {
         title.innerHTML = "<h5>Range</h5>";
         value.innerHTML = tower.range;
       } else if (i === 3) {
-        title.innerHTML = "<h5>Cooldown</h5>";
-        value.innerHTML = tower.cooldown;
+        title.innerHTML = "<h5>Speed</h5>";
+        value.innerHTML = (2500 - tower.cooldown) / 100;
       } else if (i === 4) {
         title.innerHTML = "<h5>Next</h5>";
         if (tower.canUpgrade || game.showTowerDivInfo) {
-          value.innerHTML = tower.upgrade + " ¥";
+          value.innerHTML = tower.upgrade + "¥";
         } else {
           value.innerHTML = "Max";
         }
@@ -795,13 +795,13 @@ class Game {
   }
 
   checkStats() {
-    if (this.cr !== this.lives + this.score + this.bits + this.c) {
-      console.log("oh so you think you're clever");
-      this.score = 0;
-      this.bits = 0;
-      this.lives = 1;
-      this.cr = this.lives + this.score + this.bits + this.c;
-    }
+    // if (this.cr !== this.lives + this.score + this.bits + this.c) {
+    //   console.log("oh so you think you're clever");
+    //   this.score = 0;
+    //   this.bits = 0;
+    //   this.lives = 1;
+    //   this.cr = this.lives + this.score + this.bits + this.c;
+    // }
   }
 
   handleGameStart() {
@@ -810,7 +810,7 @@ class Game {
     );
     towerEditButtons[0].style.opacity = 0;
     towerEditButtons[1].style.opacity = 0;
-    this.context.textAlign = "center";
+    // this.context.textAlign = "center";
     const title = new Image();
     title.src = "/images/splash/tower-time-title.png";
     title.onload = () =>
@@ -820,27 +820,27 @@ class Game {
         30
       );
     this.addPlayButton();
-    this.context.font = "27px Trebuchet MS";
-    this.context.fillStyle = "rgb(186, 186, 186)";
-    this.context.fillText("Tower Abilities", 400, 340);
-    this.context.font = "15px Trebuchet MS";
-    this.context.fillStyle = "#fff";
-    this.context.fillText(
-      "Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack",
-      400,
-      370
-    );
-    this.context.font = "25px Trebuchet MS";
-    this.context.fillStyle = "rgb(186, 186, 186)";
-    this.context.fillText("Optional Hotkeys", 400, 425);
-    this.context.font = "15px Trebuchet MS";
-    this.context.fillStyle = "#fff";
-    this.context.fillText(
-      "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc    Toggle Info: I",
-      400,
-      455
-    );
-    this.context.fillText("hover over anything to get tooltips", 400, 500);
+    // this.context.font = "Press Start 2P";
+    // this.context.fillStyle = "rgb(186, 186, 186)";
+    // this.context.fillText("Tower Abilities", 420, 340);
+    // this.context.font = "15px Trebuchet MS";
+    // this.context.fillStyle = "#fff";
+    // this.context.fillText(
+    //   "Earth: None     Water: Slows Enemies     Fire: Fast Attack     Air: Through Attack",
+    //   420,
+    //   370
+    // );
+    // this.context.font = "25px Trebuchet MS";
+    // this.context.fillStyle = "rgb(186, 186, 186)";
+    // this.context.fillText("Optional Hotkeys", 420, 425);
+    // this.context.font = "15px Trebuchet MS";
+    // this.context.fillStyle = "#fff";
+    // this.context.fillText(
+    //   "Earth: 1    Water: 2    Fire: 3    Air: 4    Upgrade: Q    Sell: S    Deselect: Esc    Toggle Info: I",
+    //   420,
+    //   455
+    // );
+    // this.context.fillText("hover over anything to get tooltips", 420, 500);
   }
 
   addPlayButton() {
@@ -916,11 +916,11 @@ class Game {
     this.context.font = "100px Trebuchet MS";
     this.context.fillStyle = "#333";
     this.context.textAlign = "center";
-    this.context.fillText("Game Over", 400, 210);
+    this.context.fillText("Game Over", 420, 210);
     this.context.font = "40px Trebuchet MS";
     this.context.fillStyle = "#333";
     this.context.textAlign = "center";
-    this.context.fillText(`Final Score: ${this.score}`, 400, 280);
+    this.context.fillText(`Final Score: ${this.score}`, 420, 280);
     this.context.font = "25px Trebuchet MS";
     // this.lives = 0;
     this.gameOver = true;
@@ -939,8 +939,8 @@ class Game {
     const towers = document.querySelector("#towers");
     waveButton.removeEventListener("click", game.newGame, false);
     autoWaveButton.checked = false;
-    newCanvas.width = 800;
-    newCanvas.height = 520;
+    newCanvas.width = 840;
+    newCanvas.height = 560;
     document
       .querySelector("#canvas-wrapper")
       .replaceChild(newCanvas, gameOverScreen);
