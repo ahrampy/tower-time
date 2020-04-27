@@ -11,7 +11,9 @@ class Creep {
 
     // * movement
     this.location = location;
+    this.prevCell = null;
     this.currentCell = null;
+    this.nextCell = null;
     this.velocity = new Vector(0, 0);
     this.acceleration = new Vector(0, 0);
 
@@ -43,9 +45,11 @@ class Creep {
   checkWalls() {
     const col = Math.floor(this.location.x / game.cellSize);
     const row = Math.floor(this.location.y / game.cellSize);
-    if (game.grid && game.grid[col] && game.grid[col][row].occupied) {
-      this.velocity.x = -this.velocity.x / 2;
-      this.velocity.y = -this.velocity.y / 2;
+    if (game.grid && game.grid[col] && game.grid[col][row]) {
+      if (game.grid[col][row].occupied && this.prevCell) {
+        this.velocity.x = -this.velocity.x / 2;
+        this.velocity.y = -this.velocity.y / 2;
+      }
     }
   }
 
@@ -119,14 +123,15 @@ class Creep {
     }
 
     if (cellCheck && !cellCheck.occupied) {
+      this.prevCell = this.currentCell;
       this.currentCell = cellCheck;
-      const nextCell = this.currentCell.smallestAdjacent;
+      this.nextCell = this.currentCell.smallestAdjacent;
       this.acceleration = this.acceleration.subGetNew(
-        nextCell.center,
+        this.nextCell.center,
         this.currentCell.center
       );
       this.acceleration.setMag(0.05);
-      this.setDir(nextCell.location);
+      this.setDir(this.nextCell.location);
     }
 
     this.velocity.add(this.acceleration);

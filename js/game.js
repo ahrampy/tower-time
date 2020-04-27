@@ -386,7 +386,7 @@ class Game {
     while (route.length) {
       const cell = route.pop();
       if (cell.value === -1) {
-        continue;
+        return false;
       } else if (cell === game.goal) {
         return true;
       }
@@ -607,6 +607,7 @@ class Game {
       const bottomCell = this.grid[c][this.numRows - 1];
       topCell.occupied = true;
       topCell.static = true;
+      topCell.img = sprites.border;
       topCell.img = sprites.border;
       bottomCell.occupied = true;
       bottomCell.static = true;
@@ -922,10 +923,10 @@ class Game {
   newGame() {
     const gameOverScreen = document.querySelector(".game-over");
     dom.canvas = document.createElement("canvas");
+    dom.wave.removeEventListener("click", game.newGame, false);
     dom.canvas.width = 840;
     dom.canvas.height = 560;
     dom.wrapper.replaceChild(dom.canvas, gameOverScreen);
-    dom.wave.removeEventListener("click", game.newGame, false);
     dom.auto.checked = false;
     while (dom.towerMenu.firstChild) {
       dom.towerMenu.removeChild(dom.towerMenu.lastChild);
@@ -936,6 +937,7 @@ class Game {
     dom.bottomBar.style.opacity = 0;
     dom.play.style.display = "";
     game = new Game();
+    tutorial = new Tutorial();
   }
 
   run() {
