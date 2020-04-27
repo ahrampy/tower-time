@@ -1,17 +1,17 @@
-music: howler.js
-mobile: css layout
+
+game:
+  add start / end js file
+  fix creep catch on tower placement near goal
 
 ui:
+  add info back to game start
   add small delay to wave button active times
   disable new game click before score screen load
   disable update and sell hover when hidden
   info window pop-outs for tutorial / towertypes & hotkeys
   fade displays on game over
-  add new game over w/ new game button
-  add info back to game start
-  
-game:
-  add dom handler js file
-  add start / end js file
-  fix undefined wave-button tip on first wave click & canvas tip on game over
-  fix creep catch on tower placement near goal
+  add new game over screen w/ new game button and local storage score
+
+schemes:
+  music: howler.js
+  mobile: css layout
