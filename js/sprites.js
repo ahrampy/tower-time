@@ -8,10 +8,11 @@ const sprites = {
   attack: new Image(),
   slime: {},
   gork: {},
-  uwo: {}
+  uwo: {},
 };
 
 sprites.border.src = "/images/board/border.png";
+sprites.border.style.opacity = 0.4;
 sprites.wall.src = "/images/board/wall.png";
 sprites.wallSelected.src = "/images/board/wall-selected.png";
 sprites.tower.src = "/images/towers/towers.png";
@@ -23,7 +24,7 @@ for (let i = 0; i < 5; i++) {
 
   sprites.gork[i] = new Image();
   sprites.gork[i].src = `/images/creeps/gork/gork-${i}.png`;
-  
+
   sprites.uwo[i] = new Image();
   sprites.uwo[i].src = `/images/creeps/uwo/uwo-${i}.png`;
 }

@@ -125,6 +125,7 @@ class Cell {
       this.renderImage();
       return;
     }
+    
     if (this.cancelled) {
       this.context.fillStyle = "rgba(255, 255, 255, 0.6)";
       this.timeout();
@@ -148,7 +149,9 @@ class Cell {
   }
 
   renderImage() {
-    if (!this.static) this.img = this.selected ? this.selectImg : this.wallImg;
+    if (!this.static) {
+      this.img = this.selected ? this.selectImg : this.wallImg;
+    }
     this.context.save();
     this.context.translate(this.center.x, this.center.y);
     this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);

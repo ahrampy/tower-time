@@ -877,6 +877,7 @@ class Game {
 
   handleGameOver() {
     dom.wave.style.opacity = 0;
+    dom.tutorial.style.opacity = 0;
     const highscores = firebase
       .database()
       .ref("scores")
@@ -920,12 +921,12 @@ class Game {
 
   newGame() {
     const gameOverScreen = document.querySelector(".game-over");
-    const newCanvas = document.createElement("canvas");
+    dom.canvas = document.createElement("canvas");
+    dom.canvas.width = 840;
+    dom.canvas.height = 560;
+    dom.wrapper.replaceChild(dom.canvas, gameOverScreen);
     dom.wave.removeEventListener("click", game.newGame, false);
     dom.auto.checked = false;
-    newCanvas.width = 840;
-    newCanvas.height = 560;
-    dom.wrapper.replaceChild(newCanvas, gameOverScreen);
     while (dom.towerMenu.firstChild) {
       dom.towerMenu.removeChild(dom.towerMenu.lastChild);
     }
@@ -933,7 +934,6 @@ class Game {
     dom.wave.classList.remove("active");
     dom.topBar.style.opacity = 0;
     dom.bottomBar.style.opacity = 0;
-    dom.tutorial.style.opacity = 0;
     dom.play.style.display = "";
     game = new Game();
   }

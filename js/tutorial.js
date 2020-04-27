@@ -27,11 +27,10 @@ class Tutorial {
   }
 
   showInfo(name, tip) {
-    const text = tutorial.textPar;
     if (name === "canvas" && game.wave === 0 && game.gameStarted) {
-      this.startTips(text);
+      this.startTips();
     } else {
-      text.innerHTML = tip;
+      tutorial.textPar.innerHTML = tip;
     }
     this.ensureDefault();
   }
@@ -46,9 +45,9 @@ class Tutorial {
     tutorial.textPar.innerHTML = tutorial.default;
   }
 
-  startTips(text) {
+  startTips() {
     if (game.bits <= 50) {
-      text.innerHTML =
+      tutorial.textPar.innerHTML =
         "now that you have some towers, its time to send the first wave!";
     }
   }
