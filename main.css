@@ -234,12 +234,12 @@ canvas {
 }
 
 #spacer-div-1 {
-  width: 20px;
+  width: 160px;
 }
 
-#spacer-div-2 {
+/* #spacer-div-2 {
   width: 15px;
-}
+} */
 
 #mute-button {
   display: flex;

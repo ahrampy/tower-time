@@ -3,8 +3,6 @@
 class Creep {
   constructor(location, multiplier) {
     // * stats
-    this.type = "creep";
-    // this.boss = type === "gork";
     this.multiplier = multiplier;
     this.worth = 5 * this.multiplier;
     this.pointValue = 100 * this.multiplier;
@@ -24,8 +22,6 @@ class Creep {
 
     // * img
     this.currSheet = 0;
-    this.width = 16;
-    this.height = 16;
     this.dir = 0;
     this.frame = 0;
     this.step = 0;
@@ -186,14 +182,14 @@ class Creep {
     this.context.translate(this.location.x, this.location.y);
     this.context.drawImage(
       sprites[this.type][this.currSheet],
-      this.frame * this.width,
-      this.dir * this.height,
-      this.width,
-      this.height,
-      -this.width,
-      -this.height - 4,
-      this.width * 2,
-      this.height * 2
+      this.frame * this.size,
+      this.dir * this.size,
+      this.size,
+      this.size,
+      -this.size,
+      -this.size - this.offset,
+      this.size * 2,
+      this.size * 2
     );
     this.context.restore();
   }
@@ -258,6 +254,8 @@ class Slime extends Creep {
     this.type = "slime";
     this.maxHealth = game.wave * 350 * this.multiplier;
     this.health = this.maxHealth;
+    this.size = 16;
+    this.offset = 4;
   }
 }
 
@@ -267,7 +265,18 @@ class Gork extends Creep {
     this.type = "gork";
     this.maxHealth = game.wave * 800 * this.multiplier;
     this.health = this.maxHealth;
-    this.width = 18
-    this.height = 18
+    this.size = 18;
+    this.offset = 4;
+  }
+}
+
+class Uwo extends Creep {
+  constructor(location, multiplier) {
+    super(location, multiplier);
+    this.type = "uwo";
+    this.maxHealth = game.wave * 1200 * this.multiplier;
+    this.health = this.maxHealth;
+    this.size = 32;
+    this.offset = 16;
   }
 }
