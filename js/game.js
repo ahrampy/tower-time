@@ -50,6 +50,11 @@ class Game {
     this.start = null;
     this.goal = null;
 
+    // * track cells
+    this.border = [];
+    this.blocks = [];
+    this.cellsArr = [];
+
     // * pathing
     this.validated = false;
     this.loadGrid();
@@ -59,9 +64,6 @@ class Game {
     this.showTowerDivInfo = null;
     this.placingTower = false;
     this.towersArr = [];
-
-    // * track cells
-    this.cellsArr = [];
 
     // * increase difficulty
     this.multiplier = 1;
@@ -603,26 +605,21 @@ class Game {
 
   initBorder() {
     for (let c = 0; c < this.numCols; c++) {
-      const topCell = this.grid[c][0];
-      const bottomCell = this.grid[c][this.numRows - 1];
-      topCell.occupied = true;
-      topCell.static = true;
-      topCell.img = sprites.border;
-      topCell.img = sprites.border;
-      bottomCell.occupied = true;
-      bottomCell.static = true;
-      bottomCell.img = sprites.border;
+      this.addBorderCell(c, 0);
+      this.addBorderCell(c, this.numRows - 1);
     }
     for (let r = 0; r < this.numRows; r++) {
-      const rightCell = this.grid[0][r];
-      const leftCell = this.grid[this.numCols - 1][r];
-      rightCell.occupied = true;
-      rightCell.static = true;
-      rightCell.img = sprites.border;
-      leftCell.occupied = true;
-      leftCell.static = true;
-      leftCell.img = sprites.border;
+      this.addBorderCell(0, r);
+      this.addBorderCell(this.numCols - 1, r);
     }
+  }
+
+  addBorderCell(col, row) {
+    const cell = this.grid[col][row];
+    cell.occupied = true;
+    cell.static = true;
+    cell.img = sprites.border;
+    this.border.push(cell);
   }
 
   initPosts() {
@@ -651,6 +648,7 @@ class Game {
       const cell = this.grid[randRow][randCol];
       if (cell !== this.start && cell !== this.goal && !cell.occupied) {
         cell.occupied = true;
+        this.blocks.push(cell);
       } else {
         i--;
       }
@@ -658,12 +656,10 @@ class Game {
   }
 
   resetBlocks() {
-    for (let c = 1; c < this.numCols - 1; c++) {
-      for (let r = 1; r < this.numRows - 1; r++) {
-        const cell = this.grid[c][r];
-        cell.occupied = false;
-      }
-    }
+    this.blocks.forEach((block) => {
+      block.occupied = false;
+    });
+    this.blocks = [];
   }
 
   loadPaths() {
@@ -874,6 +870,39 @@ class Game {
     dom.topBar.style.opacity = 100;
     dom.bottomBar.style.opacity = 100;
     dom.tutorial.style.opacity = 100;
+    game.animateBorder();
+    game.animateBlocks();
+  }
+
+  animateBorder() {
+    if (game.border.length) {
+      for (let i = 0; i < Math.ceil(game.border.length) / 2; i++) {
+        const cell1 = game.border[i];
+        const cell2 = game.border[game.border.length - 1 - i];
+        this.blinkCell(cell1, i);
+        this.blinkCell(cell2, i);
+      }
+      game.border = null;
+    }
+  }
+
+  animateBlocks() {
+    if (game.blocks.length) {
+      for (let i = 0; i < game.blocks.length; i++) {
+        const cell = game.blocks[i];
+        this.blinkCell(cell, i + 20);
+      }
+      game.blocks = null;
+    }
+  }
+
+  blinkCell(cell, time) {
+    cell.occupied = false;
+    cell.static = false;
+    setTimeout(() => {
+      cell.occupied = true;
+      cell.static = true;
+    }, time * 10);
   }
 
   handleGameOver() {

@@ -121,7 +121,7 @@ class Cell {
   }
 
   render() {
-    if (this.occupied || this.static) {
+    if (this.static || this.occupied) {
       this.renderImage();
       return;
     }
