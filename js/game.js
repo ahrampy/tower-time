@@ -43,8 +43,8 @@ class Game {
     // * grid specs
     this.numBlocks = 35;
     this.cellSize = this.mobile ? 20 : 40;
-    this.numCols = 20;
-    this.numRows = 13;
+    this.numCols = 21;
+    this.numRows = 14;
     this.start = null;
     this.goal = null;
 
@@ -518,9 +518,9 @@ class Game {
       } else if (title.innerHTML.includes("Wave")) {
         title.innerHTML = "<h4>Wave</h4> <br/>";
         value.innerHTML = this.wave;
-      // } else if (title.innerHTML.includes("Enemy")) {
-      //   title.innerHTML = "<h4>Enemy</h4> <br/>";
-      //   value.innerHTML = this.creepHealth;
+        // } else if (title.innerHTML.includes("Enemy")) {
+        //   title.innerHTML = "<h4>Enemy</h4> <br/>";
+        //   value.innerHTML = this.creepHealth;
       }
       title.appendChild(value);
     }
@@ -608,13 +608,29 @@ class Game {
         );
       }
     }
+    this.initBorder();
     this.initPosts();
     this.initBlocks();
   }
 
+  initBorder() {
+    for (let c = 0; c < this.numCols; c++) {
+      const topCell = this.grid[c][0];
+      const bottomCell = this.grid[c][this.numRows - 1];
+      topCell.occupied = true;
+      bottomCell.occupied = true;
+    }
+    for (let r = 0; r < this.numRows; r++) {
+      const rightCell = this.grid[0][r];
+      const leftCell = this.grid[this.numCols - 1][r];
+      rightCell.occupied = true;
+      leftCell.occupied = true;
+    }
+  }
+
   initPosts() {
-    this.start = this.grid[Math.ceil(Math.random() * 2)][
-      Math.ceil(Math.random() * 10)
+    this.start = this.grid[Math.ceil(Math.random() * 3) + 1][
+      Math.ceil(Math.random() * 10) + 1
     ];
     const startImg = new Image();
     startImg.src = "/images/board/start.png";
@@ -633,8 +649,8 @@ class Game {
   initBlocks() {
     this.resetBlocks();
     for (let i = 0; i < this.numBlocks; i++) {
-      const randRow = Math.floor(Math.random() * 18) + 1;
-      const randCol = Math.floor(Math.random() * 11) + 1;
+      const randRow = Math.floor(Math.random() * 17) + 2;
+      const randCol = Math.floor(Math.random() * 10) + 2;
       const cell = this.grid[randRow][randCol];
       if (cell !== this.start && cell !== this.goal && !cell.occupied) {
         cell.occupied = true;
@@ -645,8 +661,8 @@ class Game {
   }
 
   resetBlocks() {
-    for (let c = 0; c < this.numCols; c++) {
-      for (let r = 0; r < this.numRows; r++) {
+    for (let c = 1; c < this.numCols - 1; c++) {
+      for (let r = 1; r < this.numRows - 1; r++) {
         const cell = this.grid[c][r];
         cell.occupied = false;
       }
@@ -989,6 +1005,6 @@ class Game {
   }
 
   render() {
-    this.context.clearRect(0, 0, 800, 520);
+    this.context.clearRect(0, 0, 840, 560);
   }
 }

@@ -31,14 +31,14 @@ class Creep {
     this.slowTimeout = 0;
   }
 
-  checkEdges() {
-    if (this.location.x <= 5 || this.location.x > 795) {
-      this.velocity.x = -this.velocity.x / 2;
-    }
-    if (this.location.y <= 5 || this.location.y > 515) {
-      this.velocity.y = -this.velocity.y / 2;
-    }
-  }
+  // checkEdges() {
+  //   if (this.location.x <= 5 || this.location.x > 835) {
+  //     this.velocity.x = -this.velocity.x / 2;
+  //   }
+  //   if (this.location.y <= 5 || this.location.y > 555) {
+  //     this.velocity.y = -this.velocity.y / 2;
+  //   }
+  // }
 
   checkWalls() {
     const col = Math.floor(this.location.x / game.cellSize);
@@ -236,7 +236,7 @@ class Creep {
   update() {
     this.move();
     this.checkWalls();
-    this.checkEdges();
+    // this.checkEdges();
     this.checkHit();
     this.checkAlive();
   }
