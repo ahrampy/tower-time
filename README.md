@@ -1,5 +1,5 @@
 # Tower Time
-a live pathing tower defense game.
+A live pathing tower defense game.
 
 [Tower Time Live](https://towertime.herokuapp.com/)
 
