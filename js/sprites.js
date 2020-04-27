@@ -1,13 +1,19 @@
 "use strict";
 
-const towerSprites = new Image()
-const attackSprites = new Image()
-const creepSprites = {}
+const sprites = {
+  tower: new Image(),
+  attack: new Image(),
+  slime: {},
+  gork: {},
+};
 
-towerSprites.src = "/images/towers/towers.png"
-attackSprites.src = "/images/towers/attacks.png"
-for(let i = 0; i < 5; i++) {
-  creepSprites[i] = new Image;
-  creepSprites[i].src = `/images/creeps/creep-${i}.png`;
+sprites.tower.src = "/images/towers/towers.png";
+sprites.attack.src = "/images/towers/attacks.png";
+
+for (let i = 0; i < 5; i++) {
+  sprites.slime[i] = new Image();
+  sprites.slime[i].src = `/images/creeps/slime-${i}.png`;
+
+  sprites.gork[i] = new Image();
+  sprites.gork[i].src = `/images/creeps/gork-${i}.png`;
 }
-

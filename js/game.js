@@ -63,7 +63,6 @@ class Game {
 
     // * increase difficulty
     this.multiplier = 1;
-    this.creepHealth = this.wave * 400 * this.multiplier;
 
     // * auto wave
     this.autoWave = false;
@@ -127,7 +126,6 @@ class Game {
     if (game.wave % 30 === 0) {
       game.multiplier += 0.5;
     }
-    game.creepHealth = game.wave * 400 * game.multiplier;
     game.bits += 5 * game.wave;
     game.cr += 5 * game.wave;
     game.loadCreeps(20);
@@ -520,9 +518,9 @@ class Game {
       } else if (title.innerHTML.includes("Wave")) {
         title.innerHTML = "<h4>Wave</h4> <br/>";
         value.innerHTML = this.wave;
-      } else if (title.innerHTML.includes("Enemy")) {
-        title.innerHTML = "<h4>Enemy</h4> <br/>";
-        value.innerHTML = this.creepHealth;
+      // } else if (title.innerHTML.includes("Enemy")) {
+      //   title.innerHTML = "<h4>Enemy</h4> <br/>";
+      //   value.innerHTML = this.creepHealth;
       }
       title.appendChild(value);
     }
@@ -714,7 +712,12 @@ class Game {
     const creeps = [];
     for (let i = 0; i < numCreeps; i++) {
       const location = this.start.center.copy();
-      const creep = new Creep(location, this.multiplier);
+      let creep;
+      if (i === 0) {
+        creep = new Gork(location, this.multiplier);
+      } else {
+        creep = new Slime(location, this.multiplier);
+      }
       creeps.push(creep);
     }
     this.stages[this.wave] = [creeps, new Date() - 1500];

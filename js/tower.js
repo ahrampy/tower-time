@@ -13,10 +13,11 @@ class Tower {
     speed
   ) {
     // * images
-    (this.width = 30),
-      (this.height = 30),
-      // * stats
-      (this.idx = idx);
+    this.width = 32;
+    this.height = 32;
+
+    // * stats
+    this.idx = idx;
     this.cost = cost;
     this.upgrade = upgrade;
     this.type = type;
@@ -151,7 +152,7 @@ class Tower {
       this.context.translate(this.location.x, this.location.y);
       this.context.rotate(this.angle);
       this.context.drawImage(
-        towerSprites,
+        sprites.tower,
         this.level * this.width,
         this.idx * this.height,
         this.width,

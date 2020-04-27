@@ -2,6 +2,15 @@
 
 class Creep {
   constructor(location, multiplier) {
+    // * stats
+    this.type = "creep";
+    // this.boss = type === "gork";
+    this.multiplier = multiplier;
+    this.worth = 5 * this.multiplier;
+    this.pointValue = 100 * this.multiplier;
+    this.alive = true;
+    this.w = this.maxHealth;
+
     // * movement
     this.location = location;
     this.currentCell = null;
@@ -14,21 +23,12 @@ class Creep {
     this.color = "rgb(225, 225, 225)";
 
     // * img
-    this.currSheet = creepSprites[0];
+    this.currSheet = 0;
     this.width = 16;
     this.height = 16;
     this.dir = 0;
     this.frame = 0;
     this.step = 0;
-
-    // * stats
-    this.multiplier = multiplier;
-    this.worth = 5 * this.multiplier;
-    this.pointValue = 100 * this.multiplier;
-    this.maxHealth = game.wave * 400 * this.multiplier;
-    this.health = this.maxHealth;
-    this.alive = true;
-    this.w = this.maxHealth;
 
     // * slow
     this.slowed = false;
@@ -37,10 +37,10 @@ class Creep {
 
   checkEdges() {
     if (this.location.x <= 5 || this.location.x > 795) {
-      this.velocity.x = -this.velocity.x;
+      this.velocity.x = -this.velocity.x / 2;
     }
     if (this.location.y <= 5 || this.location.y > 515) {
-      this.velocity.y = -this.velocity.y;
+      this.velocity.y = -this.velocity.y / 2;
     }
   }
 
@@ -48,8 +48,8 @@ class Creep {
     const col = Math.floor(this.location.x / game.cellSize);
     const row = Math.floor(this.location.y / game.cellSize);
     if (game.grid && game.grid[col] && game.grid[col][row].occupied) {
-      this.velocity.x = -this.velocity.x;
-      this.velocity.y = -this.velocity.y;
+      this.velocity.x = -this.velocity.x / 2;
+      this.velocity.y = -this.velocity.y / 2;
     }
   }
 
@@ -73,15 +73,15 @@ class Creep {
 
   checkSheet() {
     if (this.slowed) {
-      this.currSheet = creepSprites[4];
+      this.currSheet = 4;
     } else if (this.health <= this.maxHealth * 0.25) {
-      this.currSheet = creepSprites[3];
+      this.currSheet = 3;
     } else if (this.health <= this.maxHealth * 0.5) {
-      this.currSheet = creepSprites[2];
+      this.currSheet = 2;
     } else if (this.health <= this.maxHealth * 0.75) {
-      this.currSheet = creepSprites[1];
+      this.currSheet = 1;
     } else {
-      this.currSheet = creepSprites[0];
+      this.currSheet = 0;
     }
   }
 
@@ -144,19 +144,29 @@ class Creep {
   }
 
   setDir(dest) {
-    // console.log(dest);
-    // console.log(this.currentCell.location);
     const loc = this.currentCell.location;
     if (dest.x > loc.x) {
+      // if (this.dir === 1) {
+      //   console.log("turn left");
+      // }
       // right
       this.dir = 2;
     } else if (dest.x < loc.x) {
+      // if (this.dir === 2) {
+      //   console.log("turn right");
+      // }
       // left
       this.dir = 1;
     } else if (dest.y < loc.y) {
+      // if (this.dir === 0) {
+      //   console.log("turn down");
+      // }
       // up
       this.dir = 3;
     } else {
+      // if (this.dir === 3) {
+      //   console.log("turn up");
+      // }
       // down
       this.dir = 0;
     }
@@ -175,7 +185,7 @@ class Creep {
     this.context.save();
     this.context.translate(this.location.x, this.location.y);
     this.context.drawImage(
-      this.currSheet,
+      sprites[this.type][this.currSheet],
       this.frame * this.width,
       this.dir * this.height,
       this.width,
@@ -239,6 +249,23 @@ class Creep {
     this.checkSheet();
     // this.drawCircle()
     this.stepAnimation();
-    
+  }
+}
+
+class Slime extends Creep {
+  constructor(location, multiplier) {
+    super(location, multiplier);
+    this.type = "slime";
+    this.maxHealth = game.wave * 350 * this.multiplier;
+    this.health = this.maxHealth;
+  }
+}
+
+class Gork extends Creep {
+  constructor(location, multiplier) {
+    super(location, multiplier);
+    this.type = "gork";
+    this.maxHealth = game.wave * 800 * this.multiplier;
+    this.health = this.maxHealth;
   }
 }

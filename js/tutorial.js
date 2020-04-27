@@ -63,10 +63,10 @@ class Tutorial {
         "#info-wave",
         "the amount of waves you have survived so far: including the current one",
       ],
-      [
-        "#info-creep",
-        "the amount damage needed to stop the most recently sent enemies: increases every wave",
-      ],
+      // [
+      //   "#info-creep",
+      //   "the amount damage needed to stop the most recently sent enemies: increases every wave",
+      // ],
       [
         "#info-lives",
         "if an enemy makes it to the red square, you lose a life: reach zero lives and the game is over",

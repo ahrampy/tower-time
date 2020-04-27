@@ -41,7 +41,7 @@ class Attack {
     this.context.translate(this.location.x, this.location.y);
     this.context.rotate(this.angle);
     this.context.drawImage(
-      attackSprites,
+      sprites.attack,
       this.level * this.width,
       this.idx * this.height,
       this.width,
