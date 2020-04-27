@@ -2,11 +2,13 @@
 
 window.addEventListener("load", init, false);
 
+var dom;
 var game;
 var tutorial;
 var scores;
 
 function init() {
+  dom = new DOMHandler();
   game = new Game();
   tutorial = new Tutorial();
   scores = new Scores();
@@ -21,7 +23,7 @@ function animate() {
 class Game {
   constructor() {
     // * add canvas
-    this.canvas = document.querySelector("canvas");
+    this.canvas = dom.canvas;
     this.context = this.canvas.getContext("2d");
 
     // * game objects
@@ -76,7 +78,7 @@ class Game {
     this.canvas.addEventListener("dblclick", this.handleCanvasDblClick, false);
 
     // * load buttons
-    this.waveButton = document.querySelector("#wave-button");
+    this.waveButton = dom.wave;
     this.tileDivs = this.createTiles();
     this.handleTileListeners(this.tileDivs);
     this.handleButtonClicks();
@@ -97,20 +99,17 @@ class Game {
   }
 
   handleButtonClicks() {
-    const upgradeButton = document.querySelector("#upgrade-button");
-    const sellButton = document.querySelector("#sell-button");
-    const autoWave = document.querySelector("input[name=auto-wave]");
-    this.waveButton.addEventListener("click", this.waveClick, false);
-    upgradeButton.addEventListener("click", this.upgradeClick, false);
-    sellButton.addEventListener("click", this.sellClick, false);
-    autoWave.addEventListener("change", this.autoWaveToggle, false);
+    dom.wave.addEventListener("click", this.waveClick, false);
+    dom.auto.addEventListener("change", this.autoWaveToggle, false);
+    dom.upgrade.addEventListener("click", this.upgradeClick, false);
+    dom.sell.addEventListener("click", this.sellClick, false);
   }
 
   waveClick() {
     game.wave += 1;
     if (game.wave === 1) {
       this.innerText = "Next Wave";
-      document.querySelector("#towers").classList.remove("active");
+      dom.towerMenu.classList.remove("active");
       tutorial.showInfo("start");
     }
     game.nextWave();
@@ -214,7 +213,7 @@ class Game {
   }
 
   // handleSoundButton() {
-  //   const muteButton = document.querySelector("#mute-button");
+  //   const muteButton = dom.mute("#mute-button");
   //   muteButton.addEventListener("click", this.audioToggle, false);
   // }
 
@@ -340,7 +339,7 @@ class Game {
         game.resetSelects();
       }
     } else {
-      const bank = document.querySelector("#info-bits");
+      const bank = dom.bank;
       if (!bank.classList.contains("flashing")) {
         bank.classList.add("flashing");
         setTimeout(() => {
@@ -422,7 +421,7 @@ class Game {
     const tileDivs = [];
     for (let i = 0; i < 4; i++) {
       let tileDiv = this.addTowerStats(i);
-      document.querySelector("#towers").appendChild(tileDiv);
+      dom.towerMenu.appendChild(tileDiv);
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
@@ -501,7 +500,7 @@ class Game {
   }
 
   updateInfo() {
-    let infoTiles = document.querySelectorAll("#info > .info-tile");
+    let infoTiles = dom.infoTiles;
     for (let i = 0; i < infoTiles.length; i++) {
       let title = infoTiles[i];
       const value = document.createElement("p");
@@ -537,23 +536,17 @@ class Game {
       obj = true;
     }
 
-    let towerEditButtons = document.querySelectorAll(
-      "#edit-tower-buttons > .edit-button"
-    );
-
     if (obj) {
-      towerEditButtons[0].style.opacity = tower.canUpgrade ? 100 : 0;
-      towerEditButtons[1].style.opacity = 100;
+      dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
+      dom.sell.style.opacity = 100;
     } else {
-      towerEditButtons[0].style.opacity = 0;
-      towerEditButtons[1].style.opacity = 0;
+      dom.upgrade.style.opacity = 0;
+      dom.sell.style.opacity = 0;
     }
 
     if (!tower) return;
 
-    let towerInfoTiles = document.querySelectorAll(
-      "#tower-details > .detail-tile"
-    );
+    let towerInfoTiles = dom.towerStats;
 
     for (let i = 0; i < towerInfoTiles.length; i++) {
       const title = towerInfoTiles[i];
@@ -791,7 +784,7 @@ class Game {
       game.waveButton.classList.remove("active");
     }
     if (game.wave === 0 && game.bits < 50) {
-      document.querySelector("#towers").classList.remove("active");
+      dom.towerMenu.classList.remove("active");
       game.waveButton.classList.add("active");
       tutorial.showInfo("canvas");
     }
@@ -808,11 +801,8 @@ class Game {
   }
 
   handleGameStart() {
-    const towerEditButtons = document.querySelectorAll(
-      "#edit-tower-buttons > .edit-button"
-    );
-    towerEditButtons[0].style.opacity = 0;
-    towerEditButtons[1].style.opacity = 0;
+    dom.upgrade.style.opacity = 0;
+    dom.sell.style.opacity = 0;
     // this.context.textAlign = "center";
     const title = new Image();
     title.src = "/images/splash/tower-time-title.png";
@@ -847,7 +837,7 @@ class Game {
   }
 
   addPlayButton() {
-    const playButton = document.querySelector("#play-button");
+    const playButton = dom.play;
     playButton.style.backgroundImage =
       "url('../images/splash/play-button.png')";
     playButton.addEventListener("mouseover", () => {
@@ -870,21 +860,20 @@ class Game {
       e.preventDefault();
       playButton.style.backgroundImage =
         "url('../images/splash/play-button-hover.png')";
-      setTimeout(() => this.handleStart(playButton), 300);
+      setTimeout(this.handleStart, 300);
     });
   }
 
-  handleStart(playButton) {
-    playButton.style.display = "none";
+  handleStart() {
+    dom.play.style.display = "none";
     game.gameStarted = true;
     game.handleGameStart();
     game.run();
-    document.querySelector("canvas").style.backgroundColor =
-      "rgba(186, 186, 186, 0.9)";
-    document.querySelector("#towers").classList.add("active");
-    document.querySelector("#game-controls").style.opacity = 100;
-    document.querySelector("#content-box").style.opacity = 100;
-    document.querySelector("#tutorial-window").style.opacity = 100;
+    dom.canvas.style.backgroundColor = "rgba(186, 186, 186, 0.9)";
+    dom.towerMenu.classList.add("active");
+    dom.topBar.style.opacity = 100;
+    dom.bottomBar.style.opacity = 100;
+    dom.tutorial.style.opacity = 100;
   }
 
   handleGameOver() {
@@ -901,9 +890,7 @@ class Game {
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
       gameOverScreen.classList.add("game-over");
-      document
-        .querySelector("#canvas-wrapper")
-        .replaceChild(gameOverScreen, this.canvas);
+      dom.wrapper.replaceChild(gameOverScreen, this.canvas);
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
         setTimeout(() => {
@@ -935,26 +922,20 @@ class Game {
   newGame() {
     const gameOverScreen = document.querySelector(".game-over");
     const newCanvas = document.createElement("canvas");
-    const playButton = document.querySelector("#play-button");
-    const waveButton = document.querySelector("#wave-button");
-    const autoWaveButton = document.querySelector("input[name=auto-wave]");
-    const towers = document.querySelector("#towers");
-    waveButton.removeEventListener("click", game.newGame, false);
-    autoWaveButton.checked = false;
+    dom.wave.removeEventListener("click", game.newGame, false);
+    dom.auto.checked = false;
     newCanvas.width = 840;
     newCanvas.height = 560;
-    document
-      .querySelector("#canvas-wrapper")
-      .replaceChild(newCanvas, gameOverScreen);
-    while (towers.firstChild) {
-      towers.removeChild(towers.lastChild);
+    dom.wrapper.replaceChild(newCanvas, gameOverScreen);
+    while (dom.towerMenu.firstChild) {
+      dom.towerMenu.removeChild(dom.towerMenu.lastChild);
     }
-    waveButton.innerText = "First Wave";
-    waveButton.classList.remove("active");
-    document.querySelector("#game-controls").style.opacity = 0;
-    document.querySelector("#content-box").style.opacity = 0;
-    document.querySelector("#tutorial-window").style.opacity = 0;
-    playButton.style.display = "";
+    dom.wave.innerText = "First Wave";
+    dom.wave.classList.remove("active");
+    dom.topBar.style.opacity = 0;
+    dom.bottomBar.style.opacity = 0;
+    dom.tutorial.style.opacity = 0;
+    dom.play.style.display = "";
     game = new Game();
   }
 
