@@ -792,7 +792,6 @@ class Game {
     }
     if (game.wave === 0 && game.bits < 50) {
       document.querySelector("#towers").classList.remove("active");
-      document.querySelector("#info-bits").classList.remove("active");
       game.waveButton.classList.add("active");
       tutorial.showInfo("canvas");
     }
@@ -977,7 +976,9 @@ class Game {
         this.grid[this.numCols - 1][r].run();
       }
       for (let c = 1; c < this.numCols - 1; c++) {
-        for (let r = 1; r < this.numRows - 1; r++) this.grid[c][r].run();
+        for (let r = 1; r < this.numRows - 1; r++) {
+          this.grid[c][r].run();
+        }
       }
       for (let i = 0; i < this.cellsArr.length; i++) {
         this.cellsArr[i].renderImage();
