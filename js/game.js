@@ -713,10 +713,10 @@ class Game {
     for (let i = 0; i < numCreeps; i++) {
       const location = this.start.center.copy();
       let creep;
-      if (i === 0) {
+      if (i === numCreeps - 1) {
         creep = new Gork(location, this.multiplier);
       } else {
-        creep = new Slime(location, this.multiplier);
+        creep = new Creep(location, this.multiplier);
       }
       creeps.push(creep);
     }

@@ -267,5 +267,7 @@ class Gork extends Creep {
     this.type = "gork";
     this.maxHealth = game.wave * 800 * this.multiplier;
     this.health = this.maxHealth;
+    this.width = 18
+    this.height = 18
   }
 }
