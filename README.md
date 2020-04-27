@@ -1,5 +1,5 @@
 # Tower Time
-A Javascript tower defense game.
+a live pathing tower defense game.
 
 [Tower Time Live](https://towertime.herokuapp.com/)
 
