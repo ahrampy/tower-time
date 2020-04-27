@@ -426,7 +426,7 @@ class Game {
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
-      tileImg.src = `/images/towers/${tileDiv.type}-tower-1.png`;
+      tileImg.src = `/images/towers/tiles/${tileDiv.type}.png`;
       tileDiv.appendChild(tileImg);
 
       const towerName = document.createElement("p");
@@ -452,7 +452,7 @@ class Game {
       div.cost = 30;
       div.upgrade = 60;
       div.range = 120;
-      div.cooldown = 300;
+      div.cooldown = 400;
       div.damage = 10;
       div.speed = 1;
     } else if (i === 2) {
@@ -468,8 +468,8 @@ class Game {
       div.cost = 100;
       div.upgrade = 200;
       div.range = 150;
-      div.cooldown = 2000;
-      div.damage = 120;
+      div.cooldown = 1800;
+      div.damage = 100;
       div.speed = 16;
     }
     return div;
@@ -570,7 +570,7 @@ class Game {
         value.innerHTML = tower.range;
       } else if (i === 3) {
         title.innerHTML = "<h5>Speed</h5>";
-        value.innerHTML = (2500 - tower.cooldown) / 100;
+        value.innerHTML = 2000 - tower.cooldown;
       } else if (i === 4) {
         title.innerHTML = "<h5>Next</h5>";
         if (tower.canUpgrade || game.showTowerDivInfo) {
@@ -590,18 +590,14 @@ class Game {
     for (let c = 0; c < this.numCols; c++) {
       this.grid.push([]);
       for (let r = 0; r < this.numRows; r++) {
-        const wallImg = new Image();
-        wallImg.src = "/images/board/wall.png";
-        const selectImg = new Image();
-        selectImg.src = "/images/board/wall-selected.png";
         this.grid[c].push(
           new Cell(
             id++,
             this.grid,
             this.cellSize,
             this.context,
-            wallImg,
-            selectImg,
+            sprites.wall,
+            sprites.wallSelected,
             c,
             r
           )
@@ -618,13 +614,21 @@ class Game {
       const topCell = this.grid[c][0];
       const bottomCell = this.grid[c][this.numRows - 1];
       topCell.occupied = true;
+      topCell.static = true;
+      topCell.img = sprites.border;
       bottomCell.occupied = true;
+      bottomCell.static = true;
+      bottomCell.img = sprites.border;
     }
     for (let r = 0; r < this.numRows; r++) {
       const rightCell = this.grid[0][r];
       const leftCell = this.grid[this.numCols - 1][r];
       rightCell.occupied = true;
+      rightCell.static = true;
+      rightCell.img = sprites.border;
       leftCell.occupied = true;
+      leftCell.static = true;
+      leftCell.img = sprites.border;
     }
   }
 
@@ -882,7 +886,6 @@ class Game {
     document.querySelector("#game-controls").style.opacity = 100;
     document.querySelector("#content-box").style.opacity = 100;
     document.querySelector("#tutorial-window").style.opacity = 100;
-
   }
 
   handleGameOver() {
@@ -966,10 +969,18 @@ class Game {
       this.checkWave();
       this.sendCreeps();
       for (let c = 0; c < this.numCols; c++) {
-        for (let r = 0; r < this.numRows; r++) this.grid[c][r].run();
+        this.grid[c][0].run();
+        this.grid[c][this.numRows - 1].run();
+      }
+      for (let r = 1; r < this.numRows - 1; r++) {
+        this.grid[0][r].run();
+        this.grid[this.numCols - 1][r].run();
+      }
+      for (let c = 1; c < this.numCols - 1; c++) {
+        for (let r = 1; r < this.numRows - 1; r++) this.grid[c][r].run();
       }
       for (let i = 0; i < this.cellsArr.length; i++) {
-        this.cellsArr[i].run();
+        this.cellsArr[i].renderImage();
       }
       for (let i = 0; i < this.towers.length; i++) {
         let tower = this.towers[i];
@@ -979,9 +990,6 @@ class Game {
           this.towers.splice(i, 1);
         }
       }
-      for (let i = 0; i < this.towersArr.length; i++) {
-        this.towersArr[i].run();
-      }
       for (let i = 0; i < this.creeps.length; i++) {
         let creep = this.creeps[i];
         if (creep.alive) {
@@ -989,6 +997,9 @@ class Game {
         } else {
           this.creeps.splice(i, 1);
         }
+      }
+      for (let i = 0; i < this.towersArr.length; i++) {
+        this.towersArr[i].drawRange();
       }
       for (let i = 0; i < this.attacks.length; i++) {
         let attack = this.attacks[i];

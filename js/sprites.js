@@ -1,6 +1,9 @@
 "use strict";
 
 const sprites = {
+  border: new Image(),
+  wall: new Image(),
+  wallSelected: new Image(),
   tower: new Image(),
   attack: new Image(),
   slime: {},
@@ -8,6 +11,9 @@ const sprites = {
   uwo: {}
 };
 
+sprites.border.src = "/images/board/border.png";
+sprites.wall.src = "/images/board/wall.png";
+sprites.wallSelected.src = "/images/board/wall-selected.png";
 sprites.tower.src = "/images/towers/towers.png";
 sprites.attack.src = "/images/towers/attacks.png";
 

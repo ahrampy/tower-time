@@ -6,6 +6,9 @@ ui:
   disable new game click before score screen load
   disable update and sell hover when hidden
   info window pop-outs for tutorial / towertypes & hotkeys
+  fade displays on game over
+  add new game over w/ new game button
+  add info back to game start
   
 game:
   add dom handler js file

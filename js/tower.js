@@ -120,6 +120,20 @@ class Tower {
     }
   }
 
+  drawRange() {
+    this.context.beginPath();
+    this.context.arc(
+      this.location.x,
+      this.location.y,
+      this.range,
+      0,
+      Math.PI * 2
+    );
+    this.context.strokeStyle = "rgba(222, 255, 252, 0.4)";
+    this.context.lineWidth = 4;
+    this.context.stroke();
+  }
+
   run() {
     this.update();
     this.render();
@@ -137,17 +151,7 @@ class Tower {
     this.context.save();
     if (this.visible) {
       if (this.selected || !this.placed) {
-        this.context.beginPath();
-        this.context.arc(
-          this.location.x,
-          this.location.y,
-          this.range,
-          0,
-          Math.PI * 2
-        );
-        this.context.strokeStyle = "rgba(222, 255, 252, 0.4)";
-        this.context.lineWidth = 4;
-        this.context.stroke();
+        this.drawRange();
       }
       this.context.translate(this.location.x, this.location.y);
       this.context.rotate(this.angle);

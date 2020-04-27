@@ -1,6 +1,6 @@
 body {
-  font-family: "Press Start 2P", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;;
+  font-family: "Press Start 2P", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-size: 12px;
   background: #333;
   background-image: url(/images/space.png);
@@ -88,9 +88,10 @@ body:hover {
   background-color: #333;
   color: #fff;
   text-align: center;
+  font-family: inherit;
   font-size: 20px;
   line-height: 1.5em;
-  width: 200px;
+  width: 300px;
   text-decoration: none;
   outline: none;
   border: 3px solid rgb(70, 70, 70);
@@ -104,7 +105,7 @@ body:hover {
 }
 
 .scores li {
-  font-size: 22px;
+  font-size: 16px;
   padding: 0px 10px 10px;
 }
 
@@ -331,7 +332,7 @@ canvas {
 }
 
 .detail-tile h5 {
-  margin: 25px
+  margin: 25px;
 }
 
 .detail-tile p {
@@ -453,7 +454,7 @@ canvas {
 
 .git {
   padding-left: 10px;
-  margin-top: -2px;
+  margin-top: -5px;
 }
 
 .git img {

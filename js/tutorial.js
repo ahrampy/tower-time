@@ -82,8 +82,8 @@ class Tutorial {
       ],
       ["#tower-range", "distance the selected tower attack enemies"],
       [
-        "#tower-cooldown",
-        "time in miliseconds the selected tower takes before each attack",
+        "#tower-speed",
+        "how quickly the tower attacks",
       ],
       ["#tower-next", "cost to your bank of the selected tower's next upgrade"],
       [
