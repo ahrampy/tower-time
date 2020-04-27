@@ -1,13 +1,17 @@
 {
   "name": "tower-time-master",
   "version": "1.0.0",
-  "description": "Canvas tower defense game.",
+  "description": "a canvas tower defense game.",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahrampy/tower-time.git"
   },
-  "keywords": [],
+  "keywords": [
+    "td",
+    "tower defense",
+    "game"
+  ],
   "author": "adrian rampy",
   "license": "ISC",
   "bugs": {
@@ -15,7 +19,6 @@
   },
   "homepage": "https://github.com/ahrampy/tower-time#readme",
   "dependencies": {
-    "firebase": "^7.9.1",
-    "uglify-js": "^3.8.0"
+    "firebase": "^7.9.1"
   }
 }
