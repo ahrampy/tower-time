@@ -78,7 +78,6 @@ class Game {
     this.canvas.addEventListener("dblclick", this.handleCanvasDblClick, false);
 
     // * load buttons
-    this.waveButton = dom.wave;
     this.tileDivs = this.createTiles();
     this.handleTileListeners(this.tileDivs);
     this.handleButtonClicks();
@@ -772,20 +771,20 @@ class Game {
 
   checkWave() {
     if (game.autoWave && !game.sendingWave && !game.creeps.length) {
-      game.waveButton.click();
+      dom.wave.click();
       game.sendingWave = true;
       setTimeout(() => {
         game.sendingWave = false;
       }, 1000);
     }
     if (!game.creeps.length && !game.sendingWave && game.wave > 0) {
-      game.waveButton.classList.add("active");
+      dom.wave.classList.add("active");
     } else {
-      game.waveButton.classList.remove("active");
+      dom.wave.classList.remove("active");
     }
     if (game.wave === 0 && game.bits < 50) {
       dom.towerMenu.classList.remove("active");
-      game.waveButton.classList.add("active");
+      dom.wave.classList.add("active");
       tutorial.showInfo("canvas");
     }
   }
@@ -877,7 +876,7 @@ class Game {
   }
 
   handleGameOver() {
-    game.waveButton.style.opacity = 0;
+    dom.wave.style.opacity = 0;
     const highscores = firebase
       .database()
       .ref("scores")
@@ -894,7 +893,7 @@ class Game {
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
         setTimeout(() => {
-          game.waveButton.style.opacity = 100;
+          dom.wave.style.opacity = 100;
           scores.handleScores(gameOverScreen, highscores);
         }, 500);
       }, 500);
@@ -913,9 +912,9 @@ class Game {
     this.context.font = "25px Trebuchet MS";
     // this.lives = 0;
     this.gameOver = true;
-    this.waveButton.innerText = "New Game";
-    this.waveButton.addEventListener("click", this.newGame, false);
-    this.waveButton.classList.add("active");
+    dom.wave.innerText = "New Game";
+    dom.wave.addEventListener("click", this.newGame, false);
+    dom.wave.classList.add("active");
     tutorial.showInfo("game-over");
   }
 
