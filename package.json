@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/ahrampy/tower-time#readme",
   "dependencies": {
-    "firebase": "^7.9.1"
+    "firebase": "^7.14.2"
   }
 }
