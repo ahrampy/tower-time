@@ -76,4 +76,10 @@ class Vector {
   copy() {
     return new Vector(this.x, this.y);
   }
+
+  cell() {
+    const col = Math.floor(this.x / game.cellSize);
+    const row = Math.floor(this.y / game.cellSize);
+    return game.grid[col][row];
+  }
 }

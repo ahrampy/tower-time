@@ -33,18 +33,19 @@ class Creep {
     this.slowTimeout = 0;
   }
 
-  // checkEdges() {
-  //   if (this.location.x <= 5 || this.location.x > 835) {
-  //     this.velocity.x = -this.velocity.x / 2;
-  //   }
-  //   if (this.location.y <= 5 || this.location.y > 555) {
-  //     this.velocity.y = -this.velocity.y / 2;
-  //   }
-  // }
+  checkBorder() {
+    if (this.location.x <= 45 || this.location.x > 795) {
+      this.velocity.x = -this.velocity.x / 2;
+    }
+    if (this.location.y <= 45 || this.location.y > 515) {
+      this.velocity.y = -this.velocity.y / 2;
+    }
+  }
 
   checkWalls() {
     const col = Math.floor(this.location.x / game.cellSize);
     const row = Math.floor(this.location.y / game.cellSize);
+
     if (game.grid && game.grid[col] && game.grid[col][row]) {
       if (game.grid[col][row].occupied && this.prevCell) {
         this.velocity.x = -this.velocity.x / 2;
@@ -111,11 +112,16 @@ class Creep {
     this.slowTimeout = 30;
   }
 
-  move() {
-    const col = Math.floor(this.location.x / game.cellSize);
-    const row = Math.floor(this.location.y / game.cellSize);
+  moveSlow() {
+    this.velocity.slow();
+    this.slowTimeout--;
+    if (this.slowTimeout <= 0) {
+      this.slowed = false;
+    }
+  }
 
-    const cellCheck = game.grid[col][row];
+  move() {
+    const cellCheck = this.location.cell();
 
     if (cellCheck === game.goal) {
       this.takeLife();
@@ -126,23 +132,27 @@ class Creep {
       this.prevCell = this.currentCell;
       this.currentCell = cellCheck;
       this.nextCell = this.currentCell.smallestAdjacent;
-      this.acceleration = this.acceleration.subGetNew(
-        this.nextCell.center,
-        this.currentCell.center
-      );
-      this.acceleration.setMag(0.05);
-      this.setDir(this.nextCell.location);
+    } else {
+      this.currentCell = cellCheck;
+      this.nextCell = this.prevCell;
+      this.velocity.normalize();
     }
+
+    this.acceleration = this.acceleration.subGetNew(
+      this.nextCell.center,
+      this.currentCell.center
+    );
+
+    this.acceleration.setMag(0.05);
+    this.setDir(this.nextCell.location);
 
     this.velocity.add(this.acceleration);
     this.velocity.normalize();
+
     if (this.slowed) {
-      this.velocity.slow();
-      this.slowTimeout--;
-      if (this.slowTimeout <= 0) {
-        this.slowed = false;
-      }
+      this.moveSlow();
     }
+
     this.location.add(this.velocity);
   }
 
@@ -243,7 +253,7 @@ class Creep {
   update() {
     this.move();
     this.checkWalls();
-    // this.checkEdges();
+    this.checkBorder();
     this.checkHit();
     this.checkAlive();
   }
