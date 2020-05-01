@@ -1,4 +1,5 @@
 # Tower Time
+
 A live pathing tower defense game.
 
 [Tower Time Live](https://towertime.herokuapp.com/)
@@ -7,10 +8,10 @@ Build, upgrade, and sell towers to create a maze for enemies, and stop them from
 
 ## Technologies
 
-* Javascript
-* HTML5
-* CSS3
-* FireBase
+- Javascript
+- HTML5
+- CSS3
+- FireBase
 
 ## About
 
@@ -19,15 +20,19 @@ Build, upgrade, and sell towers to create a maze for enemies, and stop them from
 Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm for pathfinding combined with vector movement. It features custom pixel animations and is a fully-featured game, with different enemy types, upgrade and sell options, hotkeys, group selection, and randomized map generation.
 
 #### Tower Abilities
+
 Different towers have different abilities, inluding decreasing the speed of enemies and being able to attack multiple targets with one shot. This adds a considerable strategic element to the game, giving players the chance to try out various combinations of towers and upgrade levels to make their maze more effective.
 
 #### Difficulty
-Every 10th and 30th level, the difficulty, along with points and income, increase by a multiplier to keep the game competative and challanging to commited players. It scales at a balanced level to make it a continued challange, but not a defeating one.
+
+Every 10th and 30th level, the difficulty, along with points and income, increase by a difficulty to keep the game competative and challanging to commited players. It scales at a balanced level to make it a continued challange, but not a defeating one.
 
 #### Path Finding
+
 Live path finding and valid tower placement checking are an essential element to the game, running a check for the fastest route for enemies every time a tower is placed or removed, and, before a tower is placed, making sure it does not block the path completely or trap any moving units.
 
 #### Vectors
+
 Enemies use a vector class to traverse towers and blocked squares. Upon choosing the correct direction based on Dijkstra's path creation pattern, they are propelled in that direction but limited to a defined speed, and "bounce" off objects or borders they get too close to.
 
 #### High Scores

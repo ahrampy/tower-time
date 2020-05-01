@@ -1,11 +1,11 @@
 "use strict";
 
 class Creep {
-  constructor(location, multiplier) {
+  constructor(location, difficulty) {
     // * stats
-    this.multiplier = multiplier;
-    this.worth = 5 * this.multiplier;
-    this.pointValue = 100 * this.multiplier;
+    this.difficulty = difficulty;
+    this.worth = 5 * this.difficulty;
+    this.pointValue = 100 * this.difficulty;
     this.alive = true;
     this.w = this.maxHealth;
 
@@ -266,10 +266,10 @@ class Creep {
 }
 
 class Slime extends Creep {
-  constructor(location, multiplier) {
-    super(location, multiplier);
+  constructor(location, difficulty) {
+    super(location, difficulty);
     this.type = "slime";
-    this.maxHealth = game.wave * 350 * this.multiplier;
+    this.maxHealth = game.wave * 350 * this.difficulty;
     this.health = this.maxHealth;
     this.size = 16;
     this.offset = 4;
@@ -277,10 +277,10 @@ class Slime extends Creep {
 }
 
 class Gork extends Creep {
-  constructor(location, multiplier) {
-    super(location, multiplier);
+  constructor(location, difficulty) {
+    super(location, difficulty);
     this.type = "gork";
-    this.maxHealth = game.wave * 800 * this.multiplier;
+    this.maxHealth = game.wave * 800 * this.difficulty;
     this.health = this.maxHealth;
     this.size = 18;
     this.offset = 4;
@@ -288,10 +288,10 @@ class Gork extends Creep {
 }
 
 class Uwo extends Creep {
-  constructor(location, multiplier) {
-    super(location, multiplier);
+  constructor(location, difficulty) {
+    super(location, difficulty);
     this.type = "uwo";
-    this.maxHealth = game.wave * 1200 * this.multiplier;
+    this.maxHealth = game.wave * 1200 * this.difficulty;
     this.health = this.maxHealth;
     this.size = 32;
     this.offset = 16;

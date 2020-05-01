@@ -1,11 +1,11 @@
 
 game:
   add start / end js file
-  fix creep catch on tower placement near goal
+  add send wave hotkey
+  add pause?
 
 ui:
   add small delay to wave button active times
-  disable first wave click before play click
   disable update and sell hover when hidden
   info window pop-outs for tutorial / towertypes & hotkeys
   fade bars on game over
