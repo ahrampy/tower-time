@@ -355,7 +355,7 @@ class Game {
       cell.occupied = true;
       game.loadPaths();
 
-      if (this.checkPaths() && this.checkRoute()) {
+      if (this.checkPaths(cell) && this.checkRoute()) {
         game.placeTower(cell);
       } else {
         cell.cancel();
@@ -364,18 +364,19 @@ class Game {
     }
   }
 
-  checkPaths() {
+  checkPaths(cell) {
     return game.creeps.every((creep) => {
+      if (creep.currentCell === cell) return false;
       const route = [creep.currentCell];
       while (route.length) {
-        const currCell = route.pop();
-        if (currCell) {
-          if (currCell.value === -1) {
+        const checkCell = route.pop();
+        if (checkCell) {
+          if (checkCell.value === -1) {
             continue;
-          } else if (currCell === game.goal) {
+          } else if (checkCell === game.goal) {
             return true;
           }
-          route.push(currCell.smallestAdjacent);
+          route.push(checkCell.smallestAdjacent);
         }
       }
       return false;
