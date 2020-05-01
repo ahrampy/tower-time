@@ -90,18 +90,18 @@ class Game {
   }
 
   nextWave() {
-    game.cr -= game.bits;
-    game.bits = Math.ceil(game.bits / 5) * 5;
-    game.cr += game.bits;
-    if (game.wave % 10 === 0) {
-      game.difficulty += 0.5;
-    }
-    if (game.wave % 30 === 0) {
-      game.difficulty += 0.5;
-    }
-    game.bits += 5 * game.wave;
-    game.cr += 5 * game.wave;
-    game.loadCreeps(20);
+      game.cr -= game.bits;
+      game.bits = Math.ceil(game.bits / 5) * 5;
+      game.cr += game.bits;
+      if (game.wave % 10 === 0) {
+        game.difficulty += 0.5;
+      }
+      if (game.wave % 30 === 0) {
+        game.difficulty += 0.5;
+      }
+      game.bits += 5 * game.wave;
+      game.cr += 5 * game.wave;
+      game.loadCreeps(20);
   }
 
   // handleSoundButton() {

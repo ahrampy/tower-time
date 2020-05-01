@@ -110,13 +110,15 @@ class ActionsHandler {
   }
 
   waveClick() {
-    game.wave += 1;
-    if (game.wave === 1) {
-      this.innerText = "Next Wave";
-      dom.towerMenu.classList.remove("active");
-      tutorial.showInfo("start");
+    if (game.gameStarted && !game.gameOver) {
+      game.wave += 1;
+      if (game.wave === 1) {
+        this.innerText = "Next Wave";
+        dom.towerMenu.classList.remove("active");
+        tutorial.showInfo("start");
+      }
+      game.nextWave();
     }
-    game.nextWave();
   }
 
   upgradeClick() {
