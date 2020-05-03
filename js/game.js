@@ -90,18 +90,18 @@ class Game {
   }
 
   nextWave() {
-      game.cr -= game.bits;
-      game.bits = Math.ceil(game.bits / 5) * 5;
-      game.cr += game.bits;
-      if (game.wave % 10 === 0) {
-        game.difficulty += 0.5;
-      }
-      if (game.wave % 30 === 0) {
-        game.difficulty += 0.5;
-      }
-      game.bits += 5 * game.wave;
-      game.cr += 5 * game.wave;
-      game.loadCreeps(20);
+    game.cr -= game.bits;
+    game.bits = Math.ceil(game.bits / 5) * 5;
+    game.cr += game.bits;
+    if (game.wave % 10 === 0) {
+      game.difficulty += 0.5;
+    }
+    if (game.wave % 30 === 0) {
+      game.difficulty += 0.5;
+    }
+    game.bits += 5 * game.wave;
+    game.cr += 5 * game.wave;
+    game.loadCreeps(20);
   }
 
   // handleSoundButton() {
@@ -359,19 +359,7 @@ class Game {
   }
 
   loadPaths() {
-    this.grid.forEach((col) => {
-      col.forEach((cell) => {
-        if (cell !== this.goal) {
-          cell.value = -1;
-          cell.adjacent = [];
-        }
-      });
-    });
-    for (let c = 0; c < this.numCols; c++) {
-      for (let r = 0; r < this.numRows; r++) {
-        this.grid[c][r].loadAdjacentCells();
-      }
-    }
+    this.resetPaths();
     const checkCells = [this.goal];
     while (checkCells.length) {
       const current = checkCells.shift();
@@ -395,17 +383,33 @@ class Game {
     }
   }
 
+  resetPaths() {
+    this.grid.forEach((col) => {
+      col.forEach((cell) => {
+        if (cell !== this.goal) {
+          cell.value = -1;
+          cell.adjacent = [];
+        }
+      });
+    });
+    for (let c = 0; c < this.numCols; c++) {
+      for (let r = 0; r < this.numRows; r++) {
+        this.grid[c][r].loadAdjacentCells();
+      }
+    }
+  }
+
   ensureValidMap() {
-    let checkBlock = false;
+    let pathBlocked = false;
 
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++)
         if (this.grid[c][r].value === -1 && !this.grid[c][r].occupied) {
-          checkBlock = true;
+          pathBlocked = true;
         }
     }
 
-    if (checkBlock) {
+    if (pathBlocked) {
       this.initBlocks();
       this.loadPaths();
     } else {

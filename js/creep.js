@@ -159,27 +159,15 @@ class Creep {
   setDir(dest) {
     const loc = this.currentCell.location;
     if (dest.x > loc.x) {
-      // if (this.dir === 1) {
-      //   console.log("turn left");
-      // }
       // right
       this.dir = 2;
     } else if (dest.x < loc.x) {
-      // if (this.dir === 2) {
-      //   console.log("turn right");
-      // }
       // left
       this.dir = 1;
     } else if (dest.y < loc.y) {
-      // if (this.dir === 0) {
-      //   console.log("turn down");
-      // }
       // up
       this.dir = 3;
     } else {
-      // if (this.dir === 3) {
-      //   console.log("turn up");
-      // }
       // down
       this.dir = 0;
     }
