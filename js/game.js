@@ -4,13 +4,15 @@ window.addEventListener("load", init, false);
 
 var dom;
 var actions;
+var starter;
 var game;
 var tutorial;
 var scores;
 
 function init() {
-  dom = new DOMHandler();
+  dom = new DomHandler();
   game = new Game();
+  starter = new Starter();
   actions = new ActionsHandler();
   tutorial = new Tutorial();
   scores = new Scores();
@@ -62,7 +64,7 @@ class Game {
     this.loadGrid();
     this.loadPaths();
 
-    // * load towers
+    // * load tower buttons
     this.tileDivs = this.createTiles();
 
     // * track towers
@@ -83,8 +85,7 @@ class Game {
     this.c = 0;
     this.f;
 
-    // * init
-    this.handleTitleScreen();
+    // * bounds
     this.gameStarted = false;
     this.gameOver = false;
   }
@@ -455,6 +456,7 @@ class Game {
   checkHit(attack) {
     const gridCol = Math.floor(attack.location.x / game.cellSize);
     const gridRow = Math.floor(attack.location.y / game.cellSize);
+
     if (game.grid[gridCol] && game.grid[gridCol][gridRow]) {
       const cell = game.grid[gridCol][gridRow];
       cell.attack(attack.damage, attack.type === "water");
@@ -494,56 +496,6 @@ class Game {
       this.lives = 1;
       this.cr = this.lives + this.score + this.bits + this.c;
     }
-  }
-
-  handleTitleScreen() {
-    dom.upgrade.style.opacity = 0;
-    dom.sell.style.opacity = 0;
-    // this.context.textAlign = "center";
-    const title = new Image();
-    title.src = "/images/splash/tower-time-title.png";
-    title.onload = () =>
-      this.context.drawImage(
-        title,
-        this.canvas.width / 2 - title.width / 2,
-        40
-      );
-    this.addPlayButton();
-  }
-
-  addPlayButton() {
-    dom.play.style.backgroundImage = sprites.play.plain;
-    dom.play.addEventListener("mouseover", (e) => {
-      e.target.style.backgroundImage = sprites.play.hover;
-    });
-    dom.play.addEventListener("mouseout", (e) => {
-      e.target.style.backgroundImage = sprites.play.plain;
-    });
-    dom.play.addEventListener("mousedown", (e) => {
-      e.target.style.backgroundImage = sprites.play.pressed;
-    });
-    dom.play.addEventListener("mouseup", (e) => {
-      e.target.style.backgroundImage = sprites.play.hover;
-    });
-    dom.play.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.target.style.backgroundImage = sprites.play.hover;
-      setTimeout(this.handleStart, 300);
-    });
-  }
-
-  handleStart() {
-    dom.play.style.display = "none";
-    dom.startText.style.display = "none";
-    game.gameStarted = true;
-    game.run();
-    dom.canvas.style.backgroundColor = "rgba(186, 186, 186, 0.9)";
-    dom.towerMenu.classList.add("active");
-    dom.topBar.style.opacity = 100;
-    dom.bottomBar.style.opacity = 100;
-    dom.tutorial.style.opacity = 100;
-    game.animateBorder();
-    game.animateBlocks();
   }
 
   animateBorder() {
@@ -632,6 +584,8 @@ class Game {
     dom.play.style.display = "";
     dom.startText.style.display = "flex";
     game = new Game();
+    starter = new Starter();
+    actions = new ActionsHandler();
     tutorial = new Tutorial();
   }
 

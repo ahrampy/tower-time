@@ -121,7 +121,7 @@ class Creep {
   }
 
   move() {
-    const cellCheck = this.location.cell();
+    const cellCheck = this.location.getCell();
 
     if (cellCheck === game.goal) {
       this.takeLife();

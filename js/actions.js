@@ -297,9 +297,8 @@ class ActionsHandler {
   }
 
   updateStats() {
-    let infoTiles = dom.infoTiles;
-    for (let i = 0; i < infoTiles.length; i++) {
-      let title = infoTiles[i];
+    for (let i = 0; i < dom.infoTiles.length; i++) {
+      let title = dom.infoTiles[i];
       const value = document.createElement("p");
 
       if (title.innerHTML.includes("Bank")) {

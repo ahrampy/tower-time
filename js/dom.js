@@ -1,6 +1,6 @@
 "use strict";
 
-class DOMHandler {
+class DomHandler {
   constructor() {
     // * main
     this.play = document.querySelector("#play-button");

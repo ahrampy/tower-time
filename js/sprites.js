@@ -16,6 +16,7 @@ const sprites = {
   },
 };
 
+
 sprites.border.src = "/images/board/border.png";
 sprites.border.style.opacity = 0.4;
 sprites.wall.src = "/images/board/wall.png";
