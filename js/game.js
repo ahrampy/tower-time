@@ -4,7 +4,7 @@ window.addEventListener("load", init, false);
 
 var dom;
 var actions;
-var starter;
+var loader;
 var game;
 var tutorial;
 var scores;
@@ -12,7 +12,7 @@ var scores;
 function init() {
   dom = new DomHandler();
   game = new Game();
-  starter = new Starter();
+  loader = new Loader();
   actions = new ActionsHandler();
   tutorial = new Tutorial();
   scores = new Scores();
@@ -584,7 +584,7 @@ class Game {
     dom.play.style.display = "";
     dom.startText.style.display = "flex";
     game = new Game();
-    starter = new Starter();
+    loader = new Loader();
     actions = new ActionsHandler();
     tutorial = new Tutorial();
   }

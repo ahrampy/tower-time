@@ -1,6 +1,6 @@
 'use strict';
 
-class Starter {
+class Loader {
   constructor() {
     this.handleTitleScreen();
   }

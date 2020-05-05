@@ -1,8 +1,9 @@
 
 game:
-  add start / end js file
-  add send wave hotkey
-  add pause?
+  add global vars to game instance
+  complete loader.js
+  add pause
+  refactor endgame logic
 
 ui:
   add small delay to wave button active times
