@@ -123,6 +123,7 @@ class Cell {
   render() {
     if (this.static || this.occupied) {
       if (!this.selected) this.renderImage();
+      return;
     }
 
     if (this.cancelled) {
@@ -136,7 +137,7 @@ class Cell {
       );
     }
 
-    // this.showGridNums();
+    // this.showGridNums(); // * display grid lines and pathing values
   }
 
   renderImage() {
@@ -151,13 +152,14 @@ class Cell {
 
   showGridNums() {
     this.context.strokeStyle = "#333333";
+    this.context.fillStyle = "#333333";
+    this.context.lineWidth = 1;
     this.context.strokeRect(
       this.location.x,
       this.location.y,
       this.size,
       this.size
     );
-    this.context.fillStyle = "#333333";
     this.context.fillText(
       this.value,
       this.location.x + 15,
