@@ -1,10 +1,9 @@
 
 game:
-  fix slowdown bug on tower select with many creeps / towers
-  add global vars to game instance
+  move global vars to game instance
   complete loader.js
+  refactor endgame logic and placement
   add pause
-  refactor endgame logic
 
 ui:
   add small delay to wave button active times / change tracking to watch stages

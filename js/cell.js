@@ -122,7 +122,7 @@ class Cell {
 
   render() {
     if (this.static || this.occupied) {
-      this.renderImage();
+      if (!this.selected) this.renderImage();
       return;
     }
     
