@@ -136,7 +136,7 @@ class Cell {
       );
     }
 
-    this.showGridNums();
+    // this.showGridNums();
   }
 
   renderImage() {
