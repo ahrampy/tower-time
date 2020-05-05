@@ -123,9 +123,8 @@ class Cell {
   render() {
     if (this.static || this.occupied) {
       if (!this.selected) this.renderImage();
-      return;
     }
-    
+
     if (this.cancelled) {
       this.context.fillStyle = "rgba(255, 255, 255, 0.6)";
       this.timeout();
@@ -137,15 +136,7 @@ class Cell {
       );
     }
 
-    // this.context.strokeStyle = "#333333"
-    // this.context.strokeRect(this.location.x, this.location.y, this.size, this.size)
-
-    // this.context.fillStyle = "#333333"
-    // this.context.fillText(
-    //   this.value,
-    //   this.location.x + this.size / 2,
-    //   this.location.y + this.size / 2
-    // );
+    this.showGridNums();
   }
 
   renderImage() {
@@ -156,5 +147,21 @@ class Cell {
     this.context.translate(this.center.x, this.center.y);
     this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
     this.context.restore();
+  }
+
+  showGridNums() {
+    this.context.strokeStyle = "#333333";
+    this.context.strokeRect(
+      this.location.x,
+      this.location.y,
+      this.size,
+      this.size
+    );
+    this.context.fillStyle = "#333333";
+    this.context.fillText(
+      this.value,
+      this.location.x + 15,
+      this.location.y + 15
+    );
   }
 }
