@@ -55,7 +55,7 @@ class Tutorial {
   makeTips() {
     return {
       canvas:
-        "enemies will start at the dark blue square and try to get to the red one, but cannot move through walls. place towers to attack enemies and add more walls",
+        "enemies will start at the blue square and try to get to the red one, but cannot move through walls. place towers to attack enemies and add more walls",
       score:
         "your score increases for every enemy stopped before it reaches the red square",
       currWave:
