@@ -26,9 +26,9 @@ class Attack {
     this.location.y += Math.sin(this.angle) * this.speed;
     this.location.x += Math.cos(this.angle) * this.speed;
     if (
-      this.location.x > 800 ||
+      this.location.x > 840 ||
       this.location.x < 0 ||
-      this.location.y > 520 ||
+      this.location.y > 560 ||
       this.location.y < 0
     ) {
       this.hit = true;

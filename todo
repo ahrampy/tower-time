@@ -1,12 +1,13 @@
 
 game:
+  fix slowdown bug on tower select with many creeps / towers
   add global vars to game instance
   complete loader.js
   add pause
   refactor endgame logic
 
 ui:
-  add small delay to wave button active times
+  add small delay to wave button active times / change tracking to watch stages
   disable update and sell hover when hidden
   info window pop-outs for tutorial / towertypes & hotkeys
   fade bars on game over
