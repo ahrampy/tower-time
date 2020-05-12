@@ -138,6 +138,7 @@ class Game {
     return game.creeps.every((creep) => {
       if (creep.currentCell === cell) return false;
       const route = [creep.currentCell];
+
       while (route.length) {
         const checkCell = route.pop();
         if (checkCell) {
@@ -149,6 +150,7 @@ class Game {
           route.push(checkCell.smallestAdjacent);
         }
       }
+
       return false;
     });
   }

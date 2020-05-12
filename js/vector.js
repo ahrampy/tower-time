@@ -16,10 +16,14 @@ class Vector {
     this.y -= vec.y;
   }
 
-  normalize() {
-    const len = Math.sqrt(this.x * this.x + this.y * this.y);
-    this.x /= len;
-    this.y /= len;
+  normalize(slowed, stuck) {
+    let len = Math.sqrt(this.x * this.x + this.y * this.y);
+
+    if (len > 1 || stuck || slowed) {
+      this.x /= len;
+      this.y /= len;
+    }
+
     return new Vector(this.x, this.y);
   }
 
@@ -75,11 +79,5 @@ class Vector {
 
   copy() {
     return new Vector(this.x, this.y);
-  }
-
-  getCell() {
-    const col = Math.floor(this.x / game.cellSize);
-    const row = Math.floor(this.y / game.cellSize);
-    return game.grid[col][row];
   }
 }

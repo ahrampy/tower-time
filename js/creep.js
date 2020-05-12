@@ -121,22 +121,7 @@ class Creep {
   }
 
   move() {
-    const cellCheck = this.location.getCell();
-
-    if (cellCheck === game.goal) {
-      this.takeLife();
-      return;
-    }
-
-    if (cellCheck && !cellCheck.occupied) {
-      this.prevCell = this.currentCell;
-      this.currentCell = cellCheck;
-      this.nextCell = this.currentCell.smallestAdjacent;
-    } else {
-      this.currentCell = cellCheck;
-      this.nextCell = this.prevCell;
-      this.velocity.normalize();
-    }
+    this.setCells();
 
     this.acceleration = this.acceleration.subGetNew(
       this.nextCell.center,
@@ -147,13 +132,40 @@ class Creep {
     this.setDir(this.nextCell.location);
 
     this.velocity.add(this.acceleration);
-    this.velocity.normalize();
+
+    let stuck = this.currentCell.occupied;
+    this.velocity.normalize(this.slowed, stuck);
 
     if (this.slowed) {
       this.moveSlow();
     }
 
     this.location.add(this.velocity);
+  }
+
+  getCell() {
+    const col = Math.floor(this.location.x / game.cellSize);
+    const row = Math.floor(this.location.y / game.cellSize);
+    return game.grid[col][row];
+  }
+
+  setCells() {
+    const cell = this.getCell();
+    if (!cell) return;
+
+    if (cell === game.goal) {
+      this.takeLife();
+      return;
+    }
+
+    this.prevCell = this.currentCell ? this.currentCell : null;
+    this.currentCell = cell;
+
+    if (cell.occupied) {
+      this.nextCell = this.prevCell;
+    } else {
+      this.nextCell = this.currentCell.smallestAdjacent;
+    }
   }
 
   setDir(dest) {
