@@ -55,7 +55,7 @@ class Game {
     this.loadGrid();
     this.loadPaths();
 
-    // * load tower buttons
+    // * tower buttons
     this.tileDivs = this.createTiles();
 
     // * track towers
@@ -122,16 +122,15 @@ class Game {
   // }
 
   checkTowerPlacement(cell) {
-    if (!cell.occupied && cell !== game.goal && cell !== game.start) {
-      cell.occupied = true;
-      game.loadPaths();
+    if (cell.static) return;
+    cell.occupied = true;
+    game.loadPaths();
 
-      if (this.checkPaths(cell) && this.checkRoute()) {
-        game.placeTower(cell);
-      } else {
-        cell.cancel();
-        game.loadPaths();
-      }
+    if (this.checkPaths(cell) && this.checkRoute()) {
+      game.placeTower(cell);
+    } else {
+      cell.cancel();
+      game.loadPaths();
     }
   }
 
