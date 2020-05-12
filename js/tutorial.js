@@ -1,12 +1,13 @@
 "use strict";
 
 class Tutorial {
-  constructor() {
-    this.frame = dom.tutorial;
+  constructor(dom) {
+    this.dom = dom;
+    this.frame = this.dom.tutorial;
     this.frame.addEventListener("click", this.toggleInfo, false);
 
-    this.box = dom.tutorialBox;
-    this.textPar = dom.tutorialText;
+    this.box = this.dom.tutorialBox;
+    this.textPar = this.dom.tutorialText;
     this.default =
       "move your mouse anywhere to learn more or click here to hide tooltips";
     this.tips = this.makeTips();
@@ -16,38 +17,38 @@ class Tutorial {
   addListeners(tips) {
     for (var key in tips) {
       const text = tips[key];
-      const div = dom[key];
+      const div = this.dom[key];
       div.addEventListener("mouseover", () => this.showInfo(key, text), false);
       div.addEventListener("mouseout", this.clearTip, false);
     }
   }
 
   toggleInfo() {
-    tutorial.box.toggleAttribute("hidden");
+    game.tutorial.box.toggleAttribute("hidden");
   }
 
   showInfo(name, tip) {
     if (name === "canvas" && game.wave === 0 && game.gameStarted) {
       this.startTips();
     } else {
-      tutorial.textPar.innerHTML = tip;
+      game.tutorial.textPar.innerHTML = tip;
     }
     this.ensureDefault();
   }
 
   ensureDefault() {
-    if (tutorial.textPar.innerHTML === "undefined") {
-      tutorial.textPar.innerHTML = tutorial.default;
+    if (game.tutorial.textPar.innerHTML === "undefined") {
+      game.tutorial.textPar.innerHTML = game.tutorial.default;
     }
   }
 
   clearTip() {
-    tutorial.textPar.innerHTML = tutorial.default;
+    game.tutorial.textPar.innerHTML = game.tutorial.default;
   }
 
   startTips() {
     if (game.bits <= 50) {
-      tutorial.textPar.innerHTML =
+      game.tutorial.textPar.innerHTML =
         "now that you have some towers, its time to send the first wave!";
     }
   }

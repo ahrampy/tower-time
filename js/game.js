@@ -2,20 +2,10 @@
 
 window.addEventListener("load", init, false);
 
-var dom;
-var actions;
-var loader;
 var game;
-var tutorial;
-var scores;
 
 function init() {
-  dom = new DomHandler();
   game = new Game();
-  loader = new Loader();
-  actions = new ActionsHandler();
-  tutorial = new Tutorial();
-  scores = new Scores();
   window.setTimeout(animate, 100);
 }
 
@@ -26,8 +16,11 @@ function animate() {
 
 class Game {
   constructor() {
+    // * add dom handler
+    this.dom = new DomHandler();
+
     // * add canvas
-    this.canvas = dom.canvas;
+    this.canvas = this.dom.canvas;
     this.context = this.canvas.getContext("2d");
 
     // * game objects
@@ -88,6 +81,12 @@ class Game {
     // * bounds
     this.gameStarted = false;
     this.gameOver = false;
+
+    // * add game element handlers
+    this.loader = new Loader(this.dom);
+    this.actions = new ActionsHandler(this.dom, this.tileDivs);
+    this.tutorial = new Tutorial(this.dom);
+    this.scores = game ? game.scores : new Scores();
   }
 
   nextWave() {
@@ -197,7 +196,7 @@ class Game {
     const tileDivs = [];
     for (let i = 0; i < 4; i++) {
       let tileDiv = this.addTowerStats(i);
-      dom.towerMenu.appendChild(tileDiv);
+      this.dom.towerMenu.appendChild(tileDiv);
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
@@ -470,21 +469,21 @@ class Game {
 
   checkWave() {
     if (game.autoWave && !game.sendingWave && !game.creeps.length) {
-      dom.wave.click();
+      game.dom.wave.click();
       game.sendingWave = true;
       setTimeout(() => {
         game.sendingWave = false;
       }, 1000);
     }
     if (!game.creeps.length && !game.sendingWave && game.wave > 0) {
-      dom.wave.classList.add("active");
+      game.dom.wave.classList.add("active");
     } else {
-      dom.wave.classList.remove("active");
+      game.dom.wave.classList.remove("active");
     }
     if (game.wave === 0 && game.bits < 50) {
-      dom.towerMenu.classList.remove("active");
-      dom.wave.classList.add("active");
-      tutorial.showInfo("canvas");
+      game.dom.towerMenu.classList.remove("active");
+      game.dom.wave.classList.add("active");
+      game.tutorial.showInfo("canvas");
     }
   }
 
@@ -533,10 +532,10 @@ class Game {
     this.gameOver = true;
     this.context.fillStyle = "rgba(125, 125, 125, 0.6)";
     this.context.fillRect(0, 0, 840, 560);
-    dom.gameOver.style.display = "flex";
-    dom.wave.style.opacity = 0;
-    dom.wave.removeEventListener("click", this.waveClick, false);
-    dom.tutorial.style.opacity = 0;
+    this.dom.gameOver.style.display = "flex";
+    this.dom.wave.style.opacity = 0;
+    this.dom.wave.removeEventListener("click", this.waveClick, false);
+    this.dom.tutorial.style.opacity = 0;
     const highscores = firebase
       .database()
       .ref("scores")
@@ -549,18 +548,18 @@ class Game {
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
       gameOverScreen.classList.add("game-over");
-      dom.wrapper.replaceChild(gameOverScreen, this.canvas);
-      dom.gameOver.style.opacity = 0;
+      this.dom.wrapper.replaceChild(gameOverScreen, this.canvas);
+      this.dom.gameOver.style.opacity = 0;
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
-        dom.gameOver.style.display = "none";
+        this.dom.gameOver.style.display = "none";
         setTimeout(() => {
-          dom.wave.innerText = "New Game";
-          dom.wave.addEventListener("click", this.newGame, false);
-          dom.wave.classList.add("active");
-          dom.wave.style.opacity = 100;
-          dom.gameOver.style.opacity = 100;
-          scores.handleScores(gameOverScreen, highscores);
+          this.dom.wave.innerText = "New Game";
+          this.dom.wave.addEventListener("click", this.newGame, false);
+          this.dom.wave.classList.add("active");
+          this.dom.wave.style.opacity = 100;
+          this.dom.gameOver.style.opacity = 100;
+          this.scores.handleScores(gameOverScreen, highscores);
         }, 500);
       }, 500);
     }, 5000);
@@ -568,33 +567,30 @@ class Game {
 
   newGame() {
     const gameOverScreen = document.querySelector(".game-over");
-    dom.canvas = document.createElement("canvas");
-    dom.wave.removeEventListener("click", game.newGame, false);
-    dom.canvas.width = 840;
-    dom.canvas.height = 560;
-    dom.wrapper.replaceChild(dom.canvas, gameOverScreen);
-    dom.auto.checked = false;
-    while (dom.towerMenu.firstChild) {
-      dom.towerMenu.removeChild(dom.towerMenu.lastChild);
+    game.dom.canvas = document.createElement("canvas");
+    game.dom.wave.removeEventListener("click", game.newGame, false);
+    game.dom.canvas.width = 840;
+    game.dom.canvas.height = 560;
+    game.dom.wrapper.replaceChild(game.dom.canvas, gameOverScreen);
+    game.dom.auto.checked = false;
+    while (game.dom.towerMenu.firstChild) {
+      game.dom.towerMenu.removeChild(game.dom.towerMenu.lastChild);
     }
-    dom.wave.innerText = "First Wave";
-    dom.wave.classList.remove("active");
-    dom.topBar.style.opacity = 0;
-    dom.bottomBar.style.opacity = 0;
-    dom.play.style.display = "";
-    dom.startText.style.display = "flex";
+    game.dom.wave.innerText = "First Wave";
+    game.dom.wave.classList.remove("active");
+    game.dom.topBar.style.opacity = 0;
+    game.dom.bottomBar.style.opacity = 0;
+    game.dom.play.style.display = "";
+    game.dom.startText.style.display = "flex";
     game = new Game();
-    loader = new Loader();
-    actions = new ActionsHandler();
-    tutorial = new Tutorial();
   }
 
   run() {
-    actions.updateStats();
+    this.actions.updateStats();
     this.checkStats();
 
     if (!this.gameOver && this.gameStarted) {
-      actions.showTowerInfo();
+      this.actions.showTowerInfo();
       this.render();
       this.checkWave();
       this.sendCreeps();

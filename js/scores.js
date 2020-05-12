@@ -2,7 +2,7 @@
 
 class Scores {
   constructor() {
-    this.loadFireBase();
+    this.firebase = this.loadFireBase();
   }
 
   loadFireBase() {
@@ -16,12 +16,12 @@ class Scores {
       appId: "1:114254327718:web:7d6db95c7f120f99452967",
       measurementId: "G-0BEHEHSDDL",
     };
-    firebase.initializeApp(firebaseConfig);
+    return firebase.initializeApp(firebaseConfig);
   }
 
   update(name, score) {
-    firebase.auth().signInAnonymously();
-    firebase.database().ref("scores").push({
+    this.firebase.auth().signInAnonymously();
+    this.firebase.database().ref("scores").push({
       name: name,
       score: score,
     });

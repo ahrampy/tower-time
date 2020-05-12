@@ -1,12 +1,13 @@
 "use strict";
 
 class ActionsHandler {
-  constructor() {
-    this.canvas = dom.canvas;
+  constructor(dom, tiles) {
+    this.dom = dom;
+    this.canvas = this.dom.canvas;
     this.handleCanvas();
     this.handleButtonClicks();
     this.handleKeyListeners();
-    this.handleTileListeners(game.tileDivs);
+    this.handleTileListeners(tiles);
   }
 
   handleCanvas() {
@@ -95,10 +96,10 @@ class ActionsHandler {
   }
 
   handleButtonClicks() {
-    dom.wave.addEventListener("click", this.waveClick, false);
-    dom.auto.addEventListener("change", this.autoWaveToggle, false);
-    dom.upgrade.addEventListener("click", this.upgradeClick, false);
-    dom.sell.addEventListener("click", this.sellClick, false);
+    this.dom.wave.addEventListener("click", this.waveClick, false);
+    this.dom.auto.addEventListener("change", this.autoWaveToggle, false);
+    this.dom.upgrade.addEventListener("click", this.upgradeClick, false);
+    this.dom.sell.addEventListener("click", this.sellClick, false);
   }
 
   autoWaveToggle() {
@@ -114,8 +115,8 @@ class ActionsHandler {
       game.wave += 1;
       if (game.wave === 1) {
         this.innerText = "Next Wave";
-        dom.towerMenu.classList.remove("active");
-        tutorial.showInfo("start");
+        game.dom.towerMenu.classList.remove("active");
+        game.tutorial.showInfo("start");
       }
       game.nextWave();
     }
@@ -129,7 +130,7 @@ class ActionsHandler {
           game.cr -= tower.upgrade;
           tower.handleUpgrade();
         } else {
-          actions.blinkBank();
+          game.actions.blinkBank();
         }
       }
     });
@@ -230,12 +231,12 @@ class ActionsHandler {
         game.resetSelects();
       }
     } else {
-      actions.blinkBank();
+      game.actions.blinkBank();
     }
   }
 
   blinkBank() {
-    const bank = dom.bank;
+    const bank = game.dom.bank;
     if (!bank.classList.contains("flashing")) {
       bank.classList.add("flashing");
       setTimeout(() => {
@@ -256,16 +257,16 @@ class ActionsHandler {
     }
 
     if (obj) {
-      dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
-      dom.sell.style.opacity = 100;
+      game.dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
+      game.dom.sell.style.opacity = 100;
     } else {
-      dom.upgrade.style.opacity = 0;
-      dom.sell.style.opacity = 0;
+      game.dom.upgrade.style.opacity = 0;
+      game.dom.sell.style.opacity = 0;
     }
 
     if (!tower) return;
 
-    let towerInfoTiles = dom.towerStats;
+    let towerInfoTiles = game.dom.towerStats;
 
     for (let i = 0; i < towerInfoTiles.length; i++) {
       const title = towerInfoTiles[i];
@@ -297,8 +298,8 @@ class ActionsHandler {
   }
 
   updateStats() {
-    for (let i = 0; i < dom.infoTiles.length; i++) {
-      let title = dom.infoTiles[i];
+    for (let i = 0; i < game.dom.infoTiles.length; i++) {
+      let title = game.dom.infoTiles[i];
       const value = document.createElement("p");
 
       if (title.innerHTML.includes("Bank")) {
