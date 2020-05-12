@@ -45,10 +45,10 @@ class ActionsHandler {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
-    const gridCol = Math.floor(mouseX / game.cellSize);
-    const gridRow = Math.floor(mouseY / game.cellSize);
+    const col = Math.floor(mouseX / game.cellSize);
+    const row = Math.floor(mouseY / game.cellSize);
 
-    const cell = game.grid[gridCol][gridRow];
+    const cell = game.grid[col][row];
 
     game.resetSelects();
 

@@ -12,7 +12,7 @@ class Creep {
     // * movement
     this.location = location;
     this.prevCell = null;
-    this.currentCell = null;
+    this.currentCell = this.getCell();
     this.nextCell = null;
     this.stuck = false;
     this.velocity = new Vector(0, 0);
@@ -151,25 +151,22 @@ class Creep {
 
   setCells() {
     const cell = this.getCell();
-    if (!cell) return;
 
     if (cell === game.goal) {
       this.takeLife();
       return;
     }
 
-    if (cell.occupied && this.prevCell) {
-      this.stuck = true;
-      this.currentCell = cell;
+    this.stuck = cell.occupied;
+
+    if (this.stuck) {
       this.nextCell = this.prevCell;
-      return;
     } else {
-      this.stuck = false;
+      this.prevCell = this.currentCell;
+      this.nextCell = cell.smallestAdjacent;
     }
 
-    this.prevCell = this.currentCell ? this.currentCell : null;
     this.currentCell = cell;
-    this.nextCell = this.currentCell.smallestAdjacent;
   }
 
   setDir(dest) {
