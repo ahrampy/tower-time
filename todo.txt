@@ -1,5 +1,6 @@
 
 game:
+  move tileDivs to actions class
   refactor endgame logic, remove timeout hell
   add pause
   add individual inputs for score name chars

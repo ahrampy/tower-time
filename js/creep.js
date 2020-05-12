@@ -44,23 +44,17 @@ class Creep {
   }
 
   checkWalls() {
-    const col = Math.floor(this.location.x / game.cellSize);
-    const row = Math.floor(this.location.y / game.cellSize);
-
-    if (game.grid && game.grid[col] && game.grid[col][row]) {
-      if (game.grid[col][row].occupied && this.prevCell) {
-        this.velocity.x = -this.velocity.x / 2;
-        this.velocity.y = -this.velocity.y / 2;
-      }
+    const cell = this.getCell();
+    if (cell.occupied && !this.stuck && this.prevCell) {
+      this.velocity.x = -this.velocity.x / 2;
+      this.velocity.y = -this.velocity.y / 2;
     }
   }
 
   checkHit() {
-    if (this.currentCell && this.currentCell.attacked) {
+    if (this.currentCell.attacked) {
       this.health -= this.currentCell.attackDamage;
-      if (this.currentCell.attackSlow) {
-        this.slow();
-      }
+      if (this.currentCell.attackSlow) this.slow();
     }
   }
 
@@ -122,8 +116,6 @@ class Creep {
   }
 
   move() {
-    this.setCells();
-
     this.acceleration = this.acceleration.subGetNew(
       this.nextCell.center,
       this.currentCell.center
@@ -159,7 +151,7 @@ class Creep {
 
     this.stuck = cell.occupied;
 
-    if (this.stuck) {
+    if (this.stuck) {      
       this.nextCell = this.prevCell;
     } else {
       this.prevCell = this.currentCell;
@@ -172,16 +164,16 @@ class Creep {
   setDir(dest) {
     const loc = this.currentCell.location;
     if (dest.x > loc.x) {
-      // right
+      // * right
       this.dir = 2;
     } else if (dest.x < loc.x) {
-      // left
+      // * left
       this.dir = 1;
     } else if (dest.y < loc.y) {
-      // up
+      // * up
       this.dir = 3;
     } else {
-      // down
+      // * down
       this.dir = 0;
     }
   }
@@ -212,6 +204,26 @@ class Creep {
     this.context.restore();
   }
 
+  run() {
+    this.update();
+    this.render();
+  }
+
+  update() {
+    this.checkWalls();
+    this.checkBorder();
+    this.checkHit();
+    this.checkAlive();
+    this.setCells();
+    this.move();
+  }
+
+  render() {
+    this.checkSheet();
+    this.stepAnimation();
+    // this.drawCircle();
+  }
+
   // drawCircle() {
   //   this.context.beginPath();
   //   this.context.arc(
@@ -221,49 +233,9 @@ class Creep {
   //     0,
   //     Math.PI * 2
   //   );
-  //   if (this.health === this.maxHealth) {
-  //     this.context.fillStyle = this.color;
-  //   } else if (this.slowed) {
-  //     this.context.fillStyle = "#49E2FA";
-  //   } else if (
-  //     this.health < this.maxHealth &&
-  //     this.health > this.maxHealth * 0.75
-  //   ) {
-  //     this.context.fillStyle = "rgba(245, 242, 66)";
-  //   } else if (
-  //     this.health <= this.maxHealth * 0.75 &&
-  //     this.health >= this.maxHealth * 0.5
-  //   ) {
-  //     this.context.fillStyle = "rgba(245, 182, 66)";
-  //   } else if (
-  //     this.health <= this.maxHealth * 0.5 &&
-  //     this.health >= this.maxHealth * 0.25
-  //   ) {
-  //     this.context.fillStyle = "rgba(245, 147, 66)";
-  //   } else if (this.health <= this.maxHealth * 0.25) {
-  //     this.context.fillStyle = "rgba(245, 75, 66)";
-  //   }
+  //   this.context.fillStyle = this.color;
   //   this.context.fill();
   // }
-
-  run() {
-    this.update();
-    this.render();
-  }
-
-  update() {
-    this.move();
-    this.checkWalls();
-    this.checkBorder();
-    this.checkHit();
-    this.checkAlive();
-  }
-
-  render() {
-    this.checkSheet();
-    this.stepAnimation();
-    // this.drawCircle()
-  }
 }
 
 class Slime extends Creep {
