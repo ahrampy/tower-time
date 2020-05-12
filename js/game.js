@@ -99,7 +99,7 @@ class Game {
     }
     game.bits += 5 * game.wave;
     game.cr += 5 * game.wave;
-    game.loadCreeps(1);
+    game.loadCreeps(20);
   }
 
   // handleSoundButton() {
