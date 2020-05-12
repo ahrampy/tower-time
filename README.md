@@ -17,7 +17,7 @@ Build, upgrade, and sell towers to create a maze for enemies, and stop them from
 
 #### General
 
-Tower Time was built on HTML5 canvas, and uses the Dijkstra algorithm for pathfinding combined with vector movement. It features custom pixel animations and is a fully-featured game, with different enemy types, upgrade and sell options, hotkeys, group selection, and randomized map generation.
+Tower Time was built on HTML5 canvas, and uses static grid-based pathfinding combined with vector movement. It features custom pixel animations and is a fully-featured game, with different enemy types, upgrade and sell options, hotkeys, group selection, and randomized map generation.
 
 #### Tower Abilities
 
@@ -29,7 +29,7 @@ Every 10th and 30th level, the difficulty, along with points and income, increas
 
 #### Path Finding
 
-Live path finding and valid tower placement checking are an essential element to the game, running a check for the fastest route for enemies every time a tower is placed or removed, and, before a tower is placed, making sure it does not block the path completely or trap any moving units.
+Live path finding and valid tower placement checking are an essential element to the game, running a check for the fastest route for enemies to their goal every time a tower is placed or removed, and before a tower is placed, making sure it does not block all paths from the start to the goal, or trap any moving units.
 
 #### Vectors
 
