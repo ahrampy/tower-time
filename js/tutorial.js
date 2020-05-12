@@ -1,13 +1,12 @@
 "use strict";
 
 class Tutorial {
-  constructor(dom) {
-    this.dom = dom;
-    this.frame = this.dom.tutorial;
+  constructor() {
+    this.frame = dom.tutorial;
     this.frame.addEventListener("click", this.toggleInfo, false);
 
-    this.box = this.dom.tutorialBox;
-    this.textPar = this.dom.tutorialText;
+    this.box = dom.tutorialBox;
+    this.textPar = dom.tutorialText;
     this.default =
       "move your mouse anywhere to learn more or click here to hide tooltips";
     this.tips = this.makeTips();
@@ -17,7 +16,7 @@ class Tutorial {
   addListeners(tips) {
     for (var key in tips) {
       const text = tips[key];
-      const div = this.dom[key];
+      const div = dom[key];
       div.addEventListener("mouseover", () => this.showInfo(key, text), false);
       div.addEventListener("mouseout", this.clearTip, false);
     }

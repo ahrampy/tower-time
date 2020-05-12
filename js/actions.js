@@ -1,8 +1,7 @@
 "use strict";
 
 class ActionsHandler {
-  constructor(dom, tiles) {
-    this.dom = dom;
+  constructor(tiles) {
     this.canvas = dom.canvas;
     this.handleCanvas();
     this.handleButtonClicks();
@@ -96,10 +95,10 @@ class ActionsHandler {
   }
 
   handleButtonClicks() {
-    this.dom.wave.addEventListener("click", this.waveClick, false);
-    this.dom.auto.addEventListener("change", this.autoWaveToggle, false);
-    this.dom.upgrade.addEventListener("click", this.upgradeClick, false);
-    this.dom.sell.addEventListener("click", this.sellClick, false);
+    dom.wave.addEventListener("click", this.waveClick, false);
+    dom.auto.addEventListener("change", this.autoWaveToggle, false);
+    dom.upgrade.addEventListener("click", this.upgradeClick, false);
+    dom.sell.addEventListener("click", this.sellClick, false);
   }
 
   autoWaveToggle() {
@@ -115,7 +114,7 @@ class ActionsHandler {
       game.wave += 1;
       if (game.wave === 1) {
         this.innerText = "Next Wave";
-        game.dom.towerMenu.classList.remove("active");
+        dom.towerMenu.classList.remove("active");
         game.tutorial.showInfo("start");
       }
       game.nextWave();
@@ -236,7 +235,7 @@ class ActionsHandler {
   }
 
   blinkBank() {
-    const bank = game.dom.bank;
+    const bank = dom.bank;
     if (!bank.classList.contains("flashing")) {
       bank.classList.add("flashing");
       setTimeout(() => {
@@ -250,7 +249,7 @@ class ActionsHandler {
     this.toggleEditButtons(tower);
     if (!tower) return;
 
-    let towerInfoTiles = game.dom.towerStats;
+    let towerInfoTiles = dom.towerStats;
 
     for (let i = 0; i < towerInfoTiles.length; i++) {
       const title = towerInfoTiles[i];
@@ -289,17 +288,17 @@ class ActionsHandler {
 
   toggleEditButtons(tower) {
     if (tower) {
-      game.dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
-      game.dom.sell.style.opacity = tower.placed ? 100 : 0;
+      dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
+      dom.sell.style.opacity = tower.placed ? 100 : 0;
     } else {
-      game.dom.upgrade.style.opacity = 0;
-      game.dom.sell.style.opacity = 0;
+      dom.upgrade.style.opacity = 0;
+      dom.sell.style.opacity = 0;
     }
   }
 
   updateStats() {
-    for (let i = 0; i < game.dom.infoTiles.length; i++) {
-      let title = game.dom.infoTiles[i];
+    for (let i = 0; i < dom.infoTiles.length; i++) {
+      let title = dom.infoTiles[i];
       const value = document.createElement("p");
 
       if (title.innerHTML.includes("Bank")) {
@@ -323,10 +322,10 @@ class ActionsHandler {
     game.gameOver = true;
     game.context.fillStyle = "rgba(125, 125, 125, 0.6)";
     game.context.fillRect(0, 0, 840, 560);
-    game.dom.gameOver.style.display = "flex";
-    game.dom.wave.style.opacity = 0;
-    game.dom.wave.removeEventListener("click", game.waveClick, false);
-    game.dom.tutorial.style.opacity = 0;
+    dom.gameOver.style.display = "flex";
+    dom.wave.style.opacity = 0;
+    dom.wave.removeEventListener("click", game.waveClick, false);
+    dom.tutorial.style.opacity = 0;
     const highscores = firebase
       .database()
       .ref("scores")
@@ -339,17 +338,17 @@ class ActionsHandler {
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
       gameOverScreen.classList.add("game-over");
-      game.dom.wrapper.replaceChild(gameOverScreen, game.canvas);
-      game.dom.gameOver.style.opacity = 0;
+      dom.wrapper.replaceChild(gameOverScreen, game.canvas);
+      dom.gameOver.style.opacity = 0;
       setTimeout(() => {
         gameOverScreen.classList.add("scores");
-        game.dom.gameOver.style.display = "none";
+        dom.gameOver.style.display = "none";
         setTimeout(() => {
-          game.dom.wave.innerText = "New Game";
-          game.dom.wave.addEventListener("click", game.actions.newGame, false);
-          game.dom.wave.classList.add("active");
-          game.dom.wave.style.opacity = 100;
-          game.dom.gameOver.style.opacity = 100;
+          dom.wave.innerText = "New Game";
+          dom.wave.addEventListener("click", game.actions.newGame, false);
+          dom.wave.classList.add("active");
+          dom.wave.style.opacity = 100;
+          dom.gameOver.style.opacity = 100;
           game.scores.handleScores(gameOverScreen, highscores);
         }, 500);
       }, 500);
@@ -358,21 +357,21 @@ class ActionsHandler {
 
   newGame() {
     const gameOverScreen = document.querySelector(".game-over");
-    game.dom.canvas = document.createElement("canvas");
-    game.dom.wave.removeEventListener("click", game.actions.newGame, false);
-    game.dom.canvas.width = 840;
-    game.dom.canvas.height = 560;
-    game.dom.wrapper.replaceChild(game.dom.canvas, gameOverScreen);
-    game.dom.auto.checked = false;
-    while (game.dom.towerMenu.firstChild) {
-      game.dom.towerMenu.removeChild(game.dom.towerMenu.lastChild);
+    dom.canvas = document.createElement("canvas");
+    dom.wave.removeEventListener("click", game.actions.newGame, false);
+    dom.canvas.width = 840;
+    dom.canvas.height = 560;
+    dom.wrapper.replaceChild(dom.canvas, gameOverScreen);
+    dom.auto.checked = false;
+    while (dom.towerMenu.firstChild) {
+      dom.towerMenu.removeChild(dom.towerMenu.lastChild);
     }
-    game.dom.wave.innerText = "First Wave";
-    game.dom.wave.classList.remove("active");
-    game.dom.topBar.style.opacity = 0;
-    game.dom.bottomBar.style.opacity = 0;
-    game.dom.play.style.display = "";
-    game.dom.startText.style.display = "flex";
+    dom.wave.innerText = "First Wave";
+    dom.wave.classList.remove("active");
+    dom.topBar.style.opacity = 0;
+    dom.bottomBar.style.opacity = 0;
+    dom.play.style.display = "";
+    dom.startText.style.display = "flex";
     game = new Game();
   }
 }

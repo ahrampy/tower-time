@@ -2,9 +2,10 @@
 
 window.addEventListener("load", init, false);
 
-var game;
+var dom, game;
 
 function init() {
+  dom = new DomHandler();
   game = new Game();
   window.setTimeout(animate, 100);
 }
@@ -16,11 +17,8 @@ function animate() {
 
 class Game {
   constructor() {
-    // * add dom handler
-    this.dom = new DomHandler();
-
     // * add canvas
-    this.canvas = this.dom.canvas;
+    this.canvas = dom.canvas;
     this.context = this.canvas.getContext("2d");
 
     // * game objects
@@ -83,9 +81,9 @@ class Game {
     this.gameOver = false;
 
     // * add game element handlers
-    this.loader = new Loader(this.dom);
-    this.actions = new ActionsHandler(this.dom, this.tileDivs);
-    this.tutorial = new Tutorial(this.dom);
+    this.loader = new Loader();
+    this.actions = new ActionsHandler(this.tileDivs);
+    this.tutorial = new Tutorial();
     this.scores = game ? game.scores : new Scores();
   }
 
@@ -196,7 +194,7 @@ class Game {
     const tileDivs = [];
     for (let i = 0; i < 4; i++) {
       let tileDiv = this.addTowerStats(i);
-      this.dom.towerMenu.appendChild(tileDiv);
+      dom.towerMenu.appendChild(tileDiv);
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
@@ -469,20 +467,20 @@ class Game {
 
   checkWave() {
     if (game.autoWave && !game.sendingWave && !game.creeps.length) {
-      game.dom.wave.click();
+      dom.wave.click();
       game.sendingWave = true;
       setTimeout(() => {
         game.sendingWave = false;
       }, 1000);
     }
     if (!game.creeps.length && !game.sendingWave && game.wave > 0) {
-      game.dom.wave.classList.add("active");
+      dom.wave.classList.add("active");
     } else {
-      game.dom.wave.classList.remove("active");
+      dom.wave.classList.remove("active");
     }
     if (game.wave === 0 && game.bits < 50) {
-      game.dom.towerMenu.classList.remove("active");
-      game.dom.wave.classList.add("active");
+      dom.towerMenu.classList.remove("active");
+      dom.wave.classList.add("active");
       game.tutorial.showInfo("canvas");
     }
   }
