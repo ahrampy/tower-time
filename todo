@@ -1,7 +1,5 @@
 
 game:
-  move global vars to game instance
-  complete loader.js
   refactor endgame logic and placement
   add pause
 

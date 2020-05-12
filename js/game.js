@@ -528,63 +528,6 @@ class Game {
     }, time * 10);
   }
 
-  handleGameOver() {
-    this.gameOver = true;
-    this.context.fillStyle = "rgba(125, 125, 125, 0.6)";
-    this.context.fillRect(0, 0, 840, 560);
-    this.dom.gameOver.style.display = "flex";
-    this.dom.wave.style.opacity = 0;
-    this.dom.wave.removeEventListener("click", this.waveClick, false);
-    this.dom.tutorial.style.opacity = 0;
-    const highscores = firebase
-      .database()
-      .ref("scores")
-      .orderByChild("score")
-      .limitToLast(10);
-    setTimeout(() => {
-      this.canvas.classList.add("over");
-    }, 3000);
-    game.f = game.score;
-    setTimeout(() => {
-      const gameOverScreen = document.createElement("div");
-      gameOverScreen.classList.add("game-over");
-      this.dom.wrapper.replaceChild(gameOverScreen, this.canvas);
-      this.dom.gameOver.style.opacity = 0;
-      setTimeout(() => {
-        gameOverScreen.classList.add("scores");
-        this.dom.gameOver.style.display = "none";
-        setTimeout(() => {
-          this.dom.wave.innerText = "New Game";
-          this.dom.wave.addEventListener("click", this.newGame, false);
-          this.dom.wave.classList.add("active");
-          this.dom.wave.style.opacity = 100;
-          this.dom.gameOver.style.opacity = 100;
-          this.scores.handleScores(gameOverScreen, highscores);
-        }, 500);
-      }, 500);
-    }, 5000);
-  }
-
-  newGame() {
-    const gameOverScreen = document.querySelector(".game-over");
-    game.dom.canvas = document.createElement("canvas");
-    game.dom.wave.removeEventListener("click", game.newGame, false);
-    game.dom.canvas.width = 840;
-    game.dom.canvas.height = 560;
-    game.dom.wrapper.replaceChild(game.dom.canvas, gameOverScreen);
-    game.dom.auto.checked = false;
-    while (game.dom.towerMenu.firstChild) {
-      game.dom.towerMenu.removeChild(game.dom.towerMenu.lastChild);
-    }
-    game.dom.wave.innerText = "First Wave";
-    game.dom.wave.classList.remove("active");
-    game.dom.topBar.style.opacity = 0;
-    game.dom.bottomBar.style.opacity = 0;
-    game.dom.play.style.display = "";
-    game.dom.startText.style.display = "flex";
-    game = new Game();
-  }
-
   run() {
     this.actions.updateStats();
     this.checkStats();
@@ -639,7 +582,7 @@ class Game {
         }
       }
       if (this.lives <= 0) {
-        setTimeout(this.handleGameOver(), 1000);
+        setTimeout(this.actions.handleGameOver(), 1000);
       }
     }
   }
