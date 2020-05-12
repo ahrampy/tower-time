@@ -1,6 +1,6 @@
 
 game:
-  refactor endgame logic w/o timeout hell
+  refactor endgame logic, remove timeout hell
   add pause
   add individual inputs for score name chars
 

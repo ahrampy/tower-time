@@ -3,7 +3,7 @@
 class ActionsHandler {
   constructor(dom, tiles) {
     this.dom = dom;
-    this.canvas = this.dom.canvas;
+    this.canvas = dom.canvas;
     this.handleCanvas();
     this.handleButtonClicks();
     this.handleKeyListeners();
@@ -246,24 +246,8 @@ class ActionsHandler {
   }
 
   showTowerInfo() {
-    let tower, div, obj;
-
-    if (game.showTowerDivInfo) {
-      tower = game.showTowerDivInfo;
-      div = true;
-    } else if (game.towersArr.length) {
-      tower = game.towersArr[game.towersArr.length - 1];
-      obj = true;
-    }
-
-    if (obj) {
-      game.dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
-      game.dom.sell.style.opacity = 100;
-    } else {
-      game.dom.upgrade.style.opacity = 0;
-      game.dom.sell.style.opacity = 0;
-    }
-
+    const tower = this.getTower();
+    this.toggleEditButtons(tower);
     if (!tower) return;
 
     let towerInfoTiles = game.dom.towerStats;
@@ -294,6 +278,22 @@ class ActionsHandler {
       }
 
       title.appendChild(value);
+    }
+  }
+
+  getTower() {
+    return game.showTowerDivInfo
+      ? game.showTowerDivInfo
+      : game.towersArr[game.towersArr.length - 1];
+  }
+
+  toggleEditButtons(tower) {
+    if (tower) {
+      game.dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
+      game.dom.sell.style.opacity = tower.placed ? 100 : 0;
+    } else {
+      game.dom.upgrade.style.opacity = 0;
+      game.dom.sell.style.opacity = 0;
     }
   }
 
