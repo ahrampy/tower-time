@@ -346,7 +346,7 @@ class ActionsHandler {
         game.dom.gameOver.style.display = "none";
         setTimeout(() => {
           game.dom.wave.innerText = "New Game";
-          game.dom.wave.addEventListener("click", this.newGame, false);
+          game.dom.wave.addEventListener("click", game.actions.newGame, false);
           game.dom.wave.classList.add("active");
           game.dom.wave.style.opacity = 100;
           game.dom.gameOver.style.opacity = 100;
@@ -359,7 +359,7 @@ class ActionsHandler {
   newGame() {
     const gameOverScreen = document.querySelector(".game-over");
     game.dom.canvas = document.createElement("canvas");
-    game.dom.wave.removeEventListener("click", game.newGame, false);
+    game.dom.wave.removeEventListener("click", game.actions.newGame, false);
     game.dom.canvas.width = 840;
     game.dom.canvas.height = 560;
     game.dom.wrapper.replaceChild(game.dom.canvas, gameOverScreen);

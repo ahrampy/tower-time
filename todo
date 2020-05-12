@@ -1,6 +1,6 @@
 
 game:
-  refactor endgame logic and placement
+  refactor endgame logic, w/o timeout hell
   add pause
 
 ui:
