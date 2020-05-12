@@ -16,10 +16,10 @@ class Vector {
     this.y -= vec.y;
   }
 
-  normalize(slowed, stuck) {
+  normalize(affected) {
     let len = Math.sqrt(this.x * this.x + this.y * this.y);
 
-    if (len > 1 || stuck || slowed) {
+    if (len > 1 || affected) {
       this.x /= len;
       this.y /= len;
     }

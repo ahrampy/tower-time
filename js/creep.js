@@ -14,6 +14,7 @@ class Creep {
     this.prevCell = null;
     this.currentCell = null;
     this.nextCell = null;
+    this.stuck = false;
     this.velocity = new Vector(0, 0);
     this.acceleration = new Vector(0, 0);
 
@@ -133,8 +134,7 @@ class Creep {
 
     this.velocity.add(this.acceleration);
 
-    let stuck = this.currentCell.occupied;
-    this.velocity.normalize(this.slowed, stuck);
+    this.velocity.normalize(this.slowed || this.stuck);
 
     if (this.slowed) {
       this.moveSlow();
@@ -158,14 +158,18 @@ class Creep {
       return;
     }
 
+    if (cell.occupied && this.prevCell) {
+      this.stuck = true;
+      this.currentCell = cell;
+      this.nextCell = this.prevCell;
+      return;
+    } else {
+      this.stuck = false;
+    }
+
     this.prevCell = this.currentCell ? this.currentCell : null;
     this.currentCell = cell;
-
-    if (cell.occupied) {
-      this.nextCell = this.prevCell;
-    } else {
-      this.nextCell = this.currentCell.smallestAdjacent;
-    }
+    this.nextCell = this.currentCell.smallestAdjacent;
   }
 
   setDir(dest) {
