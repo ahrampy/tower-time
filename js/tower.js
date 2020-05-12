@@ -52,17 +52,14 @@ class Tower {
 
   findTarget() {
     for (let i = 0; i < game.creeps.length; i++) {
-      if (
-        game.creeps[i].location.dist(this.location) < this.range &&
-        game.creeps[i].alive
-      ) {
+      const creep = game.creeps[i];
+      if (creep.alive && creep.location.dist(this.location) < this.range) {
         this.follow = false;
-        return game.creeps[i].location;
+        return creep.location;
       }
     }
-    this.target = new Vector(game.canvas.mouseX, game.canvas.mouseY);
     this.follow = true;
-    return this.target;
+    return new Vector(dom.canvas.mouseX, dom.canvas.mouseY);
   }
 
   checkFire() {
@@ -72,9 +69,8 @@ class Tower {
     if (
       dist < this.range &&
       this.placed &&
-      mils - this.lastFired > this.cooldown &&
-      game.creeps.length !== 0 &&
-      !this.follow
+      !this.follow &&
+      mils - this.lastFired > this.cooldown
     ) {
       this.lastFired = mils;
       const attackLocation = new Vector(this.location.x, this.location.y);

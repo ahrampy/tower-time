@@ -2,7 +2,6 @@
 
 class ActionsHandler {
   constructor(tiles) {
-    this.canvas = dom.canvas;
     this.handleCanvas();
     this.handleButtonClicks();
     this.handleKeyListeners();
@@ -10,11 +9,11 @@ class ActionsHandler {
   }
 
   handleCanvas() {
-    this.canvas.addEventListener("mousemove", this.handleCanvasMove, false);
-    this.canvas.addEventListener("mouseover", this.handleCanvasOver, false);
-    this.canvas.addEventListener("mouseout", this.handleCanvasOut, false);
-    this.canvas.addEventListener("click", this.handleCanvasClick, false);
-    this.canvas.addEventListener("dblclick", this.handleCanvasDblClick, false);
+    dom.canvas.addEventListener("mousemove", this.handleCanvasMove, false);
+    dom.canvas.addEventListener("mouseover", this.handleCanvasOver, false);
+    dom.canvas.addEventListener("mouseout", this.handleCanvasOut, false);
+    dom.canvas.addEventListener("click", this.handleCanvasClick, false);
+    dom.canvas.addEventListener("dblclick", this.handleCanvasDblClick, false);
   }
 
   handleCanvasMove(event) {
@@ -186,15 +185,12 @@ class ActionsHandler {
     game.placingTower = false;
     const towers = game.towers;
     if (towers.length && !towers[towers.length - 1].placed) {
-      towers.splice(towers.length - 1, 1);
+      towers.pop();
     }
     game.tileDivs[towerNum].click();
     const currentTower = towers[towers.length - 1];
-    if (currentTower.location.x === 0 && currentTower.location.y === 0) {
-      currentTower.location = new Vector(
-        game.canvas.mouseX,
-        game.canvas.mouseY
-      );
+    if (!currentTower.placed) {
+      currentTower.location = new Vector(dom.canvas.mouseX, dom.canvas.mouseY);
     }
     currentTower.visible = true;
   }
@@ -332,13 +328,13 @@ class ActionsHandler {
       .orderByChild("score")
       .limitToLast(10);
     setTimeout(() => {
-      game.canvas.classList.add("over");
+      dom.canvas.classList.add("over");
     }, 3000);
     game.f = game.score;
     setTimeout(() => {
       const gameOverScreen = document.createElement("div");
       gameOverScreen.classList.add("game-over");
-      dom.wrapper.replaceChild(gameOverScreen, game.canvas);
+      dom.wrapper.replaceChild(gameOverScreen, dom.canvas);
       dom.gameOver.style.opacity = 0;
       setTimeout(() => {
         gameOverScreen.classList.add("scores");

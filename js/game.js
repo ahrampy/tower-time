@@ -546,38 +546,42 @@ class Game {
       }
       for (let c = 1; c < this.numCols - 1; c++) {
         for (let r = 1; r < this.numRows - 1; r++) {
-          this.grid[c][r].run();
+          const cell = this.grid[c][r];
+          if (!cell.selected) cell.run();
         }
       }
       for (let i = 0; i < this.cellsArr.length; i++) {
         this.cellsArr[i].renderImage();
       }
       for (let i = 0; i < this.towers.length; i++) {
-        let tower = this.towers[i];
+        const tower = this.towers[i];
         if (!tower.removed) {
           tower.run();
         } else {
           this.towers.splice(i, 1);
+          i--
         }
       }
       for (let i = 0; i < this.creeps.length; i++) {
-        let creep = this.creeps[i];
+        const creep = this.creeps[i];
         if (creep.alive) {
           creep.run();
         } else {
           this.creeps.splice(i, 1);
+          i--;
         }
       }
       for (let i = 0; i < this.towersArr.length; i++) {
         this.towersArr[i].drawRange();
       }
       for (let i = 0; i < this.attacks.length; i++) {
-        let attack = this.attacks[i];
+        const attack = this.attacks[i];
         this.checkHit(attack);
         if (!attack.hit) {
           attack.run();
         } else {
           this.attacks.splice(i, 1);
+          i--;
         }
       }
       if (this.lives <= 0) {
