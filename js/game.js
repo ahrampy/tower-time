@@ -559,7 +559,7 @@ class Game {
           tower.run();
         } else {
           this.towers.splice(i, 1);
-          i--
+          i--;
         }
       }
       for (let i = 0; i < this.creeps.length; i++) {
@@ -572,7 +572,8 @@ class Game {
         }
       }
       for (let i = 0; i < this.towersArr.length; i++) {
-        this.towersArr[i].drawRange();
+        const tower = this.towersArr[i];
+        tower.drawRange();
       }
       for (let i = 0; i < this.attacks.length; i++) {
         const attack = this.attacks[i];

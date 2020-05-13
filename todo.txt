@@ -1,12 +1,14 @@
 
 game:
+  add ult air upgrade
   move tileDivs to actions class
   refactor endgame logic, remove timeout hell
   add pause
   add individual inputs for score name chars
+  refactor tower types as class extensions
 
 ui:
-  add small delay to wave button active times / change tracking to watch stages
+  add small delay to wave button active times / change tracking to watch staging
   disable update and sell hover when hidden
   info window pop-outs for tutorial / towertypes & hotkeys
   fade top/bottom bars on game over
