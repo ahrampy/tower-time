@@ -32,15 +32,23 @@ body:hover {
   color: rgb(187, 186, 186);
 }
 
-#tutorial-window {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  top: 15%;
-  right: 3%;
+#other-window {
+  display: inline-block;
   color: #333;
   background-color: rgba(207, 204, 204, 0.7);
+  width: 150px;
+  border-radius: 5px;
+  z-index: 0;
+  transition: 0.5s;
+  opacity: 0;
+}
+
+#tutorial-window {
+  display: inline-block;
+  color: #333;
+  background-color: rgba(207, 204, 204, 0.7);
+    width: 150px;
+
   border-radius: 5px;
   z-index: 0;
   transition: 0.5s;
@@ -49,64 +57,6 @@ body:hover {
 
 #tutorial-window:hover {
   background-color: rgba(180, 179, 179, 0.5);
-}
-
-.over {
-  z-index: 0;
-  opacity: 0;
-}
-
-.game-over {
-  height: 560;
-  width: 840;
-  opacity: 0.8;
-  z-index: 2;
-}
-
-.scores {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  /* background-color: black; */
-  /* background-image: radial-gradient(rgba(37, 133, 22, 0.815), black 120%); */
-  /* font-size: 12px; */
-  color: rgb(15, 189, 15);
-  /* text-shadow: 0 0 5px #c8c8c8; */
-  transition: 1s;
-}
-
-.score-terminal {
-  display: flex;
-}
-
-.scores h2 {
-  padding-left: 30px;
-}
-
-.scores input {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  font-family: inherit;
-  font-size: 20px;
-  line-height: 1.5em;
-  width: 300px;
-  text-decoration: none;
-  outline: none;
-  border: 3px solid rgb(70, 70, 70);
-}
-
-.scores ol {
-  color: #fff;
-  padding: 20px;
-  list-style: none;
-  min-width: 80px;
-}
-
-.scores li {
-  font-size: 16px;
-  padding: 0px 10px 10px;
 }
 
 .info-icon {
@@ -127,7 +77,7 @@ body:hover {
 }
 
 .hidden {
-  display: none;
+  opacity: 0;
 }
 
 .info-icon img {
@@ -232,8 +182,13 @@ body:hover {
   margin: 0px;
 }
 
+#canvas-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 canvas {
-  position: relative;
+  position: inline-block;
   z-index: 1;
   transition: 3s;
 }
@@ -479,6 +434,60 @@ canvas {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.over {
+  z-index: 0;
+  opacity: 0;
+}
+
+.game-over {
+  height: 560;
+  width: 840;
+  opacity: 0.8;
+  z-index: 2;
+}
+
+.scores {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: rgb(15, 189, 15);
+  transition: 1s;
+}
+
+.score-terminal {
+  display: flex;
+}
+
+.scores h2 {
+  padding-left: 30px;
+}
+
+.scores input {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  font-family: inherit;
+  font-size: 20px;
+  line-height: 1.5em;
+  width: 300px;
+  text-decoration: none;
+  outline: none;
+  border: 3px solid rgb(70, 70, 70);
+}
+
+.scores ol {
+  color: #fff;
+  padding: 20px;
+  list-style: none;
+  min-width: 80px;
+}
+
+.scores li {
+  font-size: 16px;
+  padding: 0px 10px 10px;
 }
 
 #footer {
