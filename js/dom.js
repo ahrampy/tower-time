@@ -5,12 +5,17 @@ class DomHandler {
     // * main
     this.play = document.querySelector("#play-button");
     this.startText = document.querySelector("#game-info");
-    this.tutorial = document.querySelector("#tutorial-window");
-    this.tutorialBox = document.querySelector("#tutorial-text");
-    this.tutorialText = document.querySelector("#text-p");
     this.wrapper = document.querySelector("#canvas-wrapper");
     this.canvas = document.querySelector("canvas");
     this.gameOver = document.querySelector("#game-over");
+
+    // * tutorial
+    this.tutorialOpen = true;
+    this.tutorial = document.querySelector("#tutorial-window");
+    this.tutorialSlide = document.querySelector("#tutorial-slide");
+    this.tutorialBox = document.querySelector("#tutorial-text");
+    this.tutorialText = document.querySelector("#text-p");
+    this.tutorialIcon = document.querySelector("#tutorial-icon");
 
     // * top nav
     this.topBar = document.querySelector("#game-controls");

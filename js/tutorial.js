@@ -3,12 +3,11 @@
 class Tutorial {
   constructor() {
     this.frame = dom.tutorial;
+    this.isOpen = true;
     this.frame.addEventListener("click", this.toggleInfo, false);
-
-    this.box = dom.tutorialBox;
-    this.textPar = dom.tutorialText;
     this.default =
-      "move your mouse anywhere to learn more or click here to hide tooltips";
+      "move your mouse anywhere to learn more, click here to hide tooltips";
+
     this.tips = this.makeTips();
     this.addListeners(this.tips);
   }
@@ -23,31 +22,37 @@ class Tutorial {
   }
 
   toggleInfo() {
-    game.tutorial.box.toggleAttribute("hidden");
+    dom.tutorialBox.classList.toggle("hidden");
+    dom.tutorialOpen = !dom.tutorialOpen;
+    dom.tutorialSlide.setAttribute(
+      "class",
+      dom.tutorialOpen ? "open" : "closed"
+    );
+    dom.tutorialIcon.classList.toggle("hidden");
   }
 
   showInfo(name, tip) {
     if (name === "canvas" && game.wave === 0 && game.gameStarted) {
       this.startTips();
     } else {
-      game.tutorial.textPar.innerHTML = tip;
+      dom.tutorialText.innerHTML = tip;
     }
     this.ensureDefault();
   }
 
   ensureDefault() {
-    if (game.tutorial.textPar.innerHTML === "undefined") {
-      game.tutorial.textPar.innerHTML = game.tutorial.default;
+    if (dom.tutorialText.innerHTML === "undefined") {
+      dom.tutorialText.innerHTML = game.tutorial.default;
     }
   }
 
   clearTip() {
-    game.tutorial.textPar.innerHTML = game.tutorial.default;
+    dom.tutorialText.innerHTML = game.tutorial.default;
   }
 
   startTips() {
     if (game.bits <= 50) {
-      game.tutorial.textPar.innerHTML =
+      dom.tutorialText.innerHTML =
         "now that you have some towers, its time to send the first wave!";
     }
   }
@@ -65,7 +70,7 @@ class Tutorial {
       bank:
         "spend your bank on towers and upgrades: increase it by stopping enemies and sending waves",
       autoBox:
-        "select to send the next wave automatically once there are no more enemies",
+        "select to send the next wave once there are no more enemies on the board",
       wave: "sends the next wave of enemies",
       towerMenu:
         "hover over a tower to show its stats, click one to select it, then click again over the board to buy a new tower of that type",
