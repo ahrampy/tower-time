@@ -25,7 +25,7 @@ body:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 1%;
+  margin: 1% 0 1% 0;
 }
 
 #holder h1 {
@@ -74,7 +74,6 @@ body:hover {
 
 #tutorial-text p {
   line-height: 1.3em;
-  margin-top: 5px;
 }
 
 #tutorial-icon img {
@@ -555,11 +554,11 @@ canvas {
 
 #footer {
   position: fixed;
-  right: 5;
-  bottom: 5;
+  bottom: 5px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
   color: rgb(186, 186, 186);
 }
 
@@ -573,7 +572,7 @@ canvas {
 }
 
 .git {
-  padding-left: 10px;
+  padding: 0px 15px 0px 10px;
   margin-top: -5px;
 }
 

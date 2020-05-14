@@ -10,7 +10,7 @@ game:
 ui:
   add small delay to wave button active times / change tracking to watch staging
   disable update and sell hover when hidden
-  info window pop-outs for tutorial / towertypes & hotkeys
+  info other window pop-out towertypes & hotkeys
   fade top/bottom bars on game over
   add new game over screen w/ new game button and local storage score
 

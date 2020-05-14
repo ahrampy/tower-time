@@ -60,7 +60,7 @@ class Tutorial {
   makeTips() {
     return {
       canvas:
-        "enemies will start at the blue square and try to get to the red one, but cannot move through walls. place towers to attack enemies and add more walls",
+        "enemies will start at the blue square and try to get to the red one, but cannot move through walls or towers; click on placed towers to edit them",
       score:
         "your score increases for every enemy stopped before it reaches the red square",
       currWave:
@@ -68,15 +68,15 @@ class Tutorial {
       lives:
         "if an enemy makes it to the red square, you lose a life; reach zero lives and the game is over",
       bank:
-        "spend your bank on towers and upgrades: increase it by stopping enemies and sending waves",
+        "spend your bank on towers and upgrades; add to it by stopping enemies and sending waves",
       autoBox:
         "select to send the next wave once there are no more enemies on the board",
-      wave: "sends the next wave of enemies",
+      wave: "send the next wave of enemies",
       towerMenu:
-        "hover over a tower to show its stats, click one to select it, then click again over the board to buy a new tower of that type",
-      type: "the name of the selected tower",
-      damage: "amount of damage the tower deals when it fires",
-      range: "how far the tower can fire",
+        "hover over a tower to show its stats, click one to select it, then click on the board to buy a new tower of that type",
+      type: "the name of the current tower",
+      damage: "amount of damage the tower deals to enemies when it fires",
+      range: "how far the tower looks for enemies",
       speed: "how quickly the tower fires",
       next: "cost to upgrade the tower",
       upgrade: "upgrade the current tower for its 'next' cost",
