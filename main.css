@@ -33,19 +33,15 @@ body:hover {
 }
 
 #other-window {
-  display: inline-block;
-  color: #333;
-  background-color: rgba(207, 204, 204, 0.7);
   width: 160px;
-  border-radius: 5px;
-  z-index: 0;
-  transition: 0.5s;
+  height: 560px;
   opacity: 0;
 }
 
 #tutorial-window {
+  display: flex;
   width: 160px;
-  height: 280px;
+  height: 560px;
   z-index: 0;
   transition: 0.5s;
   opacity: 0;
@@ -83,6 +79,17 @@ body:hover {
   filter: invert(20%);
   width: 30px;
   height: 30px;
+}
+
+#hotkeys-slide {
+  border-radius: 0px 5px 5px 0px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 280px;
+  height: 280px;
+  transition: 0.5s;
 }
 
 .hidden {

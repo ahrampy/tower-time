@@ -2,9 +2,10 @@
 
 class Tutorial {
   constructor() {
-    this.frame = dom.tutorial;
-    this.isOpen = true;
-    this.frame.addEventListener("click", this.toggleInfo, false);
+    this.slide1 = dom.tutorialSlide;
+    this.slide2 = dom.hotkeysSlide;
+    this.slide1.addEventListener("click", this.toggleTutorial, false);
+    this.slide2.addEventListener("click", this.toggleHotkeys, false);
     this.default =
       "move your mouse anywhere to learn more, click here to hide tooltips";
 
@@ -21,7 +22,7 @@ class Tutorial {
     }
   }
 
-  toggleInfo() {
+  toggleTutorial() {
     dom.tutorialBox.classList.toggle("hidden");
     dom.tutorialOpen = !dom.tutorialOpen;
     dom.tutorialSlide.setAttribute(
@@ -29,6 +30,16 @@ class Tutorial {
       dom.tutorialOpen ? "open" : "closed"
     );
     dom.tutorialIcon.classList.toggle("hidden");
+  }
+
+  toggleHotkeys() {
+    // dom.hotkeysBox.classList.toggle("hidden");
+    dom.hotkeysOpen = !dom.hotkeysOpen;
+    dom.hotkeysSlide.setAttribute(
+      "class",
+      dom.hotkeysOpen ? "open" : "closed"
+    );
+    // dom.hotkeysIcon.classList.toggle("hidden");
   }
 
   showInfo(name, tip) {

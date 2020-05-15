@@ -14,8 +14,12 @@ class DomHandler {
     this.tutorial = document.querySelector("#tutorial-window");
     this.tutorialSlide = document.querySelector("#tutorial-slide");
     this.tutorialBox = document.querySelector("#tutorial-text");
-    this.tutorialText = document.querySelector("#text-p");
+    this.tutorialText = document.querySelector("#tutorial-text-p");
     this.tutorialIcon = document.querySelector("#tutorial-icon");
+
+    // * hotkey info
+    this.hotkeysOpen = false;
+    this.hotkeysSlide = document.querySelector("#hotkeys-slide");
 
     // * top nav
     this.topBar = document.querySelector("#game-controls");

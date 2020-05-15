@@ -176,7 +176,9 @@ class ActionsHandler {
       } else if (event.keyCode === 81) {
         this.upgradeClick();
       } else if (event.keyCode === 73) {
-        game.tutorial.toggleInfo();
+        game.tutorial.toggleTutorial();
+      } else if (event.keyCode === 72) {
+        game.tutorial.toggleHotkeys();
       }
     });
   }

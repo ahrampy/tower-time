@@ -1,5 +1,6 @@
 
 game:
+  fix animation rate on tower select
   add ult air upgrade
   move tileDivs to actions class
   refactor endgame logic, remove timeout hell
