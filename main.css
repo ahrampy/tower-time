@@ -92,6 +92,35 @@ body:hover {
   transition: 0.5s;
 }
 
+#hotkeys-icon img {
+  position: absolute;
+  right: 5px;
+  top: 123px;
+  filter: invert(20%);
+  width: 30px;
+  height: 30px;
+}
+
+#hotkeys-slide:hover {
+  cursor: pointer;
+}
+
+#hotkeys-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #333;
+  padding: 10px;
+  transition: 0.5s;
+}
+
+#hotkeys-text ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  width: auto;
+}
+
 .hidden {
   opacity: 0;
 }
@@ -179,6 +208,10 @@ body:hover {
   z-index: 2;
   outline: none;
   border: none;
+}
+
+#play-button:hover {
+  cursor: pointer;
 }
 
 #game-info {

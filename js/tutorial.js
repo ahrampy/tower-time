@@ -23,7 +23,7 @@ class Tutorial {
   }
 
   toggleTutorial() {
-    dom.tutorialBox.classList.toggle("hidden");
+    dom.tutorialText.classList.toggle("hidden");
     dom.tutorialOpen = !dom.tutorialOpen;
     dom.tutorialSlide.setAttribute(
       "class",
@@ -33,37 +33,37 @@ class Tutorial {
   }
 
   toggleHotkeys() {
-    // dom.hotkeysBox.classList.toggle("hidden");
+    dom.hotkeysText.classList.toggle("hidden");
     dom.hotkeysOpen = !dom.hotkeysOpen;
     dom.hotkeysSlide.setAttribute(
       "class",
       dom.hotkeysOpen ? "open" : "closed"
     );
-    // dom.hotkeysIcon.classList.toggle("hidden");
+    dom.hotkeysIcon.classList.toggle("hidden");
   }
 
   showInfo(name, tip) {
     if (name === "canvas" && game.wave === 0 && game.gameStarted) {
       this.startTips();
     } else {
-      dom.tutorialText.innerHTML = tip;
+      dom.tutorialP.innerHTML = tip;
     }
     this.ensureDefault();
   }
 
   ensureDefault() {
-    if (dom.tutorialText.innerHTML === "undefined") {
-      dom.tutorialText.innerHTML = game.tutorial.default;
+    if (dom.tutorialP.innerHTML === "undefined") {
+      dom.tutorialP.innerHTML = game.tutorial.default;
     }
   }
 
   clearTip() {
-    dom.tutorialText.innerHTML = game.tutorial.default;
+    dom.tutorialP.innerHTML = game.tutorial.default;
   }
 
   startTips() {
     if (game.bits <= 50) {
-      dom.tutorialText.innerHTML =
+      dom.tutorialP.innerHTML =
         "now that you have some towers, its time to send the first wave!";
     }
   }

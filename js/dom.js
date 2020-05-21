@@ -13,13 +13,15 @@ class DomHandler {
     this.tutorialOpen = true;
     this.tutorial = document.querySelector("#tutorial-window");
     this.tutorialSlide = document.querySelector("#tutorial-slide");
-    this.tutorialBox = document.querySelector("#tutorial-text");
-    this.tutorialText = document.querySelector("#tutorial-text-p");
+    this.tutorialText = document.querySelector("#tutorial-text");
+    this.tutorialP = document.querySelector("#tutorial-text-p");
     this.tutorialIcon = document.querySelector("#tutorial-icon");
 
     // * hotkey info
     this.hotkeysOpen = false;
     this.hotkeysSlide = document.querySelector("#hotkeys-slide");
+    this.hotkeysIcon = document.querySelector("#hotkeys-icon");
+    this.hotkeysText = document.querySelector("#hotkeys-text");
 
     // * top nav
     this.topBar = document.querySelector("#game-controls");
