@@ -14,9 +14,10 @@ class Tutorial {
   }
 
   addListeners(tips) {
-    for (var key in tips) {
+    for (const key in tips) {
       const text = tips[key];
       const div = dom[key];
+
       div.addEventListener("mouseover", () => this.showInfo(key, text), false);
       div.addEventListener("mouseout", this.clearTip, false);
     }
@@ -35,19 +36,13 @@ class Tutorial {
   toggleHotkeys() {
     dom.hotkeysText.classList.toggle("hidden");
     dom.hotkeysOpen = !dom.hotkeysOpen;
-    dom.hotkeysSlide.setAttribute(
-      "class",
-      dom.hotkeysOpen ? "open" : "closed"
-    );
+    dom.hotkeysSlide.setAttribute("class", dom.hotkeysOpen ? "open" : "closed");
     dom.hotkeysIcon.classList.toggle("hidden");
   }
 
   showInfo(name, tip) {
-    if (name === "canvas" && game.wave === 0 && game.gameStarted) {
-      this.startTips();
-    } else {
-      dom.tutorialP.innerHTML = tip;
-    }
+    dom.tutorialP.innerHTML = tip;
+
     this.ensureDefault();
   }
 
