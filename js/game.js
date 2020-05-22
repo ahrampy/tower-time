@@ -48,7 +48,7 @@ class Game {
     // * track cells
     this.border = [];
     this.blocks = [];
-    this.cellsArr = [];
+    this.selectedCells = [];
 
     // * pathing
     this.validated = false;
@@ -61,7 +61,7 @@ class Game {
     // * track towers
     this.showTowerDivInfo = null;
     this.placingTower = false;
-    this.towersArr = [];
+    this.selectedTowers = [];
 
     // * auto wave
     this.autoWave = false;
@@ -172,11 +172,11 @@ class Game {
   }
 
   resetSelects() {
-    this.towersArr.forEach((tower) => {
+    this.selectedTowers.forEach((tower, i) => {
       tower.deselect(true);
     });
-    this.towersArr = [];
-    this.cellsArr = [];
+    this.selectedTowers = [];
+    this.selectedCells = [];
   }
 
   selectAllTowers(type, level) {
@@ -550,8 +550,8 @@ class Game {
           if (!cell.selected) cell.run();
         }
       }
-      for (let i = 0; i < this.cellsArr.length; i++) {
-        this.cellsArr[i].renderImage();
+      for (let i = 0; i < this.selectedCells.length; i++) {
+        this.selectedCells[i].renderImage();
       }
       for (let i = 0; i < this.towers.length; i++) {
         const tower = this.towers[i];
@@ -571,8 +571,8 @@ class Game {
           i--;
         }
       }
-      for (let i = 0; i < this.towersArr.length; i++) {
-        const tower = this.towersArr[i];
+      for (let i = 0; i < this.selectedTowers.length; i++) {
+        const tower = this.selectedTowers[i];
         tower.drawRange();
       }
       for (let i = 0; i < this.attacks.length; i++) {

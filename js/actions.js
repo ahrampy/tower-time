@@ -81,6 +81,8 @@ class ActionsHandler {
 
     const cell = game.grid[gridCol][gridRow];
 
+    game.resetSelects();
+
     for (let i = 0; i < game.towers.length; i++) {
       let tower = game.towers[i];
       if (
@@ -121,7 +123,7 @@ class ActionsHandler {
   }
 
   upgradeClick() {
-    game.towersArr.forEach((tower) => {
+    game.selectedTowers.forEach((tower) => {
       if (tower.canUpgrade) {
         if (game.bits - tower.upgrade >= 0) {
           game.bits -= tower.upgrade;
@@ -135,20 +137,18 @@ class ActionsHandler {
   }
 
   sellClick() {
-    if (game.towersArr.length) {
-      game.towersArr.forEach((tower) => {
-        tower.deselect(false);
-        game.bits += tower.upgrade / 2;
-        game.cr += tower.upgrade / 2;
-      });
+    game.selectedTowers.forEach((tower) => {
+      tower.deselect(false);
+      game.bits += tower.upgrade / 2;
+      game.cr += tower.upgrade / 2;
+    });
 
-      game.resetSelects();
+    game.resetSelects();
 
-      game.loadPaths();
-      for (let c = 0; c < game.numCols; c++) {
-        for (let r = 0; r < game.numRows; r++) {
-          game.grid[c][r].loadAdjacentCells();
-        }
+    game.loadPaths();
+    for (let c = 0; c < game.numCols; c++) {
+      for (let r = 0; r < game.numRows; r++) {
+        game.grid[c][r].loadAdjacentCells();
       }
     }
   }
@@ -157,7 +157,7 @@ class ActionsHandler {
     document.addEventListener("keydown", (event) => {
       if (event.keyCode === 27) {
         game.placingTower = false;
-        if (game.towersArr.length) {
+        if (game.selectedTowers.length) {
           game.resetSelects();
         }
         if (game.towers.length && !game.towers[game.towers.length - 1].placed) {
@@ -224,7 +224,7 @@ class ActionsHandler {
       game.createTower(this);
       game.currentTileDiv = this;
       game.placingTower = true;
-      if (game.towersArr) {
+      if (game.selectedTowers) {
         game.resetSelects();
       }
     } else {
@@ -281,7 +281,7 @@ class ActionsHandler {
   getTower() {
     return game.showTowerDivInfo
       ? game.showTowerDivInfo
-      : game.towersArr[game.towersArr.length - 1];
+      : game.selectedTowers[game.selectedTowers.length - 1];
   }
 
   toggleEditButtons(tower) {

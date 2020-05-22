@@ -97,13 +97,16 @@ class Tower {
     if (this.level === 2) {
       this.canUpgrade = false;
     }
+    // if (this.level === 3) handleUlt();
   }
+
+  // handleUlt() {}
 
   select() {
     this.selected = true;
-    game.towersArr.push(this);
     this.cell.selected = true;
-    game.cellsArr.push(this.cell);
+    game.selectedTowers.push(this);
+    game.selectedCells.push(this.cell);
   }
 
   deselect(present) {
