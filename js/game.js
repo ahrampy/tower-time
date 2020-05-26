@@ -122,7 +122,7 @@ class Game {
   // }
 
   checkTowerPlacement(cell) {
-    if (cell.static) return;
+    if (cell.static || cell.occupied) return;
     cell.occupied = true;
     game.loadPaths();
 

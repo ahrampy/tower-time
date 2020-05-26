@@ -370,6 +370,7 @@ class ActionsHandler {
     dom.bottomBar.style.opacity = 0;
     dom.play.style.display = "";
     dom.startText.style.display = "flex";
+    dom = new DomHandler();
     game = new Game();
   }
 }
