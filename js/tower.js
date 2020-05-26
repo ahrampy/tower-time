@@ -120,7 +120,6 @@ class Tower {
   }
 
   drawRange() {
-    this.context.save();
     this.context.beginPath();
     this.context.arc(
       this.location.x,
@@ -132,7 +131,6 @@ class Tower {
     this.context.strokeStyle = "rgba(222, 255, 252, 0.4)";
     this.context.lineWidth = 4;
     this.context.stroke();
-    this.context.restore();
   }
 
   run() {
