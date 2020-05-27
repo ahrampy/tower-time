@@ -147,9 +147,9 @@ class Tower {
   }
 
   render() {
-    this.context.save();
     if (this.visible) {
       if (!this.placed) this.drawRange();
+      this.context.save();
       this.context.translate(this.location.x, this.location.y);
       this.context.rotate(this.angle);
       this.context.drawImage(
@@ -163,8 +163,8 @@ class Tower {
         this.width,
         this.height
       );
+      this.context.restore();
     }
 
-    this.context.restore();
   }
 }
