@@ -2,16 +2,15 @@
 game:
   fix animation rate on tower select
   add ult air upgrade
-  move tileDivs to actions class
   refactor endgame logic, remove timeout hell
   add pause
   add individual inputs for score name chars
   refactor tower types as class extensions
 
 ui:
+  add fade in on load
   add small delay to wave button active times / change tracking to check stages
   disable update and sell hover when hidden
-  add other window pop-out towertypes & hotkeys
   fade top/bottom bars on game over
   add new game over screen w/ new game button and local storage score
 
