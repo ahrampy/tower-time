@@ -8,6 +8,7 @@ class Loader {
   handleTitleScreen() {
     dom.upgrade.style.opacity = 0;
     dom.sell.style.opacity = 0;
+    dom.canvas.style.opacity = 100;
     const title = new Image();
     title.src = "/images/splash/tower-time-title.png";
     title.onload = () =>

@@ -296,7 +296,8 @@ body:hover {
 canvas {
   position: inline-block;
   z-index: 1;
-  transition: 3s;
+  transition: 2s;
+  opacity: 0;
 }
 
 #content-box {
