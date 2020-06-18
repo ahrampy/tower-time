@@ -176,7 +176,7 @@ class ActionsHandler {
       } else if (event.keyCode === 81) {
         this.upgradeClick();
       } else if (event.keyCode === 73) {
-        game.tutorial.toggleTutorial();
+        game.tutorial.toggleTutorial();        
       } else if (event.keyCode === 72) {
         game.tutorial.toggleHotkeys();
       }
@@ -332,32 +332,45 @@ class ActionsHandler {
     game.f = game.score;
     let score = window.localStorage.getItem("score");
     if ((score && score < game.f) || !score) {
-        score = game.f;
-        window.localStorage.setItem("score", game.f);
+      score = game.f;
+      window.localStorage.setItem("score", game.f);
     }
     dom.local.innerHTML = `Local Highest: ${score}`;
-    // dom.wave.removeEventListener("click", game.waveClick, false);
     setTimeout(() => {
       dom.holder.style.opacity = 0;
-      dom.gameOver.style.top = "20%";
+      dom.gameOver.style.top = "15%";
       dom.overTitle.style.color = "rgb(171, 171, 171)";
       dom.terminal.style.display = "flex";
+      dom.canvas.style.backgroundColor = "";
+      dom.tutorial.style.opacity = 0;
+      dom.topBar.style.opacity = 0;
+      dom.bottomBar.style.opacity = 0;
       setTimeout(() => {
         dom.terminal.style.opacity = 100;
         game.scores.handleScores(highscores);
+        setTimeout(() => {
+          game.context.clearRect(0, 0, 840, 560);
+        }, 1000);
       }, 1000);
     }, 1000);
-    //   // .addEventListener("click", game.actions.newGame, false); // ! add new game btn
   }
 
   newGame() {
-    const gameOverScreen = document.querySelector(".game-over");
-    dom.canvas = document.createElement("canvas");
-    dom.wave.removeEventListener("click", game.actions.newGame, false);
-    dom.canvas.width = 840;
-    dom.canvas.height = 560;
-    dom.wrapper.replaceChild(dom.canvas, gameOverScreen);
+    // dom.scores = document.createElement('div');
+    // dom.scores.classList.add("scores");
+    // dom.scores
+    dom.gameOver.style.top = "40%";
+    dom.gameOver.style.opacity = 0;
+    dom.gameOver.style.width = "0px";
+    dom.gameOver.style.height = "0px";
+    dom.overTitle.style.display = "none";
+    dom.holder.style.opacity = 100;
     dom.auto.checked = false;
+    dom.terminal.style.display = "none";
+    dom.terminal.removeChild(dom.terminal.lastChild);
+    while (dom.scores.firstChild) {
+      dom.scores.removeChild(dom.scores.lastChild);
+    }
     while (dom.towerMenu.firstChild) {
       dom.towerMenu.removeChild(dom.towerMenu.lastChild);
     }
@@ -367,6 +380,13 @@ class ActionsHandler {
     dom.bottomBar.style.opacity = 0;
     dom.play.style.display = "";
     dom.startText.style.display = "flex";
+    if (!dom.tutorialOpen) {
+      game.tutorial.toggleTutorial();
+    }
+    if (dom.hotkeysOpen) {
+      game.tutorial.toggleHotkeys();
+    }
+    
     dom = new DomHandler();
     game = new Game();
   }

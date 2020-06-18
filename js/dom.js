@@ -13,7 +13,7 @@ class DomHandler {
     this.gameOver = document.querySelector("#game-over-screen");
     this.overTitle = document.querySelector("#game-over-title");
     this.terminal = document.querySelector("#score-terminal");
-    this.scores = document.querySelector("#scores");
+    this.scores = document.querySelector(".scores");
     this.local = document.querySelector("#local-top")
 
     // * tutorial

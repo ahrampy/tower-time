@@ -529,14 +529,14 @@ canvas {
 
 #game-over-screen {
   display: flex;
-  position: fixed; 
+  position: fixed;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: rgb(15, 189, 15);
+  color: #2c9e16;
   transition: 2s;
   opacity: 0;
   z-index: 2;
@@ -569,7 +569,7 @@ canvas {
   margin: 10px;
 }
 
-#scores {
+.scores {
   display: flex;
 }
 
@@ -577,11 +577,32 @@ canvas {
   padding: 0 20px;
 }
 
+.score-div:first-child {
+  text-align: center;
+}
+
+.score-div:last-child {
+  text-align: center;
+}
+
 .score-div > h2 {
+  text-align: center;
   padding-bottom: 10px;
 }
 
-#scores input {
+.scores ul {
+  color: #fff;
+  padding: 0px;
+  list-style: none;
+  min-width: 80px;
+}
+
+.scores li {
+  font-size: 16px;
+  padding: 5px 0px;
+}
+
+.name-input {
   background-color: #333;
   color: #fff;
   text-align: center;
@@ -594,16 +615,22 @@ canvas {
   border: 3px solid rgb(70, 70, 70);
 }
 
-#scores ol {
-  color: #fff;
-  padding: 0px;
-  list-style: none;
-  min-width: 80px;
+.new-game {
+  outline: none;
+  font-family: inherit;
+  background: rgb(171, 171, 171);
+  color: #333;
+  font-size: 20px;
+  margin-top: 30px;
+  width: 250px;
+  height: 60px;
+  border: 5px solid #299114;
+  transition: 0.5s;
 }
 
-#scores li {
-  font-size: 16px;
-  padding: 0px 10px 10px 0px;
+.new-game:hover {
+  color: #299114;
+  border: 5px solid #333;
 }
 
 #footer {

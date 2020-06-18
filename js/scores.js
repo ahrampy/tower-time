@@ -28,9 +28,9 @@ class Scores {
   }
 
   handleScores(highscores) {
-    const rankList = document.createElement("ol");
-    const scoreList = document.createElement("ol");
-    const nameList = document.createElement("ol");
+    const rankList = document.createElement("ul");
+    const scoreList = document.createElement("ul");
+    const nameList = document.createElement("ul");
 
     let lowestShowing;
 
@@ -62,36 +62,38 @@ class Scores {
 
     const lists = [rankList, scoreList, nameList];
     ["RANK", "SCORE", "NAME"].forEach((column, i) => {
-      
-      const rankDiv = document.createElement("div");
-      rankDiv.classList.add("score-div");
+      const div = document.createElement("div");
+      div.classList.add("score-div");
       const rankTitle = document.createElement("h2");
-      rankTitle.innerText = "RANK";
-      rankDiv.appendChild(rankTitle);
-      rankDiv.appendChild(lists[i]);
-      dom.scores.appendChild(rankDiv);
-      
+      rankTitle.innerText = column;
+      div.appendChild(rankTitle);
+      div.appendChild(lists[i]);
+      dom.scores.appendChild(div);
     })
 
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-    input.classList.add("nameInput");
-    input.placeholder = "YOUR NAME";
-    input.maxLength = 3;
-    form.appendChild(input);
-    dom.terminal.appendChild(form);
-    form.addEventListener("submit", (event) =>
-      this.addScore(event, lowestShowing)
-    );
+    if (game.score >= lowestShowing) {
+      const form = document.createElement("form");
+      const input = document.createElement("input");
+      input.classList.add("name-input");
+      input.placeholder = "ADD NAME";
+      input.maxLength = 3;
+      form.appendChild(input);
+      dom.terminal.appendChild(form);
+      form.addEventListener("submit", (event) =>
+        this.addScore(event, lowestShowing, form)
+      );
+    } else {
+      this.addNewGame();
+    }
   }
 
-  addScore(event, lowestShowing) {
+  addScore(event, lowestShowing, form) {
     event.preventDefault();
-    const name = document.querySelector(".nameInput");
+    const name = document.querySelector(".name-input");
     const scoreList = document.querySelectorAll(".score-div");
     if (game.score >= lowestShowing) {
       scoreList.forEach((div) => {
-        div.querySelector("ol").innerHTML = "";
+        div.querySelector("ul").innerHTML = "";
       });
     }
     name.style.visibility = "hidden";
@@ -100,6 +102,19 @@ class Scores {
     } else {
       window.location.reload(false);
     }
+    dom.terminal.removeChild(form);
+    this.addNewGame();
+  }
+
+  addNewGame() {
+    const btn = document.createElement("button");
+    btn.classList.add("new-game");
+    btn.innerHTML = "NEW GAME";
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      game.actions.newGame();
+    }, false)
+    dom.terminal.appendChild(btn);
   }
 
   sortScores(arr) {
