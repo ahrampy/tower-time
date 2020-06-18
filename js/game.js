@@ -529,8 +529,8 @@ class Game {
 
   run() {
     this.actions.updateStats();
-    // this.checkStats(); // ! fix after
-
+    this.checkStats();
+    
     if (!this.gameOver && this.gameStarted) {
       this.actions.showTowerInfo();
       this.render();
