@@ -3,11 +3,18 @@
 class DomHandler {
   constructor() {
     // * main
+    this.holder = document.querySelector("#holder");
     this.play = document.querySelector("#play-button");
     this.startText = document.querySelector("#game-info");
     this.wrapper = document.querySelector("#canvas-wrapper");
     this.canvas = document.querySelector("canvas");
-    this.gameOver = document.querySelector("#game-over");
+
+    // * endgame
+    this.gameOver = document.querySelector("#game-over-screen");
+    this.overTitle = document.querySelector("#game-over-title");
+    this.terminal = document.querySelector("#score-terminal");
+    this.scores = document.querySelector("#scores");
+    this.local = document.querySelector("#local-top")
 
     // * tutorial
     this.tutorialOpen = true;

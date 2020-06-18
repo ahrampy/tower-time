@@ -529,7 +529,7 @@ class Game {
 
   run() {
     this.actions.updateStats();
-    this.checkStats();
+    // this.checkStats(); // ! fix after
 
     if (!this.gameOver && this.gameStarted) {
       this.actions.showTowerInfo();

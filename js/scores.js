@@ -27,21 +27,24 @@ class Scores {
     });
   }
 
-  handleScores(screen, highscores) {
-    const scoreTerminal = document.createElement("div");
-    scoreTerminal.classList.add("score-terminal");
+  handleScores(highscores) {
     const rankList = document.createElement("ol");
     const scoreList = document.createElement("ol");
     const nameList = document.createElement("ol");
+
     let lowestShowing;
+
     highscores.on("value", (snap) => {
       const data = snap.val();
       const idArr = Object.keys(data);
       const scores = [];
+      
       for (let i = 0; i < idArr.length; i++) {
         scores.push([data[idArr[i]].score, data[idArr[i]].name]);
       }
+      
       this.sortScores(scores);
+      
       let rankCount = 1;
       scores.forEach((score) => {
         const rankLi = document.createElement("li");
@@ -57,38 +60,26 @@ class Scores {
       lowestShowing = scores[9][0];
     });
 
-    const rankDiv = document.createElement("div");
-    rankDiv.classList.add("score-div");
-    const rankTitle = document.createElement("h2");
-    rankTitle.innerText = "RANK";
-    rankDiv.appendChild(rankTitle);
-    rankDiv.appendChild(rankList);
-    scoreTerminal.appendChild(rankDiv);
+    const lists = [rankList, scoreList, nameList];
+    ["RANK", "SCORE", "NAME"].forEach((column, i) => {
+      
+      const rankDiv = document.createElement("div");
+      rankDiv.classList.add("score-div");
+      const rankTitle = document.createElement("h2");
+      rankTitle.innerText = "RANK";
+      rankDiv.appendChild(rankTitle);
+      rankDiv.appendChild(lists[i]);
+      dom.scores.appendChild(rankDiv);
+      
+    })
 
-    const scoreDiv = document.createElement("div");
-    scoreDiv.classList.add("score-div");
-    const scoreTitle = document.createElement("h2");
-    scoreTitle.innerText = "SCORE";
-    scoreDiv.appendChild(scoreTitle);
-    scoreDiv.appendChild(scoreList);
-    scoreTerminal.appendChild(scoreDiv);
-
-    const nameDiv = document.createElement("div");
-    nameDiv.classList.add("score-div");
-    const nameTitle = document.createElement("h2");
-    nameTitle.innerText = "NAME";
-    nameDiv.appendChild(nameTitle);
-    nameDiv.appendChild(nameList);
-    scoreTerminal.appendChild(nameDiv);
-
-    screen.appendChild(scoreTerminal);
     const form = document.createElement("form");
     const input = document.createElement("input");
     input.classList.add("nameInput");
     input.placeholder = "YOUR NAME";
     input.maxLength = 3;
     form.appendChild(input);
-    screen.appendChild(form);
+    dom.terminal.appendChild(form);
     form.addEventListener("submit", (event) =>
       this.addScore(event, lowestShowing)
     );

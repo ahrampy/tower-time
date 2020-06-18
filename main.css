@@ -26,13 +26,14 @@ body:hover {
   align-items: center;
   flex-direction: column;
   margin: 1% 0 1% 0;
+  transition: 2s;
 }
 
 #holder h1 {
   color: rgb(187, 186, 186);
 }
 
-#other-window {
+#placeholder-window {
   width: 160px;
   height: 560px;
   opacity: 0;
@@ -249,23 +250,6 @@ body:hover {
   margin-top: 45px;
 }
 
-#game-over {
-  position: absolute;
-  display: none;
-  justify-content: center;
-  top: 30%;
-  left: 0;
-  right: 0;
-  margin: auto;
-  z-index: 2;
-  transition: 1s;
-}
-
-#game-over > h1 {
-  color: #333;
-  font-size: 70px;
-}
-
 #wave-button {
   display: flex;
   justify-content: center;
@@ -296,7 +280,7 @@ body:hover {
 canvas {
   position: inline-block;
   z-index: 1;
-  transition: 2s;
+  transition: 2.5s;
   opacity: 0;
 }
 
@@ -543,36 +527,61 @@ canvas {
   transform: rotate(45deg);
 }
 
-.over {
-  z-index: 0;
-  opacity: 0;
-}
-
-.game-over {
-  height: 560;
-  width: 840;
-  opacity: 0.8;
-  z-index: 2;
-}
-
-.scores {
+#game-over-screen {
   display: flex;
+  position: fixed; 
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   justify-content: center;
   align-items: center;
   flex-direction: column;
   color: rgb(15, 189, 15);
-  transition: 1s;
+  transition: 2s;
+  opacity: 0;
+  z-index: 2;
 }
 
-.score-terminal {
+#game-over-title {
+  display: none;
+  color: #333;
+  font-size: 70px;
+  transition: 2s;
+}
+
+#score-terminal {
+  display: none;
+  position: fixed;
+  align-items: center;
+  flex-direction: column;
+  top: 55%;
+  transition: 2s;
+  opacity: 0;
+}
+
+#score-terminal > h2 {
+  color: #fff;
+}
+
+#score-terminal > h3 {
+  color: rgb(171, 171, 171);
+  font-size: 30px;
+  margin: 10px;
+}
+
+#scores {
   display: flex;
 }
 
-.scores h2 {
-  padding-left: 30px;
+.score-div {
+  padding: 0 20px;
 }
 
-.scores input {
+.score-div > h2 {
+  padding-bottom: 10px;
+}
+
+#scores input {
   background-color: #333;
   color: #fff;
   text-align: center;
@@ -585,16 +594,16 @@ canvas {
   border: 3px solid rgb(70, 70, 70);
 }
 
-.scores ol {
+#scores ol {
   color: #fff;
-  padding: 20px;
+  padding: 0px;
   list-style: none;
   min-width: 80px;
 }
 
-.scores li {
+#scores li {
   font-size: 16px;
-  padding: 0px 10px 10px;
+  padding: 0px 10px 10px 0px;
 }
 
 #footer {
@@ -605,6 +614,7 @@ canvas {
   align-items: center;
   width: 100%;
   color: rgb(186, 186, 186);
+  z-index: 3;
 }
 
 #footer a {

@@ -320,37 +320,34 @@ class ActionsHandler {
     game.gameOver = true;
     game.context.fillStyle = "rgba(125, 125, 125, 0.6)";
     game.context.fillRect(0, 0, 840, 560);
-    dom.gameOver.style.display = "flex";
-    dom.wave.style.opacity = 0;
-    dom.wave.removeEventListener("click", game.waveClick, false);
-    dom.tutorial.style.opacity = 0;
+    dom.gameOver.style.opacity = 100;
+    dom.gameOver.style.width = "100%";
+    dom.gameOver.style.height = "100%";
+    dom.overTitle.style.display = "inline-block";
     const highscores = firebase
       .database()
       .ref("scores")
       .orderByChild("score")
       .limitToLast(10);
-    setTimeout(() => {
-      dom.canvas.classList.add("over");
-    }, 3000);
     game.f = game.score;
+    let score = window.localStorage.getItem("score");
+    if ((score && score < game.f) || !score) {
+        score = game.f;
+        window.localStorage.setItem("score", game.f);
+    }
+    dom.local.innerHTML = `Local Highest: ${score}`;
+    // dom.wave.removeEventListener("click", game.waveClick, false);
     setTimeout(() => {
-      const gameOverScreen = document.createElement("div");
-      gameOverScreen.classList.add("game-over");
-      dom.wrapper.replaceChild(gameOverScreen, dom.canvas);
-      dom.gameOver.style.opacity = 0;
+      dom.holder.style.opacity = 0;
+      dom.gameOver.style.top = "20%";
+      dom.overTitle.style.color = "rgb(171, 171, 171)";
+      dom.terminal.style.display = "flex";
       setTimeout(() => {
-        gameOverScreen.classList.add("scores");
-        dom.gameOver.style.display = "none";
-        setTimeout(() => {
-          dom.wave.innerText = "New Game";
-          dom.wave.addEventListener("click", game.actions.newGame, false);
-          dom.wave.classList.add("active");
-          dom.wave.style.opacity = 100;
-          dom.gameOver.style.opacity = 100;
-          game.scores.handleScores(gameOverScreen, highscores);
-        }, 500);
-      }, 500);
-    }, 5000);
+        dom.terminal.style.opacity = 100;
+        game.scores.handleScores(highscores);
+      }, 1000);
+    }, 1000);
+    //   // .addEventListener("click", game.actions.newGame, false); // ! add new game btn
   }
 
   newGame() {
