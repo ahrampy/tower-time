@@ -48,12 +48,12 @@ class Tutorial {
 
   ensureDefault() {
     if (dom.tutorialP.innerHTML === "undefined") {
-      dom.tutorialP.innerHTML = game.tutorial.default;
+      dom.tutorialP.innerHTML = tutorial.default;
     }
   }
 
   clearTip() {
-    dom.tutorialP.innerHTML = game.tutorial.default;
+    dom.tutorialP.innerHTML = tutorial.default;
   }
 
   startTips() {

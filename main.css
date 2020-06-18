@@ -213,6 +213,7 @@ body:hover {
   z-index: 2;
   outline: none;
   border: none;
+  transition: .5s;
 }
 
 #play-button:hover {

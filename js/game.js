@@ -2,11 +2,13 @@
 
 window.addEventListener("load", init, false);
 
-var dom, game;
+var dom, game, tutorial, scores;
 
 function init() {
   dom = new DomHandler();
   game = new Game();
+  tutorial = new Tutorial();
+  scores = new Scores();
   window.setTimeout(animate, 100);
 }
 
@@ -83,8 +85,6 @@ class Game {
     // * add game element handlers
     this.loader = new Loader();
     this.actions = new ActionsHandler(this.tileDivs);
-    this.tutorial = new Tutorial();
-    this.scores = game ? game.scores : new Scores();
   }
 
   nextWave() {
@@ -482,7 +482,7 @@ class Game {
     if (game.wave === 0 && game.bits < 50) {
       dom.towerMenu.classList.remove("active");
       dom.wave.classList.add("active");
-      game.tutorial.showInfo("canvas");
+      tutorial.showInfo("canvas");
     }
   }
 

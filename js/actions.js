@@ -116,7 +116,7 @@ class ActionsHandler {
       if (game.wave === 1) {
         this.innerText = "Next Wave";
         dom.towerMenu.classList.remove("active");
-        game.tutorial.showInfo("start");
+        tutorial.showInfo("start");
       }
       game.nextWave();
     }
@@ -176,9 +176,9 @@ class ActionsHandler {
       } else if (event.keyCode === 81) {
         this.upgradeClick();
       } else if (event.keyCode === 73) {
-        game.tutorial.toggleTutorial();        
+        tutorial.toggleTutorial();
       } else if (event.keyCode === 72) {
-        game.tutorial.toggleHotkeys();
+        tutorial.toggleHotkeys();
       }
     });
   }
@@ -347,7 +347,7 @@ class ActionsHandler {
       dom.bottomBar.style.opacity = 0;
       setTimeout(() => {
         dom.terminal.style.opacity = 100;
-        game.scores.handleScores(highscores);
+        scores.handleScores(highscores);
         setTimeout(() => {
           game.context.clearRect(0, 0, 840, 560);
         }, 1000);
@@ -381,12 +381,12 @@ class ActionsHandler {
     dom.play.style.display = "";
     dom.startText.style.display = "flex";
     if (!dom.tutorialOpen) {
-      game.tutorial.toggleTutorial();
+      tutorial.toggleTutorial();
     }
     if (dom.hotkeysOpen) {
-      game.tutorial.toggleHotkeys();
+      tutorial.toggleHotkeys();
     }
-    
+
     dom = new DomHandler();
     game = new Game();
   }
