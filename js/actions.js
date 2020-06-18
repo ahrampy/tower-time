@@ -151,6 +151,8 @@ class ActionsHandler {
         game.grid[c][r].loadAdjacentCells();
       }
     }
+
+    game.path = game.getPath();
   }
 
   handleKeyListeners() {

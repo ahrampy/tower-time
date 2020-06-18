@@ -57,6 +57,11 @@ class Game {
     this.loadGrid();
     this.loadPaths();
 
+    // * draw path
+    this.path = this.getPath();;
+    this.vertices = this.getVertices(this.path);;
+    this.point = 10;
+
     // * tower buttons
     this.tileDivs = this.createTiles();
 
@@ -270,7 +275,8 @@ class Game {
     this.bits -= tower.cost;
     this.cr -= tower.cost;
     tower.placed = true;
-    game.placingTower = false;
+    this.placingTower = false;
+    this.path = this.getPath();
   }
 
   loadGrid() {
@@ -496,6 +502,86 @@ class Game {
     }
   }
 
+  getPath() {
+    const path = [this.start];
+    while (path[path.length - 1] !== this.goal) {
+      path.push(path[path.length - 1].smallestAdjacent);
+    }
+    this.vertices = this.getVertices(path);
+    return path;
+  }
+
+  getVertices(path) {
+    var vertices = [];
+    for (var i = 1; i < path.length; i++) {
+      var cell0 = path[i - 1];
+      var cell1 = path[i];
+      var dx = cell1.center.x - cell0.center.x;
+      var dy = cell1.center.y - cell0.center.y;
+      for (var j = 0; j < 15; j++) {
+        var x = cell0.center.x + (dx * j) / 15;
+        var y = cell0.center.y + (dy * j) / 15;
+        vertices.push({
+          x: x,
+          y: y,
+        });
+      }
+    }
+    return vertices;
+  }
+
+  animatePath() {
+    this.context.beginPath();
+    this.context.moveTo(game.start.center.x, game.start.center.y);
+    for (var i = 1; i < this.path.length; i++) {
+      let cell = this.path[i];
+      this.context.lineTo(cell.center.x, cell.center.y);
+    }
+    this.context.strokeStyle = "rgba(164, 124, 194, 0.3)";
+    this.context.lineWidth = 4;
+    this.context.stroke();
+    this.animateTravel();
+    this.point++;
+  }
+
+  animateTravel() {
+    
+    if (this.vertices.length <= this.point) this.point = 10;
+
+    this.context.beginPath();
+    this.context.arc(
+      this.vertices[this.point - 10].x,
+      this.vertices[this.point - 10].y,
+      4,
+      0,
+      Math.PI * 2
+    );
+    this.context.fillStyle = "rgba(164, 124, 194, 0.3)";
+    this.context.fill();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.vertices[this.point - 5].x,
+      this.vertices[this.point - 5].y,
+      5,
+      0,
+      Math.PI * 2
+    );
+    this.context.fillStyle = "rgba(164, 124, 194, 0.3)";
+    this.context.fill();
+
+    this.context.beginPath();
+    this.context.arc(
+      this.vertices[this.point].x,
+      this.vertices[this.point].y,
+      6,
+      0,
+      Math.PI * 2
+    );
+    this.context.fillStyle = "rgba(164, 124, 194, 0.3)";
+    this.context.fill();
+  }
+
   animateBorder() {
     if (game.border.length) {
       for (let i = 0; i < Math.ceil(game.border.length) / 2; i++) {
@@ -530,10 +616,13 @@ class Game {
   run() {
     this.actions.updateStats();
     this.checkStats();
-    
+
     if (!this.gameOver && this.gameStarted) {
       this.actions.showTowerInfo();
       this.render();
+      // if (this.creeps.length === 0 && !this.sendingWave) {
+        this.animatePath();
+      // }
       this.checkWave();
       this.sendCreeps();
       for (let c = 0; c < this.numCols; c++) {
