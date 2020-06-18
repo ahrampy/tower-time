@@ -42,7 +42,6 @@ class Tutorial {
 
   showInfo(name, tip) {
     if (game.wave === 0) {
-
       if (name === "canvas") {
         if (game.bits < 50) {          
           tip =
@@ -51,10 +50,24 @@ class Tutorial {
           tip =
             "enemies will start at the blue square and try to get to the red one, build towers to stop them";
         }
-      } else if (name === "towerMenu") {
+      }
+      if (name === "towerMenu") {
         tip = "click a tower to select it, then click on the board to buy and place it";
       }
+    }
 
+    if (name === "type") {
+      let type = dom.type.lastChild.innerHTML;      
+      if (type === "EARTH") {
+        tip = "earth type is a basic tower, good for using up spare bank and making long walls; packs a punch once upgraded"
+      } else if (type === "WATER") {
+        tip = "water type slows things down a little, but is also a little slow; make sure it can hit its target, or at least something..."
+      } else if (type === "FIRE") {
+        tip = "fire type is fast, but has a low range; it needs to be in the heat of battle to be fully effective"
+      } else if (type === "AIR") {
+        tip = "air type is the loftiest tower, and attacks everything in its path; give it good direction and it'll blow enemies away"
+      }
+      
     }
 
     dom.tutorialP.innerHTML = tip;
@@ -89,12 +102,12 @@ class Tutorial {
       wave: "send the next wave of enemies",
       towerMenu:
         "hover over a tower to show its stats, click one to select it, then click on the board to buy a new tower of that type",
-      type: "the name of the current tower",
-      damage: "amount of damage the tower deals to enemies when it fires",
-      range: "how far the tower looks for enemies",
+      type: "the tower's type; look at individual tower notes while a tower is selected",
+      damage: "amount of damage each of the tower's attacks will deal to an enemy",
+      range: "the tower's line of sight",
       speed: "how quickly the tower fires",
       next: "cost to upgrade the tower",
-      upgrade: "upgrade the current tower for its 'next' cost",
+      upgrade: "upgrade the current tower for its next cost",
       sell: "sell the current tower for its most recent cost",
     };
   }
