@@ -547,7 +547,7 @@ canvas {
   display: none;
   color: #333;
   font-size: 70px;
-  transition: 2s;
+  transition: 1s;
 }
 
 #score-terminal {

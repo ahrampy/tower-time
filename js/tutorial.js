@@ -41,6 +41,22 @@ class Tutorial {
   }
 
   showInfo(name, tip) {
+    if (game.wave === 0) {
+
+      if (name === "canvas") {
+        if (game.bits < 50) {          
+          tip =
+            "now that you have a few towers, you're ready to take on the first wave! good luck";
+        } else {
+          tip =
+            "enemies will start at the blue square and try to get to the red one, build towers to stop them";
+        }
+      } else if (name === "towerMenu") {
+        tip = "click a tower to select it, then click on the board to buy and place it";
+      }
+
+    }
+
     dom.tutorialP.innerHTML = tip;
 
     this.ensureDefault();
@@ -54,13 +70,6 @@ class Tutorial {
 
   clearTip() {
     dom.tutorialP.innerHTML = tutorial.default;
-  }
-
-  startTips() {
-    if (game.bits <= 50) {
-      dom.tutorialP.innerHTML =
-        "now that you have some towers, its time to send the first wave!";
-    }
   }
 
   makeTips() {

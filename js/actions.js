@@ -359,14 +359,13 @@ class ActionsHandler {
     // dom.scores = document.createElement('div');
     // dom.scores.classList.add("scores");
     // dom.scores
-    dom.gameOver.style.top = "40%";
     dom.gameOver.style.opacity = 0;
     dom.gameOver.style.width = "0px";
     dom.gameOver.style.height = "0px";
     dom.overTitle.style.display = "none";
     dom.holder.style.opacity = 100;
-    dom.auto.checked = false;
     dom.terminal.style.display = "none";
+    dom.gameOver.style.top = "40%";
     dom.terminal.removeChild(dom.terminal.lastChild);
     while (dom.scores.firstChild) {
       dom.scores.removeChild(dom.scores.lastChild);
@@ -374,6 +373,7 @@ class ActionsHandler {
     while (dom.towerMenu.firstChild) {
       dom.towerMenu.removeChild(dom.towerMenu.lastChild);
     }
+    dom.auto.checked = false;
     dom.wave.innerText = "First Wave";
     dom.wave.classList.remove("active");
     dom.topBar.style.opacity = 0;
@@ -386,7 +386,6 @@ class ActionsHandler {
     if (dom.hotkeysOpen) {
       tutorial.toggleHotkeys();
     }
-
     game = new Game();
   }
 }
