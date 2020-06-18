@@ -1,18 +1,10 @@
-
 game:
-  fix animation rate on tower select
-  add ult air upgrade
-  refactor endgame logic, remove timeout hell
-  add pause
   add individual inputs for score name chars
   refactor tower types as class extensions
+  add ult air upgrade
 
 ui:
-  add fade in on load
-  add small delay to wave button active times / change tracking to check stages
-  disable update and sell hover when hidden
-  fade top/bottom bars on game over
-  add new game over screen w/ new game button and local storage score
+  I & H hotkeys fix on every other new game
 
 schemes:
   music: howler.js
