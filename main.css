@@ -630,6 +630,7 @@ canvas {
 }
 
 .new-game:hover {
+  cursor: pointer;
   color: #299114;
   border: 5px solid #333;
 }
