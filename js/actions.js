@@ -341,7 +341,7 @@ class ActionsHandler {
     dom.local.innerHTML = `Local Highest: ${score}`;
     setTimeout(() => {
       dom.holder.style.opacity = 0;
-      dom.gameOver.style.top = "15%";
+      dom.gameOver.style.top = "10%";
       dom.overTitle.style.color = "rgb(171, 171, 171)";
       dom.terminal.style.display = "flex";
       dom.canvas.style.backgroundColor = "";
@@ -366,8 +366,8 @@ class ActionsHandler {
     dom.gameOver.style.width = "0px";
     dom.gameOver.style.height = "0px";
     dom.overTitle.style.display = "none";
-    dom.holder.style.opacity = 100;
     dom.terminal.style.display = "none";
+    dom.holder.style.opacity = 100;
     dom.gameOver.style.top = "40%";
     dom.terminal.removeChild(dom.terminal.lastChild);
     while (dom.scores.firstChild) {

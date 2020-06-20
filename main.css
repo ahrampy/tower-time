@@ -213,7 +213,7 @@ body:hover {
   z-index: 2;
   outline: none;
   border: none;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 #play-button:hover {
@@ -547,6 +547,7 @@ canvas {
   display: none;
   color: #333;
   font-size: 70px;
+  margin: 0px;
   transition: 1s;
 }
 
@@ -556,18 +557,24 @@ canvas {
   align-items: center;
   flex-direction: column;
   top: 55%;
+  margin: 10px;
   transition: 2s;
   opacity: 0;
 }
 
-#score-terminal > h2 {
+#local-top {
   color: #fff;
+}
+
+#local-score {
+  color: 2c9e16;
+  
 }
 
 #score-terminal > h3 {
   color: rgb(171, 171, 171);
   font-size: 30px;
-  margin: 10px;
+  margin: 20px 0px;
 }
 
 .scores {
@@ -575,7 +582,7 @@ canvas {
 }
 
 .score-div {
-  padding: 0 20px;
+  padding: 0px 20px;
 }
 
 .score-div:first-child {
