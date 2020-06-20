@@ -4,8 +4,29 @@ game:
   add ult air upgrade
 
 ui:
+  safari: {
+    auto btn placement,
+    info windows minimize
+  }
   I & H hotkeys fix on every other new game
 
 schemes:
   music: howler.js
   mobile: css layout
+
+add advanced options left window: {
+  toggle show path,
+  reseed: {
+    cost increases each use,
+    randomly places all blocks,
+    if a block is placed on a tower, the tower will remain
+  },
+  hardcore mode: {
+    once actived it cannot be turned off,
+    no reseeding,
+    creeps are stronger,
+    auto-wave is turned on, but there is a 15 second delay,
+    can only build towers between waves,
+    points earned are doubled
+  }
+}

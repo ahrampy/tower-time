@@ -337,6 +337,7 @@ class ActionsHandler {
       score = game.f;
       window.localStorage.setItem("score", game.f);
     }
+    dom.final.innerHTML = `Final Score: ${game.f}`;
     dom.local.innerHTML = `Local Highest: ${score}`;
     setTimeout(() => {
       dom.holder.style.opacity = 0;

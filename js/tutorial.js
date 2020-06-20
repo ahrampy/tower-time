@@ -65,7 +65,7 @@ class Tutorial {
       } else if (type === "FIRE") {
         tip = "fire type is fast, but has a low range; it needs to be in the heat of battle to be fully effective"
       } else if (type === "AIR") {
-        tip = "air type is the loftiest tower, and attacks everything in its path; give it good direction and it'll blow enemies away"
+        tip = "air type is a lofty tower, and attacks everything in its path; give it good direction and it'll blow enemies away"
       }
       
     }
@@ -88,7 +88,7 @@ class Tutorial {
   makeTips() {
     return {
       canvas:
-        "enemies will start at the blue square and try to get to the red one, but cannot move through walls or towers; click on placed towers to edit them",
+        "enemies will start at the blue square and try to get to the red one, but cannot move through blocks or towers; click on placed towers to edit them",
       score:
         "your score increases for every enemy stopped before it reaches the red square",
       currWave:

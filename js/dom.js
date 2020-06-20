@@ -14,7 +14,8 @@ class DomHandler {
     this.overTitle = document.querySelector("#game-over-title");
     this.terminal = document.querySelector("#score-terminal");
     this.scores = document.querySelector(".scores");
-    this.local = document.querySelector("#local-top")
+    this.final = document.querySelector("#local-score");
+    this.local = document.querySelector("#local-top");
 
     // * tutorial
     this.tutorialOpen = true;
