@@ -610,7 +610,7 @@ class Game {
     setTimeout(() => {
       cell.occupied = true;
       cell.static = true;
-    }, time * 10);
+    }, time * 15);
   }
 
   run() {
