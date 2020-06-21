@@ -290,12 +290,22 @@ class ActionsHandler {
   }
 
   toggleEditButtons(tower) {
+    let upChange = dom.upgrade.style.opacity;
+    let sellChange = dom.sell.style.opacity;
+
     if (tower) {
       dom.upgrade.style.opacity = tower.canUpgrade ? 100 : 0;
       dom.sell.style.opacity = tower.placed ? 100 : 0;
     } else {
       dom.upgrade.style.opacity = 0;
       dom.sell.style.opacity = 0;
+    }
+
+    if (upChange !== dom.upgrade.style.opacity) {
+      dom.upgrade.classList.toggle("clickable");
+    }
+    if (sellChange !== dom.sell.style.opacity) {
+      dom.sell.classList.toggle("clickable");
     }
   }
 
@@ -372,6 +382,7 @@ class ActionsHandler {
     dom.terminal.style.display = "none";
     dom.holder.style.opacity = 100;
     dom.gameOver.style.top = "40%";
+    dom.progress.style.width = "0%";
     dom.terminal.removeChild(dom.terminal.lastChild);
     while (dom.scores.firstChild) {
       dom.scores.removeChild(dom.scores.lastChild);

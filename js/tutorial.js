@@ -43,7 +43,7 @@ class Tutorial {
   showInfo(name, tip) {
     if (game.wave === 0) {
       if (name === "canvas") {
-        if (game.bits < 50) {          
+        if (game.bits < 50) {
           tip =
             "now that you have a few towers, you're ready to take on the first wave! good luck";
         } else {
@@ -52,22 +52,31 @@ class Tutorial {
         }
       }
       if (name === "towerMenu") {
-        tip = "click a tower to select it, then click on the board to buy and place it";
+        tip =
+          "click a tower to select it, then click on the board to buy and place it";
       }
     }
 
     if (name === "type") {
-      let type = dom.type.lastChild.innerHTML;      
+      let type = dom.type.lastChild.innerHTML;
       if (type === "EARTH") {
-        tip = "earth type is a basic tower, good for using up spare bank and making long walls; packs a punch once upgraded"
+        tip =
+          "earth type is a basic tower, good for using up spare bank and making long walls; packs a punch once upgraded";
       } else if (type === "WATER") {
-        tip = "water type slows things down a little, but is also a little slow; make sure it can hit its target, or at least something..."
+        tip =
+          "water type slows things down a little, but is also a little slow; make sure it can hit its target, or at least something...";
       } else if (type === "FIRE") {
-        tip = "fire type is fast, but has a low range; it needs to be in the heat of battle to be fully effective"
+        tip =
+          "fire type is fast, but has a low range; it needs to be in the heat of battle to be fully effective";
       } else if (type === "AIR") {
-        tip = "air type is a lofty tower, and attacks everything in its path; give it good direction and it'll blow enemies away"
+        tip =
+          "air type is a lofty tower, and attacks everything in its path; give it good direction and it'll blow enemies away";
       }
-      
+    } else if (
+      (name === "upgrade" || name === "sell") &&
+      !game.selectedTowers.length
+    ) {
+      tip = tutorial.default;
     }
 
     dom.tutorialP.innerHTML = tip;
@@ -102,8 +111,10 @@ class Tutorial {
       wave: "send the next wave of enemies",
       towerMenu:
         "hover over a tower to show its stats, click one to select it, then click on the board to buy a new tower of that type",
-      type: "the tower's type; look at individual tower notes while a tower is selected",
-      damage: "amount of damage each of the tower's attacks will deal to an enemy",
+      type:
+        "the tower's type; look at individual tower notes while a tower is selected",
+      damage:
+        "amount of damage each of the tower's attacks will deal to an enemy",
       range: "the tower's line of sight",
       speed: "how quickly the tower fires",
       next: "cost to upgrade the tower",

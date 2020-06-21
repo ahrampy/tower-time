@@ -475,11 +475,6 @@ canvas {
   background: rgba(68, 74, 110, 0.815);
 }
 
-#edit-tower-buttons h5:hover {
-  cursor: pointer;
-  background: rgb(120, 128, 171);
-}
-
 #auto-container {
   display: flex;
   align-items: center;
