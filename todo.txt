@@ -1,14 +1,12 @@
 game:
-  add individual inputs for score name chars
-  refactor tower types as class extensions
-  add ult air upgrade
 
 ui:
   safari: {
     auto btn placement,
-    info windows minimize
+    info windows minimize bounce
   }
   I & H hotkeys fix on every other new game
+  game over title bounce on new game
 
 schemes:
   music: howler.js
