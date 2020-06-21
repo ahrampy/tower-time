@@ -42,6 +42,8 @@ class DomHandler {
     this.autoBox = document.querySelector("#auto-container");
     this.auto = document.querySelector("input[name=auto-wave]");
     this.wave = document.querySelector("#wave-button");
+    this.waveText = document.querySelector("#wave-text");
+    this.progress = document.querySelector("#wave-progress");
 
     // * bottom nav
     this.bottomBar = document.querySelector("#content-box");

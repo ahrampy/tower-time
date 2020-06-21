@@ -111,13 +111,16 @@ class ActionsHandler {
   }
 
   waveClick() {
-    if (game.gameStarted && !game.gameOver) {
+    if (!game.sendingWave && game.gameStarted && !game.gameOver) {
       game.wave += 1;
+      game.sendingWave = true;
+      game.waveTimer = 400;
       if (game.wave === 1) {
-        this.innerText = "Next Wave";
+        dom.waveText.innerText = "Next Wave";
         dom.towerMenu.classList.remove("active");
         tutorial.showInfo("start");
       }
+      dom.wave.classList.remove("clickable");
       game.nextWave();
     }
   }
@@ -377,7 +380,7 @@ class ActionsHandler {
       dom.towerMenu.removeChild(dom.towerMenu.lastChild);
     }
     dom.auto.checked = false;
-    dom.wave.innerText = "First Wave";
+    dom.waveText.innerText = "First Wave";
     dom.wave.classList.remove("active");
     dom.topBar.style.opacity = 0;
     dom.bottomBar.style.opacity = 0;

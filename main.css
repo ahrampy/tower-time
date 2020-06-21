@@ -263,14 +263,23 @@ body:hover {
   transition: 0.5s;
 }
 
-#wave-button:hover {
+.clickable:hover {
   cursor: pointer;
-  background: rgb(120, 128, 171);
+  background: rgb(120, 128, 171) !important;
 }
 
-#wave-button > h3 {
-  padding: 0px;
-  margin: 0px;
+#wave-button > div {
+  position: fixed;
+}
+
+#wave-button > span {
+  position: relative;
+  display: block;
+  float: left;
+  overflow: hidden;
+  background: rgb(120, 128, 171);
+  border-radius: 5px;
+  height: 100%;
 }
 
 #canvas-wrapper {
@@ -568,7 +577,6 @@ canvas {
 
 #local-score {
   color: 2c9e16;
-  
 }
 
 #score-terminal > h3 {

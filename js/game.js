@@ -58,8 +58,8 @@ class Game {
     this.loadPaths();
 
     // * draw path
-    this.path = this.getPath();;
-    this.vertices = this.getVertices(this.path);;
+    this.path = this.getPath();
+    this.vertices = this.getVertices(this.path);
     this.point = 10;
 
     // * tower buttons
@@ -70,9 +70,10 @@ class Game {
     this.placingTower = false;
     this.selectedTowers = [];
 
-    // * auto wave
+    // * wave tracking
     this.autoWave = false;
     this.sendingWave = false;
+    this.waveTimer = 0;
 
     // * music
     // this.handleSoundButton();
@@ -90,21 +91,6 @@ class Game {
     // * add game element handlers
     this.loader = new Loader();
     this.actions = new ActionsHandler(this.tileDivs);
-  }
-
-  nextWave() {
-    game.cr -= game.bits;
-    game.bits = Math.ceil(game.bits / 5) * 5;
-    game.cr += game.bits;
-    if (game.wave % 10 === 0) {
-      game.difficulty += 0.5;
-    }
-    if (game.wave % 30 === 0) {
-      game.difficulty += 0.5;
-    }
-    game.bits += 5 * game.wave;
-    game.cr += 5 * game.wave;
-    game.loadCreeps(20);
   }
 
   // handleSoundButton() {
@@ -422,6 +408,21 @@ class Game {
     }
   }
 
+  nextWave() {
+    game.cr -= game.bits;
+    game.bits = Math.ceil(game.bits / 5) * 5;
+    game.cr += game.bits;
+    if (game.wave % 10 === 0) {
+      game.difficulty += 0.5;
+    }
+    if (game.wave % 30 === 0) {
+      game.difficulty += 0.5;
+    }
+    game.bits += 5 * game.wave;
+    game.cr += 5 * game.wave;
+    game.loadCreeps(20);
+  }
+
   loadCreeps(numCreeps) {
     const creeps = [];
     for (let i = 0; i < numCreeps; i++) {
@@ -473,22 +474,26 @@ class Game {
   }
 
   checkWave() {
-    if (game.autoWave && !game.sendingWave && !game.creeps.length) {
-      dom.wave.click();
-      game.sendingWave = true;
-      setTimeout(() => {
-        game.sendingWave = false;
-      }, 1000);
-    }
-    if (!game.creeps.length && !game.sendingWave && game.wave > 0) {
-      dom.wave.classList.add("active");
+    if (this.waveTimer > 0) {
+      this.waveTimer--;
+      dom.progress.style.width = `${this.waveTimer / 4}%`
     } else {
+      this.sendingWave = false;
+      dom.wave.classList.add("clickable");
+    }    
+
+    if (this.creeps.length) {
       dom.wave.classList.remove("active");
-    }
-    if (game.wave === 0 && game.bits < 50) {
-      dom.towerMenu.classList.remove("active");
-      dom.wave.classList.add("active");
-      tutorial.showInfo("canvas");
+    } else if (!this.sendingWave) {
+      if (this.autoWave) {
+        dom.wave.click();
+      } else if (this.wave > 0) {
+        dom.wave.classList.add("active");
+      } else if (this.bits < 50) {
+        dom.wave.classList.add("active");
+        dom.towerMenu.classList.remove("active");
+        tutorial.showInfo("canvas");
+      }
     }
   }
 
@@ -545,7 +550,6 @@ class Game {
   }
 
   animateTravel() {
-    
     if (this.vertices.length <= this.point) this.point = 10;
 
     this.context.beginPath();
@@ -621,7 +625,7 @@ class Game {
       this.actions.showTowerInfo();
       this.render();
       // if (this.creeps.length === 0 && !this.sendingWave) {
-        this.animatePath();
+      this.animatePath();
       // }
       this.checkWave();
       this.sendCreeps();
