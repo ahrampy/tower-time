@@ -276,7 +276,6 @@ body:hover {
 #wave-button > span {
   position: absolute;
   top: 0;
-  left: 0;
   background: rgb(120, 128, 171);
   border-radius: 5px;
   height: 100%;
@@ -371,11 +370,11 @@ canvas {
   filter: invert(19%);
 }
 
-#auto-wave {
+/* #auto-wave {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 #towers {
   color: rgb(187, 186, 186);
@@ -458,10 +457,6 @@ canvas {
   transition: 0.5s;
 }
 
-/* #upgrade-button {
-  border-bottom: 1px solid rgba(68, 74, 110, 0.8);
-} */
-
 #sell-button {
   border-radius: 0 0 5px 0;
 }
@@ -485,8 +480,6 @@ canvas {
   font-weight: 600;
   width: 80px;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
@@ -500,7 +493,6 @@ canvas {
 
 .checkmark {
   position: absolute;
-  top: 15;
   right: 0;
   height: 25px;
   width: 25px;
