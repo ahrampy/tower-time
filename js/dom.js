@@ -8,6 +8,7 @@ class DomHandler {
     this.startText = document.querySelector("#game-info");
     this.wrapper = document.querySelector("#canvas-wrapper");
     this.canvas = document.querySelector("canvas");
+    this.footer = document.querySelector("footer");
 
     // * endgame
     this.gameOver = document.querySelector("#game-over-screen");

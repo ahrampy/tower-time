@@ -73,8 +73,6 @@ class ActionsHandler {
   }
 
   handleCanvasDblClick(event) {
-    event.preventDefault();
-    
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
@@ -356,7 +354,7 @@ class ActionsHandler {
     dom.local.innerHTML = `Local Highest: ${score}`;
     setTimeout(() => {
       dom.holder.style.opacity = 0;
-      dom.gameOver.style.top = "10%";
+      dom.gameOver.style.top = "20%";
       dom.overTitle.style.color = "rgb(171, 171, 171)";
       dom.terminal.style.display = "flex";
       dom.canvas.style.backgroundColor = "";
@@ -374,15 +372,13 @@ class ActionsHandler {
   }
 
   newGame() {
-    // dom.scores = document.createElement('div');
-    // dom.scores.classList.add("scores");
-    // dom.scores
     dom.gameOver.style.opacity = 0;
     dom.gameOver.style.width = "0px";
     dom.gameOver.style.height = "0px";
     dom.overTitle.style.display = "none";
     dom.terminal.style.display = "none";
     dom.holder.style.opacity = 100;
+    dom.footer.style.opacity = 100;
     dom.gameOver.style.top = "40%";
     dom.progress.style.width = "0%";
     dom.terminal.removeChild(dom.terminal.lastChild);

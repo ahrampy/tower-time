@@ -40,6 +40,7 @@ class Loader {
   handleStart() {
     dom.play.style.display = "none";
     dom.startText.style.display = "none";
+    dom.footer.style.opacity = 0;
     game.gameStarted = true;
     game.run();
     dom.canvas.style.backgroundColor = "rgba(186, 186, 186, 0.9)";

@@ -33,7 +33,7 @@ class Game {
     this.stages = {};
 
     // * game stats
-    this.lives = 20;
+    this.lives = 1;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
