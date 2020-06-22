@@ -252,6 +252,7 @@ body:hover {
 }
 
 #wave-button {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -269,17 +270,17 @@ body:hover {
 }
 
 #wave-button > div {
-  position: fixed;
+  z-index: 1;
 }
 
 #wave-button > span {
-  position: relative;
-  display: block;
-  float: left;
-  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
   background: rgb(120, 128, 171);
   border-radius: 5px;
   height: 100%;
+  z-index: 0;
 }
 
 #canvas-wrapper {
