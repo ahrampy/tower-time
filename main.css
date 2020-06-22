@@ -152,42 +152,6 @@ body:hover {
   background-color: rgba(207, 204, 204, 0.7);
 }
 
-@keyframes slide-in {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@-webkit-keyframes slide-in {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    -webkit-transform: translateX(0%);
-  }
-}
-
-@keyframes slide-out {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@-webkit-keyframes slide-out {
-  0% {
-    -webkit-transform: translateX(0%);
-  }
-  100% {
-    -webkit-transform: translateX(-50%);
-  }
-}
-
 #game-controls {
   display: flex;
   justify-content: space-between;
@@ -701,7 +665,43 @@ canvas {
   }
 }
 
-/* mobile friendly styles */
+@keyframes slide-in {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide-in {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(-50%);
+  }
+}
+
+/* mobile*/
 
 #flip-message {
   display: none;
@@ -723,10 +723,17 @@ canvas {
     display: none;
   }
   #flip-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
     font-size: 40px;
+    color: #fff;
+  }
+
+  #flip-message > p {
+    text-align: center;
   }
 }
 

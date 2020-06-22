@@ -73,6 +73,8 @@ class ActionsHandler {
   }
 
   handleCanvasDblClick(event) {
+    event.preventDefault();
+    
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
