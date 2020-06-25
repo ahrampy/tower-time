@@ -43,7 +43,7 @@ class Loader {
     dom.footer.style.opacity = 0;
     game.gameStarted = true;
     game.run();
-    dom.canvas.style.backgroundColor = "rgba(186, 186, 186, 0.9)";
+    dom.canvas.style.backgroundColor = "rgb(186, 186, 186)";
     dom.towerMenu.classList.add("active");
     dom.topBar.style.opacity = 100;
     dom.bottomBar.style.opacity = 100;

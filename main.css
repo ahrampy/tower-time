@@ -141,19 +141,19 @@ body:hover {
 }
 
 .open {
-  background-color: rgba(207, 204, 204, 0.7);
+  background-color: rgb(207, 204, 204);
   width: 160px;
   animation: slide-in 0.5s forwards;
   -webkit-animation: slide-in 0.5s forwards;
 }
 
 .open:hover {
-  background-color: rgba(180, 179, 179, 0.5);
+  background-color: rgb(180, 179, 179);
 }
 
 .closed {
-  background-color: rgba(180, 179, 179, 0.5);
-  width: 80px;
+  background-color: rgb(180, 179, 179);
+  width: 160px;
   animation: slide-out 0.5s forwards;
   -webkit-animation: slide-out 0.5s forwards;
 }
@@ -168,7 +168,7 @@ body:hover {
   align-items: center;
   height: 55px;
   width: 840px;
-  background: rgba(68, 74, 110, 0.8);
+  background: rgb(68, 74, 110);
   border-radius: 5px 5px 0 0;
   opacity: 0;
   transition: 2s;
@@ -232,7 +232,7 @@ body:hover {
   align-items: center;
   height: 100%;
   width: 140px;
-  background: rgba(68, 74, 110, 0.815);
+  background: rgb(68, 74, 110);
   border-radius: 0px 5px 0 0;
   color: rgb(187, 186, 186);
   transition: 0.5s;
@@ -264,7 +264,7 @@ body:hover {
 canvas {
   position: inline-block;
   z-index: 1;
-  transition: 2.5s;
+  transition: 2s;
   opacity: 0;
 }
 
@@ -357,7 +357,7 @@ canvas {
   height: 50px;
   padding: 15px;
   padding-bottom: 40px;
-  background: rgba(68, 74, 110, 0.8);
+  background: rgb(68, 74, 110);
   border-radius: 0 0 0 5px;
 }
 
@@ -395,7 +395,7 @@ canvas {
 #tower-details {
   display: flex;
   width: 100%;
-  background: rgba(68, 74, 110, 0.8);
+  background: rgb(68, 74, 110);
   border-radius: 0 0 5px 0;
 }
 
@@ -442,7 +442,7 @@ canvas {
   margin: 0px;
   height: 50%;
   width: 100%;
-  background: rgba(68, 74, 110, 0.815);
+  background: rgb(68, 74, 110);
 }
 
 #auto-container {
@@ -451,7 +451,6 @@ canvas {
   position: relative;
   cursor: pointer;
   color: rgb(187, 186, 186);
-  font-weight: 600;
   width: 80px;
   -webkit-user-select: none;
   user-select: none;
@@ -470,7 +469,7 @@ canvas {
   right: 0;
   height: 25px;
   width: 25px;
-  background-color: rgba(68, 74, 110, 0.815);
+  background-color: rgb(64, 70, 106);
 }
 
 #auto-container input:checked ~ .checkmark {
@@ -492,7 +491,7 @@ canvas {
   top: 5px;
   width: 5px;
   height: 10px;
-  border: solid rgba(68, 74, 110, 0.815);
+  border: solid rgb(68, 74, 110);
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -653,13 +652,13 @@ canvas {
 
 @keyframes blink {
   0% {
-    background-color: rgba(68, 74, 110, 0.8);
+    background-color: rgb(68, 74, 110);
   }
   50% {
-    background-color: rgba(108, 117, 167, 0.8);
+    background-color: rgb(108, 117, 167);
   }
   100% {
-    background-color: rgba(68, 74, 110, 0.8);
+    background-color: rgb(68, 74, 110);
   }
 }
 
@@ -668,7 +667,7 @@ canvas {
     background-color: inherit;
   }
   50% {
-    background-color: rgba(108, 117, 167, 0.8);
+    background-color: rgb(108, 117, 167);
   }
   100% {
     background-color: inherit;
@@ -677,7 +676,7 @@ canvas {
 
 @keyframes slide-in {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(-75%);
   }
   100% {
     transform: translateX(0%);
@@ -686,7 +685,7 @@ canvas {
 
 @-webkit-keyframes slide-in {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(-75%);
   }
   100% {
     -webkit-transform: translateX(0%);
@@ -698,7 +697,7 @@ canvas {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-75%);
   }
 }
 
@@ -707,7 +706,7 @@ canvas {
     -webkit-transform: translateX(0%);
   }
   100% {
-    -webkit-transform: translateX(-50%);
+    -webkit-transform: translateX(-75%);
   }
 }
 

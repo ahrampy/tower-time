@@ -354,7 +354,7 @@ class ActionsHandler {
     dom.local.innerHTML = `Local Highest: ${score}`;
     setTimeout(() => {
       dom.holder.style.opacity = 0;
-      dom.gameOver.style.top = "20%";
+      dom.gameOver.style.top = "15%";
       dom.overTitle.style.color = "rgb(171, 171, 171)";
       dom.terminal.style.display = "flex";
       dom.canvas.style.backgroundColor = "";
