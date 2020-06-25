@@ -320,7 +320,7 @@ canvas {
   width: 15px;
 } */
 
-#mute-button {
+/* #mute-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -342,12 +342,6 @@ canvas {
 
 .mute-on {
   filter: invert(19%);
-}
-
-/* #auto-wave {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 } */
 
 #towers {
@@ -452,12 +446,9 @@ canvas {
   cursor: pointer;
   color: rgb(187, 186, 186);
   width: 80px;
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 #auto-container input {
-  position: absolute;
   opacity: 0;
   cursor: pointer;
   height: 0;
