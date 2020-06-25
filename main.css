@@ -141,25 +141,25 @@ body:hover {
 }
 
 .open {
-  background-color: rgb(207, 204, 204);
+  background-color: rgb(174, 172, 172);
   width: 160px;
   animation: slide-in 0.5s forwards;
   -webkit-animation: slide-in 0.5s forwards;
 }
 
 .open:hover {
-  background-color: rgb(180, 179, 179);
+  background-color: rgb(155, 154, 154);
 }
 
 .closed {
-  background-color: rgb(180, 179, 179);
+  background-color: rgb(155, 154, 154);
   width: 160px;
   animation: slide-out 0.5s forwards;
   -webkit-animation: slide-out 0.5s forwards;
 }
 
 .closed:hover {
-  background-color: rgba(207, 204, 204, 0.7);
+  background-color: rgb(174, 172, 172);
 }
 
 #game-controls {
@@ -232,7 +232,7 @@ body:hover {
   align-items: center;
   height: 100%;
   width: 140px;
-  background: rgb(68, 74, 110);
+  background-color: rgb(61, 67, 101);
   border-radius: 0px 5px 0 0;
   color: rgb(187, 186, 186);
   transition: 0.5s;
@@ -442,7 +442,7 @@ canvas {
   margin: 0px;
   height: 50%;
   width: 100%;
-  background: rgb(68, 74, 110);
+  background-color: rgb(61, 67, 101);
 }
 
 #auto-container {
@@ -469,7 +469,7 @@ canvas {
   right: 0;
   height: 25px;
   width: 25px;
-  background-color: rgb(64, 70, 106);
+  background-color: rgb(61, 67, 101);
 }
 
 #auto-container input:checked ~ .checkmark {
