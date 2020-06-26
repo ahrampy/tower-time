@@ -17,23 +17,18 @@ class Loader {
   }
 
   addPlayButton() {
-    dom.play.style.backgroundImage = sprites.play.plain;
-    dom.play.addEventListener("mouseover", (e) => {
-      e.target.style.backgroundImage = sprites.play.hover;
-    });
-    dom.play.addEventListener("mouseout", (e) => {
-      e.target.style.backgroundImage = sprites.play.plain;
-    });
-    dom.play.addEventListener("mousedown", (e) => {
-      e.target.style.backgroundImage = sprites.play.pressed;
-    });
-    dom.play.addEventListener("mouseup", (e) => {
-      e.target.style.backgroundImage = sprites.play.hover;
-    });
-    dom.play.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.target.style.backgroundImage = sprites.play.hover;
-      setTimeout(this.handleStart, 300);
+    dom.play.style.backgroundImage = "url(" + sprites.play.plain.src + ")";
+    this.addListener("mouseover", "hover", false);
+    this.addListener("mouseout", "plain", false);
+    this.addListener("mousedown", "pressed", false);
+    this.addListener("mouseup", "hover", false);
+    this.addListener("click", "hover", true);
+  }
+
+  addListener(action, img, start) {
+    dom.play.addEventListener(action, (e) => {
+      e.target.style.backgroundImage = `url(${sprites.play[img].src})`;
+      if (start) setTimeout(this.handleStart, 300);
     });
   }
 

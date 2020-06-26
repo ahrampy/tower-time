@@ -2,10 +2,11 @@
 
 window.addEventListener("load", init, false);
 
-var dom, game, tutorial, scores;
+var dom, sprites, game, tutorial, scores;
 
 function init() {
   dom = new DomHandler();
+  sprites = new Sprites();
   game = new Game();
   tutorial = new Tutorial();
   scores = new Scores();
@@ -476,11 +477,11 @@ class Game {
   checkWave() {
     if (this.waveTimer > 0) {
       this.waveTimer--;
-      dom.progress.style.width = `${this.waveTimer / 4}%`
+      dom.progress.style.width = `${this.waveTimer / 4}%`;
     } else {
       this.sendingWave = false;
       dom.wave.classList.add("clickable");
-    }    
+    }
 
     if (this.creeps.length) {
       dom.wave.classList.remove("active");
@@ -588,7 +589,7 @@ class Game {
 
   animateBorder() {
     if (game.border.length) {
-      for (let i = 0; i < Math.ceil(game.border.length) / 2; i++) {
+      for (let i = 0; i < game.border.length; i++) {
         const cell1 = game.border[i];
         const cell2 = game.border[game.border.length - 1 - i];
         this.blinkCell(cell1, i);
