@@ -6,16 +6,14 @@ class Loader {
   }
 
   handleTitleScreen() {
-    sprites.play.plain.onload = () => {
-      dom.holder.style.opacity = 100;
-    };
     dom.upgrade.style.opacity = 0;
     dom.sell.style.opacity = 0;
-    dom.canvas.style.opacity = 100;
     const title = new Image();
     title.src = "/images/splash/tower-time-title.png";
-    title.onload = () =>
+    title.onload = () => {
       game.context.drawImage(title, dom.canvas.width / 2 - title.width / 2, 40);
+      dom.holder.style.opacity = 100;    
+    };
     this.addPlayButton();
   }
 

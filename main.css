@@ -3,6 +3,8 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -35,7 +37,6 @@ body:hover {
   align-items: center;
   flex-direction: column;
   min-height: 100%;
-  padding-top: 1%;
   opacity: 0;
   transition: 2s;
 }
@@ -267,7 +268,6 @@ canvas {
   position: inline-block;
   z-index: 1;
   transition: 1s;
-  opacity: 0;
 }
 
 #content-box {
@@ -610,8 +610,9 @@ canvas {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  height: 40px;
   color: rgb(186, 186, 186);
-  transition: .5s;
+  transition: 0.5s;
   z-index: 3;
 }
 
@@ -625,8 +626,7 @@ canvas {
 }
 
 .git {
-  padding: 0px 15px 0px 10px;
-  margin-top: -5px;
+  margin: -5px 0 0 10px;
 }
 
 .git img {
