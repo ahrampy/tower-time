@@ -6,6 +6,9 @@ class Loader {
   }
 
   handleTitleScreen() {
+    sprites.play.plain.onload = () => {
+      dom.holder.style.opacity = 100;
+    };
     dom.upgrade.style.opacity = 0;
     dom.sell.style.opacity = 0;
     dom.canvas.style.opacity = 100;
@@ -17,7 +20,7 @@ class Loader {
   }
 
   addPlayButton() {
-    dom.play.style.backgroundImage = "url(" + sprites.play.plain.src + ")";
+    dom.play.style.backgroundImage = `url(${sprites.play.plain.src})`;
     this.addListener("mouseover", "hover", false);
     this.addListener("mouseout", "plain", false);
     this.addListener("mousedown", "pressed", false);
