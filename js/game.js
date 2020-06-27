@@ -164,7 +164,7 @@ class Game {
   }
 
   resetSelects() {
-    this.selectedTowers.forEach((tower, i) => {
+    this.selectedTowers.forEach((tower) => {
       tower.deselect(true);
     });
     this.selectedTowers = [];
