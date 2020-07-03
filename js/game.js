@@ -645,7 +645,7 @@ class Game {
         }
       }
       for (let i = 0; i < this.selectedCells.length; i++) {
-        this.selectedCells[i].renderImage();
+        this.selectedCells[i].renderImage("selectImg");
       }
       for (let i = 0; i < this.towers.length; i++) {
         const tower = this.towers[i];
@@ -666,8 +666,7 @@ class Game {
         }
       }
       for (let i = 0; i < this.selectedTowers.length; i++) {
-        const tower = this.selectedTowers[i];
-        tower.drawRange();
+        this.selectedTowers[i].drawRange();
       }
       for (let i = 0; i < this.attacks.length; i++) {
         const attack = this.attacks[i];

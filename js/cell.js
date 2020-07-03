@@ -122,7 +122,7 @@ class Cell {
 
   render() {
     if (this.static || this.occupied) {
-      if (!this.selected) this.renderImage();
+      this.renderImage("img");
       return;
     }
 
@@ -140,13 +140,10 @@ class Cell {
     // this.showGridNums(); // * display grid lines and pathing values
   }
 
-  renderImage() {
-    if (!this.static) {
-      this.img = this.selected ? this.selectImg : this.wallImg;
-    }
+  renderImage(img) {
     this.context.save();
     this.context.translate(this.center.x, this.center.y);
-    this.context.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
+    this.context.drawImage(this[img], -this[img].width / 2, -this[img].height / 2);
     this.context.restore();
   }
 

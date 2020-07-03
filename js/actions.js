@@ -24,7 +24,7 @@ class ActionsHandler {
     const tower = towers[towers.length - 1];
     if (!tower.placed && game.placingTower === true) {
       tower.location.x = this.mouseX;
-      tower.location.y = this.mouseY;
+      tower.location.y = this.mouseY;      
     }
   }
 
