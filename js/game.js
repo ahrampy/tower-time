@@ -23,8 +23,8 @@ export default class Game {
     this.stages = {};
 
     // * game stats
-    this.lives = 1;
-    this.bits = 2000;
+    this.lives = 20;
+    this.bits = 200;
     this.score = 0;
     this.wave = 0;
     this.difficulty = 1;
@@ -414,7 +414,7 @@ export default class Game {
     }
     this.bits += 5 * this.wave;
     // this.cr += 5 * this.wave;
-    this.loadCreeps(200);
+    this.loadCreeps(20);
   }
 
   loadCreeps(numCreeps) {

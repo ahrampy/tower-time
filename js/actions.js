@@ -290,7 +290,6 @@ export default class Actions {
     const tower = this.getTower();
     this.toggleEditButtons(tower);
     if (!tower || tower === this.tower) return;
-    console.log("new?");
     this.tower = tower;
     this.dom.typeP.innerHTML = tower.type.toUpperCase();
     this.dom.damageP.innerHTML = tower.damage;
