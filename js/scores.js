@@ -1,5 +1,6 @@
 export default class Scores {
-  constructor(game) {
+  constructor(dom, game) {
+    this.dom = dom;
     this.game = game;
     this.firebase = this.loadFireBase();
   }
@@ -67,7 +68,7 @@ export default class Scores {
       rankTitle.innerText = column;
       div.appendChild(rankTitle);
       div.appendChild(lists[i]);
-      dom.scores.appendChild(div);
+      this.dom.scores.appendChild(div);
     });
 
     if (this.game.score >= lowestShowing) {
@@ -77,7 +78,7 @@ export default class Scores {
       input.placeholder = "ADD NAME";
       input.maxLength = 3;
       form.appendChild(input);
-      dom.terminal.appendChild(form);
+      this.dom.terminal.appendChild(form);
       form.addEventListener("submit", (event) =>
         this.addScore(event, lowestShowing, form)
       );
@@ -101,7 +102,7 @@ export default class Scores {
     } else {
       window.location.reload(false);
     }
-    dom.terminal.removeChild(form);
+    this.dom.terminal.removeChild(form);
     this.addNewGame();
   }
 
@@ -117,7 +118,7 @@ export default class Scores {
       },
       false
     );
-    dom.terminal.appendChild(btn);
+    this.dom.terminal.appendChild(btn);
   }
 
   sortScores(arr) {

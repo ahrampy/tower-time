@@ -1,9 +1,9 @@
 import Loader from "./loader";
-import ActionsHandler from "./actions";
+import Actions from "./actions";
 import Tutorial from "./tutorial";
 import Cell from "./cell";
+import Tower from "./tower";
 import { Slime, Gork, Uwo } from "./creep";
-import Tower from "./tower"
 
 export default class Game {
   constructor(dom, sprites) {
@@ -23,7 +23,7 @@ export default class Game {
     this.stages = {};
 
     // * game stats
-    this.lives = 20;
+    this.lives = 1;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
@@ -70,9 +70,9 @@ export default class Game {
     // this.muted = false;
 
     // * trackers
-    this.cr = 220;
-    this.c = 0;
-    this.f;
+    // this.cr = 220;
+    // this.c = 0;
+    // this.f;
 
     // * bounds
     this.gameStarted = false;
@@ -81,7 +81,7 @@ export default class Game {
     // * add game element handlers
     this.tutorial = new Tutorial(this, dom);
     this.loader = new Loader(this, dom, sprites);
-    this.actions = new ActionsHandler(this, dom, this.tutorial, this.tileDivs);
+    this.actions = new Actions(this, dom, this.tutorial, this.tileDivs);
   }
 
   // handleSoundButton() {
@@ -253,7 +253,7 @@ export default class Game {
     tower.cell = cell;
     tower.location = cell.center.copy();
     this.bits -= tower.cost;
-    this.cr -= tower.cost;
+    // this.cr -= tower.cost;
     tower.placed = true;
     this.placingTower = false;
     this.path = this.getPath();
@@ -403,9 +403,9 @@ export default class Game {
   }
 
   nextWave() {
-    this.cr -= this.bits;
+    // this.cr -= this.bits;
     this.bits = Math.ceil(this.bits / 5) * 5;
-    this.cr += this.bits;
+    // this.cr += this.bits;
     if (this.wave % 10 === 0) {
       this.difficulty += 0.5;
     }
@@ -413,7 +413,7 @@ export default class Game {
       this.difficulty += 0.5;
     }
     this.bits += 5 * this.wave;
-    this.cr += 5 * this.wave;
+    // this.cr += 5 * this.wave;
     this.loadCreeps(20);
   }
 
@@ -491,15 +491,15 @@ export default class Game {
     }
   }
 
-  checkStats() {
-    if (this.cr !== this.lives + this.score + this.bits + this.c) {
-      console.log("oh so you think you're clever");
-      this.score = 0;
-      this.bits = 0;
-      this.lives = 1;
-      this.cr = this.lives + this.score + this.bits + this.c;
-    }
-  }
+  // checkStats() {
+  //   if (this.cr !== this.lives + this.score + this.bits + this.c) {
+  //     console.log("oh so you think you're clever");
+  //     this.score = 0;
+  //     this.bits = 0;
+  //     this.lives = 1;
+  //     this.cr = this.lives + this.score + this.bits + this.c;
+  //   }
+  // }
 
   getPath() {
     const path = [this.start];
@@ -612,65 +612,11 @@ export default class Game {
   }
 
   run() {
+    // this.checkStats();
     this.actions.updateStats();
-    this.checkStats();
-
     if (!this.gameOver && this.gameStarted) {
       this.actions.showTowerInfo();
       this.render();
-      // if (this.creeps.length === 0 && !this.sendingWave) {
-      this.animatePath();
-      // }
-      this.checkWave();
-      this.sendCreeps();
-      for (let c = 0; c < this.numCols; c++) {
-        this.grid[c][0].run();
-        this.grid[c][this.numRows - 1].run();
-      }
-      for (let r = 1; r < this.numRows - 1; r++) {
-        this.grid[0][r].run();
-        this.grid[this.numCols - 1][r].run();
-      }
-      for (let c = 1; c < this.numCols - 1; c++) {
-        for (let r = 1; r < this.numRows - 1; r++) {
-          const cell = this.grid[c][r];
-          if (!cell.selected) cell.run();
-        }
-      }
-      for (let i = 0; i < this.selectedCells.length; i++) {
-        this.selectedCells[i].renderImage("selectImg");
-      }
-      for (let i = 0; i < this.towers.length; i++) {
-        const tower = this.towers[i];
-        if (!tower.removed) {
-          tower.run();
-        } else {
-          this.towers.splice(i, 1);
-          i--;
-        }
-      }
-      for (let i = 0; i < this.creeps.length; i++) {
-        const creep = this.creeps[i];
-        if (creep.alive) {
-          creep.run();
-        } else {
-          this.creeps.splice(i, 1);
-          i--;
-        }
-      }
-      for (let i = 0; i < this.selectedTowers.length; i++) {
-        this.selectedTowers[i].drawRange();
-      }
-      for (let i = 0; i < this.attacks.length; i++) {
-        const attack = this.attacks[i];
-        this.checkHit(attack);
-        if (!attack.hit) {
-          attack.run();
-        } else {
-          this.attacks.splice(i, 1);
-          i--;
-        }
-      }
       if (this.lives <= 0) {
         setTimeout(this.actions.handleGameOver(), 1000);
       }
@@ -679,5 +625,58 @@ export default class Game {
 
   render() {
     this.context.clearRect(0, 0, 840, 560);
+    // if (this.creeps.length === 0 && !this.sendingWave) {
+    this.animatePath();
+    // }
+    this.checkWave();
+    this.sendCreeps();
+    for (let c = 0; c < this.numCols; c++) {
+      this.grid[c][0].run();
+      this.grid[c][this.numRows - 1].run();
+    }
+    for (let r = 1; r < this.numRows - 1; r++) {
+      this.grid[0][r].run();
+      this.grid[this.numCols - 1][r].run();
+    }
+    for (let c = 1; c < this.numCols - 1; c++) {
+      for (let r = 1; r < this.numRows - 1; r++) {
+        const cell = this.grid[c][r];
+        if (!cell.selected) cell.run();
+      }
+    }
+    for (let i = 0; i < this.selectedCells.length; i++) {
+      this.selectedCells[i].renderImage("selectImg");
+    }
+    for (let i = 0; i < this.towers.length; i++) {
+      const tower = this.towers[i];
+      if (!tower.removed) {
+        tower.run();
+      } else {
+        this.towers.splice(i, 1);
+        i--;
+      }
+    }
+    for (let i = 0; i < this.creeps.length; i++) {
+      const creep = this.creeps[i];
+      if (creep.alive) {
+        creep.run();
+      } else {
+        this.creeps.splice(i, 1);
+        i--;
+      }
+    }
+    for (let i = 0; i < this.selectedTowers.length; i++) {
+      this.selectedTowers[i].drawRange();
+    }
+    for (let i = 0; i < this.attacks.length; i++) {
+      const attack = this.attacks[i];
+      this.checkHit(attack);
+      if (!attack.hit) {
+        attack.run();
+      } else {
+        this.attacks.splice(i, 1);
+        i--;
+      }
+    }
   }
 }

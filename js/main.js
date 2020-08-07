@@ -5,20 +5,20 @@ import Scores from "./scores";
 
 window.addEventListener("load", init, false);
 
-var dom, sprites, game, scores;
+var dom, sprites, game, scores, animation;
 
 function init() {
-  // var dom = "why"
-  dom = new DomHandler();
-  sprites = new Sprites();
+  dom = dom ? dom : new DomHandler();
+  sprites = sprites ? sprites : new Sprites();
   game = new Game(dom, sprites);
-  scores = new Scores(game);
+  scores ? (scores.game = game) : (scores = new Scores(dom, game));
+  game.actions.scores = scores;
+  game.actions.init = init;
+  window.cancelAnimationFrame(animation);
   window.setTimeout(animate, 100);
 }
 
-// console.log(dom + "first");
-
 function animate() {
   game.run();
-  window.requestAnimationFrame(animate);
+  animation = window.requestAnimationFrame(animate);
 }

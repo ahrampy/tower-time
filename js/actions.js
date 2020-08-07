@@ -1,10 +1,13 @@
 import Vector from "./vector";
 
-export default class ActionsHandler {
+export default class Actions {
   constructor(game, dom, tutorial, tiles) {
     this.game = game;
     this.dom = dom;
     this.tutorial = tutorial;
+    this.scores = null;
+    this.mouseX;
+    this.mouseY;
     this.handleCanvas();
     this.handleButtonClicks();
     this.handleKeyListeners();
@@ -14,28 +17,23 @@ export default class ActionsHandler {
   handleCanvas() {
     this.dom.canvas.addEventListener(
       "mousemove",
-      this.handleCanvasMove.bind(this),
-      false
+      this.handleCanvasMove.bind(this)
     );
     this.dom.canvas.addEventListener(
       "mouseover",
-      this.handleCanvasOver.bind(this),
-      false
+      this.handleCanvasOver.bind(this)
     );
     this.dom.canvas.addEventListener(
       "mouseout",
-      this.handleCanvasOut.bind(this),
-      false
+      this.handleCanvasOut.bind(this)
     );
     this.dom.canvas.addEventListener(
       "click",
-      this.handleCanvasClick.bind(this),
-      false
+      this.handleCanvasClick.bind(this)
     );
     this.dom.canvas.addEventListener(
       "dblclick",
-      this.handleCanvasDblClick.bind(this),
-      false
+      this.handleCanvasDblClick.bind(this)
     );
   }
 
@@ -64,11 +62,11 @@ export default class ActionsHandler {
   }
 
   handleCanvasClick(event) {
-    const mouseX = event.offsetX;
-    const mouseY = event.offsetY;
+    // const mouseX = event.offsetX;
+    // const mouseY = event.offsetY;
 
-    const col = Math.floor(mouseX / this.game.cellSize);
-    const row = Math.floor(mouseY / this.game.cellSize);
+    const col = Math.floor(this.mouseX / this.game.cellSize);
+    const row = Math.floor(this.mouseY / this.game.cellSize);
 
     const cell = this.game.grid[col][row];
 
@@ -96,11 +94,8 @@ export default class ActionsHandler {
   }
 
   handleCanvasDblClick(event) {
-    const mouseX = event.offsetX;
-    const mouseY = event.offsetY;
-
-    const gridCol = Math.floor(mouseX / this.game.cellSize);
-    const gridRow = Math.floor(mouseY / this.game.cellSize);
+    const gridCol = Math.floor(this.mouseX / this.game.cellSize);
+    const gridRow = Math.floor(this.mouseY / this.game.cellSize);
 
     const cell = this.game.grid[gridCol][gridRow];
 
@@ -236,8 +231,8 @@ export default class ActionsHandler {
     const currentTower = towers[towers.length - 1];
     if (!currentTower.placed) {
       currentTower.location = new Vector(
-        this.dom.canvas.mouseX,
-        this.dom.canvas.mouseY
+        this.mouseX,
+        this.mouseY
       );
     }
     currentTower.visible = true;
@@ -411,12 +406,12 @@ export default class ActionsHandler {
       this.dom.overTitle.style.color = "rgb(171, 171, 171)";
       this.dom.terminal.style.display = "flex";
       this.dom.canvas.style.backgroundColor = "";
-      this.dom.this.tutorial.style.opacity = 0;
+      this.dom.tutorial.style.opacity = 0;
       this.dom.topBar.style.opacity = 0;
       this.dom.bottomBar.style.opacity = 0;
       setTimeout(() => {
         this.dom.terminal.style.opacity = 100;
-        scores.handleScores(highscores);
+        this.scores.handleScores(highscores);
         setTimeout(() => {
           this.game.context.clearRect(0, 0, 840, 560);
         }, 1000);
@@ -454,6 +449,6 @@ export default class ActionsHandler {
     if (this.dom.hotkeysOpen) {
       this.tutorial.toggleHotkeys();
     }
-    this.game = new Game();
+    this.init();
   }
 }
