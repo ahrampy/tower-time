@@ -12,6 +12,8 @@ export default class Actions {
     this.handleButtonClicks();
     this.handleKeyListeners();
     this.handleTileListeners(tiles);
+
+    this.towerInfo = null;
   }
 
   handleCanvas() {
@@ -287,7 +289,9 @@ export default class Actions {
   showTowerInfo() {
     const tower = this.getTower();
     this.toggleEditButtons(tower);
-    if (!tower) return;
+    if (!tower || tower === this.tower) return;
+    console.log("new?");
+    this.tower = tower;
     this.dom.typeP.innerHTML = tower.type.toUpperCase();
     this.dom.damageP.innerHTML = tower.damage;
     this.dom.rangeP.innerHTML = tower.range;
