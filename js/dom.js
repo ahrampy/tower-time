@@ -1,6 +1,6 @@
 "use strict";
 
-class DomHandler {
+export default class DomHandler {
   constructor() {
     // * main
     this.holder = document.querySelector("#holder");

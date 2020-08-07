@@ -1,27 +1,15 @@
-"use strict";
+import Loader from "./loader";
+import ActionsHandler from "./actions";
+import Tutorial from "./tutorial";
+import Cell from "./cell";
+import { Slime, Gork, Uwo } from "./creep";
 
-window.addEventListener("load", init, false);
-
-var dom, sprites, game, tutorial, scores;
-
-function init() {
-  dom = new DomHandler();
-  sprites = new Sprites();
-  game = new Game();
-  tutorial = new Tutorial();
-  scores = new Scores();
-  window.setTimeout(animate, 100);
-}
-
-function animate() {
-  game.run();
-  window.requestAnimationFrame(animate);
-}
-
-class Game {
-  constructor() {
+export default class Game {
+  constructor(dom, sprites) {
     // * add canvas
-    this.canvas = dom.canvas;
+    this.dom = dom;
+    this.sprites = sprites;
+    this.canvas = this.dom.canvas;
     this.context = this.canvas.getContext("2d");
 
     // * game objects
@@ -90,25 +78,26 @@ class Game {
     this.gameOver = false;
 
     // * add game element handlers
-    this.loader = new Loader();
-    this.actions = new ActionsHandler(this.tileDivs);
+    this.tutorial = new Tutorial(this, dom);
+    this.loader = new Loader(this, dom, sprites);
+    this.actions = new ActionsHandler(this, dom, this.tutorial, this.tileDivs);
   }
 
   // handleSoundButton() {
-  //   const muteButton = dom.mute("#mute-button");
+  //   const muteButton = this.dom.mute("#mute-button");
   //   muteButton.addEventListener("click", this.audioToggle, false);
   // }
 
   // audioToggle() {
-  //   if (game.muted) {
+  //   if (this.muted) {
   //     this.classList.add("mute-off");
   //     this.classList.remove("mute-on");
-  //     game.muted = false;
+  //     this.muted = false;
   //     music.play();
   //   } else {
   //     this.classList.add("mute-on");
   //     this.classList.remove("mute-off");
-  //     game.muted = true;
+  //     this.muted = true;
   //     music.stop();
   //   }
   // }
@@ -116,18 +105,18 @@ class Game {
   checkTowerPlacement(cell) {
     if (cell.static || cell.occupied) return;
     cell.occupied = true;
-    game.loadPaths();
+    this.loadPaths();
 
     if (this.checkPaths(cell) && this.checkRoute()) {
-      game.placeTower(cell);
+      this.placeTower(cell);
     } else {
       cell.cancel();
-      game.loadPaths();
+      this.loadPaths();
     }
   }
 
   checkPaths(cell) {
-    return game.creeps.every((creep) => {
+    return this.creeps.every((creep) => {
       if (creep.currentCell === cell) return false;
       const route = [creep.currentCell];
 
@@ -136,7 +125,7 @@ class Game {
         if (checkCell) {
           if (checkCell.value === -1) {
             continue;
-          } else if (checkCell === game.goal) {
+          } else if (checkCell === this.goal) {
             return true;
           }
           route.push(checkCell.smallestAdjacent);
@@ -148,13 +137,13 @@ class Game {
   }
 
   checkRoute() {
-    const route = [game.start];
+    const route = [this.start];
 
     while (route.length) {
       const cell = route.pop();
       if (cell.value === -1) {
         return false;
-      } else if (cell === game.goal) {
+      } else if (cell === this.goal) {
         return true;
       }
       route.push(cell.smallestAdjacent);
@@ -172,9 +161,9 @@ class Game {
   }
 
   selectAllTowers(type, level) {
-    game.resetSelects();
-    for (let i = 0; i < game.towers.length; i++) {
-      let tower = game.towers[i];
+    this.resetSelects();
+    for (let i = 0; i < this.towers.length; i++) {
+      let tower = this.towers[i];
       if (tower.type === type && tower.level === level) {
         tower.select();
       } else {
@@ -187,7 +176,7 @@ class Game {
     const tileDivs = [];
     for (let i = 0; i < 4; i++) {
       let tileDiv = this.addTowerStats(i);
-      dom.towerMenu.appendChild(tileDiv);
+      this.dom.towerMenu.appendChild(tileDiv);
       tileDivs.push(tileDiv);
 
       const tileImg = new Image();
@@ -242,7 +231,7 @@ class Game {
 
   createTower(tileDiv) {
     const tower = new Tower(
-      game.context,
+      this.context,
       tileDiv.idx,
       tileDiv.cost,
       tileDiv.upgrade,
@@ -256,7 +245,7 @@ class Game {
   }
 
   placeTower(cell) {
-    const tower = game.towers[game.towers.length - 1];
+    const tower = this.towers[this.towers.length - 1];
     tower.cell = cell;
     tower.location = cell.center.copy();
     this.bits -= tower.cost;
@@ -278,8 +267,8 @@ class Game {
             this.grid,
             this.cellSize,
             this.context,
-            sprites.wall,
-            sprites.wallSelected,
+            this.sprites.wall,
+            this.sprites.wallSelected,
             c,
             r
           )
@@ -306,7 +295,7 @@ class Game {
     const cell = this.grid[col][row];
     cell.occupied = true;
     cell.static = true;
-    cell.img = sprites.border;
+    cell.img = this.sprites.border;
     this.border.push(cell);
   }
 
@@ -410,18 +399,18 @@ class Game {
   }
 
   nextWave() {
-    game.cr -= game.bits;
-    game.bits = Math.ceil(game.bits / 5) * 5;
-    game.cr += game.bits;
-    if (game.wave % 10 === 0) {
-      game.difficulty += 0.5;
+    this.cr -= this.bits;
+    this.bits = Math.ceil(this.bits / 5) * 5;
+    this.cr += this.bits;
+    if (this.wave % 10 === 0) {
+      this.difficulty += 0.5;
     }
-    if (game.wave % 30 === 0) {
-      game.difficulty += 0.5;
+    if (this.wave % 30 === 0) {
+      this.difficulty += 0.5;
     }
-    game.bits += 5 * game.wave;
-    game.cr += 5 * game.wave;
-    game.loadCreeps(20);
+    this.bits += 5 * this.wave;
+    this.cr += 5 * this.wave;
+    this.loadCreeps(20);
   }
 
   loadCreeps(numCreeps) {
@@ -431,12 +420,12 @@ class Game {
       let creep;
       if (i === 0) {
         if (this.wave % 5 === 0) {
-          creep = new Uwo(location, this.difficulty);
+          creep = new Uwo(this, this.sprites, location, this.difficulty);
         } else {
-          creep = new Gork(location, this.difficulty);
+          creep = new Gork(this, this.sprites, location, this.difficulty);
         }
       } else {
-        creep = new Slime(location, this.difficulty);
+        creep = new Slime(this, this.sprites, location, this.difficulty);
       }
       creeps.push(creep);
     }
@@ -450,7 +439,7 @@ class Game {
         const curr = new Date();
         const lastSent = this.stages[wave][1];
         if (curr - lastSent > 1500) {
-          game.creeps.push(creeps.shift());
+          this.creeps.push(creeps.shift());
           this.stages[wave][1] = curr;
         }
       } else {
@@ -460,11 +449,11 @@ class Game {
   }
 
   checkHit(attack) {
-    const gridCol = Math.floor(attack.location.x / game.cellSize);
-    const gridRow = Math.floor(attack.location.y / game.cellSize);
+    const gridCol = Math.floor(attack.location.x / this.cellSize);
+    const gridRow = Math.floor(attack.location.y / this.cellSize);
 
-    if (game.grid[gridCol] && game.grid[gridCol][gridRow]) {
-      const cell = game.grid[gridCol][gridRow];
+    if (this.grid[gridCol] && this.grid[gridCol][gridRow]) {
+      const cell = this.grid[gridCol][gridRow];
       cell.attack(attack.damage, attack.type === "water");
       for (let j = 0; j < this.creeps.length; j++) {
         if (cell === this.creeps[j].currentCell) {
@@ -477,22 +466,22 @@ class Game {
   checkWave() {
     if (this.waveTimer > 0) {
       this.waveTimer--;
-      dom.progress.style.width = `${this.waveTimer / 4}%`;
+      this.dom.progress.style.width = `${this.waveTimer / 4}%`;
     } else {
       this.sendingWave = false;
-      dom.wave.classList.add("clickable");
+      this.dom.wave.classList.add("clickable");
     }
 
     if (this.creeps.length) {
-      dom.wave.classList.remove("active");
+      this.dom.wave.classList.remove("active");
     } else if (!this.sendingWave) {
       if (this.autoWave) {
-        dom.wave.click();
+        this.dom.wave.click();
       } else if (this.wave > 0) {
-        dom.wave.classList.add("active");
+        this.dom.wave.classList.add("active");
       } else if (this.bits < 50) {
-        dom.wave.classList.add("active");
-        dom.towerMenu.classList.remove("active");
+        this.dom.wave.classList.add("active");
+        this.dom.towerMenu.classList.remove("active");
         tutorial.showInfo("canvas");
       }
     }
@@ -538,7 +527,7 @@ class Game {
 
   animatePath() {
     this.context.beginPath();
-    this.context.moveTo(game.start.center.x, game.start.center.y);
+    this.context.moveTo(this.start.center.x, this.start.center.y);
     for (var i = 1; i < this.path.length; i++) {
       let cell = this.path[i];
       this.context.lineTo(cell.center.x, cell.center.y);
@@ -588,24 +577,24 @@ class Game {
   }
 
   animateBorder() {
-    if (game.border.length) {
-      for (let i = 0; i < game.border.length; i++) {
-        const cell1 = game.border[i];
-        const cell2 = game.border[game.border.length - 1 - i];
+    if (this.border.length) {
+      for (let i = 0; i < this.border.length; i++) {
+        const cell1 = this.border[i];
+        const cell2 = this.border[this.border.length - 1 - i];
         this.blinkCell(cell1, i);
         this.blinkCell(cell2, i);
       }
-      game.border = [];
+      this.border = [];
     }
   }
 
   animateBlocks() {
-    if (game.blocks.length) {
-      for (let i = 0; i < game.blocks.length; i++) {
-        const cell = game.blocks[i];
+    if (this.blocks.length) {
+      for (let i = 0; i < this.blocks.length; i++) {
+        const cell = this.blocks[i];
         this.blinkCell(cell, i + 20);
       }
-      game.blocks = [];
+      this.blocks = [];
     }
   }
 

@@ -8,7 +8,7 @@ class Scores {
   loadFireBase() {
     var firebaseConfig = {
       apiKey: "AIzaSyCUl00bvLb_3Ytr6Wj_L-XIp-bVX4Yb8b0",
-      authDomain: "tower-time.firebaseapp.com",
+      authdomain: "tower-time.firebaseapp.com",
       databaseURL: "https://tower-time.firebaseio.com",
       projectId: "tower-time",
       storageBucket: "tower-time.appspot.com",
@@ -38,13 +38,13 @@ class Scores {
       const data = snap.val();
       const idArr = Object.keys(data);
       const scores = [];
-      
+
       for (let i = 0; i < idArr.length; i++) {
         scores.push([data[idArr[i]].score, data[idArr[i]].name]);
       }
-      
+
       this.sortScores(scores);
-      
+
       let rankCount = 1;
       scores.forEach((score) => {
         const rankLi = document.createElement("li");
@@ -69,7 +69,7 @@ class Scores {
       div.appendChild(rankTitle);
       div.appendChild(lists[i]);
       dom.scores.appendChild(div);
-    })
+    });
 
     if (game.score >= lowestShowing) {
       const form = document.createElement("form");
@@ -109,11 +109,15 @@ class Scores {
   addNewGame() {
     const btn = document.createElement("button");
     btn.classList.add("new-game");
-    btn.innerHTML = "NEW GAME";
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      game.actions.newGame();
-    }, false)
+    btn.innerHTML = "NEW game";
+    btn.addEventListener(
+      "click",
+      (e) => {
+        e.preventDefault();
+        game.actions.newGame();
+      },
+      false
+    );
     dom.terminal.appendChild(btn);
   }
 

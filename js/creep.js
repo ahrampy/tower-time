@@ -1,8 +1,10 @@
-"use strict";
+import Vector from "./vector";
 
 class Creep {
-  constructor(location, difficulty) {
+  constructor(game, sprites, location, difficulty) {
     // * stats
+    this.game = game;
+    this.sprites = sprites;
     this.difficulty = difficulty;
     this.worth = 5 * this.difficulty;
     this.pointValue = 100 * this.difficulty;
@@ -19,7 +21,7 @@ class Creep {
     this.acceleration = new Vector(0, 0);
 
     // * default
-    this.context = game.context;
+    this.context = this.game.context;
     this.radius = 12;
     this.color = "rgb(225, 225, 225)";
 
@@ -60,9 +62,9 @@ class Creep {
 
   checkAlive() {
     if (this.health <= 0) {
-      game.bits += this.worth;
-      game.score += this.pointValue;
-      game.cr += this.worth + this.pointValue;
+      this.game.bits += this.worth;
+      this.game.score += this.pointValue;
+      this.game.cr += this.worth + this.pointValue;
       this.alive = false;
     }
   }
@@ -83,9 +85,9 @@ class Creep {
 
   takeLife() {
     this.alive = false;
-    if (!game.gameOver) {
-      game.lives -= 1;
-      game.cr -= 1;
+    if (!this.game.this.gameOver) {
+      this.game.lives -= 1;
+      this.game.cr -= 1;
       const lives = document.querySelector("#info-lives");
       if (!lives.classList.contains("flashing")) {
         lives.classList.add("flashing");
@@ -94,7 +96,7 @@ class Creep {
         }, 1000);
       }
     }
-    // if (!game.muted) {
+    // if (!this.game.muted) {
     //     const lose = new Audio;
     //     lose.setAttribute('src', 'sounds/lose_life.mp3');
     //     lose.load();
@@ -136,22 +138,22 @@ class Creep {
   }
 
   getCell() {
-    const col = Math.floor(this.location.x / game.cellSize);
-    const row = Math.floor(this.location.y / game.cellSize);
-    return game.grid[col][row];
+    const col = Math.floor(this.location.x / this.game.cellSize);
+    const row = Math.floor(this.location.y / this.game.cellSize);
+    return this.game.grid[col][row];
   }
 
   setCells() {
     const cell = this.getCell();
 
-    if (cell === game.goal) {
+    if (cell === this.game.goal) {
       this.takeLife();
       return;
     }
 
     this.stuck = cell.occupied;
 
-    if (this.stuck) {      
+    if (this.stuck) {
       this.nextCell = this.prevCell;
     } else {
       this.prevCell = this.currentCell;
@@ -191,7 +193,7 @@ class Creep {
     this.context.save();
     this.context.translate(this.location.x, this.location.y);
     this.context.drawImage(
-      sprites[this.type][this.currSheet],
+      this.sprites[this.type][this.currSheet],
       this.frame * this.size,
       this.dir * this.size,
       this.size,
@@ -239,8 +241,8 @@ class Creep {
 }
 
 class Slime extends Creep {
-  constructor(location, difficulty) {
-    super(location, difficulty);
+  constructor(game, sprites, location, difficulty) {
+    super(game, sprites, location, difficulty);
     this.type = "slime";
     this.maxHealth = game.wave * 350 * this.difficulty;
     this.health = this.maxHealth;
@@ -250,8 +252,8 @@ class Slime extends Creep {
 }
 
 class Gork extends Creep {
-  constructor(location, difficulty) {
-    super(location, difficulty);
+  constructor(game, sprites, location, difficulty) {
+    super(game, sprites, location, difficulty);
     this.type = "gork";
     this.maxHealth = game.wave * 800 * this.difficulty;
     this.health = this.maxHealth;
@@ -261,8 +263,8 @@ class Gork extends Creep {
 }
 
 class Uwo extends Creep {
-  constructor(location, difficulty) {
-    super(location, difficulty);
+  constructor(game, sprites, location, difficulty) {
+    super(game, sprites, location, difficulty);
     this.type = "uwo";
     this.maxHealth = game.wave * 1200 * this.difficulty;
     this.health = this.maxHealth;
@@ -270,3 +272,5 @@ class Uwo extends Creep {
     this.offset = 16;
   }
 }
+
+export { Slime, Gork, Uwo };

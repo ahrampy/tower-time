@@ -1,6 +1,7 @@
 "use strict";
+import Vector from "./vector";
 
-class Cell {
+export default class Cell {
   constructor(id, grid, size, context, wallImg, selectImg, col, row) {
     this.id = id;
     this.grid = grid;

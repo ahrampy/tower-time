@@ -1,6 +1,7 @@
 {
   "name": "tower-time-master",
   "version": "1.0.0",
+  "private": true,
   "description": "a canvas tower defense game.",
   "main": "index.js",
   "repository": {
@@ -19,6 +20,17 @@
   },
   "homepage": "https://github.com/ahrampy/tower-time#readme",
   "dependencies": {
-    "firebase": "^7.14.2"
+    "firebase": "^7.17.2"
+  },
+  "scripts": {
+    "build": "webpack",
+    "webpack": "webpack --mode=development --watch"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }

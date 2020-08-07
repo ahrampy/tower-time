@@ -1,6 +1,6 @@
 "use strict";
 
-class Sprites {
+export default class Sprites {
   constructor() {
     this.border = new Image();
     this.wall = new Image();
