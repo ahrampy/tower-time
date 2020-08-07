@@ -4,12 +4,8 @@ export default class Tutorial {
     this.dom = dom;
     this.slide1 = this.dom.tutorialSlide;
     this.slide2 = this.dom.hotkeysSlide;
-    this.slide1.addEventListener(
-      "click",
-      this.toggleTutorial.bind(this),
-      false
-    );
-    this.slide2.addEventListener("click", this.toggleHotkeys.bind(this), false);
+    this.slide1.addEventListener("click", this.toggleTutorial.bind(this));
+    this.slide2.addEventListener("click", this.toggleHotkeys.bind(this));
     this.default =
       "move your mouse anywhere to learn more, click here to hide tooltips";
 
@@ -22,8 +18,8 @@ export default class Tutorial {
       const text = tips[key];
       const div = this.dom[key];
 
-      div.addEventListener("mouseover", () => this.showInfo(key, text), false);
-      div.addEventListener("mouseout", this.clearTip.bind(this), false);
+      div.addEventListener("mouseover", () => this.showInfo(key, text));
+      div.addEventListener("mouseout", this.clearTip.bind(this));
     }
   }
 

@@ -61,10 +61,7 @@ export default class Actions {
     }
   }
 
-  handleCanvasClick(event) {
-    // const mouseX = event.offsetX;
-    // const mouseY = event.offsetY;
-
+  handleCanvasClick() {
     const col = Math.floor(this.mouseX / this.game.cellSize);
     const row = Math.floor(this.mouseY / this.game.cellSize);
 
@@ -93,7 +90,7 @@ export default class Actions {
     }
   }
 
-  handleCanvasDblClick(event) {
+  handleCanvasDblClick() {
     const gridCol = Math.floor(this.mouseX / this.game.cellSize);
     const gridRow = Math.floor(this.mouseY / this.game.cellSize);
 

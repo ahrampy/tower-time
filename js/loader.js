@@ -24,10 +24,10 @@ export default class Loader {
 
   addPlayButton() {
     this.dom.play.style.backgroundImage = `url(${this.sprites.play.plain.src})`;
-    this.addListener("mouseover", "hover", false);
-    this.addListener("mouseout", "plain", false);
-    this.addListener("mousedown", "pressed", false);
-    this.addListener("mouseup", "hover", false);
+    this.addListener("mouseover", "hover");
+    this.addListener("mouseout", "plain");
+    this.addListener("mousedown", "pressed");
+    this.addListener("mouseup", "hover");
     this.addListener("click", "hover", true);
   }
 

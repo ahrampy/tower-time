@@ -86,7 +86,7 @@ export default class Game {
 
   // handleSoundButton() {
   //   const muteButton = this.dom.mute("#mute-button");
-  //   muteButton.addEventListener("click", this.audioToggle, false);
+  //   muteButton.addEventListener("click", this.audioToggle);
   // }
 
   // audioToggle() {
