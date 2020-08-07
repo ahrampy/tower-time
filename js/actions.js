@@ -114,25 +114,19 @@ export default class Actions {
   }
 
   handleButtonClicks() {
-    this.dom.wave.addEventListener("click", this.waveClick.bind(this), false);
-    this.dom.auto.addEventListener(
-      "change",
-      this.autoWaveToggle.bind(this),
-      false
+    this.dom.wave.addEventListener("click", this.waveClick.bind(this));
+    this.dom.upgrade.addEventListener("click", this.upgradeClick.bind(this));
+    this.dom.sell.addEventListener("click", this.sellClick.bind(this));
+    this.dom.auto.addEventListener("change", (e) =>
+      this.autoWaveToggle(e, this.game)
     );
-    this.dom.upgrade.addEventListener(
-      "click",
-      this.upgradeClick.bind(this),
-      false
-    );
-    this.dom.sell.addEventListener("click", this.sellClick.bind(this), false);
   }
 
-  autoWaveToggle() {
-    if (this.checked) {
-      this.game.autoWave = true;
+  autoWaveToggle(e, game) {
+    if (e.currentTarget.checked) {
+      game.autoWave = true;
     } else {
-      this.game.autoWave = false;
+      game.autoWave = false;
     }
   }
 
@@ -230,10 +224,7 @@ export default class Actions {
     this.game.tileDivs[towerNum].click();
     const currentTower = towers[towers.length - 1];
     if (!currentTower.placed) {
-      currentTower.location = new Vector(
-        this.mouseX,
-        this.mouseY
-      );
+      currentTower.location = new Vector(this.mouseX, this.mouseY);
     }
     currentTower.visible = true;
   }
