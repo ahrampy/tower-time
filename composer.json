@@ -1,1 +1,5 @@
-{}
+{
+  "require": {
+    "runtime": "PHP ^7.0.0"
+  }
+}
