@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Sprites {
   constructor() {
     this.border = new Image();

@@ -85,7 +85,7 @@ class Creep {
 
   takeLife() {
     this.alive = false;
-    if (!this.game.this.gameOver) {
+    if (!this.game.gameOver) {
       this.game.lives -= 1;
       this.game.cr -= 1;
       const lives = document.querySelector("#info-lives");

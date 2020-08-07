@@ -3,6 +3,7 @@ import ActionsHandler from "./actions";
 import Tutorial from "./tutorial";
 import Cell from "./cell";
 import { Slime, Gork, Uwo } from "./creep";
+import Tower from "./tower"
 
 export default class Game {
   constructor(dom, sprites) {
@@ -231,6 +232,9 @@ export default class Game {
 
   createTower(tileDiv) {
     const tower = new Tower(
+      this,
+      this.dom,
+      this.sprites,
       this.context,
       tileDiv.idx,
       tileDiv.cost,
@@ -482,7 +486,7 @@ export default class Game {
       } else if (this.bits < 50) {
         this.dom.wave.classList.add("active");
         this.dom.towerMenu.classList.remove("active");
-        tutorial.showInfo("canvas");
+        this.tutorial.showInfo("canvas");
       }
     }
   }

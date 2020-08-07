@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Loader {
   constructor(game, dom, sprites) {
     this.game = game;

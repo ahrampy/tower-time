@@ -1,4 +1,4 @@
-"use strict";
+import Vector from "./vector";
 
 export default class ActionsHandler {
   constructor(game, dom, tutorial, tiles) {
@@ -248,39 +248,40 @@ export default class ActionsHandler {
       const tileDiv = tiles[i];
       tileDiv.addEventListener(
         "mouseover",
-        () => this.tileRollOver(this.game),
+        (e) => this.tileRollOver(e, this.game),
         false
       );
       tileDiv.addEventListener(
         "mouseout",
-        () => this.tileRollOut(this.game),
+        (e) => this.tileRollOut(e, this.game),
         false
       );
       tileDiv.addEventListener(
         "click",
-        () => this.tileClicked(this.game),
+        (e) => this.tileClicked(e, this.game),
         false
       );
     }
   }
 
-  tileRollOver(game) {
-    game.showTowerDivInfo = this;
+  tileRollOver(e, game) {
+    game.showTowerDivInfo = e.currentTarget;
   }
 
-  tileRollOut(game) {
+  tileRollOut(e, game) {
     game.showTowerDivInfo = null;
   }
 
-  tileClicked(game) {
+  tileClicked(e, game) {
+    const towerDiv = e.currentTarget;
     if (game.placingTower === true) {
       if (!game.towers[game.towers.length - 1].placed) {
         game.towers.splice(game.towers.length - 1, 1);
       }
     }
-    if (game.bits >= this.cost) {
-      game.createTower(this);
-      game.currentTileDiv = this;
+    if (game.bits >= towerDiv.cost) {
+      game.createTower(towerDiv);
+      game.currentTileDiv = towerDiv;
       game.placingTower = true;
       if (game.selectedTowers) {
         game.resetSelects();
@@ -304,7 +305,6 @@ export default class ActionsHandler {
     const tower = this.getTower();
     this.toggleEditButtons(tower);
     if (!tower) return;
-    console.log(tower);
     let towerInfoTiles = this.dom.towerStats;
 
     for (let i = 0; i < towerInfoTiles.length; i++) {

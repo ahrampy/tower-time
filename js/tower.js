@@ -1,7 +1,11 @@
-"use strict";
+import Vector from "./vector";
+import Attack from "./attack";
 
-class Tower {
+export default class Tower {
   constructor(
+    game,
+    dom,
+    sprites,
     context,
     idx,
     cost,
@@ -12,6 +16,10 @@ class Tower {
     cooldown,
     speed
   ) {
+    this.game = game;
+    this.dom = dom;
+    this.sprites = sprites;
+
     // * images
     this.width = 32;
     this.height = 32;
@@ -51,15 +59,15 @@ class Tower {
   }
 
   findTarget() {
-    for (let i = 0; i < game.creeps.length; i++) {
-      const creep = game.creeps[i];
+    for (let i = 0; i < this.game.creeps.length; i++) {
+      const creep = this.game.creeps[i];
       if (creep.alive && creep.location.dist(this.location) < this.range) {
         this.follow = false;
         return creep.location;
       }
     }
     this.follow = true;
-    return new Vector(dom.canvas.mouseX, dom.canvas.mouseY);
+    return new Vector(this.dom.canvas.mouseX, this.dom.canvas.mouseY);
   }
 
   checkFire() {
@@ -76,6 +84,7 @@ class Tower {
       const attackLocation = new Vector(this.location.x, this.location.y);
       const attack = new Attack(
         attackLocation,
+        this.sprites,
         this.context,
         this.angle,
         this.idx,
@@ -84,7 +93,7 @@ class Tower {
         this.damage,
         this.speed
       );
-      game.attacks.push(attack);
+      this.game.attacks.push(attack);
     }
   }
 
@@ -105,8 +114,8 @@ class Tower {
   select() {
     this.selected = true;
     this.cell.selected = true;
-    game.selectedTowers.push(this);
-    game.selectedCells.push(this.cell);
+    this.game.selectedTowers.push(this);
+    this.game.selectedCells.push(this.cell);
   }
 
   deselect(present) {
@@ -155,7 +164,7 @@ class Tower {
       this.context.translate(this.location.x, this.location.y);
       this.context.rotate(this.angle);
       this.context.drawImage(
-        sprites.tower,
+        this.sprites.tower,
         this.level * this.width,
         this.idx * this.height,
         this.width,

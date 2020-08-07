@@ -4,15 +4,17 @@ export default class Tutorial {
     this.dom = dom;
     this.slide1 = this.dom.tutorialSlide;
     this.slide2 = this.dom.hotkeysSlide;
-    this.slide1.addEventListener("click", this.toggleTutorial.bind(this), false);
+    this.slide1.addEventListener(
+      "click",
+      this.toggleTutorial.bind(this),
+      false
+    );
     this.slide2.addEventListener("click", this.toggleHotkeys.bind(this), false);
     this.default =
       "move your mouse anywhere to learn more, click here to hide tooltips";
 
     this.tips = this.makeTips();
     this.addListeners(this.tips);
-
-    // this.clearTip.bind(this);
   }
 
   addListeners(tips) {
@@ -38,7 +40,10 @@ export default class Tutorial {
   toggleHotkeys() {
     this.dom.hotkeysText.classList.toggle("hidden");
     this.dom.hotkeysOpen = !this.dom.hotkeysOpen;
-    this.dom.hotkeysSlide.setAttribute("class", this.dom.hotkeysOpen ? "open" : "closed");
+    this.dom.hotkeysSlide.setAttribute(
+      "class",
+      this.dom.hotkeysOpen ? "open" : "closed"
+    );
     this.dom.hotkeysIcon.classList.toggle("hidden");
   }
 

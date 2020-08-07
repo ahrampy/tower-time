@@ -5,18 +5,14 @@ import Scores from "./scores";
 
 window.addEventListener("load", init, false);
 
-// var dom, sprites, game, tutorial, scores;
-var dom;
-var sprites;
-var game;
-var scores;
+var dom, sprites, game, scores;
 
 function init() {
   // var dom = "why"
   dom = new DomHandler();
   sprites = new Sprites();
   game = new Game(dom, sprites);
-  // scores = new Scores();
+  scores = new Scores(game);
   window.setTimeout(animate, 100);
 }
 

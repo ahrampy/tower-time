@@ -1,7 +1,6 @@
-"use strict";
-
-class Scores {
-  constructor() {
+export default class Scores {
+  constructor(game) {
+    this.game = game;
     this.firebase = this.loadFireBase();
   }
 
@@ -71,7 +70,7 @@ class Scores {
       dom.scores.appendChild(div);
     });
 
-    if (game.score >= lowestShowing) {
+    if (this.game.score >= lowestShowing) {
       const form = document.createElement("form");
       const input = document.createElement("input");
       input.classList.add("name-input");
@@ -91,14 +90,14 @@ class Scores {
     event.preventDefault();
     const name = document.querySelector(".name-input");
     const scoreList = document.querySelectorAll(".score-div");
-    if (game.score >= lowestShowing) {
+    if (this.game.score >= lowestShowing) {
       scoreList.forEach((div) => {
         div.querySelector("ul").innerHTML = "";
       });
     }
     name.style.visibility = "hidden";
-    if (game.f === game.score) {
-      this.update(name.value.toUpperCase(), game.f);
+    if (this.game.f === this.game.score) {
+      this.update(name.value.toUpperCase(), this.game.f);
     } else {
       window.location.reload(false);
     }
@@ -109,12 +108,12 @@ class Scores {
   addNewGame() {
     const btn = document.createElement("button");
     btn.classList.add("new-game");
-    btn.innerHTML = "NEW game";
+    btn.innerHTML = "NEW GAME";
     btn.addEventListener(
       "click",
       (e) => {
         e.preventDefault();
-        game.actions.newGame();
+        this.game.actions.newGame();
       },
       false
     );

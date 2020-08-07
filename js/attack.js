@@ -1,8 +1,7 @@
-"use strict";
-
-class Attack {
-  constructor(location, context, angle, idx, level, type, damage, speed) {
-    this.location = location.copy();
+export default class Attack {
+  constructor(loc, sprites, context, angle, idx, level, type, damage, speed) {
+    this.location = loc.copy();
+    this.sprites = sprites;
     this.context = context;
     this.angle = angle;
     this.radius = 10;
@@ -41,7 +40,7 @@ class Attack {
     this.context.translate(this.location.x, this.location.y);
     this.context.rotate(this.angle);
     this.context.drawImage(
-      sprites.attack,
+      this.sprites.attack,
       this.level * this.width,
       this.idx * this.height,
       this.width,

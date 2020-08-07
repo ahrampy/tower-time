@@ -1,4 +1,3 @@
-"use strict";
 import Vector from "./vector";
 
 export default class Cell {
