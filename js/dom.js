@@ -47,14 +47,24 @@ export default class DomHandler {
     // * bottom nav
     this.bottomBar = document.querySelector("#content-box");
     this.towerMenu = document.querySelector("#towers");
-    this.towerStats = document.querySelectorAll(
-      "#tower-details > .detail-tile"
-    );
+    // this.towerStats = document.querySelectorAll(
+    //   "#tower-details > .detail-tile"
+    // );
     this.type = document.querySelector("#tower-type");
+    this.typeH = document.querySelector("#type-header");
+    this.typeP = document.querySelector("#type-p");
     this.damage = document.querySelector("#tower-damage");
+    this.damageH = document.querySelector("#damage-header");
+    this.damageP = document.querySelector("#damage-p");
     this.range = document.querySelector("#tower-range");
+    this.rangeH = document.querySelector("#range-header");
+    this.rangeP = document.querySelector("#range-p");
     this.speed = document.querySelector("#tower-speed");
+    this.speedH = document.querySelector("#speed-header");
+    this.speedP = document.querySelector("#speed-p");
     this.next = document.querySelector("#tower-next");
+    this.nextH = document.querySelector("#next-header");
+    this.nextP = document.querySelector("#next-p");
     this.towerEdits = document.querySelectorAll(
       "#edit-tower-buttons > .edit-button"
     );

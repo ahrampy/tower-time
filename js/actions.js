@@ -288,34 +288,14 @@ export default class Actions {
     const tower = this.getTower();
     this.toggleEditButtons(tower);
     if (!tower) return;
-    let towerInfoTiles = this.dom.towerStats;
-
-    for (let i = 0; i < towerInfoTiles.length; i++) {
-      const title = towerInfoTiles[i];
-      const value = document.createElement("p");
-
-      if (i === 0) {
-        title.innerHTML = "<h5>Type</h5>";
-        value.innerHTML = tower.type.toUpperCase();
-      } else if (i === 1) {
-        title.innerHTML = "<h5>Damage</h5>";
-        value.innerHTML = tower.damage;
-      } else if (i === 2) {
-        title.innerHTML = "<h5>Range</h5>";
-        value.innerHTML = tower.range;
-      } else if (i === 3) {
-        title.innerHTML = "<h5>Speed</h5>";
-        value.innerHTML = 2000 - tower.cooldown;
-      } else if (i === 4) {
-        title.innerHTML = "<h5>Next</h5>";
-        if (tower.canUpgrade || this.game.showTowerDivInfo) {
-          value.innerHTML = tower.upgrade + "¥";
-        } else {
-          value.innerHTML = "Max";
-        }
-      }
-
-      title.appendChild(value);
+    this.dom.typeP.innerHTML = tower.type.toUpperCase();
+    this.dom.damageP.innerHTML = tower.damage;
+    this.dom.rangeP.innerHTML = tower.range;
+    this.dom.speedP.innerHTML = 2000 - tower.cooldown;
+    if (tower.canUpgrade || this.game.showTowerDivInfo) {
+      this.dom.nextP.innerHTML = tower.upgrade + "¥";
+    } else {
+      this.dom.nextP.innerHTML = "Max";
     }
   }
 

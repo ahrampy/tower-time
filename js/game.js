@@ -24,7 +24,7 @@ export default class Game {
 
     // * game stats
     this.lives = 1;
-    this.bits = 200;
+    this.bits = 2000;
     this.score = 0;
     this.wave = 0;
     this.difficulty = 1;
@@ -414,7 +414,7 @@ export default class Game {
     }
     this.bits += 5 * this.wave;
     // this.cr += 5 * this.wave;
-    this.loadCreeps(20);
+    this.loadCreeps(200);
   }
 
   loadCreeps(numCreeps) {
@@ -616,6 +616,8 @@ export default class Game {
     this.actions.updateStats();
     if (!this.gameOver && this.gameStarted) {
       this.actions.showTowerInfo();
+      this.checkWave();
+      this.sendCreeps();
       this.render();
       if (this.lives <= 0) {
         setTimeout(this.actions.handleGameOver(), 1000);
@@ -628,8 +630,6 @@ export default class Game {
     // if (this.creeps.length === 0 && !this.sendingWave) {
     this.animatePath();
     // }
-    this.checkWave();
-    this.sendCreeps();
     for (let c = 0; c < this.numCols; c++) {
       this.grid[c][0].run();
       this.grid[c][this.numRows - 1].run();

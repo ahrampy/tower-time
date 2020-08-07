@@ -106,10 +106,7 @@ export default class Tower {
     if (this.level === 2) {
       this.canUpgrade = false;
     }
-    // if (this.level === 3) handleUlt();
   }
-
-  // handleUlt() {}
 
   select() {
     this.selected = true;
