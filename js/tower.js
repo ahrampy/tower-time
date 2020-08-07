@@ -67,7 +67,7 @@ export default class Tower {
       }
     }
     this.follow = true;
-    return new Vector(this.dom.canvas.mouseX, this.dom.canvas.mouseY);
+    return new Vector(this.game.actions.mouseX, this.game.actions.mouseY);
   }
 
   checkFire() {

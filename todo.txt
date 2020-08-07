@@ -1,4 +1,13 @@
 game:
+  towers follow mouse
+  animate individual creep paths during waves
+  `tower.js:106 Uncaught TypeError: Cannot set property 'selected' of null
+    at Tower.deselect (tower.js:106)
+    at Game.selectAllTowers (game.js:185)
+    at Actions.handleCanvasDblClick (actions.js:104)
+deselect @ tower.js:106
+selectAllTowers @ game.js:185
+handleCanvasDblClick @ actions.js:104`
 
 ui:
   I & H hotkeys fix on every other new game
