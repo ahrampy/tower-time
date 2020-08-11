@@ -147,20 +147,20 @@ export default class Cell {
     this.context.restore();
   }
 
-  showGridNums() {
-    this.context.strokeStyle = "#333333";
-    this.context.fillStyle = "#333333";
-    this.context.lineWidth = 1;
-    this.context.strokeRect(
-      this.location.x,
-      this.location.y,
-      this.size,
-      this.size
-    );
-    this.context.fillText(
-      this.value,
-      this.location.x + 15,
-      this.location.y + 15
-    );
-  }
+  // showGridNums() {
+  //   this.context.strokeStyle = "#333333";
+  //   this.context.fillStyle = "#333333";
+  //   this.context.lineWidth = 1;
+  //   this.context.strokeRect(
+  //     this.location.x,
+  //     this.location.y,
+  //     this.size,
+  //     this.size
+  //   );
+  //   this.context.fillText(
+  //     this.value,
+  //     this.location.x + 15,
+  //     this.location.y + 15
+  //   );
+  // }
 }

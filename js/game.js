@@ -648,7 +648,7 @@ export default class Game {
       this.selectedCells[i].renderImage("selectImg");
     }
     for (let i = 0; i < this.towers.length; i++) {
-      const tower = this.towers[i];
+      const tower = this.towers[i]; 
       if (!tower.removed) {
         tower.run();
       } else {

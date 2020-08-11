@@ -118,7 +118,6 @@ export default class Tower {
   deselect(present) {
     this.selected = false;
     this.cell.selected = false;
-
     if (!present) {
       this.removed = true;
       this.cell.occupied = false;
