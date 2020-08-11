@@ -6,7 +6,7 @@ ui:
   game over title bounce on new games
 
 schemes:
-  music: howler.js
+
 
 advanced options left window: {
   pause game,
