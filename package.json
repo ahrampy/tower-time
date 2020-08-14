@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/ahrampy/tower-time#readme",
   "dependencies": {
-    "firebase": "^7.17.2"
+    "firebase": "^7.17.2",
+    "howler": "^2.2.0"
   },
   "scripts": {
     "build": "webpack",

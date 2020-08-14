@@ -113,12 +113,25 @@ export default class Actions {
   }
 
   handleButtonClicks() {
+    this.dom.audio.addEventListener("click", this.audioClick.bind(this));
     this.dom.wave.addEventListener("click", this.waveClick.bind(this));
     this.dom.upgrade.addEventListener("click", this.upgradeClick.bind(this));
     this.dom.sell.addEventListener("click", this.sellClick.bind(this));
     this.dom.auto.addEventListener("change", (e) =>
       this.autoWaveToggle(e, this.game)
     );
+  }
+
+  audioClick() {
+    if (this.game.muted) {
+      this.game.muted = false;
+      this.game.sound.play();
+      this.dom.audioImg.style.filter = "invert(70%)";
+    } else {
+      this.game.muted = true;
+      this.game.sound.pause();
+      this.dom.audioImg.style.filter = "invert(20%)";
+    }
   }
 
   autoWaveToggle(e, game) {

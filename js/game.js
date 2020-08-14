@@ -4,6 +4,7 @@ import Tutorial from "./tutorial";
 import Cell from "./cell";
 import Tower from "./tower";
 import { Slime, Gork, Uwo } from "./creep";
+import { Howl, Howler } from "howler";
 
 export default class Game {
   constructor(dom, sprites) {
@@ -66,8 +67,11 @@ export default class Game {
     this.waveTimer = 0;
 
     // * music
-    // this.handleSoundButton();
-    // this.muted = false;
+    this.sound = new Howl({
+      src: "../audio/towertime.mp3",
+      loop: true,
+    });
+    this.muted = false;
 
     // * trackers
     // this.cr = 220;
@@ -648,7 +652,7 @@ export default class Game {
       this.selectedCells[i].renderImage("selectImg");
     }
     for (let i = 0; i < this.towers.length; i++) {
-      const tower = this.towers[i]; 
+      const tower = this.towers[i];
       if (!tower.removed) {
         tower.run();
       } else {

@@ -228,6 +228,22 @@ body:hover {
   margin-top: 45px;
 }
 
+#audio-button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+#audio-button:hover {
+  cursor: pointer;
+}
+
+#audio-button-img {
+  width: 22px;
+  height: 22px;
+  filter: invert(70%);
+}
+
 #wave-button {
   position: relative;
   display: flex;
@@ -294,9 +310,9 @@ canvas {
   height: 55px;
 }
 
-#info-bits {
+/* #info-bits {
   width: 160px;
-}
+} */
 
 .info-tile h4 {
   text-align: center;

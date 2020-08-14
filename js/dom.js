@@ -37,7 +37,8 @@ export default class DomHandler {
     this.currWave = document.querySelector("#info-wave");
     this.lives = document.querySelector("#info-lives");
     this.bank = document.querySelector("#info-bits");
-    this.mute = document.querySelector("#mute-button");
+    this.audio = document.querySelector("#audio-button");
+    this.audioImg = document.querySelector("#audio-button-img");
     this.autoBox = document.querySelector("#auto-container");
     this.auto = document.querySelector("input[name=auto-wave]");
     this.wave = document.querySelector("#wave-button");
