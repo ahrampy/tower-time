@@ -1,3 +1,5 @@
+import { Howl } from "howler";
+
 export default class Loader {
   constructor(game, dom, sprites) {
     this.game = game;
@@ -51,5 +53,10 @@ export default class Loader {
     this.dom.tutorial.style.opacity = 100;
     this.game.animateBorder();
     this.game.animateBlocks();
+    this.game.sound = new Howl({
+      src: "../audio/towertime.mp3",
+      loop: true,
+    });
+    this.game.sound.play();
   }
 }

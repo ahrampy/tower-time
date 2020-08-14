@@ -4,7 +4,6 @@ import Tutorial from "./tutorial";
 import Cell from "./cell";
 import Tower from "./tower";
 import { Slime, Gork, Uwo } from "./creep";
-import { Howl, Howler } from "howler";
 
 export default class Game {
   constructor(dom, sprites) {
@@ -67,10 +66,7 @@ export default class Game {
     this.waveTimer = 0;
 
     // * music
-    this.sound = new Howl({
-      src: "../audio/towertime.mp3",
-      loop: true,
-    });
+    this.sound = null;
     this.muted = false;
 
     // * trackers
@@ -87,25 +83,6 @@ export default class Game {
     this.loader = new Loader(this, dom, sprites);
     this.actions = new Actions(this, dom, this.tutorial, this.tileDivs);
   }
-
-  // handleSoundButton() {
-  //   const muteButton = this.dom.mute("#mute-button");
-  //   muteButton.addEventListener("click", this.audioToggle);
-  // }
-
-  // audioToggle() {
-  //   if (this.muted) {
-  //     this.classList.add("mute-off");
-  //     this.classList.remove("mute-on");
-  //     this.muted = false;
-  //     music.play();
-  //   } else {
-  //     this.classList.add("mute-on");
-  //     this.classList.remove("mute-off");
-  //     this.muted = true;
-  //     music.stop();
-  //   }
-  // }
 
   checkTowerPlacement(cell) {
     if (cell.static || cell.occupied) return;
