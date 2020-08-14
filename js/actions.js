@@ -364,6 +364,8 @@ export default class Actions {
   }
 
   handleGameOver() {
+    this.game.sound.stop();
+    // this.game.sound.off();
     this.game.gameOver = true;
     this.game.context.fillStyle = "rgba(125, 125, 125, 0.6)";
     this.game.context.fillRect(0, 0, 840, 560);
