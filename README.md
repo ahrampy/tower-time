@@ -43,4 +43,4 @@ A FireBase realtime storage database for an ulta-lightweight backend, to save th
 #### Thank You!
 
 To: openmusic.gallery for the custom soundtrack
-To: Kemono on on opengameart.org for the sprite inspiration
+To: Kemono on opengameart.org for the sprite inspiration
