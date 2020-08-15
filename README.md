@@ -38,3 +38,9 @@ Enemies use a vector class to traverse towers and blocked squares. Upon choosing
 #### High Scores
 
 A FireBase realtime storage database for an ulta-lightweight backend, to save the score and 3-character name of every player who chooses to add it at the end of the game, and show the all-time high scores.
+
+
+#### Thank You!
+
+To: openmusic.gallery for the soundtrack
+To: Kemono on 
