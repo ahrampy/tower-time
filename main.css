@@ -241,7 +241,14 @@ body:hover {
 #audio-button-img {
   width: 22px;
   height: 22px;
+}
+
+.audio-on {
   filter: invert(70%);
+}
+
+.audio-off {
+  filter: invert(20%);
 }
 
 #wave-button {

@@ -48,9 +48,6 @@ export default class DomHandler {
     // * bottom nav
     this.bottomBar = document.querySelector("#content-box");
     this.towerMenu = document.querySelector("#towers");
-    // this.towerStats = document.querySelectorAll(
-    //   "#tower-details > .detail-tile"
-    // );
     this.type = document.querySelector("#tower-type");
     this.typeH = document.querySelector("#type-header");
     this.typeP = document.querySelector("#type-p");

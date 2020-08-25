@@ -126,11 +126,13 @@ export default class Actions {
     if (this.game.muted) {
       this.game.muted = false;
       this.game.sound.play();
-      this.dom.audioImg.style.filter = "invert(70%)";
+      this.dom.audio.classList.remove("audio-off");
+      this.dom.audio.classList.add("audio-on");
     } else {
       this.game.muted = true;
       this.game.sound.pause();
-      this.dom.audioImg.style.filter = "invert(20%)";
+      this.dom.audio.classList.remove("audio-on");
+      this.dom.audio.classList.add("audio-off");
     }
   }
 
@@ -365,7 +367,6 @@ export default class Actions {
 
   handleGameOver() {
     this.game.sound.stop();
-    this.game.sound.off();
     this.game.gameOver = true;
     this.game.context.fillStyle = "rgba(125, 125, 125, 0.6)";
     this.game.context.fillRect(0, 0, 840, 560);
@@ -373,6 +374,7 @@ export default class Actions {
     this.dom.gameOver.style.width = "100%";
     this.dom.gameOver.style.height = "100%";
     this.dom.overTitle.style.display = "inline-block";
+
     const highscores = firebase
       .database()
       .ref("scores")

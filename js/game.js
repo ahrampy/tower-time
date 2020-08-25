@@ -6,7 +6,7 @@ import Tower from "./tower";
 import { Slime, Gork, Uwo } from "./creep";
 
 export default class Game {
-  constructor(dom, sprites) {
+  constructor(dom, sprites, sound) {
     // * add canvas
     this.dom = dom;
     this.sprites = sprites;
@@ -23,7 +23,7 @@ export default class Game {
     this.stages = {};
 
     // * game stats
-    this.lives = 20;
+    this.lives = 2;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
@@ -66,13 +66,8 @@ export default class Game {
     this.waveTimer = 0;
 
     // * music
-    this.sound = null;
-    this.muted = false;
-
-    // * trackers
-    // this.cr = 220;
-    // this.c = 0;
-    // this.f;
+    this.sound = sound;
+    this.muted = dom.audio.classList.contains("audio-off");
 
     // * bounds
     this.gameStarted = false;
@@ -472,16 +467,6 @@ export default class Game {
     }
   }
 
-  // checkStats() {
-  //   if (this.cr !== this.lives + this.score + this.bits + this.c) {
-  //     console.log("oh so you think you're clever");
-  //     this.score = 0;
-  //     this.bits = 0;
-  //     this.lives = 1;
-  //     this.cr = this.lives + this.score + this.bits + this.c;
-  //   }
-  // }
-
   getPath() {
     const path = [this.start];
     while (path[path.length - 1] !== this.goal) {
@@ -593,7 +578,6 @@ export default class Game {
   }
 
   run() {
-    // this.checkStats();
     this.actions.updateStats();
     if (!this.gameOver && this.gameStarted) {
       this.actions.showTowerInfo();
@@ -608,9 +592,7 @@ export default class Game {
 
   render() {
     this.context.clearRect(0, 0, 840, 560);
-    // if (this.creeps.length === 0 && !this.sendingWave) {
     this.animatePath();
-    // }
     for (let c = 0; c < this.numCols; c++) {
       this.grid[c][0].run();
       this.grid[c][this.numRows - 1].run();
