@@ -23,7 +23,7 @@ export default class Game {
     this.stages = {};
 
     // * game stats
-    this.lives = 2;
+    this.lives = 20;
     this.bits = 200;
     this.score = 0;
     this.wave = 0;
