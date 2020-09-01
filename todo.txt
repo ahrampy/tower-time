@@ -5,9 +5,6 @@ ui:
   I & H hotkeys fix on every other new game
   game over title bounce on new games
 
-schemes:
-  add soundtrack
-
 advanced options left window: {
   pause game,
   game speed,
