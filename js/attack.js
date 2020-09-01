@@ -22,7 +22,6 @@ export default class Attack {
   }
 
   update() {
-    console.log(this.angle);
     this.location.y += Math.sin(this.angle) * this.speed;
     this.location.x += Math.cos(this.angle) * this.speed;
     if (
