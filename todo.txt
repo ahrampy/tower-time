@@ -1,5 +1,6 @@
 game:
-  animate individual creep paths during waves
+
+  animate individual creep paths during waves?
 
 ui:
   I & H hotkeys fix on every other new game
