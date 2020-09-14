@@ -1,3 +1,5 @@
+import { Howl } from "howler";
+
 export default class Loader {
   constructor(game, dom, sprites) {
     this.game = game;
@@ -39,18 +41,33 @@ export default class Loader {
   }
 
   handleStart() {
+    this.hideSplash();
+    this.addHowl();
+    this.showBoard();
+    this.game.animateBorder();
+    this.game.animateBlocks();
+    this.game.gameStarted = true;
+  }
+
+  hideSplash() {
     this.dom.play.style.display = "none";
     this.dom.startText.style.display = "none";
     this.dom.footer.style.opacity = 0;
-    this.game.gameStarted = true;
-    this.game.run();
+  }
+
+  showBoard() {
     this.dom.canvas.style.backgroundColor = "rgb(186, 186, 186)";
     this.dom.towerMenu.classList.add("active");
     this.dom.topBar.style.opacity = 100;
     this.dom.bottomBar.style.opacity = 100;
     this.dom.tutorial.style.opacity = 100;
-    this.game.animateBorder();
-    this.game.animateBlocks();
+  }
+
+  addHowl() {
+    this.game.sound = new Howl({
+      src: "../audio/towertime.mp3",
+      loop: true,
+    });
     if (!this.game.muted) this.game.sound.play();
   }
 }

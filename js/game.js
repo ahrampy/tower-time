@@ -6,7 +6,7 @@ import Tower from "./tower";
 import { Slime, Gork, Uwo } from "./creep";
 
 export default class Game {
-  constructor(dom, sprites, sound) {
+  constructor(dom, sprites) {
     // * add canvas
     this.dom = dom;
     this.sprites = sprites;
@@ -66,7 +66,7 @@ export default class Game {
     this.waveTimer = 0;
 
     // * music
-    this.sound = sound;
+    this.sound = null;
     this.muted = dom.audio.classList.contains("audio-off");
 
     // * bounds

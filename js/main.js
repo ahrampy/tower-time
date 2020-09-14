@@ -2,21 +2,15 @@ import DomHandler from "./dom";
 import Sprites from "./sprites";
 import Game from "./game";
 import Scores from "./scores";
-import { Howl } from "howler";
 
 window.addEventListener("load", init);
 
-var soundtrack = new Howl({
-  src: "../audio/towertime.mp3",
-  loop: true,
-});
 var sprites = new Sprites();
-
-var dom, game, scores, animation, soundtrack;
+var dom, game, scores, animation;
 
 function init() {
   dom = dom ? dom : new DomHandler();
-  game = new Game(dom, sprites, soundtrack);
+  game = new Game(dom, sprites);
   scores
     ? ((scores.game = game), (scores.dom = dom))
     : (scores = new Scores(dom, game));
