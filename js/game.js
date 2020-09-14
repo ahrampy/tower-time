@@ -237,7 +237,6 @@ export default class Game {
 
   loadGrid() {
     let id = 0;
-
     for (let c = 0; c < this.numCols; c++) {
       this.grid.push([]);
       for (let r = 0; r < this.numRows; r++) {
@@ -362,14 +361,12 @@ export default class Game {
 
   ensureValidMap() {
     let pathBlocked = false;
-
     for (let c = 0; c < this.numCols; c++) {
       for (let r = 0; r < this.numRows; r++)
         if (this.grid[c][r].value === -1 && !this.grid[c][r].occupied) {
           pathBlocked = true;
         }
     }
-
     if (pathBlocked) {
       this.initBlocks();
       this.loadPaths();
