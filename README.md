@@ -12,6 +12,7 @@ Build, upgrade, and sell towers to create a maze for enemies, and stop them from
 - HTML5
 - CSS3
 - FireBase
+- Babel/Webpack
 
 ## About
 
