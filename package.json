@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ahrampy/tower-time#readme",
   "dependencies": {
-    "firebase": "^7.17.2",
+    "firebase": "^7.20.0",
     "howler": "^2.2.0"
   },
   "scripts": {
@@ -28,8 +28,8 @@
     "webpack": "webpack --mode=development --watch"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "babel-loader": "^8.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
