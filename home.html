@@ -1,193 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-  <meta charset="UTF-8" />
-  <head>
-    <title>Tower Time</title>
-    <meta name="description" content="An endless tower defense game">
-    <!-- Google / Search Engine Tags -->
-    <meta itemprop="name" content="Tower Time">
-    <meta itemprop="description" content="An endless tower defense game">
-    <meta itemprop="image" content="./images/meta-title.png">
-    <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="http://towertime.herokuapp.com">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Tower Time">
-    <meta property="og:description" content="An endless tower defense game">
-    <meta property="og:image" content="./images/meta-title.png">
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tower Time">
-    <meta name="twitter:description" content="An endless tower defense game">
-    <meta name="twitter:image" content="./images/meta-title.png">
-    <link rel="icon" type="image" href="./favicon.ico" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-MYYTKJMF3Y"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+<meta charset="UTF-8" />
 
-      gtag("config", "G-MYYTKJMF3Y");
-    </script>
-    <script src="./js/bundle.js"></script>
-    <link rel="stylesheet" type="text/css" href="./main.css" />
-  </head>
-  <body>
-    <div id="flip-message">
-      <p>
-        to play tower time on mobile, swith to landscape mode <br /> <br /> mobile version coming soon!
-      </p>
-    </div>
-    <div id="holder">
-      <div id="game-controls">
-        <div id="info">
-          <div id="info-score" class="info-tile">
-            <h4>Score</h4>
-          </div>
-          <div id="info-wave" class="info-tile">
-            <h4>Wave</h4>
-          </div>
-          <div id="info-lives" class="info-tile">
-            <h4>Lives</h4>
-          </div>
-          <div id="info-bits" class="info-tile">
-            <h4>Bank</h4>
-          </div>
-          <div id="audio-button" class="audio-on">
-            <img src="./images/icons/audio.png" id="audio-button-img" alt="audio" />
-          </div>
-          <div id="spacer-div-1"></div>
-          <div id="spacer-div"></div>
-          <label id="auto-container"
-            >Auto
-            <input name="auto-wave" type="checkbox" />
-            <span class="checkmark"></span>
-          </label>
-        </div>
-        <div id="wave-button" class="clickable">
-          <span id="wave-progress" style="width: 0%;"></span>
-          <div id="wave-text">First Wave</div>
-        </div>
-      </div>
-      <div id="canvas-wrapper">
-        <div id="placeholder-window">
-        </div>
-        <canvas width="840" height="560"></canvas>
-        <button id="play-button"></button>
-        <div id="game-info">
-          <h2>Tower Abilities</h2>
-          <ul>
-            <li>Earth:None</li>
-            <li>Water:Slows Enemies</li>
-            <li>Fire:Fast Attack</li>
-            <li>Air:Through Attack</li>
-          </ul>
-          <h2>Optional Hotkeys</h2>
-          <ul>
-            <li>Earth:1</li>
-            <li>Water:2</li>
-            <li>Fire:3</li>
-            <li>Air:4</li>
-            <li>Sell:S</li>
-            <li>Upgrade:Q</li>
-            <li>Info:I</li>
-            <li>Hotkeys:H</li>
-            <li>Deselect:Esc</li>
-          </ul>
-          <h3>hover over anything to get tooltips</h3>
-        </div>
-        <div id="tutorial-window">
-          <div id="tutorial-slide" class="open">
-            <div id="tutorial-icon" class="hidden">
-              <img src="/images/icons/info.png"></img>
-            </div>
-            <div id="tutorial-text">
-              <p id="tutorial-text-p">
-                move your mouse anywhere to learn more or click here to dismiss
-                tooltips
-              </p>
-            </div>
-          </div>
-          <div id="hotkeys-slide" class="closed">
-            <div id="hotkeys-icon">
-              <img src="/images/icons/hotkeys.png"></img>
-            </div>
-            <div id="hotkeys-text" class="hidden">
-              <h4>Hotkeys</h4>
-              <ul>
-                <li>1 Earth</li>
-                <li>2 Water</li>
-                <li>3 Fire</li>
-                <li>4 Air</li>
-                <li>S Sell</li>
-                <li>Q Upgrade</li>
-                <li>I Info</li>
-                <li>H Hotkeys</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="content-box">
-        <div id="towers"></div>
-        <div id="tower-details">
-          <div id="tower-type" class="tower-stat detail-tile">
-            <h5 id="type-header">Type</h5>
-            <p id="type-p"></p>
-          </div>
-          <div id="tower-damage" class="tower-stat detail-tile">
-            <h5 id="damage-header">Damage</h5>
-            <p id="damage-p"></p>
-          </div>
-          <div id="tower-range" class="tower-stat detail-tile">
-            <h5 id="range-header">Range</h5>
-            <p id="range-p"></p>
-          </div>
-          <div id="tower-speed" class="tower-stat detail-tile">
-            <h5 id="speed-header">Speed</h5>
-            <p id="speed-p"></p>
-          </div>
-          <div id="tower-next" class="tower-stat detail-tile">
-            <h5 id="next-header">Next</h5>
-            <p id="next-p"></p>
-          </div>
-          <div id="edit-tower-buttons" class="detail-tile">
-            <h5 id="upgrade-button" class="edit-button">Upgrade</h5>
-            <h5 id="sell-button" class="edit-button">Sell</h5>
-          </div>
-        </div>
-      </div>
-      <footer id="footer">
-        <span>
-          <a target="_blank" href="https://www.ahrampy.com/" rel="noopener">Adrian Rampy</a>
-          &copy; 2020
-        </span>
-        <span class="git"
-          ><a target="_blank" href="https://github.com/ahrampy/tower-time" rel="noopener">
-            <img src="./images/icons/git.png" alt="git" /> </a
-        ></span>
-      </footer>
-    </div>
+<head>
+  <title>Tower Time</title>
+  <meta name="description" content="An endless tower defense game">
+  <!-- Google / Search Engine Tags -->
+  <meta itemprop="name" content="Tower Time">
+  <meta itemprop="description" content="An endless tower defense game">
+  <meta itemprop="image" content="./images/meta-title.png">
+  <!-- Facebook Meta Tags -->
+  <meta property="og:url" content="http://towertime.herokuapp.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tower Time">
+  <meta property="og:description" content="An endless tower defense game">
+  <meta property="og:image" content="./images/meta-title.png">
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tower Time">
+  <meta name="twitter:description" content="An endless tower defense game">
+  <meta name="twitter:image" content="./images/meta-title.png">
+  <link rel="icon" type="image" href="./favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYYTKJMF3Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
-    <div id="game-over-screen">
-      <h1 id="game-over-title">Game Over</h1>
-      <div id="score-terminal">
-        <h2 id="local-score"></h2>
-        <h2 id="local-top"></h2>
-        <h3>High Scores</h3>
-        <div class="scores"></div>
-      </div >
+    gtag("config", "G-MYYTKJMF3Y");
+  </script>
+  <script src="./js/bundle.js"></script>
+  <link rel="stylesheet" type="text/css" href="./main.css" />
+</head>
+
+<body>
+  <div id="flip-message">
+    <p>
+      to play tower time on mobile, switch to landscape mode
+    </p>
+  </div>
+  <div id="holder">
+    <div id="game-controls">
+      <div id="info">
+        <div id="info-score" class="info-tile">
+          <h4>Score</h4>
+        </div>
+        <div id="info-wave" class="info-tile">
+          <h4>Wave</h4>
+        </div>
+        <div id="info-lives" class="info-tile">
+          <h4>Lives</h4>
+        </div>
+        <div id="info-bits" class="info-tile">
+          <h4>Bank</h4>
+        </div>
+        <div id="audio-button" class="audio-on">
+          <img src="./images/icons/audio.png" id="audio-button-img" alt="audio" />
+        </div>
+        <div id="spacer-div-1"></div>
+        <div id="spacer-div"></div>
+        <label id="auto-container">Auto
+          <input name="auto-wave" type="checkbox" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div id="wave-button" class="clickable">
+        <span id="wave-progress" style="width: 0%;"></span>
+        <div id="wave-text">First Wave</div>
+      </div>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-auth.js"></script>
-  </body>
+    <div id="canvas-wrapper">
+      <div id="placeholder-window">
+      </div>
+      <canvas width="840" height="560"></canvas>
+      <button id="play-button"></button>
+      <div id="game-info">
+        <h2>Tower Abilities</h2>
+        <ul>
+          <li>Earth:None</li>
+          <li>Water:Slows Enemies</li>
+          <li>Fire:Fast Attack</li>
+          <li>Air:Through Attack</li>
+        </ul>
+        <h2>Hotkeys</h2>
+        <ul>
+          <li>Earth:1</li>
+          <li>Water:2</li>
+          <li>Fire:3</li>
+          <li>Air:4</li>
+          <li>Sell:S</li>
+          <li>Upgrade:Q</li>
+          <li>Info:I</li>
+          <li>Hotkeys:H</li>
+          <li>Deselect:Esc</li>
+        </ul>
+        <h3>hover over anything to get tooltips</h3>
+      </div>
+      <div id="tutorial-window">
+        <div id="tutorial-slide" class="open">
+          <div id="tutorial-icon" class="hidden">
+            <img src="/images/icons/info.png"></img>
+          </div>
+          <div id="tutorial-text">
+            <p id="tutorial-text-p">
+              move your mouse anywhere to learn more or click here to dismiss
+              tooltips
+            </p>
+          </div>
+        </div>
+        <div id="hotkeys-slide" class="closed">
+          <div id="hotkeys-icon">
+            <img src="/images/icons/hotkeys.png"></img>
+          </div>
+          <div id="hotkeys-text" class="hidden">
+            <h4>Hotkeys</h4>
+            <ul>
+              <li>1 Earth</li>
+              <li>2 Water</li>
+              <li>3 Fire</li>
+              <li>4 Air</li>
+              <li>S Sell</li>
+              <li>Q Upgrade</li>
+              <li>I Info</li>
+              <li>H Hotkeys</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="content-box">
+      <div id="towers"></div>
+      <div id="tower-details">
+        <div id="tower-type" class="tower-stat detail-tile">
+          <h5 id="type-header">Type</h5>
+          <p id="type-p"></p>
+        </div>
+        <div id="tower-damage" class="tower-stat detail-tile">
+          <h5 id="damage-header">Damage</h5>
+          <p id="damage-p"></p>
+        </div>
+        <div id="tower-range" class="tower-stat detail-tile">
+          <h5 id="range-header">Range</h5>
+          <p id="range-p"></p>
+        </div>
+        <div id="tower-speed" class="tower-stat detail-tile">
+          <h5 id="speed-header">Speed</h5>
+          <p id="speed-p"></p>
+        </div>
+        <div id="tower-next" class="tower-stat detail-tile">
+          <h5 id="next-header">Next</h5>
+          <p id="next-p"></p>
+        </div>
+        <div id="edit-tower-buttons" class="detail-tile">
+          <h5 id="upgrade-button" class="edit-button">Upgrade</h5>
+          <h5 id="sell-button" class="edit-button">Sell</h5>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+      <span>
+        <a target="_blank" href="https://www.ahrampy.com/" rel="noopener">Adrian Rampy</a>
+        &copy; <span id="year"></span>
+      </span>
+      <span class="git"><a target="_blank" href="https://github.com/ahrampy/tower-time" rel="noopener">
+          <img src="./images/icons/git.png" alt="git" /> </a></span>
+    </footer>
+  </div>
+
+  <div id="game-over-screen">
+    <h1 id="game-over-title">Game Over</h1>
+    <div id="score-terminal">
+      <h2 id="local-score"></h2>
+      <h2 id="local-top"></h2>
+      <h3>High Scores</h3>
+      <div class="scores"></div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-auth.js"></script>
+</body>
+
+<script> document.querySelector("#year").append(new Date().getFullYear()) </script>
+
 </html>
