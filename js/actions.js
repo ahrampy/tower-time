@@ -217,6 +217,8 @@ export default class Actions {
 				this.towerKey(2);
 			} else if (event.key === "4") {
 				this.towerKey(3);
+			} else if (event.key === "q") {
+				this.waveClick();
 			} else if (event.key === "s") {
 				this.sellClick();
 			} else if (event.key === "r") {
