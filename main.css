@@ -51,6 +51,12 @@ body:hover {
   opacity: 0;
 }
 
+#how-to {
+  width: 800px;
+  text-align: center;
+  line-height: 1.5;
+}
+
 #tutorial-window {
   display: flex;
   width: 160px;
@@ -178,7 +184,7 @@ body:hover {
 
 #play-button {
   position: absolute;
-  top: 32%;
+  top: 28%;
   left: 0;
   right: 0;
   margin: auto;
@@ -199,7 +205,8 @@ body:hover {
 
 #game-info {
   position: absolute;
-  top: 55%;
+  top: 52%;
+  width: 80%;
   left: 0;
   right: 0;
   margin: auto;
@@ -207,11 +214,12 @@ body:hover {
   flex-direction: column;
   align-items: center;
   color: #fff;
-  background-color: inherit;
+  background-color: rgba(187, 186, 186, 0.5);
   background-repeat: no-repeat;
   z-index: 2;
   outline: none;
   border: none;
+  border-radius: 5px;
 }
 
 #game-info > ul {
@@ -226,6 +234,12 @@ body:hover {
 
 #game-info > h3 {
   margin-top: 45px;
+}
+
+#how-to {
+  width: 800px;
+  text-align: center;
+  line-height: 1.5;
 }
 
 #audio-button {
