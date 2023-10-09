@@ -48,13 +48,14 @@ export default class Tutorial {
 			if (name === "canvas") {
 				tip =
 					"click a tower to select it, then click on the board to buy and place it";
+
 				if (this.game.bits < 50) {
 					tip =
 						"now that you have a few towers, you're ready to take on the first wave! good luck";
+				} else if (this.game.bits < 200) {
+					tip =
+						"keep placing towers! try placing one on top of the movement path (purple line)";
 				}
-			} else if (!name) {
-				tip =
-					"enemies will start at the blue square and try to get to the red one, build towers to stop them";
 			}
 		}
 
