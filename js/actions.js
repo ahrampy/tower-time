@@ -235,7 +235,7 @@ export default class Actions {
     if (towers.length && !towers[towers.length - 1].placed) {
       towers.pop();
     }
-    this.game.tileDivs[towerNum].click();
+    this.game.tiles[towerNum].click();
     const currentTower = towers[towers.length - 1];
     if (!currentTower.placed) {
       currentTower.location = new Vector(this.mouseX, this.mouseY);
