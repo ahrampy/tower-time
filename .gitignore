@@ -1,3 +1,6 @@
 .DS_Store
+/js/bundle.js
 /node_modules
 /images/legacy
+.env
+.vscode
