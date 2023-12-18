@@ -2,7 +2,7 @@
 
 A live pathing tower defense game.
 
-[Tower Time Live](https://towertime.herokuapp.com/)
+[Tower Time Live](https://towertime.netlify.app/)
 
 Build, upgrade, and sell towers to create a maze for enemies, and stop them from reaching the red square! Every wave, 20 more enemies, led by a fearsome boss, try to get from one side of the board to the other, and will always find the quickest path there, but don't let them! If you have any feedback, please add an issue and I'll get back to you as soon as I can. Thanks for taking a look, and I hope you enjoy the game!
 
